@@ -20,6 +20,7 @@ class Restaurant extends Model
 
     // Mass assignable attributes
     protected $fillable = [
+        'image',
         'name',
         'address',
         'phone',

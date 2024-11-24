@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Restaurant;
+use PHPUnit\TextUI\Help;
 
 class RestaurantController extends Controller
 {
@@ -14,15 +16,36 @@ class RestaurantController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $search = $request->input('search', '');
-        $page = $request->input('page', 1);
+{
+    $search = $request->input('search', '');
+    $page = $request->input('page', 1);
 
-        $query = Restaurant::query();
+    $query = Restaurant::query();
 
-        $data = $query->paginate(20, ['*'], 'page', $page);
-        return self::success("Trial list successfully", ['data' => $data]);
+    // Optionally apply search filter if needed
+    if ($search) {
+        $query->where('name', 'like', '%' . $search . '%');
     }
+
+    // Paginate the results
+    $data = $query->paginate(20, ['*'], 'page', $page);
+
+    // Loop through the results and generate full URL for image
+    $data->getCollection()->transform(function ($item) {
+        // Check if the image path exists and generate the full URL
+        if ($item->image) {
+            // Assuming the images are stored in storage/app/public and have symbolic link created
+            $item->image_url = Helper::returnFullImageUrl($item->image);
+        } else {
+            $item->image_url = null; // Or a default image URL if no image is available
+        }
+        return $item;
+    });
+
+    // Return the response with image URLs included
+    return self::success("Trial list successfully", ['data' => $data]);
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -43,11 +66,12 @@ class RestaurantController extends Controller
 
         // Validate the required fields
         $validation = Validator::make($data, [
+            // 'image' => 'required|string',
             'name' => 'required|string|min:3|max:255',
             'address' => 'required|string|max:500',
             'phone' => 'nullable|string|regex:/^[0-9]{10,15}$/',
             'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-            'website' => 'nullable|url|max:255',
+            'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
             // 'opening_hours' => 'required|json', // Ensure valid JSON format
             'description' => 'nullable|string|max:1000',
             // 'rating' => 'nullable|numeric|min:0|max:5',
@@ -69,7 +93,19 @@ class RestaurantController extends Controller
             'rating' => $data['rating'] ?? 0, // Default rating to 0 if not provided
         ]);
 
-        return self::success('Login successful', ['restaurant' => $restaurant]);
+
+        if($data['image']){
+            $url = Helper::getBase64ImageUrl($data);
+            $restaurant->update([
+                'image' => $url
+            ]);
+        }
+
+
+
+
+
+        return self::success('Store successful', ['restaurant' => $restaurant]);
 
 
     }
