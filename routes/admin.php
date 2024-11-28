@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\RestaurantController;
+use App\Http\Controllers\Admin\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -9,11 +10,22 @@ Route::prefix('auth')->group(function () {
     Route::post('/register-via-email', [AuthController::class, 'registerViaEmail']);
 });
 
-Route::prefix('restaurant')->group(function () {
+// Route::prefix('restaurant')->group(function () {
 
-    Route::get('/by-id/{id}', [RestaurantController::class, 'show']);
-    Route::get('/list', [RestaurantController::class, 'index']);
-    Route::post('/add', [RestaurantController::class, 'store']);
+//     Route::get('/by-id/{id}', [RestaurantController::class, 'show']);
+//     Route::get('/list', [RestaurantController::class, 'index']);
+//     Route::post('/add', [RestaurantController::class, 'store']);
+// });
+
+Route::prefix('restaurant')->group(function () {
+    Route::resource('/', RestaurantController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'store']); // Restrict to specific CRUD actions.
+});
+
+Route::prefix('role')->group(function () {
+    Route::resource('/', RoleController::class)
+        ->only(['index']); // Restrict to specific CRUD actions.
 });
 
 
