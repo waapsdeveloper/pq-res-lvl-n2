@@ -5,9 +5,9 @@ namespace App\Http\Resources\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class RoleResource extends JsonResource
 {
-   /**
+    /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
@@ -23,8 +23,6 @@ class UserResource extends JsonResource
         return [
             "id" => $obj->id,
             "name" => $obj->name,
-            "email" => $obj->email,
-            "status" => $obj->status,
         ];
     }
 }

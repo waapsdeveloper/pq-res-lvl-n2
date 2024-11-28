@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Admin\RestaurantListResourse;
+use App\Http\Resources\Admin\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\Restaurant;
-use PHPUnit\TextUI\Help;
-
-class RestaurantController extends Controller
+class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     /**
      * Display a listing of the resource.
      */
@@ -22,7 +23,7 @@ class RestaurantController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
 
-        $query = Restaurant::query();
+        $query = User::query();
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -34,13 +35,12 @@ class RestaurantController extends Controller
 
         // Loop through the results and generate full URL for image
         $data->getCollection()->transform(function ($item) {
-            return new RestaurantListResourse($item);
+            return new UserResource($item);
         });
 
         // Return the response with image URLs included
         return self::success("Trial list successfully", ['data' => $data]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -55,22 +55,16 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
         $data = $request->all();
 
         // Validate the required fields
         $validation = Validator::make($data, [
-            // 'image' => 'required|string',
             'name' => 'required|string|min:3|max:255',
-            'address' => 'required|string|max:500',
-            'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
-            'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-            'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
-            // 'opening_hours' => 'required|json', // Ensure valid JSON format
-            'description' => 'nullable|string|max:1000',
-            'status' => 'nullable|string',
-            // 'rating' => 'nullable|numeric|min:0|max:5',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string', // You can add regex here for phone number validation
+            'password' => 'required|string|min:6', // Add validation for password
+            'role' => 'required|integer|in:2,3,4,5', // Ensure role is provided
+            'status' => 'required|string|in:active,inactive', // Validate status
         ]);
 
         // If validation fails
@@ -78,32 +72,27 @@ class RestaurantController extends Controller
             return self::failure($validation->errors()->first());
         }
 
-        $restaurant = Restaurant::create([
+        // Create a new user (assuming the user model exists)
+        $user = User::create([
             'name' => $data['name'],
-            'address' => $data['address'],
+            'email' => $data['email'],
             'phone' => $data['phone'] ?? null,
-            'email' => $data['email'] ?? null,
-            'website' => $data['website'] ?? null,
-            'opening_hours' => $data['opening_hours'],
-            'description' => $data['description'] ?? null,
-            'rating' => $data['rating'] ?? 0, // Default rating to 0 if not provided
-            'status' => $data['status'] ?? 'active', // Default rating to 0 if not provided
+            'password' => bcrypt($data['password']),
+            'role_id' => $data['role'],
+            'status' => $data['status'],
         ]);
 
-
-        if ($data['image']) {
-            $url = Helper::getBase64ImageUrl($data);
-            $restaurant->update([
-                'image' => $url
+        // Optionally, handle the image if the data contains it
+        if (isset($data['image'])) {
+            $url = Helper::getBase64ImageUrl($data);  // Assuming a helper to handle the image upload
+            $user->update([
+                'image' => $url,
             ]);
         }
 
-
-
-
-
-        return self::success('Store successful', ['restaurant' => $restaurant]);
+        return self::success('User store successful', ['user' => $user]);
     }
+
 
     /**
      * Display the specified resource.
@@ -111,16 +100,6 @@ class RestaurantController extends Controller
     public function show(string $id)
     {
         //
-        // Attempt to find the restaurant by ID
-        $restaurant = Restaurant::find($id);
-
-        // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
-            return self::failure("Restaurant not found", 404);
-        }
-
-        // Return a success response with the restaurant data
-        return self::success("Restaurant details retrieved successfully", ['restaurant' => $restaurant]);
     }
 
     /**

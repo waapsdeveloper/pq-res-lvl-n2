@@ -23,7 +23,7 @@ class CategoryResource extends JsonResource
         return [
             "id" => $obj->id,
             "name" => $obj->name,
-            "address" => $obj->address,
+            "category" => $obj->category,
             "status" => $obj->status,
         ];
     }
