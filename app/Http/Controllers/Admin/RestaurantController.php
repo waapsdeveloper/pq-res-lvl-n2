@@ -17,29 +17,29 @@ class RestaurantController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $search = $request->input('search', '');
-    $page = $request->input('page', 1);
-    $perpage = $request->input('perpage', 10);
+    {
+        $search = $request->input('search', '');
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
 
-    $query = Restaurant::query();
+        $query = Restaurant::query();
 
-    // Optionally apply search filter if needed
-    if ($search) {
-        $query->where('name', 'like', '%' . $search . '%');
+        // Optionally apply search filter if needed
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        // Paginate the results
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        // Loop through the results and generate full URL for image
+        $data->getCollection()->transform(function ($item) {
+            return new RestaurantListResourse($item);
+        });
+
+        // Return the response with image URLs included
+        return self::success("Trial list successfully", ['data' => $data]);
     }
-
-    // Paginate the results
-    $data = $query->paginate($perpage, ['*'], 'page', $page);
-
-    // Loop through the results and generate full URL for image
-    $data->getCollection()->transform(function ($item) {
-        return new RestaurantListResourse($item);
-    });
-
-    // Return the response with image URLs included
-    return self::success("Trial list successfully", ['data' => $data]);
-}
 
 
     /**
@@ -91,7 +91,7 @@ class RestaurantController extends Controller
         ]);
 
 
-        if($data['image']){
+        if ($data['image']) {
             $url = Helper::getBase64ImageUrl($data);
             $restaurant->update([
                 'image' => $url
@@ -103,8 +103,6 @@ class RestaurantController extends Controller
 
 
         return self::success('Store successful', ['restaurant' => $restaurant]);
-
-
     }
 
     /**
