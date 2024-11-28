@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id(); // Creates an auto-incrementing unsigned big integer as 'id'
             $table->string('name'); // Category name
-            $table->string('slug')->unique(); // Unique slug
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('cascade'); // Parent category ID
+            $table->foreignId('category_id')->nullable(); // Parent category ID
+            $table->string('status')->nullable();
             $table->timestamps(); // created_at and updated_at columns
         });
     }
