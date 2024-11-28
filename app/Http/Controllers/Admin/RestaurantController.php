@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\RestaurantListResourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,6 +20,7 @@ class RestaurantController extends Controller
 {
     $search = $request->input('search', '');
     $page = $request->input('page', 1);
+    $perpage = $request->input('perpage', 10);
 
     $query = Restaurant::query();
 
@@ -28,18 +30,11 @@ class RestaurantController extends Controller
     }
 
     // Paginate the results
-    $data = $query->paginate(20, ['*'], 'page', $page);
+    $data = $query->paginate($perpage, ['*'], 'page', $page);
 
     // Loop through the results and generate full URL for image
     $data->getCollection()->transform(function ($item) {
-        // Check if the image path exists and generate the full URL
-        if ($item->image) {
-            // Assuming the images are stored in storage/app/public and have symbolic link created
-            $item->image_url = Helper::returnFullImageUrl($item->image);
-        } else {
-            $item->image_url = null; // Or a default image URL if no image is available
-        }
-        return $item;
+        return new RestaurantListResourse($item);
     });
 
     // Return the response with image URLs included
@@ -69,11 +64,12 @@ class RestaurantController extends Controller
             // 'image' => 'required|string',
             'name' => 'required|string|min:3|max:255',
             'address' => 'required|string|max:500',
-            'phone' => 'nullable|string|regex:/^[0-9]{10,15}$/',
+            'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
             'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
             // 'opening_hours' => 'required|json', // Ensure valid JSON format
             'description' => 'nullable|string|max:1000',
+            'status' => 'nullable|string',
             // 'rating' => 'nullable|numeric|min:0|max:5',
         ]);
 
@@ -91,6 +87,7 @@ class RestaurantController extends Controller
             'opening_hours' => $data['opening_hours'],
             'description' => $data['description'] ?? null,
             'rating' => $data['rating'] ?? 0, // Default rating to 0 if not provided
+            'status' => $data['status'] ?? 'active', // Default rating to 0 if not provided
         ]);
 
 
