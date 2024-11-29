@@ -17,4 +17,10 @@ class Category extends Model
         'category_id',
         'status'
     ];
+
+    // Define the relationship
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
