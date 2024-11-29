@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,7 +51,7 @@ Route::prefix('product')->group(function () {
 });
 
 Route::prefix('rtable')->group(function () {
-    Route::resource('/', ProductController::class)
+    Route::resource('/', RtableController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
 });

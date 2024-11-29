@@ -56,7 +56,7 @@ class RtableController extends Controller
 
         // Validate the required fields
         $validation = Validator::make($data, [
-            'restaurant' => 'required|integer|exists:restaurants,id', // Ensure the restaurant exists
+            'restaurant' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
             'identifier' => 'required|string|unique:rtables,identifier|min:3|max:255', // Unique table identifier
             'location' => 'required|string|max:255', // Table location
             'description' => 'nullable|string|max:500', // Table description (nullable)
@@ -69,7 +69,7 @@ class RtableController extends Controller
 
         // Create a new user (assuming the user model exists)
         $item = Rtable::create([
-            'restaurant_id' => $data['restaurant'],
+            'restaurant_id' => $data['restaurant'] ?? 0,
             'identifier' => $data['identifier'],
             'location' => $data['location'],
             'description' => $data['description'] ?? null, // Default to null if not provided
@@ -107,6 +107,18 @@ class RtableController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Attempt to find the restaurant by ID
+        $restaurant = Rtable::find($id);
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$restaurant) {
+            return self::failure("user not found", 404);
+        }
+
+        // Delete the restaurant
+        $restaurant->delete();
+
+        // Return a success response
+        return self::success("User deleted successfully.");
     }
 }
