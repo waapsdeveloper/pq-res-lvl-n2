@@ -128,13 +128,13 @@ class UserController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
-            return self::failure("Restaurant not found", 404);
+            return self::failure("user not found", 404);
         }
 
         // Delete the restaurant
         $restaurant->delete();
 
         // Return a success response
-        return self::success("Restaurant deleted successfully.");
+        return self::success("User deleted successfully.");
     }
 }
