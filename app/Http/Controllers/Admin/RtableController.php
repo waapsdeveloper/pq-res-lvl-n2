@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Admin\CategoryResource;
-use App\Http\Resources\Admin\ProductResource;
-use App\Models\Product;
+use App\Http\Resources\Admin\RtableResource;
+use App\Models\Rtable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ProductController extends Controller
+class RtableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,7 @@ class ProductController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
 
-        $query = Product::query();
+        $query = Rtable::query();
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -32,7 +31,7 @@ class ProductController extends Controller
 
         // Loop through the results and generate full URL for image
         $data->getCollection()->transform(function ($item) {
-            return new ProductResource($item);
+            return new RtableResource($item);
         });
 
         // Return the response with image URLs included
@@ -57,11 +56,10 @@ class ProductController extends Controller
 
         // Validate the required fields
         $validation = Validator::make($data, [
-            'name' => 'required|string|min:3|max:255',
-            'category' => 'nullable|integer|exists:categories,id', // Ensure role is provided
-            'description' => 'nullable|string', // Ensure role is provided
-            'price' => 'required|integer', // Ensure role is provided
-            'status' => 'required|string|in:active,inactive', // Validate status
+            'restaurant' => 'required|integer|exists:restaurants,id', // Ensure the restaurant exists
+            'identifier' => 'required|string|unique:rtables,identifier|min:3|max:255', // Unique table identifier
+            'location' => 'required|string|max:255', // Table location
+            'description' => 'nullable|string|max:500', // Table description (nullable)
         ]);
 
         // If validation fails
@@ -70,12 +68,11 @@ class ProductController extends Controller
         }
 
         // Create a new user (assuming the user model exists)
-        $item = Product::create([
-            'name' => $data['name'],
-            'category_id' => $data['category'] ?? 0,
-            'description' => $data['description'] ?? '',
-            'price' => $data['price'],
-            'status' => $data['status'],
+        $item = Rtable::create([
+            'restaurant_id' => $data['restaurant'],
+            'identifier' => $data['identifier'],
+            'location' => $data['location'],
+            'description' => $data['description'] ?? null, // Default to null if not provided
         ]);
 
         return self::success('Category store successful', ['item' => $item]);
@@ -110,18 +107,6 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        // Attempt to find the restaurant by ID
-        $restaurant = Product::find($id);
-
-        // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
-            return self::failure("user not found", 404);
-        }
-
-        // Delete the restaurant
-        $restaurant->delete();
-
-        // Return a success response
-        return self::success("User deleted successfully.");
+        //
     }
 }

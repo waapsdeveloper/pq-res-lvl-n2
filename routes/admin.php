@@ -49,6 +49,12 @@ Route::prefix('product')->group(function () {
         ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
 });
 
+Route::prefix('rtable')->group(function () {
+    Route::resource('/', ProductController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
+});
+
 
 
 
