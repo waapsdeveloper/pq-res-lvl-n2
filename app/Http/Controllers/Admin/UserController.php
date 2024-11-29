@@ -26,9 +26,13 @@ class UserController extends Controller
         $query = User::query();
 
         // Optionally apply search filter if needed
+        $query->where('role_id', '!=', 1);
+
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
         }
+
+
 
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
