@@ -46,22 +46,22 @@ class Restaurant extends Model
 
     // Relationships
 
-    // Example: A restaurant has many reviews
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
+    // // Example: A restaurant has many reviews
+    // public function reviews()
+    // {
+    //     return $this->hasMany(Review::class);
+    // }
 
-    // Example: A restaurant belongs to a city
-    public function city()
-    {
-        return $this->belongsTo(City::class);
-    }
+    // // Example: A restaurant belongs to a city
+    // public function city()
+    // {
+    //     return $this->belongsTo(City::class);
+    // }
 
-    // Example: A restaurant can have many tags (many-to-many relationship)
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class, 'restaurant_tag', 'restaurant_id', 'tag_id');
-    }
+    // // Example: A restaurant can have many tags (many-to-many relationship)
+    // public function tags()
+    // {
+    //     return $this->belongsToMany(Tag::class, 'restaurant_tag', 'restaurant_id', 'tag_id');
+    // }
 
 }
