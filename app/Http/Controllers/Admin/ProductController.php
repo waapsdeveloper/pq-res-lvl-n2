@@ -111,6 +111,18 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Attempt to find the restaurant by ID
+        $restaurant = Product::find($id);
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$restaurant) {
+            return self::failure("user not found", 404);
+        }
+
+        // Delete the restaurant
+        $restaurant->delete();
+
+        // Return a success response
+        return self::success("User deleted successfully.");
     }
 }
