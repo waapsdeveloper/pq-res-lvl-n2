@@ -144,6 +144,18 @@ class RestaurantController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Attempt to find the restaurant by ID
+        $restaurant = Restaurant::find($id);
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$restaurant) {
+            return self::failure("Restaurant not found", 404);
+        }
+
+        // Delete the restaurant
+        $restaurant->delete();
+
+        // Return a success response
+        return self::success("Restaurant deleted successfully.");
     }
 }
