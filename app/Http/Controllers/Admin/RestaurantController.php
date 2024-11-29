@@ -91,12 +91,12 @@ class RestaurantController extends Controller
         ]);
 
 
-        if ($data['image']) {
-            $url = Helper::getBase64ImageUrl($data);
-            $restaurant->update([
-                'image' => $url
-            ]);
-        }
+        // if ($data['image']) {
+        //     $url = Helper::getBase64ImageUrl($data);
+        //     $restaurant->update([
+        //         'image' => $url
+        //     ]);
+        // }
 
 
 
