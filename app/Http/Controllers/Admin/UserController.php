@@ -150,9 +150,9 @@ class UserController extends Controller
         $user = User::where('email', $auth->email)->first();
 
         if (!$user) {
-            return response()->json(['error' => 'User data not found'], 404);
+            return self::failure("user not found", 404);
         }
 
-        return response()->json(['user' => $user]);
+        return self::success("User fetch successfully.", ['user' => $user]);
     }
 }
