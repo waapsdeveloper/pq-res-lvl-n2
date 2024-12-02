@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "name": "super admin",
+        "slug": "super-admin"
+    },
+    {
+        "id": 2,
+        "name": "admin",
+        "slug": "admin"
+    },
+    {
+        "id": 3,
+        "name": "manager",
+        "slug": "manager"
+    },
+    {
+        "id": 4,
+        "name": "staff",
+        "slug": "staff"
+    },
+    {
+        "id": 5,
+        "name": "chef",
+        "slug": "chef"
+    }
+]

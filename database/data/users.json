@@ -1,0 +1,162 @@
+[
+    {
+        "name": "Super Admin",
+        "email": "superadmin@email.com",
+        "password": "admin123$",
+        "role_id": 1,
+        "restaurant_id": null,
+        "status": "active"
+    },
+    {
+        "name": "John Doe",
+        "email": "johndoe1@email.com",
+        "password": "password123$",
+        "role_id": 2,
+        "restaurant_id": 3,
+        "status": "active"
+    },
+    {
+        "name": "Jane Smith",
+        "email": "janesmith@email.com",
+        "password": "password123$",
+        "role_id": 3,
+        "restaurant_id": 4,
+        "status": "active"
+    },
+    {
+        "name": "Tom Brown",
+        "email": "tombrown@email.com",
+        "password": "password123$",
+        "role_id": 4,
+        "restaurant_id": 1,
+        "status": "active"
+    },
+    {
+        "name": "Lisa White",
+        "email": "lisawhite@email.com",
+        "password": "password123$",
+        "role_id": 5,
+        "restaurant_id": 2,
+        "status": "active"
+    },
+    {
+        "name": "James Green",
+        "email": "jamesgreen@email.com",
+        "password": "password123$",
+        "role_id": 2,
+        "restaurant_id": 5,
+        "status": "active"
+    },
+    {
+        "name": "Sophia Black",
+        "email": "sophiablack@email.com",
+        "password": "password123$",
+        "role_id": 3,
+        "restaurant_id": 6,
+        "status": "active"
+    },
+    {
+        "name": "Ryan Gold",
+        "email": "ryangold@email.com",
+        "password": "password123$",
+        "role_id": 4,
+        "restaurant_id": 7,
+        "status": "active"
+    },
+    {
+        "name": "Emily Stone",
+        "email": "emilystone@email.com",
+        "password": "password123$",
+        "role_id": 5,
+        "restaurant_id": 8,
+        "status": "active"
+    },
+    {
+        "name": "Michael Scott",
+        "email": "michaelscott@email.com",
+        "password": "password123$",
+        "role_id": 2,
+        "restaurant_id": 9,
+        "status": "active"
+    },
+    {
+        "name": "Angela Red",
+        "email": "angelared@email.com",
+        "password": "password123$",
+        "role_id": 3,
+        "restaurant_id": 10,
+        "status": "active"
+    },
+    {
+        "name": "David Silver",
+        "email": "davidsilver@email.com",
+        "password": "password123$",
+        "role_id": 4,
+        "restaurant_id": 1,
+        "status": "active"
+    },
+    {
+        "name": "Nina Brown",
+        "email": "ninabrown@email.com",
+        "password": "password123$",
+        "role_id": 5,
+        "restaurant_id": 2,
+        "status": "active"
+    },
+    {
+        "name": "Chris Blue",
+        "email": "chrisblue@email.com",
+        "password": "password123$",
+        "role_id": 2,
+        "restaurant_id": 3,
+        "status": "active"
+    },
+    {
+        "name": "Olivia Green",
+        "email": "oliviagreen@email.com",
+        "password": "password123$",
+        "role_id": 3,
+        "restaurant_id": 4,
+        "status": "active"
+    },
+    {
+        "name": "Luke Gray",
+        "email": "lukegray@email.com",
+        "password": "password123$",
+        "role_id": 4,
+        "restaurant_id": 5,
+        "status": "active"
+    },
+    {
+        "name": "Isla Purple",
+        "email": "islapurple@email.com",
+        "password": "password123$",
+        "role_id": 5,
+        "restaurant_id": 6,
+        "status": "active"
+    },
+    {
+        "name": "Ethan Silver",
+        "email": "ethansilver@email.com",
+        "password": "password123$",
+        "role_id": 2,
+        "restaurant_id": 7,
+        "status": "active"
+    },
+    {
+        "name": "Ava Yellow",
+        "email": "avayellow@email.com",
+        "password": "password123$",
+        "role_id": 3,
+        "restaurant_id": 8,
+        "status": "active"
+    },
+    {
+        "name": "Zoe Violet",
+        "email": "zoeviolet@email.com",
+        "password": "password123$",
+        "role_id": 4,
+        "restaurant_id": 9,
+        "status": "active"
+    }
+]

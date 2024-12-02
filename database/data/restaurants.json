@@ -1,0 +1,182 @@
+[
+    {
+        "name": "The Gourmet Kitchen",
+        "address": "123 Foodie Lane, New York, NY",
+        "phone": "123-456-7890",
+        "email": "contact@gourmetkitchen.com",
+        "website": "https://www.gourmetkitchen.com",
+        "opening_hours": {
+            "Monday": "9 AM - 9 PM",
+            "Tuesday": "9 AM - 9 PM",
+            "Wednesday": "9 AM - 9 PM",
+            "Thursday": "9 AM - 9 PM",
+            "Friday": "9 AM - 11 PM",
+            "Saturday": "9 AM - 11 PM",
+            "Sunday": "Closed"
+        },
+        "description": "A fine dining experience with globally inspired cuisine.",
+        "rating": 4.8
+    },
+    {
+        "name": "Pizza Paradise",
+        "address": "456 Cheesy Blvd, Chicago, IL",
+        "phone": "987-654-3210",
+        "email": "info@pizzaparadise.com",
+        "website": "https://www.pizzaparadise.com",
+        "opening_hours": {
+            "Monday": "11 AM - 10 PM",
+            "Tuesday": "11 AM - 10 PM",
+            "Wednesday": "11 AM - 10 PM",
+            "Thursday": "11 AM - 10 PM",
+            "Friday": "11 AM - 11 PM",
+            "Saturday": "11 AM - 11 PM",
+            "Sunday": "12 PM - 9 PM"
+        },
+        "description": "Home of the best Chicago-style pizza.",
+        "rating": 4.7
+    },
+    {
+        "name": "Vegan Delights",
+        "address": "789 Plant Lane, San Francisco, CA",
+        "phone": "555-123-4567",
+        "email": "hello@vegandelights.com",
+        "website": "https://www.vegandelights.com",
+        "opening_hours": {
+            "Monday": "10 AM - 8 PM",
+            "Tuesday": "10 AM - 8 PM",
+            "Wednesday": "10 AM - 8 PM",
+            "Thursday": "10 AM - 8 PM",
+            "Friday": "10 AM - 9 PM",
+            "Saturday": "10 AM - 9 PM",
+            "Sunday": "10 AM - 6 PM"
+        },
+        "description": "Delicious and healthy vegan meals.",
+        "rating": 4.9
+    },
+    {
+        "name": "Ocean Breeze Cafe",
+        "address": "321 Coastline Ave, Miami, FL",
+        "phone": "321-654-0987",
+        "email": "contact@oceanbreezecafe.com",
+        "website": "https://www.oceanbreezecafe.com",
+        "opening_hours": {
+            "Monday": "8 AM - 8 PM",
+            "Tuesday": "8 AM - 8 PM",
+            "Wednesday": "8 AM - 8 PM",
+            "Thursday": "8 AM - 8 PM",
+            "Friday": "8 AM - 10 PM",
+            "Saturday": "8 AM - 10 PM",
+            "Sunday": "8 AM - 6 PM"
+        },
+        "description": "Relax with ocean views and fresh seafood dishes.",
+        "rating": 4.6
+    },
+    {
+        "name": "The Breakfast Club",
+        "address": "654 Morning Rd, Austin, TX",
+        "phone": "789-456-1230",
+        "email": "info@breakfastclub.com",
+        "website": "https://www.breakfastclub.com",
+        "opening_hours": {
+            "Monday": "6 AM - 2 PM",
+            "Tuesday": "6 AM - 2 PM",
+            "Wednesday": "6 AM - 2 PM",
+            "Thursday": "6 AM - 2 PM",
+            "Friday": "6 AM - 3 PM",
+            "Saturday": "6 AM - 3 PM",
+            "Sunday": "6 AM - 3 PM"
+        },
+        "description": "Start your day right with a hearty breakfast.",
+        "rating": 4.8
+    },
+    {
+        "name": "Spicy Affair",
+        "address": "111 Curry St, Houston, TX",
+        "phone": "333-222-1111",
+        "email": "spicy@affair.com",
+        "website": "https://www.spicyaffair.com",
+        "opening_hours": {
+            "Monday": "12 PM - 10 PM",
+            "Tuesday": "12 PM - 10 PM",
+            "Wednesday": "12 PM - 10 PM",
+            "Thursday": "12 PM - 10 PM",
+            "Friday": "12 PM - 11 PM",
+            "Saturday": "12 PM - 11 PM",
+            "Sunday": "12 PM - 10 PM"
+        },
+        "description": "Authentic Indian curries and more.",
+        "rating": 4.5
+    },
+    {
+        "name": "Steakhouse Prime",
+        "address": "999 Meat Lovers Lane, Dallas, TX",
+        "phone": "444-555-6666",
+        "email": "contact@steakhouseprime.com",
+        "website": "https://www.steakhouseprime.com",
+        "opening_hours": {
+            "Monday": "5 PM - 11 PM",
+            "Tuesday": "5 PM - 11 PM",
+            "Wednesday": "5 PM - 11 PM",
+            "Thursday": "5 PM - 11 PM",
+            "Friday": "5 PM - 12 AM",
+            "Saturday": "5 PM - 12 AM",
+            "Sunday": "5 PM - 10 PM"
+        },
+        "description": "Premium cuts of steak grilled to perfection.",
+        "rating": 4.7
+    },
+    {
+        "name": "Sushi Samurai",
+        "address": "123 Fishy Way, Los Angeles, CA",
+        "phone": "123-321-1234",
+        "email": "sushi@samurai.com",
+        "website": "https://www.sushisamurai.com",
+        "opening_hours": {
+            "Monday": "11 AM - 10 PM",
+            "Tuesday": "11 AM - 10 PM",
+            "Wednesday": "11 AM - 10 PM",
+            "Thursday": "11 AM - 10 PM",
+            "Friday": "11 AM - 11 PM",
+            "Saturday": "11 AM - 11 PM",
+            "Sunday": "11 AM - 9 PM"
+        },
+        "description": "Exquisite sushi crafted by expert chefs.",
+        "rating": 4.9
+    },
+    {
+        "name": "Burger Haven",
+        "address": "456 Patty Ln, Orlando, FL",
+        "phone": "987-654-4321",
+        "email": "burgers@haven.com",
+        "website": "https://www.burgerhaven.com",
+        "opening_hours": {
+            "Monday": "10 AM - 9 PM",
+            "Tuesday": "10 AM - 9 PM",
+            "Wednesday": "10 AM - 9 PM",
+            "Thursday": "10 AM - 9 PM",
+            "Friday": "10 AM - 10 PM",
+            "Saturday": "10 AM - 10 PM",
+            "Sunday": "10 AM - 8 PM"
+        },
+        "description": "Juicy burgers and crispy fries.",
+        "rating": 4.6
+    },
+    {
+        "name": "Pasta Palace",
+        "address": "789 Noodle Rd, Boston, MA",
+        "phone": "555-666-7777",
+        "email": "pasta@palace.com",
+        "website": "https://www.pastapalace.com",
+        "opening_hours": {
+            "Monday": "12 PM - 10 PM",
+            "Tuesday": "12 PM - 10 PM",
+            "Wednesday": "12 PM - 10 PM",
+            "Thursday": "12 PM - 10 PM",
+            "Friday": "12 PM - 11 PM",
+            "Saturday": "12 PM - 11 PM",
+            "Sunday": "12 PM - 9 PM"
+        },
+        "description": "Fresh handmade pasta and authentic Italian flavors.",
+        "rating": 4.7
+    }
+]
