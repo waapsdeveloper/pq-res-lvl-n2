@@ -38,6 +38,8 @@ Route::prefix('user')->group(function () {
         ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
 });
 
+Route::get('/auth-user', [UserController::class, 'getAuthUser'])->middleware('auth:api');
+
 Route::prefix('category')->group(function () {
     Route::resource('/', CategoryController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.

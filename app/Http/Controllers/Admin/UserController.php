@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -140,5 +141,18 @@ class UserController extends Controller
 
         // Return a success response
         return self::success("User deleted successfully.");
+    }
+
+    public function getAuthUser(Request $request)
+    {
+
+        $auth = Auth::user();
+        $user = User::where('email', $auth->email)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User data not found'], 404);
+        }
+
+        return response()->json(['user' => $user]);
     }
 }
