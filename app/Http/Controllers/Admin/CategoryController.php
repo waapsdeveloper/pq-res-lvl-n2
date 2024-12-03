@@ -73,7 +73,7 @@ class CategoryController extends Controller
             'status' => $data['status'],
         ]);
 
-        return self::success('Category store successful', ['category' => $user]);
+        return self::success('Category store successful', ['Category' => $user]);
     }
 
     /**
@@ -82,6 +82,16 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         //
+        // Attempt to find the restaurant by ID
+        $restaurant = Category::find($id);
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$restaurant) {
+            return self::failure("Category not found", 404);
+        }
+
+        // Return a success response with the restaurant data
+        return self::success("Category details retrieved successfully", ['Category' => $restaurant]);
     }
 
     /**

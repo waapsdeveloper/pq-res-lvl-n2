@@ -115,7 +115,7 @@ class UserController extends Controller
         }
 
         // Return a success response with the restaurant data
-        return self::success("User details retrieved successfully", ['restaurant' => $restaurant]);
+        return self::success("User details retrieved successfully", ['user' => $restaurant]);
     }
 
     /**
