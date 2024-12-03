@@ -78,7 +78,7 @@ class ProductController extends Controller
             'status' => $data['status'],
         ]);
 
-        return self::success('Category store successful', ['item' => $item]);
+        return self::success('Product store successful', ['item' => $item]);
     }
 
     /**
@@ -87,7 +87,18 @@ class ProductController extends Controller
     public function show(string $id)
     {
         //
+        // Attempt to find the restaurant by ID
+        $restaurant = Product::find($id);
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$restaurant) {
+            return self::failure("Product not found", 404);
+        }
+
+        // Return a success response with the restaurant data
+        return self::success("Product details retrieved successfully", ['Product' => $restaurant]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
