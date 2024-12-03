@@ -68,7 +68,7 @@ Run the following commands to set up the database schema and seed data:
 
 3. **Seed the Database:**
    ```bash
-   php artisan db:seed --class=RTableSeeder
+   php artisan db:seed
    ```
 
 ---
