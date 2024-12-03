@@ -91,7 +91,7 @@ class CategoryController extends Controller
         }
 
         // Return a success response with the restaurant data
-        return self::success("Category details retrieved successfully", ['Category' => $restaurant]);
+        return self::success("Category details retrieved successfully", ['category' => $restaurant]);
     }
 
     /**
