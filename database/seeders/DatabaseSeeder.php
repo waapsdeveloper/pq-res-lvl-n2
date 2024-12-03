@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RestaurantsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(PassportPersonalAccessTokenSeeder::class);
+        $this->call(RTableSeeder::class);
 
 
 

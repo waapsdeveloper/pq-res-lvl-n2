@@ -1,0 +1,23 @@
+[
+    {
+      "restaurant_id": 1,
+      "identifier": "TBL001",
+      "location": "First Floor - Corner",
+      "description": "A table near the window with a scenic view.",
+      "status": "active"
+    },
+    {
+      "restaurant_id": 2,
+      "identifier": "TBL002",
+      "location": "Ground Floor - Near Entrance",
+      "description": "Convenient for walk-in customers.",
+      "status": "active"
+    },
+    {
+      "restaurant_id": 5,
+      "identifier": "TBL030",
+      "location": "Rooftop - Near Bar",
+      "description": "Perfect for couples with a view of the city.",
+      "status": "reserved"
+    }
+  ]
