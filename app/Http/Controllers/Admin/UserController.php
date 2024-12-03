@@ -102,9 +102,20 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(string $id)
     {
         //
+        // Attempt to find the restaurant by ID
+        $restaurant = User::find($id);
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$restaurant) {
+            return self::failure("User not found", 404);
+        }
+
+        // Return a success response with the restaurant data
+        return self::success("User details retrieved successfully", ['restaurant' => $restaurant]);
     }
 
     /**

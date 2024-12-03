@@ -1,34 +1,132 @@
 [
     {
-        "id": 1,
         "name": "Dairy Products",
         "category_id": null,
-        "status": "active",
-        "created_at": "2024-12-01 12:00:00",
-        "updated_at": "2024-12-01 12:00:00"
+        "status": "active"
     },
     {
-        "id": 2,
         "name": "Bakery Items",
         "category_id": null,
-        "status": "active",
-        "created_at": "2024-12-01 12:10:00",
-        "updated_at": "2024-12-01 12:10:00"
+        "status": "active"
     },
     {
-        "id": 3,
         "name": "Milk",
         "category_id": 1,
-        "status": "active",
-        "created_at": "2024-12-01 12:15:00",
-        "updated_at": "2024-12-01 12:15:00"
+        "status": "active"
     },
     {
-        "id": 4,
+        "name": "Cheese",
+        "category_id": 1,
+        "status": "active"
+    },
+    {
+        "name": "Butter",
+        "category_id": 1,
+        "status": "active"
+    },
+    {
         "name": "Bread",
         "category_id": 2,
-        "status": "active",
-        "created_at": "2024-12-01 12:20:00",
-        "updated_at": "2024-12-01 12:20:00"
+        "status": "active"
+    },
+    {
+        "name": "Cakes",
+        "category_id": 2,
+        "status": "active"
+    },
+    {
+        "name": "Pastries",
+        "category_id": 2,
+        "status": "active"
+    },
+    {
+        "name": "Vegetables",
+        "category_id": null,
+        "status": "active"
+    },
+    {
+        "name": "Fruits",
+        "category_id": null,
+        "status": "active"
+    },
+    {
+        "name": "Apples",
+        "category_id": 10,
+        "status": "active"
+    },
+    {
+        "name": "Bananas",
+        "category_id": 10,
+        "status": "active"
+    },
+    {
+        "name": "Tomatoes",
+        "category_id": 9,
+        "status": "active"
+    },
+    {
+        "name": "Potatoes",
+        "category_id": 9,
+        "status": "active"
+    },
+    {
+        "name": "Meat",
+        "category_id": null,
+        "status": "active"
+    },
+    {
+        "name": "Beef",
+        "category_id": 14,
+        "status": "active"
+    },
+    {
+        "name": "Chicken",
+        "category_id": 14,
+        "status": "active"
+    },
+    {
+        "name": "Seafood",
+        "category_id": 14,
+        "status": "active"
+    },
+    {
+        "name": "Beverages",
+        "category_id": null,
+        "status": "active"
+    },
+    {
+        "name": "Juices",
+        "category_id": 18,
+        "status": "active"
+    },
+    {
+        "name": "Soft Drinks",
+        "category_id": 18,
+        "status": "active"
+    },
+    {
+        "name": "Tea & Coffee",
+        "category_id": 18,
+        "status": "active"
+    },
+    {
+        "name": "Snacks",
+        "category_id": null,
+        "status": "active"
+    },
+    {
+        "name": "Chips",
+        "category_id": 22,
+        "status": "active"
+    },
+    {
+        "name": "Cookies",
+        "category_id": 22,
+        "status": "active"
+    },
+    {
+        "name": "Candy",
+        "category_id": 22,
+        "status": "active"
     }
 ]

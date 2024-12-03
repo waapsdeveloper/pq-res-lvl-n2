@@ -1,0 +1,74 @@
+[
+    {
+        "category_id": 1,
+        "name": "Full Cream Milk",
+        "description": "Rich and creamy milk sourced from organic farms.",
+        "price": 2.5,
+        "image": "full_cream_milk.jpg",
+        "status": "active"
+    },
+    {
+        "category_id": 1,
+        "name": "Cheddar Cheese",
+        "description": "Aged cheddar cheese with a bold and tangy flavor.",
+        "price": 5.0,
+        "image": "cheddar_cheese.jpg",
+        "status": "active"
+    },
+    {
+        "category_id": 2,
+        "name": "Whole Wheat Bread",
+        "description": "Freshly baked whole wheat bread with a soft texture.",
+        "price": 3.0,
+        "image": "whole_wheat_bread.jpg",
+        "status": "active"
+    },
+    {
+        "category_id": 2,
+        "name": "Chocolate Cake",
+        "description": "Decadent chocolate cake made with premium cocoa.",
+        "price": 15.0,
+        "image": "chocolate_cake.jpg",
+        "status": "active"
+    },
+    {
+        "category_id": 9,
+        "name": "Fresh Tomatoes",
+        "description": "Ripe and juicy tomatoes perfect for salads and cooking.",
+        "price": 1.8,
+        "image": "fresh_tomatoes.jpg",
+        "status": "active"
+    },
+    {
+        "category_id": 10,
+        "name": "Golden Bananas",
+        "description": "Sweet and delicious bananas for a healthy snack.",
+        "price": 1.2,
+        "image": "golden_bananas.jpg",
+        "status": "active"
+    },
+    {
+        "category_id": 14,
+        "name": "Grilled Chicken",
+        "description": "Tender grilled chicken seasoned with herbs.",
+        "price": 10.0,
+        "image": "grilled_chicken.jpg",
+        "status": "active"
+    },
+    {
+        "category_id": 18,
+        "name": "Orange Juice",
+        "description": "Freshly squeezed orange juice with no added sugar.",
+        "price": 3.5,
+        "image": "orange_juice.jpg",
+        "status": "active"
+    },
+    {
+        "category_id": 22,
+        "name": "Salted Potato Chips",
+        "description": "Crispy potato chips lightly salted for the perfect crunch.",
+        "price": 2.0,
+        "image": "salted_potato_chips.jpg",
+        "status": "active"
+    }
+]
