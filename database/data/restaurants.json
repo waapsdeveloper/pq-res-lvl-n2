@@ -15,7 +15,8 @@
             "Sunday": "Closed"
         },
         "description": "A fine dining experience with globally inspired cuisine.",
-        "rating": 4.8
+        "rating": 4.8,
+        "status": "active"
     },
     {
         "name": "Pizza Paradise",
@@ -33,7 +34,8 @@
             "Sunday": "12 PM - 9 PM"
         },
         "description": "Home of the best Chicago-style pizza.",
-        "rating": 4.7
+        "rating": 4.7,
+        "status": "active"
     },
     {
         "name": "Vegan Delights",
@@ -51,7 +53,8 @@
             "Sunday": "10 AM - 6 PM"
         },
         "description": "Delicious and healthy vegan meals.",
-        "rating": 4.9
+        "rating": 4.9,
+        "status": "active"
     },
     {
         "name": "Ocean Breeze Cafe",
@@ -69,7 +72,8 @@
             "Sunday": "8 AM - 6 PM"
         },
         "description": "Relax with ocean views and fresh seafood dishes.",
-        "rating": 4.6
+        "rating": 4.6,
+        "status": "active"
     },
     {
         "name": "The Breakfast Club",
@@ -87,7 +91,8 @@
             "Sunday": "6 AM - 3 PM"
         },
         "description": "Start your day right with a hearty breakfast.",
-        "rating": 4.8
+        "rating": 4.8,
+        "status": "active"
     },
     {
         "name": "Spicy Affair",
@@ -105,7 +110,8 @@
             "Sunday": "12 PM - 10 PM"
         },
         "description": "Authentic Indian curries and more.",
-        "rating": 4.5
+        "rating": 4.5,
+        "status": "active"
     },
     {
         "name": "Steakhouse Prime",
@@ -123,7 +129,8 @@
             "Sunday": "5 PM - 10 PM"
         },
         "description": "Premium cuts of steak grilled to perfection.",
-        "rating": 4.7
+        "rating": 4.7,
+        "status": "active"
     },
     {
         "name": "Sushi Samurai",
@@ -141,7 +148,8 @@
             "Sunday": "11 AM - 9 PM"
         },
         "description": "Exquisite sushi crafted by expert chefs.",
-        "rating": 4.9
+        "rating": 4.9,
+        "status": "active"
     },
     {
         "name": "Burger Haven",
@@ -159,7 +167,8 @@
             "Sunday": "10 AM - 8 PM"
         },
         "description": "Juicy burgers and crispy fries.",
-        "rating": 4.6
+        "rating": 4.6,
+        "status": "active"
     },
     {
         "name": "Pasta Palace",
@@ -177,6 +186,7 @@
             "Sunday": "12 PM - 9 PM"
         },
         "description": "Fresh handmade pasta and authentic Italian flavors.",
-        "rating": 4.7
+        "rating": 4.7,
+        "status": "active"
     }
 ]

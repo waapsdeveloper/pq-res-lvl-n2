@@ -40,6 +40,7 @@ class RestaurantsTableSeeder extends Seeder
                 'opening_hours' => json_encode($restaurant['opening_hours']),
                 'description' => $restaurant['description'] ?? null,
                 'rating' => $restaurant['rating'],
+                'status' => $restaurant['status'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
