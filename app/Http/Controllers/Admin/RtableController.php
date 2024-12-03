@@ -75,7 +75,7 @@ class RtableController extends Controller
             'description' => $data['description'] ?? null, // Default to null if not provided
         ]);
 
-        return self::success('Category store successful', ['item' => $item]);
+        return self::success('Rtable store successful', ['item' => $item]);
     }
 
     /**
@@ -84,6 +84,16 @@ class RtableController extends Controller
     public function show(string $id)
     {
         //
+        // Attempt to find the restaurant by ID
+        $restaurant = Rtable::find($id);
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$restaurant) {
+            return self::failure("Rtable not found", 404);
+        }
+
+        // Return a success response with the restaurant data
+        return self::success("Rtable details retrieved successfully", ['Rtable' => $restaurant]);
     }
 
     /**
