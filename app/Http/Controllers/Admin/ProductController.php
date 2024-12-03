@@ -96,7 +96,7 @@ class ProductController extends Controller
         }
 
         // Return a success response with the restaurant data
-        return self::success("Product details retrieved successfully", ['Product' => $restaurant]);
+        return self::success("Product details retrieved successfully", ['product' => $restaurant]);
     }
 
 
