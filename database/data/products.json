@@ -1,74 +1,734 @@
 [
-    {
-        "category_id": 1,
-        "name": "Full Cream Milk",
-        "description": "Rich and creamy milk sourced from organic farms.",
-        "price": 2.5,
-        "image": "full_cream_milk.jpg",
-        "status": "active"
-    },
-    {
-        "category_id": 1,
-        "name": "Cheddar Cheese",
-        "description": "Aged cheddar cheese with a bold and tangy flavor.",
-        "price": 5.0,
-        "image": "cheddar_cheese.jpg",
-        "status": "active"
-    },
-    {
-        "category_id": 2,
-        "name": "Whole Wheat Bread",
-        "description": "Freshly baked whole wheat bread with a soft texture.",
-        "price": 3.0,
-        "image": "whole_wheat_bread.jpg",
-        "status": "active"
-    },
-    {
-        "category_id": 2,
-        "name": "Chocolate Cake",
-        "description": "Decadent chocolate cake made with premium cocoa.",
-        "price": 15.0,
-        "image": "chocolate_cake.jpg",
-        "status": "active"
-    },
-    {
-        "category_id": 9,
-        "name": "Fresh Tomatoes",
-        "description": "Ripe and juicy tomatoes perfect for salads and cooking.",
-        "price": 1.8,
-        "image": "fresh_tomatoes.jpg",
-        "status": "active"
-    },
-    {
-        "category_id": 10,
-        "name": "Golden Bananas",
-        "description": "Sweet and delicious bananas for a healthy snack.",
-        "price": 1.2,
-        "image": "golden_bananas.jpg",
-        "status": "active"
-    },
-    {
-        "category_id": 14,
-        "name": "Grilled Chicken",
-        "description": "Tender grilled chicken seasoned with herbs.",
-        "price": 10.0,
-        "image": "grilled_chicken.jpg",
-        "status": "active"
-    },
-    {
-        "category_id": 18,
-        "name": "Orange Juice",
-        "description": "Freshly squeezed orange juice with no added sugar.",
-        "price": 3.5,
-        "image": "orange_juice.jpg",
-        "status": "active"
-    },
-    {
-        "category_id": 22,
-        "name": "Salted Potato Chips",
-        "description": "Crispy potato chips lightly salted for the perfect crunch.",
-        "price": 2.0,
-        "image": "salted_potato_chips.jpg",
-        "status": "active"
-    }
+    [
+        {
+            "id": 101,
+            "name": "Plain Fries (Half)",
+            "price": 100
+        },
+        {
+            "id": 102,
+            "name": "Plain Fries (Full)",
+            "price": 180
+        },
+        {
+            "id": 103,
+            "name": "Masala Fries",
+            "price": 190
+        },
+        {
+            "id": 104,
+            "name": "Fries with Mayo Garlic (2 Sauce)",
+            "price": 240
+        },
+        {
+            "id": 105,
+            "name": "Cheese Fries (Half)",
+            "price": 320
+        },
+        {
+            "id": 106,
+            "name": "Cheese Fries (Full)",
+            "price": 450
+        },
+        {
+            "id": 107,
+            "name": "Chicken Strips (4 Pcs)",
+            "price": 370
+        },
+        {
+            "id": 108,
+            "name": "Pizza Fries",
+            "price": 680
+        }
+    ],
+    [
+        {
+            "id": 201,
+            "name": "Beef Seekh Kabab Roll (Plain)",
+            "price": 170
+        },
+        {
+            "id": 202,
+            "name": "Beef Seekh Kabab Roll (Mayo)",
+            "price": 240
+        },
+        {
+            "id": 203,
+            "name": "Chicken Chatni Roll (Plain)",
+            "price": 200
+        },
+        {
+            "id": 204,
+            "name": "Chicken Chatni Roll (Mayo)",
+            "price": 270
+        },
+        {
+            "id": 205,
+            "name": "Beef Behari Boti Roll (Plain)",
+            "price": 220
+        },
+        {
+            "id": 206,
+            "name": "Beef Behari Boti Roll (Mayo)",
+            "price": 290
+        },
+        {
+            "id": 207,
+            "name": "Chicken Roll (Plain)",
+            "price": 250
+        },
+        {
+            "id": 208,
+            "name": "Chicken Roll (Mayo)",
+            "price": 320
+        },
+        {
+            "id": 209,
+            "name": "Zinger Roll",
+            "price": 250
+        },
+        {
+            "id": 210,
+            "name": "Chicken Juicy Roll",
+            "price": 250
+        }
+    ],
+    [
+        {
+            "id": 301,
+            "name": "Chicken Regular Burger (Plain)",
+            "price": 280
+        },
+        {
+            "id": 302,
+            "name": "Chicken Regular Burger (With Cheese)",
+            "price": 320
+        },
+        {
+            "id": 303,
+            "name": "Beef Regular Burger (Plain)",
+            "price": 300
+        },
+        {
+            "id": 304,
+            "name": "Beef Regular Burger (With Cheese)",
+            "price": 340
+        },
+        {
+            "id": 305,
+            "name": "Zinger Burger (Plain)",
+            "price": 400
+        },
+        {
+            "id": 306,
+            "name": "Zinger Burger (With Cheese)",
+            "price": 440
+        },
+        {
+            "id": 307,
+            "name": "Double Decker Zinger Burger",
+            "price": 450
+        },
+        {
+            "id": 308,
+            "name": "Mexican Gyro",
+            "price": 480
+        },
+        {
+            "id": 309,
+            "name": "Chicken Grilled Burger (Plain)",
+            "price": 380
+        },
+        {
+            "id": 310,
+            "name": "Chicken Grilled Burger (With Cheese)",
+            "price": 420
+        }
+    ],
+    [
+        {
+            "id": 401,
+            "name": "Chicken Sandwich (Plain)",
+            "price": 300
+        },
+        {
+            "id": 402,
+            "name": "Chicken Sandwich (With Cheese)",
+            "price": 340
+        },
+        {
+            "id": 403,
+            "name": "Chicken Club Sandwich (Plain)",
+            "price": 350
+        },
+        {
+            "id": 404,
+            "name": "Chicken Club Sandwich (With Cheese)",
+            "price": 390
+        },
+        {
+            "id": 405,
+            "name": "Zinger Sandwich (Plain)",
+            "price": 400
+        },
+        {
+            "id": 406,
+            "name": "Zinger Sandwich (With Cheese)",
+            "price": 440
+        },
+        {
+            "id": 407,
+            "name": "Pizza Sandwich (Plain)",
+            "price": 400
+        },
+        {
+            "id": 408,
+            "name": "Pizza Sandwich (With Cheese)",
+            "price": 440
+        },
+        {
+            "id": 409,
+            "name": "Club Sandwich (Plain)",
+            "price": 450
+        },
+        {
+            "id": 410,
+            "name": "Club Sandwich (With Cheese)",
+            "price": 490
+        }
+    ],
+    [
+        {
+            "id": 501,
+            "name": "Plain Broast (Chest)",
+            "price": 400
+        },
+        {
+            "id": 502,
+            "name": "Plain Broast (Leg)",
+            "price": 400
+        },
+        {
+            "id": 503,
+            "name": "Masala Broast (Chest)",
+            "price": 460
+        },
+        {
+            "id": 504,
+            "name": "Masala Broast (Leg)",
+            "price": 460
+        }
+    ],
+    [
+        {
+            "id": 601,
+            "name": "Chicken Tikka (Leg) Half",
+            "price": 260
+        },
+        {
+            "id": 602,
+            "name": "Chicken Tikka (Leg) Full",
+            "price": 520
+        },
+        {
+            "id": 603,
+            "name": "Chicken Tikka (Chest) Half",
+            "price": 280
+        },
+        {
+            "id": 604,
+            "name": "Chicken Tikka (Chest) Full",
+            "price": 560
+        },
+        {
+            "id": 605,
+            "name": "Bihari Tikka (Chest) Half",
+            "price": 280
+        },
+        {
+            "id": 606,
+            "name": "Bihari Tikka (Chest) Full",
+            "price": 560
+        },
+        {
+            "id": 607,
+            "name": "Bihari Tikka (Leg) Half",
+            "price": 260
+        },
+        {
+            "id": 608,
+            "name": "Bihari Tikka (Leg) Full",
+            "price": 520
+        },
+        {
+            "id": 609,
+            "name": "Malai Chicken Tikka Half",
+            "price": 280
+        },
+        {
+            "id": 610,
+            "name": "Malai Chicken Tikka Full",
+            "price": 560
+        },
+        {
+            "id": 611,
+            "name": "Chicken Boti Half",
+            "price": 220
+        },
+        {
+            "id": 612,
+            "name": "Chicken Boti Full",
+            "price": 450
+        },
+        {
+            "id": 613,
+            "name": "Beef Boti Half",
+            "price": 230
+        },
+        {
+            "id": 614,
+            "name": "Beef Boti Full",
+            "price": 450
+        },
+        {
+            "id": 615,
+            "name": "Chicken Kastoori Boti Half",
+            "price": 230
+        },
+        {
+            "id": 616,
+            "name": "Chicken Kastoori Boti Full",
+            "price": 450
+        },
+        {
+            "id": 617,
+            "name": "Chicken Malai Boti Half",
+            "price": 230
+        },
+        {
+            "id": 618,
+            "name": "Chicken Malai Boti Full",
+            "price": 450
+        },
+        {
+            "id": 619,
+            "name": "Chicken Mughlai Boti Half",
+            "price": 230
+        },
+        {
+            "id": 620,
+            "name": "Chicken Mughlai Boti Full",
+            "price": 450
+        },
+        {
+            "id": 621,
+            "name": "Beef Seekh Kabab Half",
+            "price": 220
+        },
+        {
+            "id": 622,
+            "name": "Beef Seekh Kabab Full",
+            "price": 440
+        },
+        {
+            "id": 623,
+            "name": "Gola Kabab Half",
+            "price": 220
+        },
+        {
+            "id": 624,
+            "name": "Gola Kabab Full",
+            "price": 440
+        },
+        {
+            "id": 625,
+            "name": "Chicken Dhaga Kabab Half",
+            "price": 220
+        },
+        {
+            "id": 626,
+            "name": "Chicken Dhaga Kabab Full",
+            "price": 440
+        },
+        {
+            "id": 627,
+            "name": "Persian Kabab Half",
+            "price": 220
+        },
+        {
+            "id": 628,
+            "name": "Persian Kabab Full",
+            "price": 440
+        },
+        {
+            "id": 629,
+            "name": "Chicken Sizzling Kabab Half",
+            "price": 220
+        },
+        {
+            "id": 630,
+            "name": "Chicken Sizzling Kabab Full",
+            "price": 440
+        },
+        {
+            "id": 631,
+            "name": "Turkish Kabab Half",
+            "price": 220
+        },
+        {
+            "id": 632,
+            "name": "Turkish Kabab Full",
+            "price": 440
+        },
+        {
+            "id": 633,
+            "name": "Malai Kabab Half",
+            "price": 220
+        },
+        {
+            "id": 634,
+            "name": "Malai Kabab Full",
+            "price": 440
+        },
+        {
+            "id": 635,
+            "name": "Chicken Shahi Chatak Boti Half",
+            "price": 550
+        },
+        {
+            "id": 636,
+            "name": "Chicken Shahi Chatak Boti Full",
+            "price": 570
+        },
+        {
+            "id": 637,
+            "name": "B.B.Q Platter Without Rice",
+            "price": 1850
+        },
+        {
+            "id": 638,
+            "name": "B.B.Q Platter With Rice",
+            "price": 1950
+        }
+    ],
+    [
+        {
+            "id": 701,
+            "name": "Chicken Corn Soup (Single Bowl)",
+            "price": 150
+        },
+        {
+            "id": 702,
+            "name": "Chicken Corn Soup With Egg (Medium Bowl)",
+            "price": 180
+        },
+        {
+            "id": 703,
+            "name": "Chicken Corn Soup (Family Bowl)",
+            "price": 250
+        },
+        {
+            "id": 704,
+            "name": "Chicken Corn Soup With Egg (Family Bowl)",
+            "price": 280
+        },
+        {
+            "id": 705,
+            "name": "Hot N Sour Soup",
+            "price": 180
+        }
+    ],
+    [
+        {
+            "id": 801,
+            "name": "Vegetable Fried Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 802,
+            "name": "Vegetable Fried Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 803,
+            "name": "Egg Fried Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 804,
+            "name": "Egg Fried Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 805,
+            "name": "Chicken Fried Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 806,
+            "name": "Chicken Fried Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 807,
+            "name": "Chicken Chowmein (Half)",
+            "price": 280
+        },
+        {
+            "id": 808,
+            "name": "Chicken Chowmein (Full)",
+            "price": 500
+        },
+        {
+            "id": 809,
+            "name": "Chicken Manchurian (Half)",
+            "price": 280
+        },
+        {
+            "id": 810,
+            "name": "Chicken Manchurian (Full)",
+            "price": 500
+        },
+        {
+            "id": 811,
+            "name": "Chicken Shashlik Without Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 812,
+            "name": "Chicken Shashlik Without Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 813,
+            "name": "Chicken Shashlik With Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 814,
+            "name": "Chicken Shashlik With Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 815,
+            "name": "Chicken Chili Dry (Half)",
+            "price": 280
+        },
+        {
+            "id": 816,
+            "name": "Chicken Chili Dry (Full)",
+            "price": 500
+        },
+        {
+            "id": 817,
+            "name": "Chicken Chili Dry With Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 818,
+            "name": "Chicken Chili Dry With Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 819,
+            "name": "Chicken Chili With Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 820,
+            "name": "Chicken Chili With Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 821,
+            "name": "Chicken Ginger With Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 822,
+            "name": "Chicken Ginger With Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 823,
+            "name": "Chicken Jalfrezi (Half)",
+            "price": 280
+        },
+        {
+            "id": 824,
+            "name": "Chicken Jalfrezi (Full)",
+            "price": 500
+        },
+        {
+            "id": 825,
+            "name": "Chicken Jalfrezi With Rice (Half)",
+            "price": 280
+        },
+        {
+            "id": 826,
+            "name": "Chicken Jalfrezi With Rice (Full)",
+            "price": 500
+        },
+        {
+            "id": 827,
+            "name": "Chicken Jalfrezi (Pakistani) (Half)",
+            "price": 280
+        },
+        {
+            "id": 828,
+            "name": "Chicken Jalfrezi (Pakistani) (Full)",
+            "price": 500
+        }
+    ],
+    [
+        {
+            "id": 901,
+            "name": "Chapati",
+            "price": 20
+        },
+        {
+            "id": 902,
+            "name": "Paratha",
+            "price": 40
+        },
+        {
+            "id": 903,
+            "name": "Roti",
+            "price": 20
+        },
+        {
+            "id": 904,
+            "name": "Lung Bun",
+            "price": 40
+        },
+        {
+            "id": 905,
+            "name": "Mayo Garlic Sauce",
+            "price": 40
+        },
+        {
+            "id": 906,
+            "name": "Cheese Slice",
+            "price": 40
+        }
+    ],
+    [
+        {
+            "id": 1001,
+            "name": "Rasgulla (2 Pcs)",
+            "price": 200
+        },
+        {
+            "id": 1002,
+            "name": "Ras Malai",
+            "price": 280
+        },
+        {
+            "id": 1003,
+            "name": "Rabri 125 gm",
+            "price": 200
+        },
+        {
+            "id": 1004,
+            "name": "Doodh Dulari",
+            "price": 280
+        },
+        {
+            "id": 1005,
+            "name": "Khas Masala 125 gm",
+            "price": 160
+        },
+        {
+            "id": 1006,
+            "name": "Mineral Water Small",
+            "price": 40
+        },
+        {
+            "id": 1007,
+            "name": "Mineral Water Large",
+            "price": 80
+        },
+        {
+            "id": 1008,
+            "name": "Soft Drink (Cane)",
+            "price": 80
+        }
+    ],
+    [
+        {
+            "id": 1101,
+            "name": "Margherita Pizza (Small)",
+            "price": 400
+        },
+        {
+            "id": 1102,
+            "name": "Margherita Pizza (Medium)",
+            "price": 600
+        },
+        {
+            "id": 1103,
+            "name": "Margherita Pizza (Large)",
+            "price": 800
+        },
+        {
+            "id": 1104,
+            "name": "Pepperoni Pizza (Small)",
+            "price": 450
+        },
+        {
+            "id": 1105,
+            "name": "Pepperoni Pizza (Medium)",
+            "price": 650
+        },
+        {
+            "id": 1106,
+            "name": "Pepperoni Pizza (Large)",
+            "price": 850
+        },
+        {
+            "id": 1107,
+            "name": "Vegetarian Pizza (Small)",
+            "price": 500
+        },
+        {
+            "id": 1108,
+            "name": "Vegetarian Pizza (Medium)",
+            "price": 700
+        },
+        {
+            "id": 1109,
+            "name": "Vegetarian Pizza (Large)",
+            "price": 900
+        },
+        {
+            "id": 1110,
+            "name": "Chicken Supreme Pizza (Small)",
+            "price": 550
+        },
+        {
+            "id": 1111,
+            "name": "Chicken Supreme Pizza (Medium)",
+            "price": 750
+        },
+        {
+            "id": 1112,
+            "name": "Chicken Supreme Pizza (Large)",
+            "price": 950
+        },
+        {
+            "id": 1113,
+            "name": "BBQ Chicken Pizza (Small)",
+            "price": 600
+        },
+        {
+            "id": 1114,
+            "name": "BBQ Chicken Pizza (Medium)",
+            "price": 800
+        },
+        {
+            "id": 1115,
+            "name": "BBQ Chicken Pizza (Large)",
+            "price": 1000
+        }
+    ]
 ]
