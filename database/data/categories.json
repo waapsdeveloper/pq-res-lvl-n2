@@ -1,132 +1,468 @@
 [
+    [
+        {
+            "id": 1,
+            "name": "Starter",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 101,
+                    "name": "Chicken Wings",
+                    "description": "Crispy fried chicken wings with a spicy dip",
+                    "price": 300
+                },
+                {
+                    "id": 102,
+                    "name": "Garlic Bread",
+                    "description": "Freshly baked bread topped with garlic butter",
+                    "price": 150
+                },
+                {
+                    "id": 103,
+                    "name": "Cheese Sticks",
+                    "description": "Mozzarella cheese sticks served with marinara sauce",
+                    "price": 250
+                },
+                {
+                    "id": 104,
+                    "name": "Chicken Nuggets",
+                    "description": "Golden fried chicken nuggets with BBQ sauce",
+                    "price": 200
+                },
+                {
+                    "id": 105,
+                    "name": "Spring Rolls",
+                    "description": "Vegetable spring rolls with tangy sauce",
+                    "price": 180
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Roll",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 201,
+                    "name": "Chicken Roll",
+                    "description": "Juicy chicken wrapped in soft flatbread",
+                    "price": 120
+                },
+                {
+                    "id": 202,
+                    "name": "Beef Roll",
+                    "description": "Spicy beef roll with a tangy sauce",
+                    "price": 150
+                },
+                {
+                    "id": 203,
+                    "name": "Vegetable Roll",
+                    "description": "Fresh vegetables wrapped in flatbread",
+                    "price": 100
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Burger",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 301,
+                    "name": "Chicken Burger",
+                    "description": "Grilled chicken patty with fresh veggies",
+                    "price": 300
+                },
+                {
+                    "id": 302,
+                    "name": "Beef Burger",
+                    "description": "Juicy beef patty with cheese and lettuce",
+                    "price": 350
+                },
+                {
+                    "id": 303,
+                    "name": "Zinger Burger",
+                    "description": "Crispy chicken fillet with a zesty sauce",
+                    "price": 320
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Sandwich",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 401,
+                    "name": "Club Sandwich",
+                    "description": "Triple-layered sandwich with chicken, egg, and veggies",
+                    "price": 350
+                },
+                {
+                    "id": 402,
+                    "name": "Grilled Cheese Sandwich",
+                    "description": "Classic grilled sandwich with melted cheese",
+                    "price": 250
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Broast",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 501,
+                    "name": "Crispy Chicken Broast",
+                    "description": "Whole crispy chicken served with fries",
+                    "price": 500
+                },
+                {
+                    "id": 502,
+                    "name": "Spicy Chicken Broast",
+                    "description": "Spicy and crispy chicken served with coleslaw",
+                    "price": 550
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "B.B.Q",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 601,
+                    "name": "Chicken Tikka",
+                    "description": "Grilled chicken marinated in spicy BBQ sauce",
+                    "price": 300
+                },
+                {
+                    "id": 602,
+                    "name": "Beef Seekh Kabab",
+                    "description": "Juicy beef skewers grilled to perfection",
+                    "price": 400
+                },
+                {
+                    "id": 603,
+                    "name": "Malai Boti",
+                    "description": "Creamy chicken BBQ chunks",
+                    "price": 350
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Soup",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 701,
+                    "name": "Hot and Sour Soup",
+                    "description": "Spicy and tangy soup with chicken and veggies",
+                    "price": 250
+                },
+                {
+                    "id": 702,
+                    "name": "Chicken Corn Soup",
+                    "description": "Classic chicken soup with corn and egg",
+                    "price": 220
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Chinese",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 801,
+                    "name": "Chicken Chowmein",
+                    "description": "Stir-fried noodles with chicken and veggies",
+                    "price": 400
+                },
+                {
+                    "id": 802,
+                    "name": "Beef Fried Rice",
+                    "description": "Fried rice with tender beef chunks",
+                    "price": 350
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "name": "Extras",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 901,
+                    "name": "Fries",
+                    "description": "Crispy potato fries",
+                    "price": 150
+                },
+                {
+                    "id": 902,
+                    "name": "Coleslaw",
+                    "description": "Creamy cabbage coleslaw",
+                    "price": 80
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "name": "Sweets & Beverage",
+            "category_id": null,
+            "status": "active",
+            "items": [
+                {
+                    "id": 1001,
+                    "name": "Gulab Jamun",
+                    "description": "Soft and sweet dough balls in syrup",
+                    "price": 120
+                },
+                {
+                    "id": 1002,
+                    "name": "Soft Drink",
+                    "description": "Choice of soft drinks (300ml)",
+                    "price": 60
+                }
+            ]
+        }
+    ],
+
+    [
     {
-        "name": "Dairy Products",
+        "id": 1,
+        "name": "Starter",
         "category_id": null,
         "status": "active"
     },
     {
-        "name": "Bakery Items",
+        "id": 2,
+        "name": "Roll",
         "category_id": null,
         "status": "active"
     },
     {
-        "name": "Milk",
-        "category_id": 1,
-        "status": "active"
-    },
-    {
-        "name": "Cheese",
-        "category_id": 1,
-        "status": "active"
-    },
-    {
-        "name": "Butter",
-        "category_id": 1,
-        "status": "active"
-    },
-    {
-        "name": "Bread",
-        "category_id": 2,
-        "status": "active"
-    },
-    {
-        "name": "Cakes",
-        "category_id": 2,
-        "status": "active"
-    },
-    {
-        "name": "Pastries",
-        "category_id": 2,
-        "status": "active"
-    },
-    {
-        "name": "Vegetables",
+        "id": 3,
+        "name": "Burger",
         "category_id": null,
         "status": "active"
     },
     {
-        "name": "Fruits",
+        "id": 4,
+        "name": "Sandwich",
         "category_id": null,
         "status": "active"
     },
     {
-        "name": "Apples",
-        "category_id": 10,
-        "status": "active"
-    },
-    {
-        "name": "Bananas",
-        "category_id": 10,
-        "status": "active"
-    },
-    {
-        "name": "Tomatoes",
-        "category_id": 9,
-        "status": "active"
-    },
-    {
-        "name": "Potatoes",
-        "category_id": 9,
-        "status": "active"
-    },
-    {
-        "name": "Meat",
+        "id": 5,
+        "name": "Broast",
         "category_id": null,
         "status": "active"
     },
     {
-        "name": "Beef",
-        "category_id": 14,
-        "status": "active"
-    },
-    {
-        "name": "Chicken",
-        "category_id": 14,
-        "status": "active"
-    },
-    {
-        "name": "Seafood",
-        "category_id": 14,
-        "status": "active"
-    },
-    {
-        "name": "Beverages",
+        "id": 6,
+        "name": "B.B.Q",
         "category_id": null,
         "status": "active"
     },
     {
-        "name": "Juices",
-        "category_id": 18,
-        "status": "active"
-    },
-    {
-        "name": "Soft Drinks",
-        "category_id": 18,
-        "status": "active"
-    },
-    {
-        "name": "Tea & Coffee",
-        "category_id": 18,
-        "status": "active"
-    },
-    {
-        "name": "Snacks",
+        "id": 7,
+        "name": "Soup",
         "category_id": null,
         "status": "active"
     },
     {
-        "name": "Chips",
-        "category_id": 22,
+        "id": 8,
+        "name": "Chinese",
+        "category_id": null,
         "status": "active"
     },
     {
-        "name": "Cookies",
-        "category_id": 22,
+        "id": 9,
+        "name": "Extras",
+        "category_id": null,
         "status": "active"
     },
     {
-        "name": "Candy",
-        "category_id": 22,
+        "id": 10,
+        "name": "Sweets & Beverages",
+        "category_id": null,
         "status": "active"
+    }
+],
+[
+    {
+        "id": 1,
+        "name": "Starter",
+        "category_id": null,
+        "status": "active",
+        "items": [
+            {
+                "id": 101,
+                "name": "Plain Fries (Half)",
+                "price": 100
+            },
+            {
+                "id": 102,
+                "name": "Plain Fries (Full)",
+                "price": 180
+            },
+            {
+                "id": 103,
+                "name": "Masala Fries",
+                "price": 190
+            },
+            {
+                "id": 104,
+                "name": "Fries with Mayo Garlic (2 Sauce)",
+                "price": 240
+            },
+            {
+                "id": 105,
+                "name": "Cheese Fries (Half)",
+                "price": 320
+            },
+            {
+                "id": 106,
+                "name": "Cheese Fries (Full)",
+                "price": 450
+            },
+            {
+                "id": 107,
+                "name": "Chicken Strips (4 Pcs)",
+                "price": 370
+            },
+            {
+                "id": 108,
+                "name": "Pizza Fries",
+                "price": 680
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Roll",
+        "category_id": null,
+        "status": "active",
+        "items": [
+            {
+                "id": 201,
+                "name": "Beef Seekh Kabab Roll (Plain)",
+                "price": 170
+            },
+            {
+                "id": 202,
+                "name": "Beef Seekh Kabab Roll (Mayo)",
+                "price": 240
+            },
+            {
+                "id": 203,
+                "name": "Chicken Chatni Roll (Plain)",
+                "price": 200
+            },
+            {
+                "id": 204,
+                "name": "Chicken Chatni Roll (Mayo)",
+                "price": 270
+            },
+            {
+                "id": 205,
+                "name": "Beef Behari Boti Roll (Plain)",
+                "price": 220
+            },
+            {
+                "id": 206,
+                "name": "Beef Behari Boti Roll (Mayo)",
+                "price": 290
+            },
+            {
+                "id": 207,
+                "name": "Chicken Roll (Plain)",
+                "price": 250
+            },
+            {
+                "id": 208,
+                "name": "Chicken Roll (Mayo)",
+                "price": 320
+            },
+            {
+                "id": 209,
+                "name": "Zinger Roll",
+                "price": 250
+            },
+            {
+                "id": 210,
+                "name": "Chicken Juicy Roll",
+                "price": 250
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Burger",
+        "category_id": null,
+        "status": "active",
+        "items": [
+            {
+                "id": 301,
+                "name": "Chicken Regular Burger (Plain)",
+                "price": 280
+            },
+            {
+                "id": 302,
+                "name": "Chicken Regular Burger (With Cheese)",
+                "price": 320
+            },
+            {
+                "id": 303,
+                "name": "Beef Regular Burger (Plain)",
+                "price": 300
+            },
+            {
+                "id": 304,
+                "name": "Beef Regular Burger (With Cheese)",
+                "price": 340
+            },
+            {
+                "id": 305,
+                "name": "Zinger Burger (Plain)",
+                "price": 400
+            },
+            {
+                "id": 306,
+                "name": "Zinger Burger (With Cheese)",
+                "price": 440
+            },
+            {
+                "id": 307,
+                "name": "Double Decker Zinger Burger",
+                "price": 450
+            },
+            {
+                "id": 308,
+                "name": "Mexican Gyro",
+                "price": 480
+            },
+            {
+                "id": 309,
+                "name": "Chicken Grilled Burger (Plain)",
+                "price": 380
+            },
+            {
+                "id": 310,
+                "name": "Chicken Grilled Burger (With Cheese)",
+                "price": 420
+            }
+        ]
     }
 ]
