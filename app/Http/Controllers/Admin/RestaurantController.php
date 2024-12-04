@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
+use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Restaurant\StoreRestaurant;
 use App\Http\Resources\Admin\RestaurantListResourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Restaurant;
+use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
 
 class RestaurantController extends Controller
@@ -84,7 +87,7 @@ class RestaurantController extends Controller
             'phone' => $data['phone'] ?? null,
             'email' => $data['email'] ?? null,
             'website' => $data['website'] ?? null,
-            'opening_hours' => $data['opening_hours'],
+            'opening_hours' => $data['opening_hours'] ?? null,
             'description' => $data['description'] ?? null,
             'rating' => $data['rating'] ?? 0, // Default rating to 0 if not provided
             'status' => $data['status'] ?? 'active', // Default rating to 0 if not provided
@@ -102,8 +105,30 @@ class RestaurantController extends Controller
 
 
 
-        return self::success('Store successful', ['restaurant' => $restaurant]);
+        return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
     }
+
+
+    // public function store(StoreRestaurant $request)
+    // {
+
+    //     $data = $request->validated();  // Returns only validated data
+
+
+    //     $restaurant = Restaurant::create([
+    //         'name' => $data['name'],
+    //         'address' => $data['address'],
+    //         'phone' => $data['phone'] ?? null,
+    //         'email' => $data['email'] ?? null,
+    //         'website' => $data['website'] ?? null,
+    //         'opening_hours' => $data['opening_hours'] ?? null,
+    //         'description' => $data['description'] ?? null,
+    //         'rating' => $data['rating'] ?? 0,
+    //         'status' => $data['status'] ?? 'active',
+    //     ]);
+
+    //     return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
+    // }
 
     /**
      * Display the specified resource.
@@ -136,8 +161,60 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $data = $request->all();
+
+
+        $validation = Validator::make($data, [
+            'name' => 'required|string|min:3|max:255',
+            'address' => 'required|string|max:500',
+            'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
+            'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+            'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
+            'description' => 'nullable|string|max:1000',
+            'status' => 'nullable|string',
+            'rating' => 'nullable|numeric|min:0|max:5',
+        ]);
+
+
+        if ($validation->fails()) {
+            return self::failure($validation->errors()->first());
+        }
+
+
+        $restaurant = Restaurant::find($id);
+
+
+        if (!$restaurant) {
+            return self::failure('Restaurant not found');
+        }
+
+
+        $restaurant->update([
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'phone' => $data['phone'] ?? $restaurant->phone,
+            'email' => $data['email'] ?? $restaurant->email,
+            'website' => $data['website'] ?? $restaurant->website,
+            'opening_hours' => $data['opening_hours'] ?? $restaurant->opening_hours,
+            'description' => $data['description'] ?? $restaurant->description,
+            'rating' => $data['rating'] ?? $restaurant->rating,
+            'status' => $data['status'] ?? $restaurant->status,
+        ]);
+
+
+        // if (isset($data['image'])) {
+        //     // Assuming you have a helper method to handle image uploads
+        //     $url = Helper::getBase64ImageUrl($data);
+        //     $restaurant->update([
+        //         'image' => $url
+        //     ]);
+        // }
+
+        // Return a success response with the updated restaurant data
+        return ServiceResponse::success('Update successful', ['restaurant' => $restaurant]);
     }
+
 
     /**
      * Remove the specified resource from storage.

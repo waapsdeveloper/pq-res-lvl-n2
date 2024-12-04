@@ -23,9 +23,10 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('restaurant')->group(function () {
     Route::resource('/', RestaurantController::class)
-        ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
+        ->parameters(['' => 'id'])
+        ->only(['index', 'show', 'store', 'update', 'destroy']);
 });
+
 
 Route::prefix('role')->group(function () {
     Route::resource('/', RoleController::class)
