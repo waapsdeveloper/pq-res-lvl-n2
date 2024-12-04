@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\CategoryResource;
 use App\Models\Category;
@@ -73,7 +74,7 @@ class CategoryController extends Controller
             'status' => $data['status'],
         ]);
 
-        return self::success('Category store successful', ['Category' => $user]);
+        return ServiceResponse::success('Category store successful', ['Category' => $user]);
     }
 
     /**
@@ -107,8 +108,38 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the incoming data
+        $data = $request->all();
+
+        $validation = Validator::make($data, [
+            'name' => 'required|string|min:3|max:255',
+            'category' => 'nullable|integer|exists:categories,id', // Ensure category is valid
+            'status' => 'required|string|in:active,inactive', // Validate status
+        ]);
+
+        // If validation fails
+        if ($validation->fails()) {
+            return self::failure($validation->errors()->first());
+        }
+
+        // Find the category by ID
+        $category = Category::find($id);
+
+        // If category does not exist
+        if (!$category) {
+            return self::failure('Category not found');
+        }
+
+        // Update the category
+        $category->update([
+            'name' => $data['name'],
+            'category_id' => $data['category'] ?? 0,
+            'status' => $data['status'],
+        ]);
+
+        return ServiceResponse::success('Category update successful', ['Category' => $category]);
     }
+
 
     /**
      * Remove the specified resource from storage.

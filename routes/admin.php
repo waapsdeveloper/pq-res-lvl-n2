@@ -44,13 +44,13 @@ Route::get('/auth-user', [UserController::class, 'getAuthUser'])->middleware('au
 Route::prefix('category')->group(function () {
     Route::resource('/', CategoryController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
+        ->only(['index', 'show', 'update', 'store', 'destroy']); // Restrict to specific CRUD actions.
 });
 
 Route::prefix('product')->group(function () {
     Route::resource('/', ProductController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
+        ->only(['index', 'show', 'update', 'store', 'destroy']); // Restrict to specific CRUD actions.
 });
 
 Route::prefix('rtable')->group(function () {
@@ -58,10 +58,3 @@ Route::prefix('rtable')->group(function () {
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
 });
-
-
-
-
-
-
-?>
