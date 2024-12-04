@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\CategoryResource;
 use App\Http\Resources\Admin\ProductResource;
@@ -84,7 +85,7 @@ class ProductController extends Controller
             'status' => $data['status'],
         ]);
 
-        return self::success('Product store successful', ['item' => $item]);
+        return ServiceResponse::success('Product store successful', ['item' => $item]);
     }
 
     /**
@@ -119,8 +120,39 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $data = $request->all();
+
+
+        $validation = Validator::make($data, [
+            'name' => 'required|string|min:3|max:255',
+            'category' => 'nullable|integer|exists:categories,id', // Ensure category exists
+            'description' => 'nullable|string', // Description is optional
+            'price' => 'required|integer', // Price is required
+            'status' => 'required|string|in:active,inactive', // Validate status
+        ]);
+
+        if ($validation->fails()) {
+            return self::failure($validation->errors()->first());
+        }
+
+        $item = Product::find($id);
+
+        if (!$item) {
+            return self::failure('Product not found');
+        }
+
+        $item->update([
+            'name' => $data['name'],
+            'category_id' => $data['category'] ?? $item->category_id, // Only update if provided
+            'description' => $data['description'] ?? $item->description, // Only update if provided
+            'price' => $data['price'],
+            'status' => $data['status'],
+        ]);
+
+        return ServiceResponse::success('Product update successful', ['item' => $item]);
     }
+
 
     /**
      * Remove the specified resource from storage.
