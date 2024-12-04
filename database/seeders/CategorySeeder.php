@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 
 
-class CategoryTableSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
