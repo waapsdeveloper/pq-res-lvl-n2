@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\RoleController;
@@ -49,6 +50,12 @@ Route::prefix('category')->group(function () {
 
 Route::prefix('product')->group(function () {
     Route::resource('/', ProductController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy']); // Restrict to specific CRUD actions.
+});
+
+Route::prefix('order')->group(function () {
+    Route::resource('/', OrderController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy']); // Restrict to specific CRUD actions.
 });
