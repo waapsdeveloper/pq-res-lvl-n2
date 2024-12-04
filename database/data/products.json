@@ -1,7 +1,7 @@
 [
     {
         "id": 101,
-      "category_id": 1,
+        "category_id": 1,
         "name": "Plain Fries (Half)",
         "price": 100
     },
@@ -414,10 +414,8 @@
         "price": 220
     },
     {
-    
-    
         "id": 628,
-    "category_id": 6,
+        "category_id": 6,
         "name": "Persian Kabab Full",
         "price": 440
     },
@@ -464,7 +462,7 @@
         "price": 550
     },
     {
-        "id": 636,  
+        "id": 636,
         "category_id": 6,
         "name": "Chicken Shahi Chatak Boti Full",
         "price": 570
@@ -698,7 +696,6 @@
         "price": 20
     },
     {
-        
         "id": 904,
         "category_id": 9,
         "name": "Lung Bun",

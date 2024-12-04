@@ -25,10 +25,10 @@ class ProductSeeder extends Seeder
             DB::table('products')->insert([
                 'category_id' => $product['category_id'],
                 'name' => $product['name'],
-                'description' => $product['description'],
+                'description' => $product['description'] ?? "",
                 'price' => $product['price'],
-                'image' => $product['image'],
-                'status' => $product['status'],
+                'image' => $product['image'] ?? "",
+                'status' => $product['status'] ?? 'active',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

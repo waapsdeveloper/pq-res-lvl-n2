@@ -20,11 +20,17 @@ class ProductController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
 
+        $category = $request->input('category_id', '');
+
         $query = Product::query();
 
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        if ($category) {
+            $query->where('category_id', $category);
         }
 
         // Paginate the results
