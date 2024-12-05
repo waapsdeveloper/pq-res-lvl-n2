@@ -116,15 +116,13 @@ class OrderController extends Controller
         $order->load('orderProducts.product');
 
         return new OrderResource($order);
-
-
     }
 
     public function updateStatus(Request $request, $id)
     {
 
         $validation = Validator::make($request->all(), [
-            'status' => 'required|string|in:pending,processing,completed',
+            'status' => 'required|string|in:pending,processing,completed,served,out_for_delivery,delivered ',
         ]);
 
         if ($validation->fails()) {
