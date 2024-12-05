@@ -18,8 +18,26 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::with('orderProducts.product')->get();
+
+        $order = OrderResource::collection($orders);
+        return ServiceResponse::success('Order list retrieved successfully', $order);
     }
+
+    public function listById($id)
+    {
+
+        $order = Order::with('orderProducts.product')->find($id);
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+
+        return ServiceResponse::success('Order details fetched successfully', new OrderResource($order));
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -83,6 +101,7 @@ class OrderController extends Controller
             'discount' => $discount,
             'order_number' => $orderNumber,
             'total_price' => $finalPrice,
+            'status' => "pending",
         ]);
 
         foreach ($orderProducts as $orderProduct) {
@@ -97,6 +116,8 @@ class OrderController extends Controller
         $order->load('orderProducts.product');
 
         return new OrderResource($order);
+        // $course = new CourseResource($course);
+
     }
 
 

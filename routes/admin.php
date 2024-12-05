@@ -55,10 +55,12 @@ Route::prefix('product')->group(function () {
 });
 
 Route::prefix('order')->group(function () {
-    Route::resource('/', OrderController::class)
-        ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'update', 'store', 'destroy']); // Restrict to specific CRUD actions.
+    Route::get('byid/{id}', [OrderController::class, 'listById']);
+    Route::resource('orders', OrderController::class)
+        ->parameters(['orders' => 'id'])
+        ->only(['index', 'show', 'update', 'store', 'destroy']);
 });
+
 
 Route::prefix('rtable')->group(function () {
     Route::resource('/', RtableController::class)

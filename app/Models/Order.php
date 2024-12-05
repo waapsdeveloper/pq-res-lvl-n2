@@ -15,6 +15,7 @@ class Order extends Model
         'discount',
         'order_number',
         'total_price',
+        'status',
     ];
 
     // Define relationship with OrderProduct

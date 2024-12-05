@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Admin;
 
-
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -14,6 +13,7 @@ class OrderResource extends JsonResource
             'customer_name' => $this->customer_name,
             'customer_phone' => $this->customer_phone,
             'order_number' => $this->order_number,
+            'status' => $this->status,
             'total_price' => $this->total_price,
             'discount' => $this->discount,
             'created_at' => $this->created_at,
