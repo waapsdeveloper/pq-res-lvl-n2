@@ -23,7 +23,7 @@ class RtableController extends Controller
 
         // Optionally apply search filter if needed
         if ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
+            $query->where('identifier', 'like', '%' . $search . '%');
         }
 
         // Paginate the results
