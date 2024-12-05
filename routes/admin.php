@@ -56,11 +56,12 @@ Route::prefix('product')->group(function () {
 
 Route::prefix('order')->group(function () {
     Route::resource('/', OrderController::class)
-        ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'update', 'store', 'destroy']); // Restrict to specific CRUD actions.
+        ->parameters(['' => 'id'])
+        ->only(['index', 'show', 'update', 'store', 'destroy']);
 });
 
-Route::get('orders/byid/{id}', [OrderController::class, 'listById']);
+Route::get('/orders/byid/{id}', [OrderController::class, 'listById']);
+Route::post('/orders/update-status/{id}', [OrderController::class, 'updateStatus']);
 
 
 Route::prefix('rtable')->group(function () {

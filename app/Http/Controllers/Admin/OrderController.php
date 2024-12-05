@@ -116,10 +116,33 @@ class OrderController extends Controller
         $order->load('orderProducts.product');
 
         return new OrderResource($order);
-        // $course = new CourseResource($course);
+
 
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+
+        $validation = Validator::make($request->all(), [
+            'status' => 'required|string|in:pending,processing,completed',
+        ]);
+
+        if ($validation->fails()) {
+            return ServiceResponse::error($validation->errors()->first());
+        }
+
+        $order = Order::find($id);
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+
+
+        $order->status = $request->status;
+        $order->save();
+
+        return ServiceResponse::success('Order status updated successfully', $order);
+    }
 
 
 
