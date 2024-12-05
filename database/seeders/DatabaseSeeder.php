@@ -15,10 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call(RolesTableSeeder::class);
+
+        $this->call(RestaurantsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(PassportPersonalAccessTokenSeeder::class);
 
-        $this->call(RestaurantsTableSeeder::class);
+
         $this->call(RTableSeeder::class);
 
         // categories and products

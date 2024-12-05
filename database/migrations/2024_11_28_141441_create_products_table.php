@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id(); // Creates an auto-incrementing primary key
+            $table->integer('category_id');
             $table->string('name'); // Product name
             $table->text('description'); // Product description
             $table->decimal('price', 10, 2); // Product price (10 digits total, 2 decimal places)
