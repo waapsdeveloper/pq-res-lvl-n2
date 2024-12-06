@@ -10,10 +10,6 @@ use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-header('Access-Control-Allow-Origin', '*');
-header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
 Route::prefix('auth')->group(function () {
     Route::post('/login-via-email', [AuthController::class, 'loginViaEmail']);
     Route::post('/register-via-email', [AuthController::class, 'registerViaEmail']);
