@@ -151,7 +151,7 @@ class OrderController extends Controller
             return ServiceResponse::error('Order not found');
         }
 
-        return ServiceResponse::success('Order details fetched successfully', new OrderResource($order));
+        return ServiceResponse::success('Order details fetched successfully', ['order' => new OrderResource($order)] );
     }
 
     /**
