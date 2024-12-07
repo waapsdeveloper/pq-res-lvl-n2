@@ -13,7 +13,7 @@ class UpdateOrder extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return true; // Adjust authorization logic if needed
     }
 
     /**
@@ -24,23 +24,30 @@ class UpdateOrder extends FormRequest
     public function rules(): array
     {
         return [
-            // abi kam nai hoa
+            'customer_name' => 'nullable|string|max:255',
+            'customer_phone' => 'nullable|string|max:15',
+            'discount' => 'nullable|numeric|min:0|max:100',
+            'status' => 'nullable|string|in:pending,completed,cancelled', // Add more statuses if needed
+            'products' => 'required|array|min:1',
+            'products.*.product_id' => 'required|exists:products,id',
+            'products.*.quantity' => 'required|integer|min:1',
         ];
     }
+
+    /**
+     * Handle a failed validation attempt.
+     */
     protected function failedValidation(Validator $validator)
     {
-        // Customize the error response if validation fails
         $error = $validator->errors()->first();
 
-        // Create a custom error response object or structure
         $response = [
             'bool' => false,
             'status' => 422,
-            "message" => $error,
-            "result" => null
+            'message' => $error,
+            'result' => null,
         ];
 
-        // Throw an HttpResponseException with the custom response
         throw new HttpResponseException(response()->json($response, 422));
     }
 }

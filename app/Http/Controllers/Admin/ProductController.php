@@ -141,7 +141,6 @@ class ProductController extends Controller
         // }
 
         $item = Product::find($id);
-
         if (!$item) {
             return self::failure('Product not found');
         }

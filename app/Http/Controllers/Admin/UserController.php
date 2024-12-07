@@ -131,11 +131,43 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUser $request, string $id)
+    public function update(UpdateUser $request, $id)
     {
-        //$data = $request->all();
-        // $data = $request->validated();
+        $data = $request->validated();
+
+        // Find the user
+        $user = User::find($id);
+        if (!$user) {
+            return self::failure("User with ID $id not found.");
+        }
+
+        // Update user details
+        $user->update([
+            'name' => $data['name'] ?? $user->name,
+            'email' => $data['email'] ?? $user->email,
+            'phone' => $data['phone'] ?? $user->phone,
+            'role_id' => $data['role'] ?? $user->role_id,
+            'status' => $data['status'] ?? $user->status,
+        ]);
+
+        // Optionally update the password if provided
+        if (isset($data['password']) && !empty($data['password'])) {
+            $user->update([
+                'password' => bcrypt($data['password']),
+            ]);
+        }
+
+        // Optionally handle the image if provided
+        if (isset($data['image'])) {
+            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+            $user->update([
+                'image' => $url,
+            ]);
+        }
+
+        return self::success('User updated successfully', ['user' => $user]);
     }
+
 
     /**
      * Remove the specified resource from storage.

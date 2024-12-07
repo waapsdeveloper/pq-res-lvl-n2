@@ -23,8 +23,13 @@ class UpdateRtable extends FormRequest
      */
     public function rules(): array
     {
+        $rtableId = $this->route('id'); // Get the current Rtable ID from the route
+
         return [
-            // kam nai hoa abi
+            'restaurant' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
+            'identifier' => 'nullable|string|min:3|max:255|unique:rtables,identifier,' . $rtableId, // Unique identifier excluding the current record
+            'location' => 'nullable|string|max:255', // Optional location
+            'description' => 'nullable|string|max:500', // Optional description
         ];
     }
     protected function failedValidation(Validator $validator)

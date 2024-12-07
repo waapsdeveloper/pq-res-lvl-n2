@@ -110,11 +110,28 @@ class RtableController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRtable $request, string $id)
+    public function update(UpdateRtable $request, $id)
     {
-        //        $data = $request->validated();
+        $data = $request->validated();
 
+        // Find the Rtable
+        $rtable = Rtable::find($id);
+        dd($data, $rtable);
+        if (!$rtable) {
+            return self::failure("Rtable with ID $id not found.");
+        }
+
+        // Update the Rtable details
+        $rtable->update([
+            'restaurant_id' => $data['restaurant'] ?? $rtable->restaurant_id,
+            'identifier' => $data['identifier'] ?? $rtable->identifier,
+            'location' => $data['location'] ?? $rtable->location,
+            'description' => $data['description'] ?? $rtable->description,
+        ]);
+
+        return self::success('Rtable updated successfully', ['item' => $rtable]);
     }
+
 
     /**
      * Remove the specified resource from storage.

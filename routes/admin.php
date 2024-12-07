@@ -37,7 +37,7 @@ Route::prefix('role')->group(function () {
 Route::prefix('user')->group(function () {
     Route::resource('/', UserController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
+        ->only(['index', 'show', 'store', 'destroy', 'update']); // Restrict to specific CRUD actions.
 });
 
 Route::get('/auth-user', [UserController::class, 'getAuthUser'])->middleware('auth:api');
@@ -67,5 +67,5 @@ Route::post('/orders/update-status/{id}', [OrderController::class, 'updateStatus
 Route::prefix('rtable')->group(function () {
     Route::resource('/', RtableController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'store', 'destroy']); // Restrict to specific CRUD actions.
+        ->only(['index', 'show', 'store', 'destroy', 'update']); // Restrict to specific CRUD actions.
 });
