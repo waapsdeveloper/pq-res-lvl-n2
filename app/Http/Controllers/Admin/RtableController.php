@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Rtable\StoreRtable;
+use App\Http\Requests\Admin\Rtable\UpdateRtable;
 use App\Http\Resources\Admin\RtableResource;
 use App\Models\Rtable;
 use Illuminate\Http\Request;
@@ -49,23 +51,24 @@ class RtableController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRtable $request)
     {
         //
         $data = $request->all();
+        $data = $request->validated();
 
         // Validate the required fields
-        $validation = Validator::make($data, [
-            'restaurant' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
-            'identifier' => 'required|string|unique:rtables,identifier|min:3|max:255', // Unique table identifier
-            'location' => 'required|string|max:255', // Table location
-            'description' => 'nullable|string|max:500', // Table description (nullable)
-        ]);
+        // $validation = Validator::make($data, [
+        //     'restaurant' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
+        //     'identifier' => 'required|string|unique:rtables,identifier|min:3|max:255', // Unique table identifier
+        //     'location' => 'required|string|max:255', // Table location
+        //     'description' => 'nullable|string|max:500', // Table description (nullable)
+        // ]);
 
-        // If validation fails
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // // If validation fails
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         // Create a new user (assuming the user model exists)
         $item = Rtable::create([
@@ -107,9 +110,10 @@ class RtableController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRtable $request, string $id)
     {
-        //
+        //        $data = $request->validated();
+
     }
 
     /**

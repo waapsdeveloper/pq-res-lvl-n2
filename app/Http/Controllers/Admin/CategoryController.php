@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Category\StoreCategory;
+use App\Http\Requests\Admin\Category\UpdateCategory;
 use App\Http\Resources\Admin\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -50,22 +52,23 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategory $request)
     {
         //
         $data = $request->all();
+        $data = $request->validated();
 
         // Validate the required fields
-        $validation = Validator::make($data, [
-            'name' => 'required|string|min:3|max:255',
-            'category' => 'nullable|integer|exists:categories,id', // Ensure role is provided
-            'status' => 'required|string|in:active,inactive', // Validate status
-        ]);
+        // $validation = Validator::make($data, [
+        //     'name' => 'required|string|min:3|max:255',
+        //     'category' => 'nullable|integer|exists:categories,id', // Ensure role is provided
+        //     'status' => 'required|string|in:active,inactive', // Validate status
+        // ]);
 
-        // If validation fails
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // // If validation fails
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         // Create a new user (assuming the user model exists)
         $user = Category::create([
@@ -106,21 +109,22 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategory $request, string $id)
     {
         // Validate the incoming data
         $data = $request->all();
+        $data = $request->validated();
 
-        $validation = Validator::make($data, [
-            'name' => 'required|string|min:3|max:255',
-            'category' => 'nullable|integer|exists:categories,id', // Ensure category is valid
-            'status' => 'required|string|in:active,inactive', // Validate status
-        ]);
+        // $validation = Validator::make($data, [
+        //     'name' => 'required|string|min:3|max:255',
+        //     'category' => 'nullable|integer|exists:categories,id', // Ensure category is valid
+        //     'status' => 'required|string|in:active,inactive', // Validate status
+        // ]);
 
         // If validation fails
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         // Find the category by ID
         $category = Category::find($id);

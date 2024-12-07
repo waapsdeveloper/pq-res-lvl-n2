@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auth\LoginAuthRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +14,8 @@ class AuthController extends Controller
 {
     //
 
-    public function loginViaEmail(LoginAuthRequest $request){
+    public function loginViaEmail(LoginAuthRequest $request)
+    {
 
         // $data = $request->all();
 
@@ -53,23 +54,24 @@ class AuthController extends Controller
 
     }
 
-    public function registerViaEmail(Request $request)
+    public function registerViaEmail(LoginAuthRequest $request)
     {
         $data = $request->all();
+        $data = $request->validated();
 
         // Validate the required fields
-        $validation = Validator::make($data, [
-            'name' => 'required|string',
-            'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
-            'password' => 'required|string|min:8',
-            'confirm_password' => 'required|string|same:password',
-            'role_id' => 'required|integer|in:2,3,4,5',
-        ]);
+        // $validation = Validator::make($data, [
+        //     'name' => 'required|string',
+        //     'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
+        //     'password' => 'required|string|min:8',
+        //     'confirm_password' => 'required|string|same:password',
+        //     'role_id' => 'required|integer|in:2,3,4,5',
+        // ]);
 
         // If validation fails
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         // Retrieve the user by email
         $user = User::where('email', $data['email'])->first();

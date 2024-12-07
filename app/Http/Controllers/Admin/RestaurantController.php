@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Restaurant\UpdateRestaurant;
 use App\Http\Requests\Restaurant\StoreRestaurant;
 use App\Http\Resources\Admin\RestaurantListResourse;
 use Illuminate\Http\Request;
@@ -56,30 +57,31 @@ class RestaurantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRestaurant $request)
     {
         //
 
         $data = $request->all();
+        $data = $request->validated();
 
         // Validate the required fields
-        $validation = Validator::make($data, [
-            // 'image' => 'required|string',
-            'name' => 'required|string|min:3|max:255',
-            'address' => 'required|string|max:500',
-            'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
-            'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-            'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
-            // 'opening_hours' => 'required|json', // Ensure valid JSON format
-            'description' => 'nullable|string|max:1000',
-            'status' => 'nullable|string',
-            // 'rating' => 'nullable|numeric|min:0|max:5',
-        ]);
+        // $validation = Validator::make($data, [
+        //     // 'image' => 'required|string',
+        //     'name' => 'required|string|min:3|max:255',
+        //     'address' => 'required|string|max:500',
+        //     'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
+        //     'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+        //     'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
+        //     // 'opening_hours' => 'required|json', // Ensure valid JSON format
+        //     'description' => 'nullable|string|max:1000',
+        //     'status' => 'nullable|string',
+        //     // 'rating' => 'nullable|numeric|min:0|max:5',
+        // ]);
 
-        // If validation fails
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // // If validation fails
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         $restaurant = Restaurant::create([
             'name' => $data['name'],
@@ -159,27 +161,27 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRestaurant $request, string $id)
     {
 
         $data = $request->all();
 
 
-        $validation = Validator::make($data, [
-            'name' => 'required|string|min:3|max:255',
-            'address' => 'required|string|max:500',
-            'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
-            'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-            'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
-            'description' => 'nullable|string|max:1000',
-            'status' => 'nullable|string',
-            'rating' => 'nullable|numeric|min:0|max:5',
-        ]);
+        // $validation = Validator::make($data, [
+        //     'name' => 'required|string|min:3|max:255',
+        //     'address' => 'required|string|max:500',
+        //     'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
+        //     'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+        //     'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
+        //     'description' => 'nullable|string|max:1000',
+        //     'status' => 'nullable|string',
+        //     'rating' => 'nullable|numeric|min:0|max:5',
+        // ]);
 
 
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
 
         $restaurant = Restaurant::find($id);

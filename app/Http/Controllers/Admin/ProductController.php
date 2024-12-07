@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Product\StoreProduct;
+use App\Http\Requests\Admin\Product\UpdateProduct;
 use App\Http\Resources\Admin\CategoryResource;
 use App\Http\Resources\Admin\ProductResource;
 use App\Models\Product;
@@ -57,24 +59,25 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProduct $request)
     {
         //
         $data = $request->all();
+        $data = $request->validated();
 
         // Validate the required fields
-        $validation = Validator::make($data, [
-            'name' => 'required|string|min:3|max:255',
-            'category' => 'nullable|integer|exists:categories,id', // Ensure role is provided
-            'description' => 'nullable|string', // Ensure role is provided
-            'price' => 'required|integer', // Ensure role is provided
-            'status' => 'required|string|in:active,inactive', // Validate status
-        ]);
+        // $validation = Validator::make($data, [
+        //     'name' => 'required|string|min:3|max:255',
+        //     'category' => 'nullable|integer|exists:categories,id', // Ensure role is provided
+        //     'description' => 'nullable|string', // Ensure role is provided
+        //     'price' => 'required|integer', // Ensure role is provided
+        //     'status' => 'required|string|in:active,inactive', // Validate status
+        // ]);
 
-        // If validation fails
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // // If validation fails
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         // Create a new user (assuming the user model exists)
         $item = Product::create([
@@ -118,23 +121,24 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProduct $request, string $id)
     {
 
         $data = $request->all();
+        $data = $request->validated();
 
 
-        $validation = Validator::make($data, [
-            'name' => 'required|string|min:3|max:255',
-            'category' => 'nullable|integer|exists:categories,id', // Ensure category exists
-            'description' => 'nullable|string', // Description is optional
-            'price' => 'required|integer', // Price is required
-            'status' => 'required|string|in:active,inactive', // Validate status
-        ]);
+        // $validation = Validator::make($data, [
+        //     'name' => 'required|string|min:3|max:255',
+        //     'category' => 'nullable|integer|exists:categories,id', // Ensure category exists
+        //     'description' => 'nullable|string', // Description is optional
+        //     'price' => 'required|integer', // Price is required
+        //     'status' => 'required|string|in:active,inactive', // Validate status
+        // ]);
 
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         $item = Product::find($id);
 
