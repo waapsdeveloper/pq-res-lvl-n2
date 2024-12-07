@@ -16,10 +16,41 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // $orders = Order::with('orderProducts.product')->get();
+        // $order = OrderResource::collection($orders);
+        // return ServiceResponse::success('Order list retrieved successfully', $order);
+
+        $search = $request->input('search', '');
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
+
+        $category = $request->input('category_id', '');
+
+        $query = Order::query();
+
+        $query->with('orderProducts.product');
+
+        // Optionally apply search filter if needed
+        if ($search) {
+            // $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        // Paginate the results
+        $query->orderBy('id', 'desc');
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        // Loop through the results and generate full URL for image
+        $data->getCollection()->transform(function ($item) {
+            return new OrderResource($item);
+        });
+
+        // Return the response with image URLs included
+        return self::success("Order list successfully", ['data' => $data]);
+
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -57,7 +88,8 @@ class OrderController extends Controller
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
-                return self::failure("Product with ID {$item['product_id']} not found.");
+                continue;
+                // return self::failure("Product with ID {$item['product_id']} not found.");
             }
 
             $pricePerUnit = $product->price;
@@ -83,6 +115,7 @@ class OrderController extends Controller
             'discount' => $discount,
             'order_number' => $orderNumber,
             'total_price' => $finalPrice,
+            'status' => "pending",
         ]);
 
         foreach ($orderProducts as $orderProduct) {
@@ -96,9 +129,12 @@ class OrderController extends Controller
 
         $order->load('orderProducts.product');
 
-        return new OrderResource($order);
+        $data = new OrderResource($order);
+
+        return self::success("Order list successfully", ['data' => $data]);
     }
 
+    
 
 
 
@@ -109,6 +145,13 @@ class OrderController extends Controller
     public function show(string $id)
     {
         //
+        $order = Order::where('id', $id)->with('orderProducts.product')->first();
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+
+        return ServiceResponse::success('Order details fetched successfully', ['order' => new OrderResource($order)] );
     }
 
     /**
@@ -133,5 +176,29 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+
+        $validation = Validator::make($request->all(), [
+            'status' => 'required|string|in:pending,processing,completed,served,out_for_delivery,delivered ',
+        ]);
+
+        if ($validation->fails()) {
+            return ServiceResponse::error($validation->errors()->first());
+        }
+
+        $order = Order::find($id);
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+
+
+        $order->status = $request->status;
+        $order->save();
+
+        return ServiceResponse::success('Order status updated successfully', $order);
     }
 }
