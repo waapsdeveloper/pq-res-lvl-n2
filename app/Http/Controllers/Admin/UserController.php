@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\User\StoreUser;
+use App\Http\Requests\Admin\User\UpdateUser;
 use App\Http\Resources\Admin\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -58,24 +60,24 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUser $request)
     {
-        $data = $request->all();
-
+        // $data = $request->all();
+        $data = $request->validated();
         // Validate the required fields
-        $validation = Validator::make($data, [
-            'name' => 'required|string|min:3|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|string', // You can add regex here for phone number validation
-            'password' => 'required|string|min:6', // Add validation for password
-            'role' => 'required|integer|in:2,3,4,5', // Ensure role is provided
-            'status' => 'required|string|in:active,inactive', // Validate status
-        ]);
+        // $validation = Validator::make($data, [
+        //     'name' => 'required|string|min:3|max:255',
+        //     'email' => 'required|email|max:255',
+        //     'phone' => 'nullable|string', // You can add regex here for phone number validation
+        //     'password' => 'required|string|min:6', // Add validation for password
+        //     'role' => 'required|integer|in:2,3,4,5', // Ensure role is provided
+        //     'status' => 'required|string|in:active,inactive', // Validate status
+        // ]);
 
-        // If validation fails
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // // If validation fails
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         // Create a new user (assuming the user model exists)
         $user = User::create([
@@ -129,10 +131,43 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUser $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        // Find the user
+        $user = User::find($id);
+        if (!$user) {
+            return self::failure("User with ID $id not found.");
+        }
+
+        // Update user details
+        $user->update([
+            'name' => $data['name'] ?? $user->name,
+            'email' => $data['email'] ?? $user->email,
+            'phone' => $data['phone'] ?? $user->phone,
+            'role_id' => $data['role'] ?? $user->role_id,
+            'status' => $data['status'] ?? $user->status,
+        ]);
+
+        // Optionally update the password if provided
+        if (isset($data['password']) && !empty($data['password'])) {
+            $user->update([
+                'password' => bcrypt($data['password']),
+            ]);
+        }
+
+        // Optionally handle the image if provided
+        if (isset($data['image'])) {
+            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+            $user->update([
+                'image' => $url,
+            ]);
+        }
+
+        return self::success('User updated successfully', ['user' => $user]);
     }
+
 
     /**
      * Remove the specified resource from storage.

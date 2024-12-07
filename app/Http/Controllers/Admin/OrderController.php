@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Order\StoreOrder;
+use App\Http\Requests\Admin\Order\UpdateOrder;
+use App\Http\Requests\Admin\Order\UpdateOrderStatus;
 use App\Http\Resources\Admin\OrderResource;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -63,21 +66,22 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreOrder $request)
     {
-        $data = $request->all();
+        // $data = $request->all();
+        $data = $request->validated();
 
         // Validation
-        $validation = Validator::make($data, [
-            'products' => 'required|array|min:1',
-            'products.*.product_id' => 'required|exists:products,id',
-            'products.*.quantity' => 'required|integer|min:1',
-            'discount' => 'nullable|numeric|min:0|max:100',
-        ]);
+        // $validation = Validator::make($data, [
+        //     'products' => 'required|array|min:1',
+        //     'products.*.product_id' => 'required|exists:products,id',
+        //     'products.*.quantity' => 'required|integer|min:1',
+        //     'discount' => 'nullable|numeric|min:0|max:100',
+        // ]);
 
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         $customerPhone = $data['customer_phone'] ?? 'XXXX';
@@ -134,7 +138,7 @@ class OrderController extends Controller
         return self::success("Order list successfully", ['data' => $data]);
     }
 
-    
+
 
 
 
@@ -151,7 +155,7 @@ class OrderController extends Controller
             return ServiceResponse::error('Order not found');
         }
 
-        return ServiceResponse::success('Order details fetched successfully', ['order' => new OrderResource($order)] );
+        return ServiceResponse::success('Order details fetched successfully', ['order' => new OrderResource($order)]);
     }
 
     /**
@@ -165,10 +169,78 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateOrder $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        // Fetch the order
+        $order = Order::find($id);
+        if (!$order) {
+            return self::failure("Order with ID $id not found.");
+        }
+
+        // dd($data, $order);
+        // Update customer details
+        $customerName = $data['customer_name'] ?? $order->customer_name;
+        $customerPhone = $data['customer_phone'] ?? $order->customer_phone;
+
+        $totalPrice = 0;
+        $orderProducts = [];
+        // Process products
+        foreach ($data['products'] as $item) {
+            $product = Product::find($item['product_id']);
+            if (!$product) {
+                continue; // Ignore invalid products
+            }
+
+            $pricePerUnit = $product->price;
+            $quantity = $item['quantity'];
+            $itemTotal = $pricePerUnit * $quantity;
+
+            $totalPrice += $itemTotal;
+
+            $orderProducts[] = [
+                'product_id' => $item['product_id'],
+                'quantity' => $quantity,
+                'price' => $pricePerUnit,
+            ];
+        }
+
+        // Calculate discount and final price
+        $discount = $data['discount'] ?? $order->discount;
+        $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+
+        // Update order details
+        $order->update([
+            'customer_name' => $customerName,
+            'customer_phone' => $customerPhone,
+            'discount' => $discount,
+            'total_price' => $finalPrice,
+            'status' => $data['status'] ?? $order->status,
+        ]);
+
+        // Update order products
+        // First, delete old products
+        $order->orderProducts()->delete();
+
+        // Then, insert new ones
+        foreach ($orderProducts as $orderProduct) {
+            OrderProduct::create([
+                'order_id' => $order->id,
+                'product_id' => $orderProduct['product_id'],
+                'quantity' => $orderProduct['quantity'],
+                'price' => $orderProduct['price'],
+            ]);
+        }
+
+        // Reload the updated order with its products
+        $order->load('orderProducts.product');
+
+        $data = new OrderResource($order);
+
+        return self::success("Order updated successfully", ['data' => $data]);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -178,16 +250,17 @@ class OrderController extends Controller
         //
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(UpdateOrderStatus $request, $id)
     {
+        $data = $request->validated();
 
-        $validation = Validator::make($request->all(), [
-            'status' => 'required|string|in:pending,processing,completed,served,out_for_delivery,delivered ',
-        ]);
+        // $validation = Validator::make($request->all(), [
+        //     'status' => 'required|string|in:pending,processing,completed,served,out_for_delivery,delivered ',
+        // ]);
 
-        if ($validation->fails()) {
-            return ServiceResponse::error($validation->errors()->first());
-        }
+        // if ($validation->fails()) {
+        //     return ServiceResponse::error($validation->errors()->first());
+        // }
 
         $order = Order::find($id);
 
