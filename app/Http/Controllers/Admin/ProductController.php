@@ -62,7 +62,7 @@ class ProductController extends Controller
     public function store(StoreProduct $request)
     {
         //
-        $data = $request->all();
+        // $data = $request->all();
         $data = $request->validated();
 
         // Validate the required fields
@@ -124,7 +124,7 @@ class ProductController extends Controller
     public function update(UpdateProduct $request, string $id)
     {
 
-        $data = $request->all();
+        // $data = $request->all();
         $data = $request->validated();
 
 

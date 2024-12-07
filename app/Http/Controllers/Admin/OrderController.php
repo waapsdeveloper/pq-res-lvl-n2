@@ -67,7 +67,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrder $request)
     {
-        $data = $request->all();
+        // $data = $request->all();
         $data = $request->validated();
 
         // Validation

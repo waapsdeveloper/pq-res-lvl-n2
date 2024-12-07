@@ -63,6 +63,7 @@ class RestaurantController extends Controller
 
         $data = $request->all();
         $data = $request->validated();
+        dd($data);
 
         // Validate the required fields
         // $validation = Validator::make($data, [
@@ -94,7 +95,6 @@ class RestaurantController extends Controller
             'rating' => $data['rating'] ?? 0, // Default rating to 0 if not provided
             'status' => $data['status'] ?? 'active', // Default rating to 0 if not provided
         ]);
-
 
         // if ($data['image']) {
         //     $url = Helper::getBase64ImageUrl($data);

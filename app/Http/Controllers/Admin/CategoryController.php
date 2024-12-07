@@ -55,7 +55,7 @@ class CategoryController extends Controller
     public function store(StoreCategory $request)
     {
         //
-        $data = $request->all();
+        // $data = $request->all();
         $data = $request->validated();
 
         // Validate the required fields
@@ -112,7 +112,7 @@ class CategoryController extends Controller
     public function update(UpdateCategory $request, string $id)
     {
         // Validate the incoming data
-        $data = $request->all();
+        // $data = $request->all();
         $data = $request->validated();
 
         // $validation = Validator::make($data, [

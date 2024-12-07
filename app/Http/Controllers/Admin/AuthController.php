@@ -56,7 +56,7 @@ class AuthController extends Controller
 
     public function registerViaEmail(LoginAuthRequest $request)
     {
-        $data = $request->all();
+        // $data = $request->all();
         $data = $request->validated();
 
         // Validate the required fields

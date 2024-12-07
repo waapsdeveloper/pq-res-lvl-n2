@@ -54,7 +54,7 @@ class RtableController extends Controller
     public function store(StoreRtable $request)
     {
         //
-        $data = $request->all();
+        // $data = $request->all();
         $data = $request->validated();
 
         // Validate the required fields

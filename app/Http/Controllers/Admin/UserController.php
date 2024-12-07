@@ -62,7 +62,7 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
-        $data = $request->all();
+        // $data = $request->all();
         $data = $request->validated();
         // Validate the required fields
         // $validation = Validator::make($data, [
