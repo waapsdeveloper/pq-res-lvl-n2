@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Auth\LoginAuthRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,20 +14,22 @@ class AuthController extends Controller
 {
     //
 
-    public function loginViaEmail(Request $request){
+    public function loginViaEmail(LoginAuthRequest $request){
 
-        $data = $request->all();
+        // $data = $request->all();
+
+        $data = $request->validated();
 
         // Validate the required fields
-        $validation = Validator::make($data, [
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        // $validation = Validator::make($data, [
+        //     'email' => 'required|email',
+        //     'password' => 'required|string',
+        // ]);
 
-        // If validation fails
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // // If validation fails
+        // if ($validation->fails()) {
+        //     return self::failure($validation->errors()->first());
+        // }
 
         // Retrieve the user by email
         $user = User::where('email', $data['email'])->first();
