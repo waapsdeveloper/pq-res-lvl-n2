@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('order_number');
             $table->decimal('total_price', 10, 2);
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

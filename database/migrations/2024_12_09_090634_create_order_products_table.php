@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('product_id');
             $table->string('quantity');
             $table->decimal('price', 10, 2);
-            $table->string('notes')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
