@@ -24,11 +24,15 @@ class StoreOrder extends FormRequest
     public function rules(): array
     {
         return [
+            'customer_name' => 'nullable|string',
+            'customer_phone' => 'nullable|string',
             'products' => 'required|array|min:1',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
+            'products.*.price' => 'required',
+            'products.*.notes' => 'required|string',
             'discount' => 'nullable|numeric|min:0|max:100',
-            'notes' => 'nullable',
+            'notes' => 'nullable|string',
         ];
     }
     protected function failedValidation(Validator $validator)

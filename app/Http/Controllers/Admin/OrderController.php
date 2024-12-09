@@ -68,34 +68,23 @@ class OrderController extends Controller
      */
     public function store(StoreOrder $request)
     {
-        // $data = $request->all();
+
         $data = $request->validated();
 
-        // Validation
-        // $validation = Validator::make($data, [
-        //     'products' => 'required|array|min:1',
-        //     'products.*.product_id' => 'required|exists:products,id',
-        //     'products.*.quantity' => 'required|integer|min:1',
-        //     'discount' => 'nullable|numeric|min:0|max:100',
-        // ]);
-
-        // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
-        // }
-        // $customerName = $data['customer_name'] ?? 'Walk-in Customer';
-        // $customerPhone = $data['customer_phone'] ?? 'XXXX';
-        $customerName = $request->customer_name ?? 'Walk-in Customer';
-        $customerPhone = $request->customer_phone ?? 'XXXX';
+        $customerName = $data['customer_name'] ?? 'Walk-in Customer';
+        $customerPhone = $data['customer_phone'] ?? 'XXXX';
 
         $totalPrice = 0;
         $orderProducts = [];
-
+        // dd($data['products']);
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
                 continue;
                 // return self::failure("Product with ID {$item['product_id']} not found.");
             }
+
+            // dd($data['products'], $item);
 
             $pricePerUnit = $product->price;
             $quantity = $item['quantity'];
@@ -107,15 +96,15 @@ class OrderController extends Controller
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
+                'notes' => $item['notes'],
             ];
         }
-
 
         $discount = $data['discount'] ?? 0;
         $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $orderNumber = strtoupper(uniqid('ORD-'));
         $orderNote = $request->notes;
-        $orderStatus = $request->status ?? 'pending';
+        $orderStatus = $request->status;
         $order = Order::create([
             'customer_name' => $customerName,
             'customer_phone' => $customerPhone,
@@ -132,6 +121,7 @@ class OrderController extends Controller
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
+                'notes' => $orderProduct['notes'],
             ]);
         }
 
@@ -207,6 +197,8 @@ class OrderController extends Controller
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
+                'notes' => $item['notes'],
+
             ];
         }
 
@@ -235,6 +227,7 @@ class OrderController extends Controller
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
+                'notes' => $orderProduct['notes'],
             ]);
         }
 

@@ -29,6 +29,7 @@ class StoreProduct extends FormRequest
             'description' => 'nullable|string', // Ensure role is provided
             'price' => 'required|integer', // Ensure role is provided
             'status' => 'required|string|in:active,inactive',
+            'notes' => "nullable|string",
         ];
     }
     protected function failedValidation(Validator $validator)
