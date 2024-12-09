@@ -112,13 +112,14 @@ class OrderController extends Controller
         $discount = $data['discount'] ?? 0;
         $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $orderNumber = strtoupper(uniqid('ORD-'));
-
+        $orderNote = $request->notes;
         $order = Order::create([
             'customer_name' => $customerName,
             'customer_phone' => $customerPhone,
             'discount' => $discount,
             'order_number' => $orderNumber,
             'total_price' => $finalPrice,
+            "notes" => $orderNote,
             'status' => "pending",
         ]);
 

@@ -28,6 +28,7 @@ class StoreOrder extends FormRequest
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
             'discount' => 'nullable|numeric|min:0|max:100',
+            'notes' => 'nullable',
         ];
     }
     protected function failedValidation(Validator $validator)
