@@ -82,9 +82,10 @@ class OrderController extends Controller
         // if ($validation->fails()) {
         //     return self::failure($validation->errors()->first());
         // }
-
-        $customerName = $data['customer_name'] ?? 'Walk-in Customer';
-        $customerPhone = $data['customer_phone'] ?? 'XXXX';
+        // $customerName = $data['customer_name'] ?? 'Walk-in Customer';
+        // $customerPhone = $data['customer_phone'] ?? 'XXXX';
+        $customerName = $request->customer_name ?? 'Walk-in Customer';
+        $customerPhone = $request->customer_phone ?? 'XXXX';
 
         $totalPrice = 0;
         $orderProducts = [];
@@ -109,10 +110,12 @@ class OrderController extends Controller
             ];
         }
 
+
         $discount = $data['discount'] ?? 0;
         $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $orderNumber = strtoupper(uniqid('ORD-'));
         $orderNote = $request->notes;
+        $orderStatus = $request->status ?? 'pending';
         $order = Order::create([
             'customer_name' => $customerName,
             'customer_phone' => $customerPhone,
@@ -120,7 +123,7 @@ class OrderController extends Controller
             'order_number' => $orderNumber,
             'total_price' => $finalPrice,
             "notes" => $orderNote,
-            'status' => "pending",
+            'status' => $orderStatus,
         ]);
 
         foreach ($orderProducts as $orderProduct) {
@@ -218,6 +221,7 @@ class OrderController extends Controller
             'discount' => $discount,
             'total_price' => $finalPrice,
             'status' => $data['status'] ?? $order->status,
+            'notes' => $data['notes'] ?? $order->notes,
         ]);
 
         // Update order products
