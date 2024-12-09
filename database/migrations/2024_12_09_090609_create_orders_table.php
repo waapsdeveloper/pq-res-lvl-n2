@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->decimal('discount', 10, 2);
             $table->string('order_number');
             $table->decimal('total_price', 10, 2);
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('status', ['pending', 'accepted', 'in_progress', 'ready', 'delivered'])->default('pending');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

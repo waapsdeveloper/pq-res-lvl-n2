@@ -2,5 +2,5 @@ notes ka column add karna hy order k table mai
 notes ka column add karna hy order_products k 
 make migration
 make seeder for both to add data
+9/12/24done
 
-session ki migration + seeder bhi ban gaya hy
