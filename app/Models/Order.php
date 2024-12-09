@@ -16,6 +16,7 @@ class Order extends Model
         'order_number',
         'total_price',
         'status',
+        'notes'
     ];
 
     // Define relationship with OrderProduct
