@@ -30,6 +30,19 @@
       <img src="{{ asset('assets/img/fl-26') }}.svg" alt="">
    </div>
 </section>
+<section class="sc-2 ">
+
+   <div class="container">
+      <div class="row">
+
+
+         <img src="{{ asset('assets/img/contact-us.png') }}" alt="">
+      </div>
+   </div>
+
+
+
+</section>
 
 <section class="sec-3">
    <div class="fl-15" data-aos="fade" data-aos-duration="1200">

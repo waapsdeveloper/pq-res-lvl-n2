@@ -3,9 +3,6 @@
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('app');
-// });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/today-deals', [HomeController::class, 'todayDeals'])->name('todayDeals');
