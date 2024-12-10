@@ -4,7 +4,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/today-deals', [HomeController::class, 'todayDeals'])->name('todayDeals');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');

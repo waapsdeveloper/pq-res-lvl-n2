@@ -34,10 +34,10 @@
    <div class="container">
       <div class="booking-box">
          <div class="fl-9 aos-init aos-animate" data-aos="fade" data-aos-duration="1200">
-            <img src="http://pq-res-lvl-n2.test/assets/img/fl-9.svg" alt="">
+            <img src="{{ asset('assets/img/fl-9.svg') }}" alt="">
          </div>
          <div class="fl-10 aos-init aos-animate" data-aos="fade" data-aos-duration="1200">
-            <img src="http://pq-res-lvl-n2.test/assets/img/fl-10.svg" alt="">
+            <img src="{{ asset('assets/img/fl-10.svg') }}" alt="">
          </div>
          <div class="book-sc">
             <h3 class="top-cont-1">Online Booking</h3>
@@ -72,13 +72,13 @@
             </div>
          </div>
          <div class="fl-11 aos-init aos-animate" data-aos="fade" data-aos-duration="1200">
-            <img src="http://pq-res-lvl-n2.test/assets/img/fl-11.svg" alt="">
+            <img src="{{ asset('assets/img/fl-11.svg') }}" alt="">
          </div>
          <div class="fl-12 aos-init aos-animate" data-aos="fade" data-aos-duration="1200">
-            <img src="http://pq-res-lvl-n2.test/assets/img/fl-12.svg" alt="">
+            <img src="{{ asset('assets/img/fl-12.svg') }}" alt="">
          </div>
          <div class="fl-14 aos-init aos-animate" data-aos="fade" data-aos-duration="1200">
-            <img src="http://pq-res-lvl-n2.test/assets/img/fl-14.svg" alt="">
+            <img src="{{ asset('assets/img/fl-14.svg') }}" alt="">
          </div>
       </div>
    </div>

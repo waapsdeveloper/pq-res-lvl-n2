@@ -33,13 +33,13 @@
 
 <section class="sec-3">
    <div class="fl-15 aos-init aos-animate" data-aos="fade" data-aos-duration="1200">
-      <img src="http://pq-res-lvl-n2.test/assets/img/fl-15.svg" alt="">
+      <img src="{{ asset('assets/img/fl-15.svg') }}" alt="">
    </div>
    <div class="fl-16 aos-init" data-aos="fade" data-aos-duration="1200">
-      <img src="http://pq-res-lvl-n2.test/assets/img/fl-16.svg" alt="">
+      <img src="{{ asset('assets/img/fl-16.svg') }}" alt="">
    </div>
    <div class="fl-17 aos-init" data-aos="fade" data-aos-duration="1200">
-      <img src="http://pq-res-lvl-n2.test/assets/img/fl-17.svg" alt="">
+      <img src="{{ asset('assets/img/fl-17.svg') }}" alt="">
    </div>
    <div class="container">
       <div class="fod-head">
@@ -51,7 +51,7 @@
             <div class="col-md-3">
                <div class="prod-box">
                   <div class="prod-img">
-                     <img src="http://pq-res-lvl-n2.test/assets/img/prod-item.svg" alt="">
+                     <img src="{{ asset('assets/img/prod-item.svg') }}" alt="">
                   </div>
                   <div class="prod-cont">
                      <a href="#">
@@ -68,7 +68,7 @@
             <div class="col-md-3">
                <div class="prod-box">
                   <div class="prod-img">
-                     <img src="http://pq-res-lvl-n2.test/assets/img/prod-item.svg" alt="">
+                     <img src="{{ asset('assets/img/prod-item.svg') }}" alt="">
                   </div>
                   <div class="prod-cont">
                      <a href="#">
@@ -85,7 +85,7 @@
             <div class="col-md-3">
                <div class="prod-box">
                   <div class="prod-img">
-                     <img src="http://pq-res-lvl-n2.test/assets/img/prod-item.svg" alt="">
+                     <img src="{{ asset('assets/img/prod-item.svg') }}" alt="">
                   </div>
                   <div class="prod-cont">
                      <a href="#">
@@ -102,7 +102,7 @@
             <div class="col-md-3">
                <div class="prod-box">
                   <div class="prod-img">
-                     <img src="http://pq-res-lvl-n2.test/assets/img/prod-item.svg" alt="">
+                     <img src="{{ asset('assets/img/prod-item.svg') }}" alt="">
                   </div>
                   <div class="prod-cont">
                      <a href="#">
@@ -119,7 +119,7 @@
             <div class="col-md-3">
                <div class="prod-box">
                   <div class="prod-img">
-                     <img src="http://pq-res-lvl-n2.test/assets/img/prod-item.svg" alt="">
+                     <img src="{{ asset('assets/img/prod-item.svg') }}" alt="">
                   </div>
                   <div class="prod-cont">
                      <a href="#">
@@ -136,7 +136,7 @@
             <div class="col-md-3">
                <div class="prod-box">
                   <div class="prod-img">
-                     <img src="http://pq-res-lvl-n2.test/assets/img/prod-item.svg" alt="">
+                     <img src="{{ asset('assets/img/prod-item.svg') }}" alt="">
                   </div>
                   <div class="prod-cont">
                      <a href="#">
@@ -153,7 +153,7 @@
             <div class="col-md-3">
                <div class="prod-box">
                   <div class="prod-img">
-                     <img src="http://pq-res-lvl-n2.test/assets/img/prod-item.svg" alt="">
+                     <img src="{{ asset('assets/img/prod-item.svg') }}" alt="">
                   </div>
                   <div class="prod-cont">
                      <a href="#">
@@ -170,7 +170,7 @@
             <div class="col-md-3">
                <div class="prod-box">
                   <div class="prod-img">
-                     <img src="http://pq-res-lvl-n2.test/assets/img/prod-item.svg" alt="">
+                     <img src="{{ asset('assets/img/prod-item.svg') }}" alt="">
                   </div>
                   <div class="prod-cont">
                      <a href="#">
