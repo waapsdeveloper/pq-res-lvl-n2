@@ -134,12 +134,6 @@ class OrderController extends Controller
 
         return self::success("Order list successfully", ['data' => $data]);
     }
-
-
-
-
-
-
     /**
      * Display the specified resource.
      */
@@ -186,6 +180,8 @@ class OrderController extends Controller
             $product = Product::find($item['product_id']);
             if (!$product) {
                 continue; // Ignore invalid products
+                // return self::failure("Product with ID {$item['product_id']} not found.");
+
             }
 
             // $pricePerUnit = $product->price;
