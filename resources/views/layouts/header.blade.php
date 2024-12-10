@@ -11,7 +11,7 @@
     {{--
     <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon"> --}}
-    <link rel="icon" type="image/svg+xml" href="http://pq-res-lvl-n2.test/assets/img/logo.svg">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/img/logo.svg') }}">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
