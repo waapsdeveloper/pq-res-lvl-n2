@@ -3,6 +3,11 @@
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('/admin/{any}', function () {
+    return view('angular');
+})->where('any', '.*');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/today-deals', [HomeController::class, 'todayDeals'])->name('todayDeals');
