@@ -31,7 +31,7 @@ Route::prefix('restaurant')->group(function () {
 
 Route::prefix('role')->group(function () {
     Route::resource('/', RoleController::class)
-        ->only(['index']); // Restrict to specific CRUD actions.
+        ->only(['index', 'show', 'store', 'update', 'destroy']); // Restrict to specific CRUD actions.
 });
 
 Route::prefix('user')->group(function () {
