@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin/{any}', function () {
     return view('angular');
 })->where('any', '.*');
+Route::get('/admin', function(){
+    return view('angular');
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
