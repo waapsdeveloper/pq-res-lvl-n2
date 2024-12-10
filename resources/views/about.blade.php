@@ -11,8 +11,8 @@
       <div class="row">
          <div class="col-md-12">
             <div class="inner-content">
-               <h1>Add to cart</h1>
-               <p>HOME / ADD TO CART</p>
+               <h1>About</h1>
+               <p>HOME / About</p>
             </div>
          </div>
 
