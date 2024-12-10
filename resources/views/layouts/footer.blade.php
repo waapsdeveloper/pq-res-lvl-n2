@@ -55,7 +55,7 @@
                 <div class="ftr-news">
                     <input type="email" name="" id="">
                     <button href="#" class="btn-news">
-                        <img src="{{ asset('assets/img/sent.svg"') }} alt="sent">
+                        <img src="{{ asset('assets/img/sent.svg') }} alt=" sent">
                     </button>
                 </div>
                 <a href="#">Make A Call</a>
@@ -72,14 +72,14 @@
 <!-- Preloader -->
 <div id="preloader"></div>
 <!-- Vendor JS Files -->
-<script src="{{ asset(' assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-                        <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
-                        <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-                        <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-                        <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-                        <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-                        <!-- Main JS File -->
-                        <script src="{{ asset('assets/js/main.js') }}"></script>
-                        </body>
+<script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+<script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+<!-- Main JS File -->
+<script src="{{ asset('assets/js/main.js') }}"></script>
+</body>
 
-                        </html>
+</html>
