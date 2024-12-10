@@ -12,7 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->validateCsrfTokens(except: [
+            'admin/*', // Excludes all routes starting with 'admin/'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
