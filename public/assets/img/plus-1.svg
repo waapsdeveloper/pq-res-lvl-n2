@@ -1,0 +1,13 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 261 81" width="261" height="81">
+	<title>New Project</title>
+	<style>
+		.s0 { fill: none;stroke: #1e1e1e;stroke-linecap: round;stroke-dasharray: 6 } 
+		.s1 { fill: #cc3333 } 
+		.s2 { fill: none;stroke: #ffffff;stroke-linecap: round;stroke-width: 3 } 
+	</style>
+	<path fill-rule="evenodd" class="s0" d="m223 47l-48.9-40h-170.1"/>
+	<path fill-rule="evenodd" class="s0" d="m-197-326l-48.9-40h-170.1"/>
+	<path class="s1" d="m235 80c-12.7 0-23-10.3-23-23 0-12.7 10.3-23 23-23 12.7 0 23 10.3 23 23 0 12.7-10.3 23-23 23z"/>
+	<path fill-rule="evenodd" class="s2" d="m241.6 56.6h-14.1"/>
+	<path fill-rule="evenodd" class="s2" d="m234.6 49.5v14.1"/>
+</svg>
