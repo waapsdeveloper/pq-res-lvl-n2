@@ -84,9 +84,10 @@ class OrderController extends Controller
                 // return self::failure("Product with ID {$item['product_id']} not found.");
             }
 
-            // dd($data['products'], $item);
 
-            $pricePerUnit = $product->price;
+            // $pricePerUnit = $product->price;
+            $pricePerUnit = $item['price'];
+
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
 
@@ -101,7 +102,9 @@ class OrderController extends Controller
         }
 
         $discount = $data['discount'] ?? 0;
-        $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+        // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+        $finalPrice = $totalPrice - $discount;
+        // dd($finalPrice);
         $orderNumber = strtoupper(uniqid('ORD-'));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
@@ -167,14 +170,12 @@ class OrderController extends Controller
     {
         $data = $request->validated();
 
-        // Fetch the order
         $order = Order::find($id);
         if (!$order) {
             return self::failure("Order with ID $id not found.");
         }
 
-        // dd($data, $order);
-        // Update customer details
+
         $customerName = $data['customer_name'] ?? $order->customer_name;
         $customerPhone = $data['customer_phone'] ?? $order->customer_phone;
 
@@ -187,7 +188,8 @@ class OrderController extends Controller
                 continue; // Ignore invalid products
             }
 
-            $pricePerUnit = $product->price;
+            // $pricePerUnit = $product->price;
+            $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
 
@@ -204,7 +206,8 @@ class OrderController extends Controller
 
         // Calculate discount and final price
         $discount = $data['discount'] ?? $order->discount;
-        $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+        // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+        $finalPrice = $totalPrice - $discount;
 
         // Update order details
         $order->update([
@@ -252,13 +255,6 @@ class OrderController extends Controller
     {
         $data = $request->validated();
 
-        // $validation = Validator::make($request->all(), [
-        //     'status' => 'required|string|in:pending,processing,completed,served,out_for_delivery,delivered ',
-        // ]);
-
-        // if ($validation->fails()) {
-        //     return ServiceResponse::error($validation->errors()->first());
-        // }
 
         $order = Order::find($id);
 

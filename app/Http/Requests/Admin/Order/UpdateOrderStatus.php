@@ -24,7 +24,7 @@ class UpdateOrderStatus extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|string|in:pending,processing,completed,served,out_for_delivery,delivered ',
+            'status' => 'required|string|in:pending,accepted,in_progress,ready,delivered',
         ];
     }
     protected function failedValidation(Validator $validator)

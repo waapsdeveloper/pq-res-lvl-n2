@@ -33,6 +33,7 @@ class StoreOrder extends FormRequest
             'products.*.notes' => 'required|string',
             'discount' => 'nullable|numeric|min:0|max:100',
             'notes' => 'nullable|string',
+            'status' => 'required|string|in:pending,accepted,in_progress,ready,delivered',
         ];
     }
     protected function failedValidation(Validator $validator)
