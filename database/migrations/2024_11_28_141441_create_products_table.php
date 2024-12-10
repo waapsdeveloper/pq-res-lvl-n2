@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,7 +17,7 @@ return new class extends Migration
             $table->text('description'); // Product description
             $table->decimal('price', 10, 2); // Product price (10 digits total, 2 decimal places)
             $table->string('image')->nullable(); // Product image (nullable in case there's no image)
-            $table->string('status')->nullable()->default('active'); // Product image (nullable in case there's no image)
+            $table->enum('status', ['active', 'inactive'])->default('active'); // Product image (nullable in case there's no image)
             $table->timestamps(); // created_at and updated_at columns
         });
 

@@ -29,6 +29,7 @@ class UpdateProduct extends FormRequest
             'description' => 'nullable|string', // Description is optional
             'price' => 'required|integer', // Price is required
             'status' => 'required|string|in:active,inactive', // Validate status
+            'notes' => "nullable|string",
         ];
     }
 

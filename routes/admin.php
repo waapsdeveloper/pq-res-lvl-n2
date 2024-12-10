@@ -60,7 +60,6 @@ Route::prefix('order')->group(function () {
         ->only(['index', 'show', 'update', 'store', 'destroy']);
 });
 
-Route::get('/orders/byid/{id}', [OrderController::class, 'listById']);
 Route::post('/orders/update-status/{id}', [OrderController::class, 'updateStatus']);
 
 

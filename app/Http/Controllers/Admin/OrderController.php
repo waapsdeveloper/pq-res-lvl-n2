@@ -68,27 +68,15 @@ class OrderController extends Controller
      */
     public function store(StoreOrder $request)
     {
-        // $data = $request->all();
+
         $data = $request->validated();
-
-        // Validation
-        // $validation = Validator::make($data, [
-        //     'products' => 'required|array|min:1',
-        //     'products.*.product_id' => 'required|exists:products,id',
-        //     'products.*.quantity' => 'required|integer|min:1',
-        //     'discount' => 'nullable|numeric|min:0|max:100',
-        // ]);
-
-        // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
-        // }
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         $customerPhone = $data['customer_phone'] ?? 'XXXX';
 
         $totalPrice = 0;
         $orderProducts = [];
-
+        // dd($data['products']);
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
@@ -96,7 +84,10 @@ class OrderController extends Controller
                 // return self::failure("Product with ID {$item['product_id']} not found.");
             }
 
-            $pricePerUnit = $product->price;
+
+            // $pricePerUnit = $product->price;
+            $pricePerUnit = $item['price'];
+
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
 
@@ -106,20 +97,25 @@ class OrderController extends Controller
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
+                'notes' => $item['notes'],
             ];
         }
 
         $discount = $data['discount'] ?? 0;
-        $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+        // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+        $finalPrice = $totalPrice - $discount;
+        // dd($finalPrice);
         $orderNumber = strtoupper(uniqid('ORD-'));
-
+        $orderNote = $request->notes;
+        $orderStatus = $request->status;
         $order = Order::create([
             'customer_name' => $customerName,
             'customer_phone' => $customerPhone,
             'discount' => $discount,
             'order_number' => $orderNumber,
             'total_price' => $finalPrice,
-            'status' => "pending",
+            "notes" => $orderNote,
+            'status' => $orderStatus,
         ]);
 
         foreach ($orderProducts as $orderProduct) {
@@ -128,6 +124,7 @@ class OrderController extends Controller
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
+                'notes' => $orderProduct['notes'],
             ]);
         }
 
@@ -137,12 +134,6 @@ class OrderController extends Controller
 
         return self::success("Order list successfully", ['data' => $data]);
     }
-
-
-
-
-
-
     /**
      * Display the specified resource.
      */
@@ -173,14 +164,12 @@ class OrderController extends Controller
     {
         $data = $request->validated();
 
-        // Fetch the order
         $order = Order::find($id);
         if (!$order) {
             return self::failure("Order with ID $id not found.");
         }
 
-        // dd($data, $order);
-        // Update customer details
+
         $customerName = $data['customer_name'] ?? $order->customer_name;
         $customerPhone = $data['customer_phone'] ?? $order->customer_phone;
 
@@ -191,9 +180,12 @@ class OrderController extends Controller
             $product = Product::find($item['product_id']);
             if (!$product) {
                 continue; // Ignore invalid products
+                // return self::failure("Product with ID {$item['product_id']} not found.");
+
             }
 
-            $pricePerUnit = $product->price;
+            // $pricePerUnit = $product->price;
+            $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
 
@@ -203,12 +195,15 @@ class OrderController extends Controller
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
+                'notes' => $item['notes'],
+
             ];
         }
 
         // Calculate discount and final price
         $discount = $data['discount'] ?? $order->discount;
-        $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+        // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+        $finalPrice = $totalPrice - $discount;
 
         // Update order details
         $order->update([
@@ -217,6 +212,7 @@ class OrderController extends Controller
             'discount' => $discount,
             'total_price' => $finalPrice,
             'status' => $data['status'] ?? $order->status,
+            'notes' => $data['notes'] ?? $order->notes,
         ]);
 
         // Update order products
@@ -230,6 +226,7 @@ class OrderController extends Controller
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
+                'notes' => $orderProduct['notes'],
             ]);
         }
 
@@ -254,13 +251,6 @@ class OrderController extends Controller
     {
         $data = $request->validated();
 
-        // $validation = Validator::make($request->all(), [
-        //     'status' => 'required|string|in:pending,processing,completed,served,out_for_delivery,delivered ',
-        // ]);
-
-        // if ($validation->fails()) {
-        //     return ServiceResponse::error($validation->errors()->first());
-        // }
 
         $order = Order::find($id);
 

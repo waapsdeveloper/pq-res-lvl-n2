@@ -1,0 +1,82 @@
+[
+    {
+        "customer_name": "Ali Khan",
+        "customer_phone": "03001234567",
+        "discount": 100.0,
+        "order_number": "ORD-1001",
+        "total_price": 900.0,
+        "status": "pending"
+    },
+    {
+        "customer_name": "Sara Ahmed",
+        "customer_phone": "03219876543",
+        "discount": 50.0,
+        "order_number": "ORD-1002",
+        "total_price": 450.0,
+        "status": "ready"
+    },
+    {
+        "customer_name": "Hamza Sheikh",
+        "customer_phone": "03123456789",
+        "discount": 200.0,
+        "order_number": "ORD-1003",
+        "total_price": 1800.0,
+        "status": "in_progress"
+    },
+    {
+        "customer_name": "Zara Ali",
+        "customer_phone": "03457890123",
+        "discount": 0.0,
+        "order_number": "ORD-1004",
+        "total_price": 1200.0,
+        "status": "delivered"
+    },
+    {
+        "customer_name": "Umar Farooq",
+        "customer_phone": "03567984321",
+        "discount": 150.0,
+        "order_number": "ORD-1005",
+        "total_price": 1350.0,
+        "status": "accepted"
+    },
+    {
+        "customer_name": "Aisha Khan",
+        "customer_phone": "03112345678",
+        "discount": 20.0,
+        "order_number": "ORD-1006",
+        "total_price": 980.0,
+        "status": "accepted"
+    },
+    {
+        "customer_name": "Hassan Raza",
+        "customer_phone": "03029874561",
+        "discount": 300.0,
+        "order_number": "ORD-1007",
+        "total_price": 2700.0,
+        "status": "pending"
+    },
+    {
+        "customer_name": "Fatima Bano",
+        "customer_phone": "03451239876",
+        "discount": 75.0,
+        "order_number": "ORD-1008",
+        "total_price": 1125.0,
+        "status": "ready"
+    },
+    {
+        "customer_name": "Bilal Aslam",
+        "customer_phone": "03216784321",
+        "discount": 250.0,
+        "order_number": "ORD-1009",
+        "total_price": 1750.0,
+        "status": "ready"
+    },
+    {
+        "customer_name": "Saima Iqbal",
+        "customer_phone": "03041239876",
+        "discount": 100.0,
+        "order_number": "ORD-1010",
+        "total_price": 900.0,
+        "status": "pending"
+    }
+]
