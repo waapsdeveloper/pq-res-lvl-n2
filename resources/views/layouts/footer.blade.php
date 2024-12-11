@@ -55,16 +55,16 @@
                 <div class="ftr-news">
                     <input type="email" name="" id="">
                     <button href="#" class="btn-news">
-                        <img src="{{ asset('assets/img/sent.svg') }} alt='sent'>
+                        <img src="{{ asset('assets/img/sent.svg') }}" alt="sent">
                     </button>
                 </div>
                 <a href=" #">Make A Call</a>
-                </div>
             </div>
         </div>
-        <div class="container copyright text-center mt-4">
-            <p>© <span>2024</span> <span>The Local Craft Food</span></p>
-        </div>
+    </div>
+    <div class="container copyright text-center mt-4">
+        <p>© <span>2024</span> <span>The Local Craft Food</span></p>
+    </div>
 </footer>
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i

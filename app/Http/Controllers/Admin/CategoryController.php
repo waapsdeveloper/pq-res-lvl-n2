@@ -151,17 +151,17 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         // Attempt to find the restaurant by ID
-        $restaurant = Category::find($id);
+        $category = Category::find($id);
 
-        // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
-            return self::failure("user not found", 404);
+        // If the category doesn't exist, return an error response
+        if (!$category) {
+            return self::failure("Category $id not found", 404);
         }
 
-        // Delete the restaurant
-        $restaurant->delete();
+        // Delete the category
+        $category->delete();
 
         // Return a success response
-        return self::success("User deleted successfully.");
+        return self::success("Category deleted successfully.");
     }
 }
