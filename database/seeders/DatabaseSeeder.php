@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
         $this->call(PassportPersonalAccessTokenSeeder::class);
 
 
-        $this->call(RTableSeeder::class);
+        // $this->call(RTableSeeder::class);
 
         // categories and products
         $this->call(CategorySeeder::class);
         $this->call(ProductSeeder::class);
 
-        $this->call(OrderSeeder::class);
-        $this->call(OrderProductSeeder::class);
+        // $this->call(OrderSeeder::class);
+        // $this->call(OrderProductSeeder::class);
 
 
     }
