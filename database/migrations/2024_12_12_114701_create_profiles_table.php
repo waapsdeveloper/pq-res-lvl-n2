@@ -10,16 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('discounts', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
             $table->string('identifier');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->decimal('actual_price', 10, 2);
-            $table->decimal('discount_price', 10, 2);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('user_id')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('discounts');
+        Schema::dropIfExists('profiles');
     }
 };

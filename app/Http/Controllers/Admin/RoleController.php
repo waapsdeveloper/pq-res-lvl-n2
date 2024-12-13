@@ -127,7 +127,7 @@ class RoleController extends Controller
 
         // If role does not exist
         if (!$role) {
-            return self::failure("Role '$id' not found");
+            return self::failure("Role $id not found");
         }
         $role->delete();
         return ServiceResponse::success('Role delete successful');

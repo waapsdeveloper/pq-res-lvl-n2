@@ -17,3 +17,11 @@ http correction for live
 11/12/24
 routes problem solved
 role api work with model working
+
+12/12/24
+clients changes whatsapp
+
+order_billing
+payments
+customers
+customer_addresses

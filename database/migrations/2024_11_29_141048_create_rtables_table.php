@@ -11,13 +11,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('rtables', function (Blueprint $table) {
-            $table->id(); // Auto-incrementing ID field
-            $table->unsignedBigInteger('restaurant_id'); // Foreign key to restaurants (assuming you have a restaurants table)
-            $table->string('identifier')->unique(); // A unique identifier for the table
-            $table->string('location'); // Location of the table
-            $table->text('description')->nullable(); // A description of the table
+            $table->id();
+            $table->unsignedBigInteger('restaurant_id');
+            $table->string('identifier')->unique();
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->timestamps(); // Created at and updated at timestamps
+            $table->timestamps();
         });
     }
 
