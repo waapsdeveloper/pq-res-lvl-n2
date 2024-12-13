@@ -1,79 +1,32 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
     {
-        $data = [];
+        // Path to the JSON file
+        $jsonFilePath = database_path('data/rtables.json');
 
-        for ($i = 1; $i <= 30; $i++) {
-            $data[] = [
-                'restaurant_id' => rand(1, 5), // Assuming there are 5 restaurants
-                'identifier' => 'TBL' . str_pad($i, 3, '0', STR_PAD_LEFT),
-                'location' => $this->randomLocation(),
-                'description' => $this->randomDescription(),
-                'status' => $this->randomStatus(),
+        // Read and decode JSON
+        $rtables = json_decode(File::get($jsonFilePath), true);
+
+        // Insert rtables into the database
+        foreach ($rtables as $rtable) {
+            DB::table('rtables')->insert([
+                'restaurant_id' => $rtable['restaurant_id'],
+                'identifier' => $rtable['identifier'],
+                'status' => $rtable['status'],
                 'created_at' => now(),
                 'updated_at' => now(),
-            ];
+            ]);
         }
 
-        // Insert data into the rtable table
-        \DB::table('rtables')->insert($data);
-    }
-
-    /**
-     * Generate a random location.
-     *
-     * @return string
-     */
-    private function randomLocation()
-    {
-        $locations = [
-            'Ground Floor - Near Entrance',
-            'First Floor - Corner',
-            'Rooftop - Near Bar',
-            'Patio Area',
-            'VIP Section'
-        ];
-        return $locations[array_rand($locations)];
-    }
-
-    /**
-     * Generate a random description.
-     *
-     * @return string
-     */
-    private function randomDescription()
-    {
-        $descriptions = [
-            'Perfect for couples with a scenic view.',
-            'A quiet table for business meetings.',
-            'Convenient for walk-in customers.',
-            'Great for families with kids.',
-            'Close to the kitchen for quick service.'
-        ];
-        return $descriptions[array_rand($descriptions)];
-    }
-
-    /**
-     * Generate a random status.
-     *
-     * @return string
-     */
-    private function randomStatus()
-    {
-        $statuses = ['active', 'reserved', 'maintenance'];
-        return $statuses[array_rand($statuses)];
+        $this->command->info('Rtables imported successfully from JSON file.');
     }
 }

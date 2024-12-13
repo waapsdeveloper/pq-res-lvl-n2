@@ -15,9 +15,7 @@ class PassportPersonalAccessTokenSeeder extends Seeder
      */
     public function run()
     {
-
-
-
+        Artisan::call('passport:install');
         // Find or create a user (or use an existing one)
         $user = User::first(); // You can change this to get a specific user or create one.
 
@@ -29,7 +27,8 @@ class PassportPersonalAccessTokenSeeder extends Seeder
             $client = \Laravel\Passport\Client::create([
                 'user_id' => $user->id,
                 'name' => 'AuthToken',
-                'secret' => \Str::random(40),
+                // 'secret' => \Str::random(40),
+                'secret' => str()->random(40),
                 'provider' => null,
                 'redirect' => 'http://localhost',
                 'personal_access_client' => 1,

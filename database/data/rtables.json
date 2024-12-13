@@ -1,23 +1,52 @@
 [
     {
-      "restaurant_id": 1,
-      "identifier": "TBL001",
-      "location": "First Floor - Corner",
-      "description": "A table near the window with a scenic view.",
-      "status": "active"
+        "restaurant_id": 1,
+        "identifier": "TABLE001",
+        "status": "active"
     },
     {
-      "restaurant_id": 2,
-      "identifier": "TBL002",
-      "location": "Ground Floor - Near Entrance",
-      "description": "Convenient for walk-in customers.",
-      "status": "active"
+        "restaurant_id": 1,
+        "identifier": "TABLE002",
+        "status": "active"
     },
     {
-      "restaurant_id": 5,
-      "identifier": "TBL030",
-      "location": "Rooftop - Near Bar",
-      "description": "Perfect for couples with a view of the city.",
-      "status": "reserved"
+        "restaurant_id": 2,
+        "identifier": "TABLE003",
+        "status": "inactive"
+    },
+    {
+        "restaurant_id": 2,
+        "identifier": "TABLE004",
+        "status": "active"
+    },
+    {
+        "restaurant_id": 3,
+        "identifier": "TABLE005",
+        "status": "active"
+    },
+    {
+        "restaurant_id": 3,
+        "identifier": "TABLE006",
+        "status": "inactive"
+    },
+    {
+        "restaurant_id": 4,
+        "identifier": "TABLE007",
+        "status": "active"
+    },
+    {
+        "restaurant_id": 4,
+        "identifier": "TABLE008",
+        "status": "active"
+    },
+    {
+        "restaurant_id": 5,
+        "identifier": "TABLE009",
+        "status": "inactive"
+    },
+    {
+        "restaurant_id": 5,
+        "identifier": "TABLE010",
+        "status": "active"
     }
-  ]
+]

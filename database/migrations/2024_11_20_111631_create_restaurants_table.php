@@ -18,12 +18,13 @@ return new class extends Migration
             $table->string('phone')->nullable(); // Phone number (optional)
             $table->string('email')->nullable(); // Email address (optional)
             $table->string('website')->nullable(); // Website URL (optional)
-            $table->json('opening_hours')->nullable(); // JSON for opening hours (optional)
+            $table->json('opening_hours'); // JSON for opening hours
             $table->text('description')->nullable(); // Description of the restaurant (optional)
             $table->float('rating')->default(0); // Average rating, default to 0
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps(); // Adds created_at and updated_at columns
         });
+        
     }
 
     /**

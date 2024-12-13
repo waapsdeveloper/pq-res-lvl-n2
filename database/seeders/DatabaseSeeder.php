@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,23 +12,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        $this->call(RolesTableSeeder::class);
+        // Use statements for seeders
+        $this->call(RolesTableSeeder::class); //1
+        $this->call(UsersTableSeeder::class); //2
+        $this->call(CategorySeeder::class); //3
+        $this->call(RestaurantsTableSeeder::class); //4
+        $this->call(OrderSeeder::class); //5
+        $this->call(OrderBillingSeeder::class); //6
+        $this->call(OrderProductSeeder::class); //7
+        $this->call(PaymentSeeder::class); //8
+        $this->call(ProductSeeder::class); //9
+        $this->call(ProductsPropsSeeder::class); //10
+        $this->call(ProfileSeeder::class); //11
+        $this->call(RTableSeeder::class); //12
+        $this->call(SessionSeeder::class); //13
+        $this->call(UserAddressesSeeder::class); //14
+        $this->call(PassportPersonalAccessTokenSeeder::class); //15
 
-        $this->call(RestaurantsTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        $this->call(PassportPersonalAccessTokenSeeder::class);
-
-
-        // $this->call(RTableSeeder::class);
-
-        // categories and products
-        $this->call(CategorySeeder::class);
-        $this->call(ProductSeeder::class);
-
-        // $this->call(OrderSeeder::class);
-        // $this->call(OrderProductSeeder::class);
-
-
+        // You can also seed additional data here if needed
     }
 }

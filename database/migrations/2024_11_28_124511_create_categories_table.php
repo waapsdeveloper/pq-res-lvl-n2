@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id(); // Creates an auto-incrementing unsigned big integer as 'id'
             $table->string('name'); // Category name
             $table->foreignId('category_id')->nullable();
-            $table->integer('restaurant_id');
+            $table->integer('restaurant_id')->nullable();
             // Parent category ID
             $table->text('description')->nullable();
             $table->text('image')->nullable();

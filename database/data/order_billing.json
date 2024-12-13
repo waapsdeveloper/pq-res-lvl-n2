@@ -1,0 +1,56 @@
+[
+    {
+        "order_id": 1,
+        "amount": 100,
+        "tax": 10,
+        "total": 110,
+        "status": "received",
+        "discount": 15,
+        "total_price": 95
+    },
+    {
+        "order_id": 2,
+        "amount": 50.0,
+        "tax": 5.0,
+        "total": 55.0,
+        "status": "on_delivery",
+        "discount": 5.0,
+        "total_price": 50.0
+    },
+    {
+        "order_id": 3,
+        "amount": 18.5,
+        "tax": 1.85,
+        "total": 20.35,
+        "status": "pending",
+        "discount": 2.0,
+        "total_price": 18.35
+    },
+    {
+        "order_id": 4,
+        "amount": 30.0,
+        "tax": 3.0,
+        "total": 33.0,
+        "status": "received",
+        "discount": 0,
+        "total_price": 33.0
+    },
+    {
+        "order_id": 5,
+        "amount": 75.0,
+        "tax": 7.5,
+        "total": 82.5,
+        "status": "on_delivery",
+        "discount": 10.0,
+        "total_price": 72.5
+    },
+    {
+        "order_id": 6,
+        "amount": 40.0,
+        "tax": 4.0,
+        "total": 44.0,
+        "status": "pending",
+        "discount": 5.0,
+        "total_price": 39.0
+    }
+]
