@@ -1,5 +1,13 @@
 [
     {
+        "name": "Super Admin",
+        "email": "superadmin@email.com",
+        "password": "admin123$",
+        "role_id": 1,
+        "restaurant_id": null,
+        "status": "active"
+    },
+    {
         "name": "Diana Baldwin",
         "email": "dennisyu@hotmail.com",
         "password": "password123$",
