@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Role\RoleStore;
+use App\Http\Requests\Admin\Role\RoleUpdate;
 use App\Http\Resources\Admin\RoleResource;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -29,6 +32,7 @@ class RoleController extends Controller
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
+        // dd($data);
         // Loop through the results and generate full URL for image
         $data->getCollection()->transform(function ($item) {
             return new RoleResource($item);
@@ -51,9 +55,17 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RoleStore $request)
     {
-        //
+        $data = $request->validated();
+        $role = Role::create([
+            'name' => $data['name'],
+            'slug' => $data['slug'],
+
+        ]);
+
+        return ServiceResponse::success('Roles store successful', ['role' => $role]);
+
     }
 
     /**
@@ -62,6 +74,16 @@ class RoleController extends Controller
     public function show(string $id)
     {
         //
+        // Attempt to find the restaurant by ID
+        $role = Role::find($id);
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$role) {
+            return self::failure("Role $id not found", 404);
+        }
+
+        // Return a success response with the restaurant data
+        return self::success("Role details retrieved successfully", ['role' => $role]);
     }
 
     /**
@@ -75,9 +97,25 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RoleUpdate $request, string $id)
     {
-        //
+        $data = $request->validated();
+
+        // Find the category by ID
+        $role = Role::find($id);
+
+        // If role does not exist
+        if (!$role) {
+            return self::failure("role '$id' not found");
+        }
+
+        // Update the role
+        $role->update([
+            'name' => $data['name'],
+            'slug' => $data['slug'],
+        ]);
+
+        return ServiceResponse::success('role update successful', ['role' => $role]);
     }
 
     /**
@@ -85,6 +123,14 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $role = Role::find($id);
+
+        // If role does not exist
+        if (!$role) {
+            return self::failure("Role $id not found");
+        }
+        $role->delete();
+        return ServiceResponse::success('Role delete successful');
+
     }
 }

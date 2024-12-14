@@ -62,22 +62,8 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
-        // $data = $request->all();
         $data = $request->validated();
-        // Validate the required fields
-        // $validation = Validator::make($data, [
-        //     'name' => 'required|string|min:3|max:255',
-        //     'email' => 'required|email|max:255',
-        //     'phone' => 'nullable|string', // You can add regex here for phone number validation
-        //     'password' => 'required|string|min:6', // Add validation for password
-        //     'role' => 'required|integer|in:2,3,4,5', // Ensure role is provided
-        //     'status' => 'required|string|in:active,inactive', // Validate status
-        // ]);
 
-        // // If validation fails
-        // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
-        // }
 
         // Create a new user (assuming the user model exists)
         $user = User::create([

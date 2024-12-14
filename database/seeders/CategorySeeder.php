@@ -26,13 +26,15 @@ class CategorySeeder extends Seeder
         foreach ($categories as $category) {
             DB::table('categories')->insert([
                 'name' => $category['name'],
-                'category_id' => $category['category_id'], // Parent category ID (nullable)
+                'category_id' => $category['category_id'],
+                'restaurant_id' => $category['restaurant_id'] ?? 0,
+                'description' => $category['description'],
+                'image' => $category['image'],
                 'status' => $category['status'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
         }
+}
 
-        $this->command->info('Categories imported successfully from JSON file.');
-    }
 }

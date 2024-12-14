@@ -1,68 +1,38 @@
 [
     {
         "id": 1,
-        "name": "Starter",
+        "name": "Appetizers",
         "category_id": null,
+        "restaurant_id": 1,
+        "description": "Start your meal with our delicious appetizers.",
+        "image": "appetizers.jpg",
         "status": "active"
     },
     {
         "id": 2,
-        "name": "Roll",
+        "name": "Main Courses",
         "category_id": null,
+        "restaurant_id": 1,
+        "description": "Hearty main dishes for a fulfilling meal.",
+        "image": "main_courses.jpg",
         "status": "active"
     },
     {
         "id": 3,
-        "name": "Burger",
+        "name": "Desserts",
         "category_id": null,
+        "restaurant_id": 1,
+        "description": "Sweet treats to end your meal on a high note.",
+        "image": "desserts.jpg",
         "status": "active"
     },
     {
         "id": 4,
-        "name": "Sandwich",
+        "name": "Beverages",
         "category_id": null,
-        "status": "active"
-    },
-    {
-        "id": 5,
-        "name": "Broast",
-        "category_id": null,
-        "status": "active"
-    },
-    {
-        "id": 6,
-        "name": "B.B.Q",
-        "category_id": null,
-        "status": "active"
-    },
-    {
-        "id": 7,
-        "name": "Soup",
-        "category_id": null,
-        "status": "active"
-    },
-    {
-        "id": 8,
-        "name": "Chinese",
-        "category_id": null,
-        "status": "active"
-    },
-    {
-        "id": 9,
-        "name": "Extras",
-        "category_id": null,
-        "status": "active"
-    },
-    {
-        "id": 10,
-        "name": "Sweets & Beverages",
-        "category_id": null,
-        "status": "active"
-    },
-    {
-        "id": 11,
-        "name": "Pizza",
-        "category_id": null,
+        "restaurant_id": 1,
+        "description": "Refreshing beverages to complement your meal.",
+        "image": "beverages.jpg",
         "status": "active"
     }
 ]

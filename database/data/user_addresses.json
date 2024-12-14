@@ -1,0 +1,72 @@
+[
+    {
+        "user_id": 1,
+        "address_line": "123 Main St, Apt 4",
+        "city": "New York",
+        "state": "NY",
+        "country": "USA"
+    },
+    {
+        "user_id": 2,
+        "address_line": "456 Oak Ave, Suite 202",
+        "city": "Los Angeles",
+        "state": "CA",
+        "country": "USA"
+    },
+    {
+        "user_id": 3,
+        "address_line": "789 Pine St",
+        "city": "Chicago",
+        "state": "IL",
+        "country": "USA"
+    },
+    {
+        "user_id": 4,
+        "address_line": "101 Elm Rd",
+        "city": "Houston",
+        "state": "TX",
+        "country": "USA"
+    },
+    {
+        "user_id": 5,
+        "address_line": "22 Maple Dr",
+        "city": "San Francisco",
+        "state": "CA",
+        "country": "USA"
+    },
+    {
+        "user_id": 6,
+        "address_line": "11 Cedar Ln",
+        "city": "Seattle",
+        "state": "WA",
+        "country": "USA"
+    },
+    {
+        "user_id": 7,
+        "address_line": "78 Willow Ct",
+        "city": "Miami",
+        "state": "FL",
+        "country": "USA"
+    },
+    {
+        "user_id": 8,
+        "address_line": "555 Birch Blvd",
+        "city": "Boston",
+        "state": "MA",
+        "country": "USA"
+    },
+    {
+        "user_id": 9,
+        "address_line": "321 Spruce St",
+        "city": "Austin",
+        "state": "TX",
+        "country": "USA"
+    },
+    {
+        "user_id": 10,
+        "address_line": "999 Redwood Way",
+        "city": "Denver",
+        "state": "CO",
+        "country": "USA"
+    }
+]

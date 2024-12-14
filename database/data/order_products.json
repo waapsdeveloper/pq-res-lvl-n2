@@ -3,84 +3,105 @@
         "order_id": "1",
         "product_id": "101",
         "quantity": "2",
-        "price": 500.0,
-        "notes": "Urgent delivery required"
+        "price": "14.99",
+        "notes": "Extra cheese on both burgers."
     },
     {
         "order_id": "1",
         "product_id": "102",
         "quantity": "1",
-        "price": 300.0,
-        "notes": null
+        "price": "4.99",
+        "notes": "Large fries with ketchup."
     },
     {
         "order_id": "2",
-        "product_id": "1",
-        "quantity": "5",
-        "price": 150.0,
-        "notes": "Handle with care"
+        "product_id": "103",
+        "quantity": "1",
+        "price": "8.49",
+        "notes": "No ice in the drink."
+    },
+    {
+        "order_id": "2",
+        "product_id": "104",
+        "quantity": "3",
+        "price": "5.99",
+        "notes": "Make all drinks medium size."
     },
     {
         "order_id": "3",
-        "product_id": "2",
-        "quantity": "3",
-        "price": 200.0,
+        "product_id": "105",
+        "quantity": "1",
+        "price": "9.99",
+        "notes": "Add extra pickles to the sandwich."
+    },
+    {
+        "order_id": "3",
+        "product_id": "106",
+        "quantity": "2",
+        "price": "3.49",
         "notes": null
     },
     {
-        "order_id": "3",
-        "product_id": "4",
-        "quantity": "4",
-        "price": 250.0,
-        "notes": "Gift wrap requested"
-    },
-    {
         "order_id": "4",
-        "product_id": "3",
-        "quantity": "6",
-        "price": 100.0,
-        "notes": "Deliver in the evening"
+        "product_id": "107",
+        "quantity": "2",
+        "price": "7.99",
+        "notes": "One drink should be diet soda."
     },
     {
         "order_id": "5",
-        "product_id": "7",
+        "product_id": "108",
         "quantity": "1",
-        "price": 750.0,
+        "price": "11.99",
+        "notes": null
+    },
+    {
+        "order_id": "5",
+        "product_id": "109",
+        "quantity": "4",
+        "price": "2.99",
+        "notes": "Make sure all sauces are included."
+    },
+    {
+        "order_id": "6",
+        "product_id": "110",
+        "quantity": "5",
+        "price": "6.99",
         "notes": null
     },
     {
         "order_id": "6",
-        "product_id": "6",
-        "quantity": "2",
-        "price": 400.0,
-        "notes": "Fragile"
+        "product_id": "111",
+        "quantity": "3",
+        "price": "8.99",
+        "notes": "Spicy level: mild."
     },
     {
         "order_id": "7",
-        "product_id": "4",
-        "quantity": "10",
-        "price": 80.0,
-        "notes": "For wholesale"
+        "product_id": "112",
+        "quantity": "2",
+        "price": "15.49",
+        "notes": "No onions in both sandwiches."
     },
     {
         "order_id": "8",
-        "product_id": "9",
-        "quantity": "3",
-        "price": 600.0,
-        "notes": "Contact on arrival"
+        "product_id": "113",
+        "quantity": "1",
+        "price": "4.49",
+        "notes": "Extra crispy fries."
     },
     {
         "order_id": "9",
-        "product_id": "10",
-        "quantity": "3",
-        "price": 600.0,
-        "notes": "Contact on arrival"
+        "product_id": "114",
+        "quantity": "6",
+        "price": "12.99",
+        "notes": null
     },
     {
         "order_id": "10",
-        "product_id": "4",
-        "quantity": "10",
-        "price": 100.0,
-        "notes": "For wholesale/reatail"
+        "product_id": "115",
+        "quantity": "1",
+        "price": "18.99",
+        "notes": "Party pack - no specific notes."
     }
 ]

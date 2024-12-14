@@ -1,82 +1,68 @@
 [
     {
-        "customer_name": "Ali Khan",
-        "customer_phone": "03001234567",
-        "discount": 100.0,
-        "order_number": "ORD-1001",
-        "total_price": 900.0,
-        "status": "pending"
+        "identifier": "ORD12345",
+        "order_number": "1001",
+        "type": "dine-in",
+        "status": "pending",
+        "notes": "Customer requested extra napkins.",
+        "customer_id": "1",
+        "invoice_no": "INV001",
+        "table_no": "5",
+        "restaurant_id": "1"
     },
     {
-        "customer_name": "Sara Ahmed",
-        "customer_phone": "03219876543",
-        "discount": 50.0,
-        "order_number": "ORD-1002",
-        "total_price": 450.0,
-        "status": "ready"
+        "identifier": "ORD12346",
+        "order_number": "1002",
+        "type": "take-away",
+        "status": "confirmed",
+        "notes": "Add extra ketchup packets.",
+        "customer_id": "2",
+        "invoice_no": "INV002",
+        "table_no": null,
+        "restaurant_id": "2"
     },
     {
-        "customer_name": "Hamza Sheikh",
-        "customer_phone": "03123456789",
-        "discount": 200.0,
-        "order_number": "ORD-1003",
-        "total_price": 1800.0,
-        "status": "in_progress"
+        "identifier": "ORD12347",
+        "order_number": "1003",
+        "type": "delivery",
+        "status": "out_for_delivery",
+        "notes": "Deliver to the back door.",
+        "customer_id": "3",
+        "invoice_no": "INV003",
+        "table_no": null,
+        "restaurant_id": "3"
     },
     {
-        "customer_name": "Zara Ali",
-        "customer_phone": "03457890123",
-        "discount": 0.0,
-        "order_number": "ORD-1004",
-        "total_price": 1200.0,
-        "status": "delivered"
+        "identifier": "ORD12348",
+        "order_number": "1004",
+        "type": "drive-thru",
+        "status": "ready_for_pickup",
+        "notes": "No onions in the burger.",
+        "customer_id": "4",
+        "invoice_no": "INV004",
+        "table_no": null,
+        "restaurant_id": "4"
     },
     {
-        "customer_name": "Umar Farooq",
-        "customer_phone": "03567984321",
-        "discount": 150.0,
-        "order_number": "ORD-1005",
-        "total_price": 1350.0,
-        "status": "accepted"
+        "identifier": "ORD12349",
+        "order_number": "1005",
+        "type": "curbside-pickup",
+        "status": "preparing",
+        "notes": "Add a small fries to the order.",
+        "customer_id": "5",
+        "invoice_no": "INV005",
+        "table_no": null,
+        "restaurant_id": "5"
     },
     {
-        "customer_name": "Aisha Khan",
-        "customer_phone": "03112345678",
-        "discount": 20.0,
-        "order_number": "ORD-1006",
-        "total_price": 980.0,
-        "status": "accepted"
-    },
-    {
-        "customer_name": "Hassan Raza",
-        "customer_phone": "03029874561",
-        "discount": 300.0,
-        "order_number": "ORD-1007",
-        "total_price": 2700.0,
-        "status": "pending"
-    },
-    {
-        "customer_name": "Fatima Bano",
-        "customer_phone": "03451239876",
-        "discount": 75.0,
-        "order_number": "ORD-1008",
-        "total_price": 1125.0,
-        "status": "ready"
-    },
-    {
-        "customer_name": "Bilal Aslam",
-        "customer_phone": "03216784321",
-        "discount": 250.0,
-        "order_number": "ORD-1009",
-        "total_price": 1750.0,
-        "status": "ready"
-    },
-    {
-        "customer_name": "Saima Iqbal",
-        "customer_phone": "03041239876",
-        "discount": 100.0,
-        "order_number": "ORD-1010",
-        "total_price": 900.0,
-        "status": "pending"
+        "identifier": "ORD12350",
+        "order_number": "1006",
+        "type": "reservation",
+        "status": "completed",
+        "notes": "Birthday party reservation for 10 people.",
+        "customer_id": "6",
+        "invoice_no": "INV006",
+        "table_no": "10",
+        "restaurant_id": "1"
     }
 ]

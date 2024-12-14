@@ -1,17 +1,13 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ProductSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
     {
         // Path to the JSON file
@@ -24,11 +20,14 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             DB::table('products')->insert([
                 'category_id' => $product['category_id'],
+                'restaurant_id' => $product['restaurant_id'],
+                'identifier' => $product['identifier'],
                 'name' => $product['name'],
-                'description' => $product['description'] ?? "",
+                'description' => $product['description'],
                 'price' => $product['price'],
-                'image' => $product['image'] ?? "",
-                'status' => $product['status'] ?? 'active',
+                'discount' => $product['discount'],
+                'image' => $product['image'],
+                'status' => $product['status'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

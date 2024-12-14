@@ -1,0 +1,38 @@
+[
+    {
+        "product_id": 1,
+        "meta_key": "color",
+        "meta_value": "Red",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 2,
+        "meta_key": "size",
+        "meta_value": "Large",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 3,
+        "meta_key": "is_vegan",
+        "meta_value": "true",
+        "meta_key_type": "boolean"
+    },
+    {
+        "product_id": 4,
+        "meta_key": "spice_level",
+        "meta_value": "3",
+        "meta_key_type": "integer"
+    },
+    {
+        "product_id": 5,
+        "meta_key": "ingredients",
+        "meta_value": "Chocolate, Butter, Flour, Sugar",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 6,
+        "meta_key": "calories",
+        "meta_value": "250",
+        "meta_key_type": "integer"
+    }
+]

@@ -1,0 +1,92 @@
+[
+    {
+        "rtable_id": "1",
+        "customer_id": 101,
+        "order_id": 1001,
+        "booking_start": "2024-12-14 18:00:00",
+        "booking_end": "2024-12-14 20:00:00",
+        "number_of_people": 4,
+        "status": "pending"
+    },
+    {
+        "rtable_id": "2",
+        "customer_id": 102,
+        "order_id": 1002,
+        "booking_start": "2024-12-14 19:00:00",
+        "booking_end": "2024-12-14 21:00:00",
+        "number_of_people": 2,
+        "status": "confirmed"
+    },
+    {
+        "rtable_id": "3",
+        "customer_id": 103,
+        "order_id": 1003,
+        "booking_start": "2024-12-15 12:00:00",
+        "booking_end": "2024-12-15 14:00:00",
+        "number_of_people": 6,
+        "status": "completed"
+    },
+    {
+        "rtable_id": "4",
+        "customer_id": 104,
+        "order_id": 1004,
+        "booking_start": "2024-12-15 13:00:00",
+        "booking_end": "2024-12-15 15:00:00",
+        "number_of_people": 3,
+        "status": "cancelled"
+    },
+    {
+        "rtable_id": "5",
+        "customer_id": 105,
+        "order_id": 1005,
+        "booking_start": "2024-12-16 17:00:00",
+        "booking_end": "2024-12-16 19:00:00",
+        "number_of_people": 5,
+        "status": "pending"
+    },
+    {
+        "rtable_id": "6",
+        "customer_id": 106,
+        "order_id": 1006,
+        "booking_start": "2024-12-16 18:00:00",
+        "booking_end": "2024-12-16 20:00:00",
+        "number_of_people": 7,
+        "status": "confirmed"
+    },
+    {
+        "rtable_id": "7",
+        "customer_id": 107,
+        "order_id": 1007,
+        "booking_start": "2024-12-17 11:00:00",
+        "booking_end": "2024-12-17 13:00:00",
+        "number_of_people": 8,
+        "status": "completed"
+    },
+    {
+        "rtable_id": "8",
+        "customer_id": 108,
+        "order_id": 1008,
+        "booking_start": "2024-12-17 14:00:00",
+        "booking_end": "2024-12-17 16:00:00",
+        "number_of_people": 10,
+        "status": "pending"
+    },
+    {
+        "rtable_id": "9",
+        "customer_id": 109,
+        "order_id": 1009,
+        "booking_start": "2024-12-18 15:00:00",
+        "booking_end": "2024-12-18 17:00:00",
+        "number_of_people": 9,
+        "status": "confirmed"
+    },
+    {
+        "rtable_id": "10",
+        "customer_id": 110,
+        "order_id": 1010,
+        "booking_start": "2024-12-18 18:00:00",
+        "booking_end": "2024-12-18 20:00:00",
+        "number_of_people": 4,
+        "status": "completed"
+    }
+]

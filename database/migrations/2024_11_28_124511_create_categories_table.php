@@ -13,7 +13,11 @@ return new class extends Migration {
         Schema::create('categories', function (Blueprint $table) {
             $table->id(); // Creates an auto-incrementing unsigned big integer as 'id'
             $table->string('name'); // Category name
-            $table->foreignId('category_id')->nullable(); // Parent category ID
+            $table->foreignId('category_id')->nullable();
+            $table->integer('restaurant_id')->nullable();
+            // Parent category ID
+            $table->text('description')->nullable();
+            $table->text('image')->nullable();
             $table->string('status')->nullable()->default('active');
             $table->timestamps(); // created_at and updated_at columns
         });

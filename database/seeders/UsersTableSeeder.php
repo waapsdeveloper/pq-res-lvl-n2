@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 
 class UsersTableSeeder extends Seeder
 {
@@ -25,10 +26,12 @@ class UsersTableSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => $user['name'],
                 'email' => $user['email'],
-                'password' => bcrypt($user['password']), // Encrypt the password
+                'email_verified_at' => $user['email_verified_at'] ?? null, // Nullable
+                'password' => bcrypt($user['password']), // Hashing password
                 'role_id' => $user['role_id'],
-                'restaurant_id' => $user['restaurant_id'],
+                'restaurant_id' => $user['restaurant_id'] ?? 0,
                 'status' => $user['status'],
+                'remember_token' => str()->random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -36,4 +39,5 @@ class UsersTableSeeder extends Seeder
 
         $this->command->info('Users imported successfully from JSON file.');
     }
+
 }

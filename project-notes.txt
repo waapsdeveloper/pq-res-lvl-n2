@@ -8,3 +8,20 @@ make seeder for both to add data
 10/12/24
 price workflow
 front end layout setup
+http correction for live
+ files:
+ -.htaccess
+ -appServiceProvider
+ -config/app.php
+
+11/12/24
+routes problem solved
+role api work with model working
+
+12/12/24
+clients changes whatsapp
+
+order_billing
+payments
+customers
+customer_addresses
