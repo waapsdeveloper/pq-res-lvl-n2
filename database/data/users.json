@@ -75,7 +75,7 @@
         "name": "Robert Mccall",
         "email": "justin52@gmail.com",
         "password": "password123$",
-        "role_id": 1,
+        "role_id": 3,
         "restaurant_id": 4,
         "status": "active"
     },
@@ -139,7 +139,7 @@
         "name": "Kimberly Carroll",
         "email": "melissareyes@hotmail.com",
         "password": "password123$",
-        "role_id": 1,
+        "role_id": 2,
         "restaurant_id": 5,
         "status": "active"
     },
@@ -155,7 +155,7 @@
         "name": "Lisa Young",
         "email": "leeerik@spence.org",
         "password": "password123$",
-        "role_id": 1,
+        "role_id": 9,
         "restaurant_id": 1,
         "status": "active"
     },
