@@ -10,17 +10,18 @@ class Product extends Model
 
     protected $fillable = [
         'category_id',
+        'restaurant_id',
+        'identifier',
         'name',
         'description',
         'price',
+        'discount',
         'image',
-        'status'
+        'status',
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-
-
 }

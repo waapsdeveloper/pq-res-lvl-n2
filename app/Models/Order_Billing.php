@@ -10,9 +10,10 @@ class Order_Billing extends Model
     protected $fillable = [
         'order_id',
         'amount',
-        'discount',
         'tax',
         'total',
-        'status'
+        'status',
+        'discount',
+        'total_price',
     ];
 }

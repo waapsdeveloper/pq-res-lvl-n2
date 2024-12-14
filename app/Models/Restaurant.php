@@ -30,6 +30,7 @@ class Restaurant extends Model
         'description',
         'rating',
         'status'
+
     ];
 
     // Attributes that should be hidden from arrays (e.g., sensitive data)

@@ -9,11 +9,9 @@ class Payments extends Model
     protected $table = 'payments';
     protected $fillable = [
         'order_id',
-        'amount', // this is equals to total of order_billing table 
-        'amount_user_paid',
-        'amount_return_to_user',
-        'status',
+        'amount',
         'customer_id',
-        'mode'
+        'status',
+        'mode',
     ];
 }

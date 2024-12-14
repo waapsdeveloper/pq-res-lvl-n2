@@ -10,13 +10,15 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'customer_name',
-        'customer_phone',
-        'discount',
+        'identifier',
         'order_number',
-        'total_price',
+        'type',
         'status',
-        'notes'
+        'notes',
+        'customer_id',
+        'invoice_no',
+        'table_no',
+        'restaurant_id'
     ];
 
     // Define relationship with OrderProduct

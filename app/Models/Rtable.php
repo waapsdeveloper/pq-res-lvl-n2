@@ -19,7 +19,7 @@ class Rtable extends Model
     protected $fillable = [
         'restaurant_id',
         'identifier',
-        'location',
+        'status',
         'description',
     ];
 

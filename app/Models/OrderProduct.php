@@ -14,7 +14,7 @@ class OrderProduct extends Model
         'product_id',
         'quantity',
         'price',
-        'notes'
+        'notes',
     ];
 
     // Relationship with Order

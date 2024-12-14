@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfileSeeder::class); //11
         $this->call(RTableSeeder::class); //12
         $this->call(SessionSeeder::class); //13
-        $this->call(UserAddressesSeeder::class);
+        $this->call(UserAddressesSeeder::class); //14
 
-        // You can also seed additional data here if needed
+
     }
 }
