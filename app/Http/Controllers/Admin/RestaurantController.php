@@ -80,26 +80,6 @@ class RestaurantController extends Controller
 
         $data = $request->all();
         $data = $request->validated();
-        dd($data);
-
-        // Validate the required fields
-        // $validation = Validator::make($data, [
-        //     // 'image' => 'required|string',
-        //     'name' => 'required|string|min:3|max:255',
-        //     'address' => 'required|string|max:500',
-        //     'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
-        //     'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-        //     'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
-        //     // 'opening_hours' => 'required|json', // Ensure valid JSON format
-        //     'description' => 'nullable|string|max:1000',
-        //     'status' => 'nullable|string',
-        //     // 'rating' => 'nullable|numeric|min:0|max:5',
-        // ]);
-
-        // // If validation fails
-        // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
-        // }
 
         $restaurant = Restaurant::create([
             'name' => $data['name'],
@@ -112,17 +92,6 @@ class RestaurantController extends Controller
             'rating' => $data['rating'] ?? 0, // Default rating to 0 if not provided
             'status' => $data['status'] ?? 'active', // Default rating to 0 if not provided
         ]);
-
-        // if ($data['image']) {
-        //     $url = Helper::getBase64ImageUrl($data);
-        //     $restaurant->update([
-        //         'image' => $url
-        //     ]);
-        // }
-
-
-
-
 
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
     }
