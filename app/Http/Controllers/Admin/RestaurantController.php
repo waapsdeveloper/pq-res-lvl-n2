@@ -25,12 +25,29 @@ class RestaurantController extends Controller
         $search = $request->input('search', '');
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
 
         $query = Restaurant::query();
 
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        if ($filters) {
+            $filters = json_decode($filters, true); // Decode JSON string into an associative array
+
+            if (isset($filters['name'])) {
+                $query->where('name', 'like', '%' . $filters['name'] . '%');
+            }
+
+            if (isset($filters['address'])) {
+                $query->where('address', 'like', '%' . $filters['address'] . '%');
+            }
+
+            if (isset($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
         }
 
         // Paginate the results
