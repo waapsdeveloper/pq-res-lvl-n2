@@ -31,4 +31,6 @@ return [
 
     'supports_credentials' => true,
 
+    'debug' => true, // Enable debug mode
+
 ];
