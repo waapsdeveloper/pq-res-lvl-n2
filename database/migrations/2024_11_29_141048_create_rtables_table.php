@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('restaurant_id');
             $table->string('identifier')->unique();
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

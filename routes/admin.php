@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
@@ -76,4 +77,10 @@ Route::prefix('rtable')->group(function () {
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'store', 'destroy', 'update'])
         ->names('rtable'); // Restrict to specific CRUD actions.
+});
+Route::prefix('customer')->group(function () {
+    Route::resource('/', CustomerController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('customer'); // Restrict to specific CRUD actions.
 });

@@ -14,4 +14,9 @@ class UserAddresses extends Model
         'state',
         'country'
     ];
+
+    protected function userDetail()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

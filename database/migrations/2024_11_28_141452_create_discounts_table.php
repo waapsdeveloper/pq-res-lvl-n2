@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('identifier');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->decimal('actual_price', 10, 2);

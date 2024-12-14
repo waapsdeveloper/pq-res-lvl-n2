@@ -15,6 +15,13 @@ class CustomerResource extends JsonResource
     public function toArray($request)
     {
         $obj = self::toObject($this);
+        $address = $this->userDetails; // Fetch the related UserAddresses
+        if ($address->count() > 0) {
+            $obj['address'] = $address; // Assuming 'address' is a column in the related table
+        } else {
+            $obj['address'] = 'no address found';
+        }
+
         return $obj;
     }
 
@@ -23,7 +30,7 @@ class CustomerResource extends JsonResource
         return [
             "id" => $obj->id,
             "name" => $obj->name,
-            "address" => $obj->address,
+            // "address" => $obj->address,
             "status" => $obj->status,
         ];
     }

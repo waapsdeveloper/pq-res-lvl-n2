@@ -25,3 +25,5 @@ order_billing
 payments
 customers
 customer_addresses
+
+<img src={api_url + '/' + companyData?.logo} style={{ maxWidth: "230px", maxHeight: "250px" }} alt="2" />

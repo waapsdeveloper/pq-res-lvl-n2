@@ -22,7 +22,8 @@
     {
         "restaurant_id": 3,
         "identifier": "TABLE005",
-        "status": "active"
+        "status": "active",
+        "description": "10 members table"
     },
     {
         "restaurant_id": 3,
@@ -37,7 +38,8 @@
     {
         "restaurant_id": 4,
         "identifier": "TABLE008",
-        "status": "active"
+        "status": "active",
+        "description": "10 members table"
     },
     {
         "restaurant_id": 5,
@@ -47,6 +49,7 @@
     {
         "restaurant_id": 5,
         "identifier": "TABLE010",
-        "status": "active"
+        "status": "active",
+        "description": "10 members table"
     }
 ]

@@ -16,14 +16,13 @@ return new class extends Migration {
             $table->integer('restaurant_id');
             $table->string('identifier');
             $table->string('name'); // Product name
-            $table->text('description'); // Product description
+            $table->text('description')->nullable(); // Product description
             $table->decimal('price', 10, 2); // Product price (10 digits total, 2 decimal places)
             $table->decimal('discount', 10, 2); // Product price (10 digits total, 2 decimal places)
             $table->string('image')->nullable(); // Product image (nullable in case there's no image)
             $table->enum('status', ['active', 'inactive'])->default('active'); // Product image (nullable in case there's no image)
             $table->timestamps(); // created_at and updated_at columns
         });
-
     }
 
     /**

@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name'); // Category name
             $table->foreignId('category_id')->nullable();
             $table->integer('restaurant_id')->nullable();
-            // Parent category ID
+            $table->string('identifier')->nullable();
             $table->text('description')->nullable();
             $table->text('image')->nullable();
             $table->string('status')->nullable()->default('active');
