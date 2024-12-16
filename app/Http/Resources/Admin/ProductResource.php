@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,12 +21,15 @@ class ProductResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
+
+        $image = Helper::returnFullImageUrl($obj->image);
+
         return [
             "id" => $obj->id,
             "category" => $obj->category,
             "name" => $obj->name,
             "price" => $obj->price,
-            "image" => $obj->image,
+            "image" => $image,
             "status" => $obj->status,
         ];
     }
