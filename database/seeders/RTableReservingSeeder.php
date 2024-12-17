@@ -22,12 +22,10 @@ class RTableReservingSeeder extends Seeder
 
         // Insert rtables into the database
         foreach ($rtables as $rtable) {
-            DB::table('rtables')->insert([
-                'restaurant' => $rtable['restaurant'],
+            DB::table('rtable_bookings')->insert([
                 'rtable_id' => $rtable['rtable_id'],
                 'description' => $rtable['description'],
                 'status' => $rtable['status'],
-                'floor' => $rtable['floor'],
                 'booking_start' => $rtable['booking_start'],
                 'booking_end' => $rtable['booking_end'],
                 'created_at' => now(),
