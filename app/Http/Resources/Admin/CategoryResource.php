@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,9 +21,14 @@ class CategoryResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
+
+        $image = Helper::returnFullImageUrl($obj->image);
+
         return [
             "id" => $obj->id,
             "name" => $obj->name,
+            "description" => $obj->description,
+            "image" => $image,
             "category" => $obj->category,
             "status" => $obj->status,
         ];

@@ -59,7 +59,7 @@ class Helper
         }
 
         // Get the URL from Laravel's filesystem config (the URL from 'public' disk)
-        $baseUrl = Storage::disk('public')->url('');
+        $baseUrl = url('/'); //Storage::disk('public')->url('');
 
         // Generate the full image URL by appending the image path
         // Ensure that the image path is properly concatenated to the base URL

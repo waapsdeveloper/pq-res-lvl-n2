@@ -45,7 +45,7 @@ class ProductController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Category list successfully", ['data' => $data]);
+        return self::success("Product list successfully", ['data' => $data]);
     }
 
     /**
