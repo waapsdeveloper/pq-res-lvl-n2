@@ -11,7 +11,7 @@ Route::prefix('table-booking')->group(function () {
         ->names('table-booking');
 
     // Add your custom route here
-    Route::get('check-table-availability', [TableBookingController::class, 'checkTableAvailability'])
+    Route::post('check-table-availability', [TableBookingController::class, 'checkTableAvailability'])
         ->name('table-booking.check-availability');
 
 });
