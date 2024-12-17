@@ -9,7 +9,7 @@ Route::prefix('table-booking')->group(function () {
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
         ->names('table-booking');
-    Route::post('/check-table-availability', [TableBookingController::class. 'checkTableAvailability'])
+    Route::post('/check-table-availability', [TableBookingController::class. 'checkTableAvailability']);
 });
 
 
