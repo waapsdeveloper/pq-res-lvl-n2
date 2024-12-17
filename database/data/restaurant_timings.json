@@ -1,0 +1,422 @@
+[
+    {
+        "restaurant": 1,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 1,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 1,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 1,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 1,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 1,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 1,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 2,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 2,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 2,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 2,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 2,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 2,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 2,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 3,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 3,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 3,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 3,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 3,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 3,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 3,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 4,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 4,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 4,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 4,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 4,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 4,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 4,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 5,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 5,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 5,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 5,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 5,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 5,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 5,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 6,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 6,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 6,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 6,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 6,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 6,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 6,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 7,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 7,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 7,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 7,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 7,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 7,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 7,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 8,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 8,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 8,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 8,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 8,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 8,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 8,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 9,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 9,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 9,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 9,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 9,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 9,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 9,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 10,
+        "day": "Monday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 10,
+        "day": "Tuesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 10,
+        "day": "Wednesday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 10,
+        "day": "Thursday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 10,
+        "day": "Friday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 10,
+        "day": "Saturday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    },
+    {
+        "restaurant": 10,
+        "day": "Sunday",
+        "start_time": "09:00",
+        "end_time": "22:00"
+    }
+]

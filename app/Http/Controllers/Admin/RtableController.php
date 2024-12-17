@@ -20,6 +20,7 @@ class RtableController extends Controller
         $search = $request->input('search', '');
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
 
         $query = Rtable::query();
 
@@ -27,7 +28,21 @@ class RtableController extends Controller
         if ($search) {
             $query->where('identifier', 'like', '%' . $search . '%');
         }
+        if ($filters) {
+            $filters = json_decode($filters, true); // Decode JSON string into an associative array
 
+            if (isset($filters['name'])) {
+                $query->where('name', 'like', '%' . $filters['name'] . '%');
+            }
+
+            if (isset($filters['address'])) {
+                $query->where('address', 'like', '%' . $filters['address'] . '%');
+            }
+
+            if (isset($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
+        }
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
@@ -39,6 +54,7 @@ class RtableController extends Controller
         // Return the response with image URLs included
         return self::success("Category list successfully", ['data' => $data]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -56,25 +72,13 @@ class RtableController extends Controller
         //
         // $data = $request->all();
         $data = $request->validated();
-
-        // Validate the required fields
-        // $validation = Validator::make($data, [
-        //     'restaurant' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
-        //     'identifier' => 'required|string|unique:rtables,identifier|min:3|max:255', // Unique table identifier
-        //     'location' => 'required|string|max:255', // Table location
-        //     'description' => 'nullable|string|max:500', // Table description (nullable)
-        // ]);
-
-        // // If validation fails
-        // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
-        // }
-
         // Create a new user (assuming the user model exists)
         $item = Rtable::create([
-            'restaurant_id' => $data['restaurant'] ?? 0,
+            'restaurant' => $data['restaurant'],
             'identifier' => $data['identifier'],
-            'location' => $data['location'],
+            'no_of_seats' => $data['no_of_seats'],
+            'floor' => $data['floor'],
+            'status' => $data['status'],
             'description' => $data['description'] ?? null, // Default to null if not provided
         ]);
 
@@ -116,7 +120,7 @@ class RtableController extends Controller
 
         // Find the Rtable
         $rtable = Rtable::find($id);
-        dd($data, $rtable);
+        // dd($data, $rtable);
         if (!$rtable) {
             return self::failure("Rtable with ID $id not found.");
         }
@@ -125,7 +129,8 @@ class RtableController extends Controller
         $rtable->update([
             'restaurant_id' => $data['restaurant'] ?? $rtable->restaurant_id,
             'identifier' => $data['identifier'] ?? $rtable->identifier,
-            'location' => $data['location'] ?? $rtable->location,
+            'no_of_seats' => $data['no_of_seats'] ?? $rtable->no_of_seats,
+            'status' => $data['status'] ?? $rtable->status,
             'description' => $data['description'] ?? $rtable->description,
         ]);
 

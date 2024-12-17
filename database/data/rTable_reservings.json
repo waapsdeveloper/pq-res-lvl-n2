@@ -1,0 +1,162 @@
+[
+    {
+        "restaurant": 3,
+        "rtable_id": 1,
+        "booking_start": "2024-12-25 18:00:00",
+        "booking_end": "2024-12-25 20:00:00",
+        "status": "available",
+        "description": "Reservation for dinner."
+    },
+    {
+        "restaurant": 8,
+        "rtable_id": 2,
+        "booking_start": "2024-12-26 20:00:00",
+        "booking_end": "2024-12-26 22:00:00",
+        "status": "available",
+        "description": "Reservation for a group meeting."
+    },
+    {
+        "restaurant": 6,
+        "rtable_id": 3,
+        "booking_start": "2024-12-27 14:00:00",
+        "booking_end": "2024-12-27 16:00:00",
+        "status": "unavailable",
+        "description": "Reservation for a birthday party."
+    },
+    {
+        "restaurant": 4,
+        "rtable_id": 4,
+        "booking_start": "2024-12-28 12:00:00",
+        "booking_end": "2024-12-28 14:00:00",
+        "status": "available",
+        "description": "Lunch reservation."
+    },
+    {
+        "restaurant": 7,
+        "rtable_id": 5,
+        "booking_start": "2024-12-29 19:00:00",
+        "booking_end": "2024-12-29 21:00:00",
+        "status": "available",
+        "description": "Dinner reservation."
+    },
+    {
+        "restaurant": 5,
+        "rtable_id": 6,
+        "booking_start": "2024-12-30 17:00:00",
+        "booking_end": "2024-12-30 19:00:00",
+        "status": "unavailable",
+        "description": "Reserved for a private event."
+    },
+    {
+        "restaurant": 2,
+        "rtable_id": 7,
+        "booking_start": "2024-12-31 21:00:00",
+        "booking_end": "2024-12-31 23:00:00",
+        "status": "available",
+        "description": "New Year's Eve celebration."
+    },
+    {
+        "restaurant": 1,
+        "rtable_id": 8,
+        "booking_start": "2025-01-01 10:00:00",
+        "booking_end": "2025-01-01 12:00:00",
+        "status": "available",
+        "description": "New Year's Day brunch."
+    },
+    {
+        "restaurant": 8,
+        "rtable_id": 9,
+        "booking_start": "2025-01-02 15:00:00",
+        "booking_end": "2025-01-02 17:00:00",
+        "status": "unavailable",
+        "description": "Reserved for a corporate meeting."
+    },
+    {
+        "restaurant": 3,
+        "rtable_id": 10,
+        "booking_start": "2025-01-03 18:30:00",
+        "booking_end": "2025-01-03 20:30:00",
+        "status": "available",
+        "description": "Dinner reservation."
+    },
+    {
+        "restaurant": 6,
+        "rtable_id": 11,
+        "booking_start": "2025-01-04 13:00:00",
+        "booking_end": "2025-01-04 15:00:00",
+        "status": "unavailable",
+        "description": "Reserved for a private event."
+    },
+    {
+        "restaurant": 4,
+        "rtable_id": 12,
+        "booking_start": "2025-01-05 19:00:00",
+        "booking_end": "2025-01-05 21:00:00",
+        "status": "available",
+        "description": "Dinner reservation."
+    },
+    {
+        "restaurant": 7,
+        "rtable_id": 13,
+        "booking_start": "2025-01-06 21:00:00",
+        "booking_end": "2025-01-06 23:00:00",
+        "status": "unavailable",
+        "description": "Reserved for a party."
+    },
+    {
+        "restaurant": 5,
+        "rtable_id": 14,
+        "booking_start": "2025-01-07 17:00:00",
+        "booking_end": "2025-01-07 19:00:00",
+        "status": "available",
+        "description": "Dinner reservation."
+    },
+    {
+        "restaurant": 2,
+        "rtable_id": 15,
+        "booking_start": "2025-01-08 16:00:00",
+        "booking_end": "2025-01-08 18:00:00",
+        "status": "available",
+        "description": "Brunch reservation."
+    },
+    {
+        "restaurant": 8,
+        "rtable_id": 16,
+        "booking_start": "2025-01-09 12:00:00",
+        "booking_end": "2025-01-09 14:00:00",
+        "status": "available",
+        "description": "Reserved for a private meeting."
+    },
+    {
+        "restaurant": 6,
+        "rtable_id": 17,
+        "booking_start": "2025-01-10 19:30:00",
+        "booking_end": "2025-01-10 21:30:00",
+        "status": "unavailable",
+        "description": "Reserved for a business dinner."
+    },
+    {
+        "restaurant": 4,
+        "rtable_id": 18,
+        "booking_start": "2025-01-11 15:00:00",
+        "booking_end": "2025-01-11 17:00:00",
+        "status": "available",
+        "description": "Afternoon reservation."
+    },
+    {
+        "restaurant": 7,
+        "rtable_id": 19,
+        "booking_start": "2025-01-12 14:00:00",
+        "booking_end": "2025-01-12 16:00:00",
+        "status": "available",
+        "description": "Lunch reservation."
+    },
+    {
+        "restaurant": 5,
+        "rtable_id": 20,
+        "booking_start": "2025-01-13 16:00:00",
+        "booking_end": "2025-01-13 18:00:00",
+        "status": "unavailable",
+        "description": "Reserved for a private event."
+    }
+]

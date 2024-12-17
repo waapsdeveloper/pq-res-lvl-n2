@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RTableSeeder::class); //12
         $this->call(SessionSeeder::class); //13
         $this->call(UserAddressesSeeder::class); //14
-
-
+        $this->call(RTableReservingSeeder::class);
+        $this->call(RestaurantTimingSeeder::class);
     }
 }

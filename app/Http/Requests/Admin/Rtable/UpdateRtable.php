@@ -28,8 +28,10 @@ class UpdateRtable extends FormRequest
         return [
             'restaurant' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
             'identifier' => 'nullable|string|min:3|max:255|unique:rtables,identifier,' . $rtableId, // Unique identifier excluding the current record
-            'location' => 'nullable|string|max:255', // Optional location
-            'description' => 'nullable|string|max:500', // Optional description
+            'no_of_seats' => 'required|integer|max:255', // Table location
+            'description' => 'nullable|string|max:500', // Table description (nullable)
+            'floor' => 'nullable|string|max:500', // Table description (nullable)
+            'status' => 'nullable', // Table description (nullable) // Optional description
         ];
     }
     protected function failedValidation(Validator $validator)

@@ -5,7 +5,7 @@ namespace App\Http\Resources\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RtableResource extends JsonResource
+class TableBookingResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,11 +23,11 @@ class RtableResource extends JsonResource
         return [
             "id" => $obj->id,
             "restaurant" => $obj->restaurant,
-            "identifier" => $obj->identifier,
-            "no_of_seats" => $obj->no_of_seats,
-            "description" => $obj->description,
-            "floor" => $obj->floor,
-            "status" => $obj->status,  // If you have a 'status' field in your rtable, you can add it here
+            // "identifier" => $obj->identifier,
+            // "no_of_seats" => $obj->no_of_seats,
+            // "description" => $obj->description,
+            // "floor" => $obj->floor,
+            // "status" => $obj->status,  // If you have a 'status' field in your rtable, you can add it here
         ];
     }
 }

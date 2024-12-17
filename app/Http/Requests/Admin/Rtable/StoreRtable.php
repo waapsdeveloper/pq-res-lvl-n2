@@ -26,8 +26,10 @@ class StoreRtable extends FormRequest
         return [
             'restaurant' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
             'identifier' => 'required|string|unique:rtables,identifier|min:3|max:255', // Unique table identifier
-            'location' => 'required|string|max:255', // Table location
+            'no_of_seats' => 'required|integer|max:255', // Table location
             'description' => 'nullable|string|max:500', // Table description (nullable)
+            'floor' => 'nullable|string|max:500', // Table description (nullable)
+            'status' => 'nullable', // Table description (nullable)
         ];
     }
     protected function failedValidation(Validator $validator)

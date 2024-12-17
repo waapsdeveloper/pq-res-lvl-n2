@@ -13,14 +13,16 @@ class Rtable extends Model
     protected $table = 'rtables';
 
     // Define the primary key (optional, as Laravel uses 'id' by default)
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
 
     // Define the columns that can be mass-assigned (fillable)
     protected $fillable = [
-        'restaurant_id',
+        'restaurant',
         'identifier',
-        'status',
+        'no_of_seats',
         'description',
+        'status',
+        'floor'
     ];
 
     // If you need to disable timestamps (created_at, updated_at), you can set this to false:
@@ -30,6 +32,11 @@ class Rtable extends Model
     // Example:
     public function restaurant()
     {
-        return $this->belongsTo(Restaurant::class);
+        return $this->belongsTo(Restaurant::class, 'restaurant', 'id');
+    }
+    public function restaurantTimings()
+    {
+        dd($this->hasMany(RestaurantTimings::class, 'restaurant', "restaurant"));
+        // return $this->hasMany(RestaurantTimings::class, 'id', 'restaurant');
     }
 }
