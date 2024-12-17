@@ -25,18 +25,13 @@ class Rtable extends Model
         'floor'
     ];
 
-    // If you need to disable timestamps (created_at, updated_at), you can set this to false:
-    // public $timestamps = false;
-
-    // Optionally, you can define relationships here, such as with the Restaurant model
-    // Example:
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class, 'restaurant', 'id');
     }
+    // Rtable Model
     public function restaurantTimings()
     {
-        dd($this->hasMany(RestaurantTimings::class, 'restaurant', "restaurant"));
-        // return $this->hasMany(RestaurantTimings::class, 'id', 'restaurant');
+        return $this->hasMany(RestaurantTimings::class, 'restaurant', 'restaurant');
     }
 }

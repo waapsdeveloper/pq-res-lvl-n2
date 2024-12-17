@@ -20,7 +20,6 @@ class TableBookingResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
-        dd($obj->restaurantTimings);
         return [
             "id" => $obj->id,
             "restaurant" => $obj->restaurant,
@@ -34,7 +33,7 @@ class TableBookingResource extends JsonResource
                     'restaurant' => $resSchedule->restaurant,
                     'day' => $resSchedule->day,
                     'start_time' => $resSchedule->start_time,
-                    'end_time' => $resSchedule->product->name,
+                    'end_time' => $resSchedule->end_time,
                 ];
             }),
         ];

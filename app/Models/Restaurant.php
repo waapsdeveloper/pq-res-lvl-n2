@@ -64,5 +64,8 @@ class Restaurant extends Model
     // {
     //     return $this->belongsToMany(Tag::class, 'restaurant_tag', 'restaurant_id', 'tag_id');
     // }
-
+    public function timings()
+    {
+        return $this->hasMany(RestaurantTimings::class);
+    }
 }

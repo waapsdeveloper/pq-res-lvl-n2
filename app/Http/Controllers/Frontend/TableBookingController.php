@@ -24,7 +24,6 @@ class TableBookingController extends Controller
         $filters = $request->input('filters', null);
 
         $query = RTable::query()->where('status', 'active')->with('restaurant', 'restaurantTimings');
-        // $query = RTable::query()->where('status', 'active')->with('restaurant', 'restaurantTimings')->first();
 
         // dd($query);
         // Optionally apply search filter if needed

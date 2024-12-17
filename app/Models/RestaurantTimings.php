@@ -13,4 +13,8 @@ class RestaurantTimings extends Model
         'start_time',
         'end_time',
     ];
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
 }
