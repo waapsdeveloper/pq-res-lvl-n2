@@ -97,8 +97,8 @@ class TableBookingController extends Controller
         // Validate the required fields
         $validation = Validator::make($data, [
             'no_of_guests' => 'required|integer|min:2|max:10',
-            'date' => 'required|date', // Ensure role is provided
-            'time' => 'required|time', // Validate status
+            'date' => 'required', // Ensure role is provided
+            'time' => 'required', // Validate status
         ]);
 
         if ($validation->fails()) {
