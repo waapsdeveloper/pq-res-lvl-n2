@@ -27,11 +27,11 @@ class Rtable extends Model
 
     public function restaurant()
     {
-        return $this->belongsTo(Restaurant::class, 'restaurant', 'id');
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
     // Rtable Model
     public function restaurantTimings()
     {
-        return $this->hasMany(RestaurantTimings::class, 'restaurant', 'restaurant');
+        return $this->hasMany(RestaurantTimings::class, 'restaurant_id', 'restaurant');
     }
 }
