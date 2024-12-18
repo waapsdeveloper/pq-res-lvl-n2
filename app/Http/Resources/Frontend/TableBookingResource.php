@@ -28,6 +28,16 @@ class TableBookingResource extends JsonResource
             "date" => $obj->date,
             "days" => $obj->days,
             "status" => $obj->status,
+            'restaurant_detail' => $obj->restaurantDetail ? [
+                "name" => $obj->restaurantDetail->name,
+                "address" => $obj->restaurantDetail->address,
+                "phone" => $obj->restaurantDetail->phone,
+                // "email" => $obj->restaurantDetail->email,
+                // "website" => $obj->restaurantDetail->website,
+                // "description" => $obj->restaurantDetail->description,
+                "rating" => 4.8,
+                "status" => $obj->restaurantDetail->status,
+            ] : null,
             'res_timings' => $obj->restaurantTimings->map(function ($resSchedule) {
                 return [
                     'restaurant' => $resSchedule->restaurant,

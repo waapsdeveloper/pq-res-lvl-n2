@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -24,7 +25,7 @@ class RestaurantsTableSeeder extends Seeder
                 'phone' => $restaurant['phone'],
                 'email' => $restaurant['email'],
                 'website' => $restaurant['website'],
-                'opening_hours' => json_encode($restaurant['opening_hours']), // JSON کو اسٹرنگ میں کنورٹ کریں
+                // 'opening_hours' => json_encode($restaurant['opening_hours']), // JSON کو اسٹرنگ میں کنورٹ کریں
                 'description' => $restaurant['description'],
                 'rating' => $restaurant['rating'],
                 'status' => $restaurant['status'],
@@ -32,7 +33,7 @@ class RestaurantsTableSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
-        
+
 
         $this->command->info('Restaurants imported successfully from JSON file.');
     }

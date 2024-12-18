@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RestaurantTimings extends Model
+class RestaurantTiming extends Model
 {
     protected $table = 'restaurant_timings';
     protected $fillable = [
-        'restaurant',
+        'restaurant_id',
         'day',
         'start_time',
         'end_time',
+        'status'
     ];
-    public function restaurant()
+
+    public function restaurantDetail()
     {
-        return $this->belongsTo(Restaurant::class);
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
 }

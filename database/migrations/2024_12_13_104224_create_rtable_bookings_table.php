@@ -13,11 +13,11 @@ return new class extends Migration {
         Schema::create('rtable_bookings', function (Blueprint $table) {
             $table->id();
             $table->string('rtable_id');
-            $table->integer('customer_id')->nullable();
-            $table->integer('order_id')->nullable();
+            $table->biginteger('customer_id')->nullable();
+            $table->bigInteger('order_id')->nullable();
             $table->dateTime('booking_start')->nullable();
             $table->dateTime('booking_end')->nullable();
-            $table->integer('number_of_people')->nullable();
+            $table->bigInteger('no_of_seats')->nullable();
             $table->string('description')->nullable();
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'completed'])->default('pending');
             $table->timestamps();

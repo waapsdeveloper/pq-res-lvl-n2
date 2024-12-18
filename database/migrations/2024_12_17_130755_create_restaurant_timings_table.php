@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('restaurant_timings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restaurant')->constrained()->onDelete('cascade');
+            $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
             $table->string('day');
             $table->time('start_time');
             $table->time('end_time');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

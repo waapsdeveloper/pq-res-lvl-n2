@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Frontend\CheckAvailabilityResource;
 use App\Http\Resources\Frontend\TableBookingResource;
 use App\Models\RTable;
 use Illuminate\Http\Request;
@@ -140,7 +141,8 @@ class TableBookingController extends Controller
     public function checkTableAvailability(Request $request)
     {
         $data = $request->all();
-
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
         // Validate the required fields
         $validation = Validator::make($data, [
             'restaurant' => 'required',
@@ -155,17 +157,24 @@ class TableBookingController extends Controller
         }
 
         // Fetch available tables based on the restaurant, number of guests, floor, date, and time
-        $availableTables = Rtable::with('restaurant')->where('restaurant', $data['restaurant'])
+        $data = Rtable::with('restaurantDetail')->where('restaurant', $data['restaurant'])
+            ->whereNotNull("restaurant")
             ->where('no_of_seats', '>=', $data['no_of_seats'])
             ->where('status', 'active') // Ensure the table status is active
             // ->where('date', $data['date'])
             // ->where('time', $data['time'])
-            ->get();
+            ->paginate($perpage, ['*'], 'page', $page);
 
-        if ($availableTables->isEmpty()) {
+        if ($data->isEmpty()) {
             return ServiceResponse::error('No tables available for the selected criteria.');
         }
+        // $data = $availableTables;
 
-        return ServiceResponse::success('Table availability', ['data' => $availableTables]);
+        // Loop through the results and generate full URL for image
+
+        $data->getCollection()->transform(function ($item) {
+            return new CheckAvailabilityResource($item);
+        });
+        return ServiceResponse::success('Table availability', ['data' => $data]);
     }
 }

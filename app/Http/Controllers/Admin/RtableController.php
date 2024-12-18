@@ -22,7 +22,7 @@ class RtableController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Rtable::query();
+        $query = Rtable::query()->with('restaurantDetail', 'restaurantTimings');
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -74,7 +74,7 @@ class RtableController extends Controller
         $data = $request->validated();
         // Create a new user (assuming the user model exists)
         $item = Rtable::create([
-            'restaurant' => $data['restaurant'],
+            'restaurant_id' => $data['restaurant_id'],
             'identifier' => $data['identifier'],
             'no_of_seats' => $data['no_of_seats'],
             'floor' => $data['floor'],
@@ -127,9 +127,10 @@ class RtableController extends Controller
 
         // Update the Rtable details
         $rtable->update([
-            'restaurant_id' => $data['restaurant'] ?? $rtable->restaurant_id,
+            'restaurant_id' => $data['restaurant_id'] ?? $rtable->restaurant_id,
             'identifier' => $data['identifier'] ?? $rtable->identifier,
             'no_of_seats' => $data['no_of_seats'] ?? $rtable->no_of_seats,
+            'floor' => $data['floor'] ?? $rtable->floor,
             'status' => $data['status'] ?? $rtable->status,
             'description' => $data['description'] ?? $rtable->description,
         ]);

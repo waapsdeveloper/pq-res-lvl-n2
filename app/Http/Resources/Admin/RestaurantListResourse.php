@@ -24,7 +24,14 @@ class RestaurantListResourse extends JsonResource
             "id" => $obj->id,
             "name" => $obj->name,
             "address" => $obj->address,
+            "phone" => $obj->phone ?? null,
+            "email" => $obj->email ?? null,
+            "website" => $obj->website ?? null,
+            "description" => $obj->description ?? null,
+            "rating" => $obj->rating ?? 0, // Default rating to 0 if not set
             "status" => $obj->status,
+            // "opening_hours" => $obj->opening_hours ?? null,
+
         ];
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Restaurant;
+use App\Models\RestaurantTimings;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
 
@@ -76,9 +77,7 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurant $request)
     {
-        //
 
-        $data = $request->all();
         $data = $request->validated();
 
         $restaurant = Restaurant::create([
@@ -87,11 +86,13 @@ class RestaurantController extends Controller
             'phone' => $data['phone'] ?? null,
             'email' => $data['email'] ?? null,
             'website' => $data['website'] ?? null,
-            'opening_hours' => $data['opening_hours'] ?? null,
+            // 'opening_hours' => $data['opening_hours'] ?? null,
             'description' => $data['description'] ?? null,
             'rating' => $data['rating'] ?? 0, // Default rating to 0 if not provided
             'status' => $data['status'] ?? 'active', // Default rating to 0 if not provided
         ]);
+
+
 
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
     }
@@ -109,7 +110,7 @@ class RestaurantController extends Controller
     //         'phone' => $data['phone'] ?? null,
     //         'email' => $data['email'] ?? null,
     //         'website' => $data['website'] ?? null,
-    //         'opening_hours' => $data['opening_hours'] ?? null,
+    //        // 'opening_hours' => $data['opening_hours'] ?? null,
     //         'description' => $data['description'] ?? null,
     //         'rating' => $data['rating'] ?? 0,
     //         'status' => $data['status'] ?? 'active',

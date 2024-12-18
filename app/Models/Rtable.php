@@ -17,7 +17,7 @@ class Rtable extends Model
 
     // Define the columns that can be mass-assigned (fillable)
     protected $fillable = [
-        'restaurant',
+        'restaurant_id',
         'identifier',
         'no_of_seats',
         'description',
@@ -29,9 +29,18 @@ class Rtable extends Model
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
+    // // Rtable Model
+    // public function restaurantTimings()
+    // {
+    //     return $this->hasMany(RestaurantTimings::class, 'restaurant_id', 'restaurant');
+    // }
+    public function restaurantDetail()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
+    }
     // Rtable Model
     public function restaurantTimings()
     {
-        return $this->hasMany(RestaurantTimings::class, 'restaurant_id', 'restaurant');
+        return $this->hasMany(RestaurantTimings::class, 'restaurant_id', 'restaurant_id');
     }
 }

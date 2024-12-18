@@ -22,7 +22,7 @@ class RestaurantTimingSeeder extends Seeder
         // Insert rtables into the database
         foreach ($rtables as $rtable) {
             DB::table('restaurant_timings')->insert([
-                'restaurant' => $rtable['restaurant'],
+                'restaurant_id' => $rtable['restaurant_id'],
                 'day' => $rtable['day'],
                 'start_time' => $rtable['start_time'],
                 'end_time' => $rtable['end_time'],

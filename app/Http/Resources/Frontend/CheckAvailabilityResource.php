@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Admin;
+namespace App\Http\Resources\Frontend;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RtableResource extends JsonResource
+class CheckAvailabilityResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,20 +22,12 @@ class RtableResource extends JsonResource
     {
         return [
             "id" => $obj->id,
-            "restaurant_id" => $obj->restaurant_id,
+            "restaurant" => $obj->restaurant,
             "identifier" => $obj->identifier,
-            "no_of_seats" => $obj->no_of_seats,
-            "description" => $obj->description,
-            "floor" => $obj->floor,
+            // "day" => $obj->day,
+            // "date" => $obj->date,
+            // "days" => $obj->days,
             "status" => $obj->status,
-            'opening_hours' => $obj->restaurantTimings->map(function ($resSchedule) {
-                return [
-                    // 'restaurant_id' => $resSchedule->restaurant_id,
-                    'day' => $resSchedule->day,
-                    'start_time' => $resSchedule->start_time,
-                    'end_time' => $resSchedule->end_time,
-                ];
-            }),
             'restaurant_detail' => $obj->restaurantDetail ? [
                 "name" => $obj->restaurantDetail->name,
                 "address" => $obj->restaurantDetail->address,
@@ -46,6 +38,14 @@ class RtableResource extends JsonResource
                 "rating" => 4.8,
                 "status" => $obj->restaurantDetail->status,
             ] : null,
+            'res_timings' => $obj->restaurantTimings->map(function ($resSchedule) {
+                return [
+                    'restaurant' => $resSchedule->restaurant,
+                    'day' => $resSchedule->day,
+                    'start_time' => $resSchedule->start_time,
+                    'end_time' => $resSchedule->end_time,
+                ];
+            }),
         ];
     }
 }

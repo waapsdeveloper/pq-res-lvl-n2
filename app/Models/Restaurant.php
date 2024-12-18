@@ -26,7 +26,7 @@ class Restaurant extends Model
         'phone',
         'email',
         'website',
-        'opening_hours',
+        // 'opening_hours',
         'description',
         'rating',
         'status'
