@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Frontend\RTablesController;
 use App\Http\Controllers\Frontend\TableBookingController;
 use Illuminate\Support\Facades\Route;
@@ -19,3 +20,5 @@ Route::resource('/rtables', RTablesController::class)
     ->parameters(['' => 'id'])
     ->only(['index', 'show', 'store', 'update', 'destroy'])
     ->names('rtables');
+
+Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);

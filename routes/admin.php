@@ -92,7 +92,6 @@ Route::prefix('rtable')->group(function () {
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'store', 'destroy', 'update',])
         ->names('rtable'); // Restrict to specific CRUD actions.
-        Route::get('/get-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
 });
 
 
