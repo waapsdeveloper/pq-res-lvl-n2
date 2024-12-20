@@ -20,30 +20,12 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->timestamps();
         });
-
-        Schema::create('rtables_reservings', function (Blueprint $table) {
-            $table->id(); // Primary key
-            $table->unsignedBigInteger('rtable_id'); // Foreign key referencing the table
-            $table->dateTime('booking_start'); // Date and time for the reservation
-            $table->dateTime('booking_end');
-            // Date and time for the reservation
-            $table->enum('status', ['available', 'unavailable'])->default('available'); // Status of the reservation
-            $table->text('description')->nullable(); // Optional description for the reservation
-            $table->timestamps();
-
-            // Foreign key constraints
-            $table->foreign('rtable_id')->references('id')->on('rtables')->onDelete('cascade');
-            // Date range validation
-
-        });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('rtables_reservings');
         Schema::dropIfExists('rtables');
     }
 };
