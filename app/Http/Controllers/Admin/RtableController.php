@@ -112,11 +112,20 @@ class RtableController extends Controller
             ->get()
             ->groupBy('restaurant_id');
 
-        // Return the tables without the restaurant ID as key
+        // Get the first (and only) restaurant data
+        $restaurantData = $restaurants->first();
+
+        // Collect floor values into an array of strings
+        $floors = $restaurantData->pluck('floor')->unique()->values()->toArray();
+
+        // Return the tables and floors together
+
         return response()->json([
-            'restaurant' => $restaurants->first() // Get the first (and only) restaurant data
+            'restaurant' => $restaurants->first(),
+            'floors' => $floors      // Get the first (and only) restaurant data
         ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
