@@ -120,9 +120,9 @@ class RtableController extends Controller
 
         // Return the tables and floors together
 
-        return response()->json([
+        return self::success('success', [
             'restaurant' => $restaurants->first(),
-            'floors' => $floors      // Get the first (and only) restaurant data
+            'floors' => $floors
         ]);
     }
 
