@@ -16,6 +16,11 @@ class RTablesBooking extends Model
         'description',
         'status',
     ];
+
+    public function rTableBookings()
+    {
+        return $this->hasMany(RTableBooking_RTable::class, 'rtable_booking_id');
+    }
     public function rTable()
     {
         return $this->belongsTo(RTable::class, 'rtable_id', 'id');
@@ -28,4 +33,9 @@ class RTablesBooking extends Model
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
+    public function rtablesBookingId()
+{
+    return $this->hasMany(RTable::class, 'rtable_booking_id', 'id');
+}
+
 }

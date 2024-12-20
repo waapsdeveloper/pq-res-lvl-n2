@@ -41,6 +41,6 @@ class Rtable extends Model
     // Rtable Model
     public function restaurantTimings()
     {
-        return $this->hasMany(RestaurantTimings::class, 'restaurant_id', 'restaurant_id');
+        return $this->hasMany(RestaurantTiming::class, 'restaurant_id', 'restaurant_id');
     }
 }

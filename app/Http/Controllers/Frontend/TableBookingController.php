@@ -71,7 +71,7 @@ class TableBookingController extends Controller
     public function index()
     {
         $bookings = RTablesBooking::where('customer_id', 1)
-            ->with('rTable')
+            ->with('rTableBookings')
             ->get();
 
         return self::success(
@@ -95,7 +95,6 @@ class TableBookingController extends Controller
     public function show()
     {
 
-        dd("AGDg");
         // Fetch all bookings associated with this customer
         $bookings = RTablesBooking::where('customer_id', 1)
             ->with('rTableBookings')  // Eager load related rTableBookings
@@ -116,7 +115,7 @@ class TableBookingController extends Controller
                 'booking_end' => $booking->booking_end,
                 'status' => $booking->status,
                 'tables' => $booking->rTableBookings->map(function ($rTableBooking) {
-                    return $rTableBooking->rtable_id;
+                    return $rTableBooking;
                 }),
             ];
         });
