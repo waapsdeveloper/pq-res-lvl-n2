@@ -20,7 +20,7 @@ class RTableBooking_RTable extends Model
 
     public function restaurant()
     {
-        return $this->belongsTo(Restaurant::class)->with('timings');
+        return $this->belongsTo(Restaurant::class);
     }
 
     public function rtable()

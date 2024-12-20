@@ -140,33 +140,48 @@ class TableBookingController extends Controller
         //
     }
 
-    public function checkTableAvailability(Request $request)
+    public function checkTableAvailability(Request $request, $id)
     {
+        // $search = $request->input('search', '');
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
+        // $restaurantId = $request->input('restaurant_id', null);
         // Fetch available tables with eager loaded relationships
-        $availableTables = RTableBooking_RTable::with('restaurant.timings')->get();
+        $query = RTableBooking_RTable::query()->with('restaurant.timings')
+            ->where('restaurant_id', $id);
+        // if ($search) {
+        //     $query->where('identifier', 'like', '%' . $search . '%');
+        // }
 
-        // Check if records exist
-        if ($availableTables->isEmpty()) {
-            return ServiceResponse::error('No tables available for the selected criteria.');
+        if ($filters) {
+            $filters = json_decode($filters, true); // Decode JSON string into an associative array
+
+            if (isset($filters['identifier'])) {
+                $query->where('identifier', 'like', '%' . $filters['identifier'] . '%');
+            }
+            if (isset($filters['restaurant'])) {
+                $query->where('restaurant', 'like', '%' . $filters['restaurant'] . '%');
+            }
+
+            if (isset($filters['days'])) {
+                $query->where('days', $filters['days']);
+            }
+            if (isset($filters['date'])) {
+                $query->where('date', $filters['date']);
+            }
+            if (isset($filters['time'])) {
+                $query->where('time', $filters['time']);
+            }
         }
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        $data->getCollection()->transform(function ($item) {
+            return new CheckAvailabilityResource($item);
+        });
 
         // Transform available tables into resources for the response
-        $data = $availableTables->map(function ($item) {
-            return [
-                'id' => $item->id,
-                'restaurant_id' => $item->restaurant_id,
-                'rtable_booking_id' => $item->rtable_booking_id,
-                'rtable_id' => $item->rtable_id,
-                'booking_start' => $item->booking_start,
-                'booking_end' => $item->booking_end,
-                'no_of_seats' => $item->no_of_seats,
-                'restaurant' => [
-                    'id' => $item->restaurant->id,
-                    'name' => $item->restaurant->name,
-                    'timings' => $item->restaurant->timings, // Include restaurant timings directly
-                ],
-            ];
-        });
+
 
         return ServiceResponse::success('Table availability', ['data' => $data]);
     }

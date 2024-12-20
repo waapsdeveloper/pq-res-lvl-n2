@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('table-booking')->group(function () {
     // Route::get('/getRestaurantsTables', [TableBookingController::class, 'getRestaurantsTables'])->name('getRestaurantsTables');
-    Route::get('check-table-availability', [TableBookingController::class, 'checkTableAvailability'])
+    Route::get('check-table-availability/{id}', [TableBookingController::class, 'checkTableAvailability'])
         ->name('table-booking.check-availability');
 
     Route::resource('/', TableBookingController::class)

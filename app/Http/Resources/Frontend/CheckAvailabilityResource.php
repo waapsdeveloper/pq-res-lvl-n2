@@ -28,20 +28,24 @@ class CheckAvailabilityResource extends JsonResource
     public static function toObject($obj, $lang = 'en')
     {
         return [
-            'table_id' => $obj->id,
-            'restaurant' => $obj->restaurant ? [
-                'id' => $obj->restaurant->id,
-                'name' => $obj->restaurant->name,
-                'timings' => $obj->restaurant->timings->map(function ($timing) {
-                    return [
-                        'day' => $timing->day,
-                        'start_time' => $timing->start_time,
-                        'end_time' => $timing->end_time,
-                    ];
-                })->toArray(),
-            ] : null,
+            'id' => $obj->id,
+            'restaurant_id' => $obj->restaurant_id,
+            'rtable_booking_id' => $obj->rtable_booking_id,
+            'rtable_id' => $obj->rtable_id,
             'booking_start' => $obj->booking_start,
             'booking_end' => $obj->booking_end,
+            'no_of_seats' => $obj->no_of_seats,
+            'res_timing' => $obj->restaurant->timings->map(function ($restaurant) {
+
+                // dd($restaurant->timings);
+                return [
+                    'day' => $restaurant->day, // Include restaurant timings directly
+                    'start_time' => $restaurant->start_time, // Include restaurant timings directly
+                    'end_time' => $restaurant->end_time, // Include restaurant timings directly
+                    'status' => $restaurant->status, // Include restaurant timings directly
+
+                ];
+            }),
         ];
     }
 }
