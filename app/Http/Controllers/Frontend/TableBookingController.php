@@ -186,8 +186,8 @@ class TableBookingController extends Controller
                 'booking_end' => $end_time,
                 'status' => $booking->status,
         ];
-        return self::success([ 'Tables successfully booked for the restaurant',[$result]
-        ]);
+        return self::success('Tables successfully booked for the restaurant',[$result]
+        );
     }
 
 
