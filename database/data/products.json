@@ -689,7 +689,7 @@
         "description": "Pancetta, egg, and parmesan cheese.",
         "price": 11.99,
         "discount": 0.2,
-        "image": "images/products/PROD063.png",
+        "image": "images/products/PROD063.jpg",
         "status": "active"
     },
     {
@@ -700,7 +700,7 @@
         "description": "Pancetta, egg, and parmesan cheese.",
         "price": 11.99,
         "discount": 0.2,
-        "image": "images/products/PROD064.png",
+        "image": "images/products/PROD064.jpg",
         "status": "active"
     },
     {
@@ -711,7 +711,7 @@
         "description": "Pancetta, egg, and parmesan cheese.",
         "price": 11.99,
         "discount": 0.2,
-        "image": "images/products/PROD065.png",
+        "image": "images/products/PROD065.jpg",
         "status": "active"
     },
     {
@@ -722,7 +722,7 @@
         "description": "Pancetta, egg, and parmesan cheese.",
         "price": 11.99,
         "discount": 0.2,
-        "image": "images/products/PROD066.png",
+        "image": "images/products/PROD066.jpg",
         "status": "active"
     },
     {
@@ -733,7 +733,7 @@
         "description": "Pancetta, egg, and parmesan cheese.",
         "price": 11.99,
         "discount": 0.2,
-        "image": "images/products/PROD067.png",
+        "image": "images/products/PROD067.jpg",
         "status": "active"
     },
     {
@@ -744,7 +744,7 @@
         "description": "Pancetta, egg, and parmesan cheese.",
         "price": 11.99,
         "discount": 0.2,
-        "image": "images/products/PROD068.png",
+        "image": "images/products/PROD068.jpg",
         "status": "active"
     },
     {

@@ -28,15 +28,15 @@
         "slug": "delivery-boy"
     },
     {
-        "name": "Customer",
-        "slug": "customer"
+        "name": "Receptionist",
+        "slug": "receptionist"
     },
     {
         "name": "Cleaner",
         "slug": "cleaner"
     },
     {
-        "name": "Receptionist",
-        "slug": "receptionist"
+        "name": "Customer",
+        "slug": "customer"
     }
 ]

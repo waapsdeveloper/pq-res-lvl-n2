@@ -1,6 +1,6 @@
 [
     {
-        "name": "The Gourmet Kitchen",
+        "name": "The Local CraftFood",
         "address": "123 Foodie Lane, New York, NY",
         "phone": "123-456-7890",
         "email": "contact@gourmetkitchen.com",
@@ -81,6 +81,46 @@
     },
     {
         "name": "Burger Haven",
+        "address": "456 Patty Ln, Orlando, FL",
+        "phone": "987-654-4321",
+        "email": "burgers@haven.com",
+        "website": "https://www.burgerhaven.com",
+        "description": "Juicy burgers and crispy fries.",
+        "rating": 4.6,
+        "status": "active"
+    },
+    {
+        "name": "Burger Haven 3",
+        "address": "456 Patty Ln, Orlando, FL",
+        "phone": "987-654-4321",
+        "email": "burgers@haven.com",
+        "website": "https://www.burgerhaven.com",
+        "description": "Juicy burgers and crispy fries.",
+        "rating": 4.6,
+        "status": "active"
+    },
+    {
+        "name": "Burger Haven44",
+        "address": "456 Patty Ln, Orlando, FL",
+        "phone": "987-654-4321",
+        "email": "burgers@haven.com",
+        "website": "https://www.burgerhaven.com",
+        "description": "Juicy burgers and crispy fries.",
+        "rating": 4.6,
+        "status": "active"
+    },
+    {
+        "name": "Burger Haven55",
+        "address": "456 Patty Ln, Orlando, FL",
+        "phone": "987-654-4321",
+        "email": "burgers@haven.com",
+        "website": "https://www.burgerhaven.com",
+        "description": "Juicy burgers and crispy fries.",
+        "rating": 4.6,
+        "status": "active"
+    },
+    {
+        "name": "Burger Haven77",
         "address": "456 Patty Ln, Orlando, FL",
         "phone": "987-654-4321",
         "email": "burgers@haven.com",

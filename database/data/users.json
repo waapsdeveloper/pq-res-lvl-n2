@@ -12,22 +12,22 @@
         "email": "dennisyu@hotmail.com",
         "password": "password123$",
         "role_id": 2,
-        "restaurant_id": 3,
+        "restaurant_id": 1,
         "status": "active"
     },
     {
         "name": "Connor Allen",
         "email": "douglaswendy@yahoo.com",
         "password": "password123$",
-        "role_id": 8,
-        "restaurant_id": 4,
+        "role_id": 3,
+        "restaurant_id": 1,
         "status": "active"
     },
     {
         "name": "Roberto Smith",
         "email": "sarah40@brown.com",
         "password": "password123$",
-        "role_id": 8,
+        "role_id": 4,
         "restaurant_id": 1,
         "status": "active"
     },
@@ -35,15 +35,15 @@
         "name": "Anne Malone",
         "email": "robertjones@hernandez-west.com",
         "password": "password123$",
-        "role_id": 3,
-        "restaurant_id": 3,
+        "role_id": 5,
+        "restaurant_id": 1,
         "status": "active"
     },
     {
         "name": "Gabriela Smith",
         "email": "irodriguez@yahoo.com",
         "password": "password123$",
-        "role_id": 7,
+        "role_id": 6,
         "restaurant_id": 1,
         "status": "active"
     },
@@ -51,23 +51,23 @@
         "name": "Jane Snow",
         "email": "michaelgarcia@hotmail.com",
         "password": "password123$",
-        "role_id": 8,
-        "restaurant_id": 2,
+        "role_id": 7,
+        "restaurant_id": 1,
         "status": "active"
     },
     {
         "name": "Eric Williams MD",
         "email": "nicholas07@yahoo.com",
         "password": "password123$",
-        "role_id": 2,
-        "restaurant_id": 4,
+        "role_id": 8,
+        "restaurant_id": 1,
         "status": "active"
     },
     {
         "name": "Brian Hester",
         "email": "shanelang@hotmail.com",
         "password": "password123$",
-        "role_id": 7,
+        "role_id": 9,
         "restaurant_id": 1,
         "status": "active"
     },
@@ -75,96 +75,8 @@
         "name": "Robert Mccall",
         "email": "justin52@gmail.com",
         "password": "password123$",
-        "role_id": 3,
-        "restaurant_id": 4,
-        "status": "active"
-    },
-    {
-        "name": "Elizabeth Smith",
-        "email": "riceemily@thompson.com",
-        "password": "password123$",
-        "role_id": 6,
-        "restaurant_id": 5,
-        "status": "active"
-    },
-    {
-        "name": "James Harris",
-        "email": "jennifer_54@hotmail.com",
-        "password": "password123$",
-        "role_id": 3,
-        "restaurant_id": 1,
-        "status": "active"
-    },
-    {
-        "name": "Nancy Lee",
-        "email": "cody51@shaffer.com",
-        "password": "password123$",
-        "role_id": 4,
-        "restaurant_id": 4,
-        "status": "active"
-    },
-    {
-        "name": "Kenneth Navarro",
-        "email": "samanthabaldwin@orozco.com",
-        "password": "password123$",
-        "role_id": 6,
-        "restaurant_id": 2,
-        "status": "active"
-    },
-    {
-        "name": "Toni Cervantes",
-        "email": "christinaerickson@hotmail.com",
-        "password": "password123$",
-        "role_id": 5,
-        "restaurant_id": 1,
-        "status": "active"
-    },
-    {
-        "name": "Karen Pruitt",
-        "email": "vedwards@morgan-taylor.info",
-        "password": "password123$",
-        "role_id": 10,
-        "restaurant_id": 4,
-        "status": "active"
-    },
-    {
-        "name": "Karen Patterson",
-        "email": "grahamwhitney@yahoo.com",
-        "password": "password123$",
-        "role_id": 4,
-        "restaurant_id": 1,
-        "status": "active"
-    },
-    {
-        "name": "Kimberly Carroll",
-        "email": "melissareyes@hotmail.com",
-        "password": "password123$",
-        "role_id": 2,
-        "restaurant_id": 5,
-        "status": "active"
-    },
-    {
-        "name": "Monique Butler",
-        "email": "jacksonjustin@yahoo.com",
-        "password": "password123$",
-        "role_id": 9,
-        "restaurant_id": 2,
-        "status": "active"
-    },
-    {
-        "name": "Lisa Young",
-        "email": "leeerik@spence.org",
-        "password": "password123$",
-        "role_id": 9,
-        "restaurant_id": 1,
-        "status": "active"
-    },
-    {
-        "name": "Erica Mckenzie",
-        "email": "aaron90@davis.com",
-        "password": "password123$",
-        "role_id": 5,
-        "restaurant_id": 1,
+        "role_id": null,
+        "restaurant_id": null,
         "status": "active"
     }
 ]

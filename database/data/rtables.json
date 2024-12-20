@@ -1,14 +1,14 @@
 [
     {
-        "restaurant_id": 3,
+        "restaurant_id": 1,
         "identifier": "TABLE291199",
         "status": "active",
-        "floor": "Second",
+        "floor": "First",
         "no_of_seats": 4,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 8,
+        "restaurant_id": 1,
         "identifier": "TABLE8572",
         "status": "active",
         "floor": "First",
@@ -16,15 +16,15 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 6,
+        "restaurant_id": 1,
         "identifier": "TABLE77633",
         "status": "active",
-        "floor": "Third",
+        "floor": "First",
         "no_of_seats": 8,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 8,
+        "restaurant_id": 1,
         "identifier": "TABLE231",
         "status": "active",
         "floor": "First",
@@ -32,15 +32,15 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 4,
+        "restaurant_id": 1,
         "identifier": "TABLE761",
         "status": "active",
-        "floor": "Second",
+        "floor": "First",
         "no_of_seats": 8,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 7,
+        "restaurant_id": 1,
         "identifier": "TABLE339",
         "status": "inactive",
         "floor": "First",
@@ -48,10 +48,10 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 4,
+        "restaurant_id": 1,
         "identifier": "TABLE359",
         "status": "inactive",
-        "floor": "Third",
+        "floor": "First",
         "no_of_seats": 3,
         "description": "Random table description."
     },
@@ -59,20 +59,20 @@
         "restaurant_id": 1,
         "identifier": "TABLE413",
         "status": "active",
-        "floor": "Second",
+        "floor": "First",
         "no_of_seats": 7,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "identifier": "TABLE911",
         "status": "inactive",
-        "floor": "Third",
+        "floor": "First",
         "no_of_seats": 9,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "identifier": "TABLE169",
         "status": "active",
         "floor": "First",
@@ -80,7 +80,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 7,
+        "restaurant_id": 1,
         "identifier": "TABLE204",
         "status": "active",
         "floor": "Second",
@@ -88,31 +88,31 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 6,
+        "restaurant_id": 1,
         "identifier": "TABLE547",
         "status": "active",
-        "floor": "First",
+        "floor": "Second",
         "no_of_seats": 4,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 3,
+        "restaurant_id": 1,
         "identifier": "TABLE348",
         "status": "inactive",
-        "floor": "Third",
+        "floor": "Second",
         "no_of_seats": 6,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "identifier": "TABLE756",
         "status": "active",
-        "floor": "First",
+        "floor": "Second",
         "no_of_seats": 7,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "identifier": "TABLE512",
         "status": "inactive",
         "floor": "Second",
@@ -123,20 +123,20 @@
         "restaurant_id": 1,
         "identifier": "TABLE287",
         "status": "active",
-        "floor": "Third",
+        "floor": "Second",
         "no_of_seats": 5,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 4,
+        "restaurant_id": 1,
         "identifier": "TABLE637",
         "status": "inactive",
-        "floor": "First",
+        "floor": "Second",
         "no_of_seats": 8,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 6,
+        "restaurant_id": 1,
         "identifier": "TABLE492",
         "status": "active",
         "floor": "Second",
@@ -144,26 +144,26 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 7,
+        "restaurant_id": 1,
         "identifier": "TABLE9641",
         "status": "active",
-        "floor": "Third",
+        "floor": "Second",
         "no_of_seats": 4,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 8,
+        "restaurant_id": 1,
         "identifier": "TABLE501",
         "status": "inactive",
-        "floor": "First",
+        "floor": "Second",
         "no_of_seats": 3,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "identifier": "TABLE279",
         "status": "active",
-        "floor": "Second",
+        "floor": "Third",
         "no_of_seats": 8,
         "description": "Random table description."
     },
@@ -176,15 +176,15 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 4,
+        "restaurant_id": 1,
         "identifier": "TABLE302",
         "status": "active",
-        "floor": "First",
+        "floor": "Third",
         "no_of_seats": 6,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 3,
+        "restaurant_id": 1,
         "identifier": "TABLE474",
         "status": "active",
         "floor": "Third",
@@ -192,23 +192,23 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "identifier": "TABLE980",
         "status": "inactive",
-        "floor": "First",
+        "floor": "Third",
         "no_of_seats": 5,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 7,
+        "restaurant_id": 1,
         "identifier": "TABLE133",
         "status": "inactive",
-        "floor": "Second",
+        "floor": "Third",
         "no_of_seats": 4,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 6,
+        "restaurant_id": 1,
         "identifier": "TABLE731",
         "status": "active",
         "floor": "Third",
@@ -216,23 +216,23 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "identifier": "TABLE260",
         "status": "active",
-        "floor": "First",
+        "floor": "Third",
         "no_of_seats": 9,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 8,
+        "restaurant_id": 1,
         "identifier": "TABLE574",
         "status": "inactive",
-        "floor": "Second",
+        "floor": "Third",
         "no_of_seats": 2,
         "description": "Random table description."
     },
     {
-        "restaurant_id": 3,
+        "restaurant_id": 1,
         "identifier": "TABLE461",
         "status": "active",
         "floor": "Third",
@@ -240,7 +240,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 4,
+        "restaurant_id": 1,
         "identifier": "TABLE297",
         "status": "inactive",
         "floor": "First",
@@ -264,7 +264,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "identifier": "TABLE503",
         "status": "active",
         "floor": "First",
@@ -288,7 +288,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 8,
+        "restaurant_id": 1,
         "identifier": "TABLE724",
         "status": "inactive",
         "floor": "First",
@@ -320,7 +320,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "identifier": "TABLE123",
         "status": "active",
         "floor": "First",
