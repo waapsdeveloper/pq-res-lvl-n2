@@ -90,9 +90,12 @@ Route::prefix('order')->group(function () {
 Route::prefix('rtable')->group(function () {
     Route::resource('/', RtableController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'store', 'destroy', 'update'])
+        ->only(['index', 'show', 'store', 'destroy', 'update',])
         ->names('rtable'); // Restrict to specific CRUD actions.
+        Route::get('/get-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
 });
+
+
 Route::prefix('customer')->group(function () {
     Route::resource('/', CustomerController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.

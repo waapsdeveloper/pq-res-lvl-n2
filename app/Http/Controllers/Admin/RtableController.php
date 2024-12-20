@@ -103,6 +103,27 @@ class RtableController extends Controller
         return self::success("Rtable details retrieved successfully", ['Rtable' => $restaurant]);
     }
 
+    public function getByRestaurantId(string $id)
+    {
+        //
+        // Attempt to find the restaurant by ID
+        // Fetch the data, grouping by restaurant and then floor
+        $restaurants = Rtable::with('restaurant:id,name') // Include restaurant details
+            ->select('restaurant_id', 'floor', 'identifier') // Select necessary columns
+            ->get()
+            ->groupBy('restaurant_id')
+            ->map(function ($tables) {
+                return $tables->groupBy('floor'); // Further group by floor
+            });
+
+        // If the restaurant doesn't exist, return an error response
+        if (!$restaurants) {
+            return self::failure("Rtable not found", 404);
+        }
+
+        // Return a success response with the restaurant data
+        return self::success("restaurant tables retrieved successfully", ['restaurant' => $restaurants]);
+    }
     /**
      * Show the form for editing the specified resource.
      */
