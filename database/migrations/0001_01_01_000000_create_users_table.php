@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
 
-            $table->integer('role_id');
+            $table->integer('role_id')->nullable();
             $table->integer('restaurant_id')->nullable();
             $table->string('phone')->nullable();
             $table->enum('status', ['active', 'inactive']);
