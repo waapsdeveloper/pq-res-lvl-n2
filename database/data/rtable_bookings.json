@@ -5,7 +5,7 @@
         "order_id": 1001,
         "booking_start": "2024-12-14 18:00:00",
         "booking_end": "2024-12-14 20:00:00",
-        "number_of_people": 4,
+        "no_of_seats": 4,
         "status": "pending"
     },
     {
@@ -14,7 +14,7 @@
         "order_id": 1002,
         "booking_start": "2024-12-14 19:00:00",
         "booking_end": "2024-12-14 21:00:00",
-        "number_of_people": 2,
+        "no_of_seats": 2,
         "status": "confirmed"
     },
     {
@@ -23,7 +23,7 @@
         "order_id": 1003,
         "booking_start": "2024-12-15 12:00:00",
         "booking_end": "2024-12-15 14:00:00",
-        "number_of_people": 6,
+        "no_of_seats": 6,
         "status": "completed"
     },
     {
@@ -32,7 +32,7 @@
         "order_id": 1004,
         "booking_start": "2024-12-15 13:00:00",
         "booking_end": "2024-12-15 15:00:00",
-        "number_of_people": 3,
+        "no_of_seats": 3,
         "status": "cancelled"
     },
     {
@@ -41,7 +41,7 @@
         "order_id": 1005,
         "booking_start": "2024-12-16 17:00:00",
         "booking_end": "2024-12-16 19:00:00",
-        "number_of_people": 5,
+        "no_of_seats": 5,
         "status": "pending"
     },
     {
@@ -50,7 +50,7 @@
         "order_id": 1006,
         "booking_start": "2024-12-16 18:00:00",
         "booking_end": "2024-12-16 20:00:00",
-        "number_of_people": 7,
+        "no_of_seats": 7,
         "status": "confirmed"
     },
     {
@@ -59,7 +59,7 @@
         "order_id": 1007,
         "booking_start": "2024-12-17 11:00:00",
         "booking_end": "2024-12-17 13:00:00",
-        "number_of_people": 8,
+        "no_of_seats": 8,
         "status": "completed"
     },
     {
@@ -68,7 +68,7 @@
         "order_id": 1008,
         "booking_start": "2024-12-17 14:00:00",
         "booking_end": "2024-12-17 16:00:00",
-        "number_of_people": 10,
+        "no_of_seats": 10,
         "status": "pending"
     },
     {
@@ -77,7 +77,7 @@
         "order_id": 1009,
         "booking_start": "2024-12-18 15:00:00",
         "booking_end": "2024-12-18 17:00:00",
-        "number_of_people": 9,
+        "no_of_seats": 9,
         "status": "confirmed"
     },
     {
@@ -86,7 +86,7 @@
         "order_id": 1010,
         "booking_start": "2024-12-18 18:00:00",
         "booking_end": "2024-12-18 20:00:00",
-        "number_of_people": 4,
+        "no_of_seats": 4,
         "status": "completed"
     }
 ]

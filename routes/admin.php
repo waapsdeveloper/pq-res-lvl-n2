@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\RestaurantTimingController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\RTableBookingController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,13 @@ Route::prefix('restaurant-timing')->group(function () {
     Route::resource('/', RestaurantTimingController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
-        ->names('restaurant');
+        ->names('restaurant-timing');
+});
+Route::prefix('r-table-booking')->group(function () {
+    Route::resource('/', RTableBookingController::class)
+        ->parameters(['' => 'id'])
+        ->only(['index', 'show', 'store', 'update', 'destroy'])
+        ->names('r-table-booking');
 });
 
 

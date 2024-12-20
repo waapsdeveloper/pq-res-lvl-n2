@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Frontend\CheckAvailabilityResource;
 use App\Http\Resources\Frontend\TableBookingResource;
 use App\Models\RTable;
+use App\Models\RTableBooking_RTable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class TableBookingController extends Controller
@@ -140,41 +142,32 @@ class TableBookingController extends Controller
 
     public function checkTableAvailability(Request $request)
     {
-        $data = $request->all();
-        $page = $request->input('page', 1);
-        $perpage = $request->input('perpage', 10);
-        // Validate the required fields
-        $validation = Validator::make($data, [
-            'restaurant' => 'required',
-            'no_of_seats' => 'required|integer|min:2',
-            'date' => 'nullable',
-            'time' => 'nullable',
+        // Fetch available tables with eager loaded relationships
+        $availableTables = RTableBooking_RTable::with('restaurant.timings')->get();
 
-        ]);
-
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
-
-        // Fetch available tables based on the restaurant, number of guests, floor, date, and time
-        $data = Rtable::with('restaurantDetail')->where('restaurant', $data['restaurant'])
-            ->whereNotNull("restaurant")
-            ->where('no_of_seats', '>=', $data['no_of_seats'])
-            ->where('status', 'active') // Ensure the table status is active
-            // ->where('date', $data['date'])
-            // ->where('time', $data['time'])
-            ->paginate($perpage, ['*'], 'page', $page);
-
-        if ($data->isEmpty()) {
+        // Check if records exist
+        if ($availableTables->isEmpty()) {
             return ServiceResponse::error('No tables available for the selected criteria.');
         }
-        // $data = $availableTables;
 
-        // Loop through the results and generate full URL for image
-
-        $data->getCollection()->transform(function ($item) {
-            return new CheckAvailabilityResource($item);
+        // Transform available tables into resources for the response
+        $data = $availableTables->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'restaurant_id' => $item->restaurant_id,
+                'rtable_booking_id' => $item->rtable_booking_id,
+                'rtable_id' => $item->rtable_id,
+                'booking_start' => $item->booking_start,
+                'booking_end' => $item->booking_end,
+                'no_of_seats' => $item->no_of_seats,
+                'restaurant' => [
+                    'id' => $item->restaurant->id,
+                    'name' => $item->restaurant->name,
+                    'timings' => $item->restaurant->timings, // Include restaurant timings directly
+                ],
+            ];
         });
+
         return ServiceResponse::success('Table availability', ['data' => $data]);
     }
 }

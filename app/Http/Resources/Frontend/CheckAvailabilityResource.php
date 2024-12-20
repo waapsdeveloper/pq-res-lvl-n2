@@ -10,42 +10,38 @@ class CheckAvailabilityResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
+     * @param \Illuminate\Http\Request $request
      * @return array<string, mixed>
      */
     public function toArray($request)
     {
-        $obj = self::toObject($this);
-        return $obj;
+        return self::toObject($this);
     }
 
+    /**
+     * Transform the resource into an object format.
+     *
+     * @param mixed $obj
+     * @param string $lang
+     * @return array<string, mixed>
+     */
     public static function toObject($obj, $lang = 'en')
     {
         return [
-            "id" => $obj->id,
-            "restaurant" => $obj->restaurant,
-            "identifier" => $obj->identifier,
-            // "day" => $obj->day,
-            // "date" => $obj->date,
-            // "days" => $obj->days,
-            "status" => $obj->status,
-            'restaurant_detail' => $obj->restaurantDetail ? [
-                "name" => $obj->restaurantDetail->name,
-                "address" => $obj->restaurantDetail->address,
-                "phone" => $obj->restaurantDetail->phone,
-                // "email" => $obj->restaurantDetail->email,
-                // "website" => $obj->restaurantDetail->website,
-                // "description" => $obj->restaurantDetail->description,
-                "rating" => 4.8,
-                "status" => $obj->restaurantDetail->status,
+            'table_id' => $obj->id,
+            'restaurant' => $obj->restaurant ? [
+                'id' => $obj->restaurant->id,
+                'name' => $obj->restaurant->name,
+                'timings' => $obj->restaurant->timings->map(function ($timing) {
+                    return [
+                        'day' => $timing->day,
+                        'start_time' => $timing->start_time,
+                        'end_time' => $timing->end_time,
+                    ];
+                })->toArray(),
             ] : null,
-            'res_timings' => $obj->restaurantTimings->map(function ($resSchedule) {
-                return [
-                    'restaurant' => $resSchedule->restaurant,
-                    'day' => $resSchedule->day,
-                    'start_time' => $resSchedule->start_time,
-                    'end_time' => $resSchedule->end_time,
-                ];
-            }),
+            'booking_start' => $obj->booking_start,
+            'booking_end' => $obj->booking_end,
         ];
     }
 }

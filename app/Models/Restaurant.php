@@ -66,6 +66,6 @@ class Restaurant extends Model
     // }
     public function timings()
     {
-        return $this->hasMany(RestaurantTimings::class);
+        return $this->hasMany(RestaurantTiming::class);
     }
 }
