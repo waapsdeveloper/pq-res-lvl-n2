@@ -24,7 +24,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return  ServiceResponse::error($validator->errors()->first());
+            return self::failure($validator->errors()->first());
         }
 
         $user = User::create([
@@ -48,7 +48,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+            return self::failure("Invalid credentials");
         }
 
         $user = Auth::user();
