@@ -10,7 +10,7 @@
     {
         "name": "Diana Baldwin",
         "email": "dennisyu@hotmail.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": 2,
         "restaurant_id": 1,
         "status": "active"
@@ -18,7 +18,7 @@
     {
         "name": "Connor Allen",
         "email": "douglaswendy@yahoo.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": 3,
         "restaurant_id": 1,
         "status": "active"
@@ -26,7 +26,7 @@
     {
         "name": "Roberto Smith",
         "email": "sarah40@brown.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": 4,
         "restaurant_id": 1,
         "status": "active"
@@ -34,7 +34,7 @@
     {
         "name": "Anne Malone",
         "email": "robertjones@hernandez-west.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": 5,
         "restaurant_id": 1,
         "status": "active"
@@ -42,7 +42,7 @@
     {
         "name": "Gabriela Smith",
         "email": "irodriguez@yahoo.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": 6,
         "restaurant_id": 1,
         "status": "active"
@@ -50,7 +50,7 @@
     {
         "name": "Jane Snow",
         "email": "michaelgarcia@hotmail.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": 7,
         "restaurant_id": 1,
         "status": "active"
@@ -58,7 +58,7 @@
     {
         "name": "Eric Williams MD",
         "email": "nicholas07@yahoo.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": 8,
         "restaurant_id": 1,
         "status": "active"
@@ -66,7 +66,7 @@
     {
         "name": "Brian Hester",
         "email": "shanelang@hotmail.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": 9,
         "restaurant_id": 1,
         "status": "active"
@@ -74,7 +74,7 @@
     {
         "name": "Robert Mccall",
         "email": "justin52@gmail.com",
-        "password": "password123$",
+        "password": "admin123$",
         "role_id": null,
         "restaurant_id": null,
         "status": "active"

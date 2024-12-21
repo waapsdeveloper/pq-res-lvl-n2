@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'email_verified_at' => $user['email_verified_at'] ?? null, // Nullable
-                'password' => bcrypt($user['password']), // Hashing password
+                'password' => Hash::make($user['password']), // Hashing password
                 'role_id' => $user['role_id'],
                 'restaurant_id' => $user['restaurant_id'] ?? 0,
                 'status' => $user['status'],
@@ -39,5 +39,4 @@ class UsersTableSeeder extends Seeder
 
         $this->command->info('Users imported successfully from JSON file.');
     }
-
 }
