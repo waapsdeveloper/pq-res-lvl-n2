@@ -6,73 +6,42 @@ use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    /**
-     * Handle user registration.
-     */
-    public function register(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-
-        if ($validator->fails()) {
-            return self::failure($validator->errors()->first());
-        }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        $token = $user->createToken('auth_token')->accessToken;
-
-
-
-        return ServiceResponse::success('register successful', ['user' => $user, 'token' => $token]);
-    }
-
-    /**
-     * Handle user login.
-     */
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if (!Auth::attempt($credentials)) {
-            return self::failure("Invalid credentials");
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+            $token = $user->createToken('Personal Access Token')->accessToken;
+
+            return ServiceResponse::success('Authorized', [
+                'success' => true,
+                'token' => $token,
+                'user' => $user,
+            ]);
         }
 
-        $user = Auth::user();
-        $token = $user->createToken('auth_token')->accessToken;
-
-        return self::success('Login successful', ['user' => $user, 'token' => $token]);
+        return ServiceResponse::error("Unauthorized", ['status' => 'false'], 401);
     }
 
-    /**
-     * Get the authenticated user.
-     */
-    public function me(Request $request)
+    public function user(Request $request)
     {
-        $user = Auth::user();
-        return self::success('Login successful', ['user' => $user]);
+        return ServiceResponse::success('Authorized', [
+            'user' => $request->user()
+        ]);
     }
 
-    /**
-     * Handle user logout.
-     */
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        // Current token revoke
+        $request->user()->token()->revoke();
 
-        return response()->json(['message' => 'Logged out successfully'], 200);
+        return ServiceResponse::success('Logged out successfully', []);
     }
 }

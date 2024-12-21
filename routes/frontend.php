@@ -7,18 +7,11 @@ use App\Http\Controllers\Frontend\TableBookingController;
 use Illuminate\Support\Facades\Route;
 
 
-
-Route::post('/auth/register', [AuthController::class, 'register']);
-Route::post('/auth/login', [AuthController::class, 'login']);
-Route::get('/auth/me', [AuthController::class, 'me'])->middleware('auth:api');
-Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:api');
-
-
-Route::resource('/rtables', RTablesController::class)
-    ->parameters(['' => 'id'])
-    ->only(['index', 'show', 'store', 'update', 'destroy'])
-    ->names('rtables');
-
+Route::post('login', [AuthController::class, 'login']);
+Route::middleware('auth:api')->group(function () {
+    Route::get('user', [AuthController::class, 'user']);
+    Route::post('logout', [AuthController::class, 'logout']);
+});
 
 Route::prefix('table-booking')->group(function () {
     // Route::get('/getRestaurantsTables', [TableBookingController::class, 'getRestaurantsTables'])->name('getRestaurantsTables');
