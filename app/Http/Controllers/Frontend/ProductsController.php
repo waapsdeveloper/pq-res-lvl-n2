@@ -88,4 +88,49 @@ class ProductsController extends Controller
         // Return the transformed data with a success message
         return ServiceResponse::success('Products retrieved by category', ['products' => $data]);
     }
+
+    public function todayDeals(Request $request)
+    {
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 8);
+
+        //     $perpage = $request->input('perpage', 8);
+        $deals = [];
+
+        // Loop until we have 5 deals
+        while (count($deals) < 5) {
+            // Get 3 random categories
+            $categories = Category::query()->where('status', 'active')->inRandomOrder()->limit(3)->get();
+
+            $products = [];
+            $totalPrice = 0;
+
+            // For each category, get 1 random product
+            foreach ($categories as $category) {
+                // Get 1 random product for each category
+                $product = Product::where('category_id', $category->id)
+                    ->where('status', 'active')
+                    ->inRandomOrder()
+                    ->first();
+
+                if ($product) {
+                    $products[] = $product;
+                    $totalPrice += $product->price;
+                }
+            }
+
+            // If we successfully got 3 products, calculate the discounted price
+            if (count($products) == 3) {
+                $discountedPrice = $totalPrice * 0.90; // Apply 10% discount
+
+                // Add the deal to the list
+                $deals[] = [
+                    'products' => $products,
+                    'total_price' => $totalPrice,
+                    'discounted_price' => $discountedPrice
+                ];
+            }
+        }
+        return ServiceResponse::success("Today's deals fetched successfully", array_slice($deals, 0, 5));
+    }
 }
