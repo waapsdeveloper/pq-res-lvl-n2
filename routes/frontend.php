@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\ProductsController;
+use App\Http\Controllers\Frontend\ContactUsController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Frontend\RTablesController;
 use App\Http\Controllers\Frontend\AuthController;
@@ -43,3 +44,6 @@ Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRes
 
 
 Route::get('/popular-dishes', [ProductsController::class, 'popdishes']);
+Route::get('/menu', [ProductsController::class, 'menu']);
+Route::get('/product-by-category/{category_id}', [ProductsController::class, 'productByCategory']);
+Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');

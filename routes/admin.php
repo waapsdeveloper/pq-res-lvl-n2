@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
@@ -101,3 +102,5 @@ Route::prefix('customer')->group(function () {
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('customer'); // Restrict to specific CRUD actions.
 });
+
+Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact.index');
