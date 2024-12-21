@@ -15,6 +15,8 @@ class RTablesBooking extends Model
         'no_of_seats',
         'description',
         'status',
+        'payment_method',
+        'payment_status'
     ];
 
     public function rTableBookings()
@@ -34,8 +36,7 @@ class RTablesBooking extends Model
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
     public function rtablesBookingId()
-{
-    return $this->hasMany(RTable::class, 'rtable_booking_id', 'id');
-}
-
+    {
+        return $this->hasMany(RTable::class, 'rtable_booking_id', 'id');
+    }
 }

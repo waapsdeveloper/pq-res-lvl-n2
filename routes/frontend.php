@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\ProductsController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Frontend\RTablesController;
 use App\Http\Controllers\Frontend\AuthController;
@@ -22,6 +23,8 @@ Route::resource('/rtables', RTablesController::class)
 
 Route::prefix('table-booking')->group(function () {
     // Route::get('/getRestaurantsTables', [TableBookingController::class, 'getRestaurantsTables'])->name('getRestaurantsTables');
+    Route::put('on-payment', [TableBookingController::class, 'onPayment'])
+        ->name('table-booking.on-payment');
     Route::get('check-table-availability/{id}', [TableBookingController::class, 'checkTableAvailability'])
         ->name('table-booking.check-availability');
 
@@ -37,3 +40,6 @@ Route::resource('/rtables', RTablesController::class)
     ->names('rtables');
 
 Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
+
+
+Route::get('/popular-dishes', [ProductsController::class, 'popdishes']);

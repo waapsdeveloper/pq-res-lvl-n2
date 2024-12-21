@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->dateTime('booking_end')->nullable();
             $table->bigInteger('no_of_seats')->default(0)->nullable();
             $table->string('description')->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('payment_status')->nullable();
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'checked_in', 'checked_out', 'no_show', 'reserved', 'completed'])->default('pending');
             $table->timestamps();
         });

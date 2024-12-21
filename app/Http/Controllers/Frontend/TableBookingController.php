@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\DateHelper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Frontend\TableBooking\StoreTableBooking;
 use App\Http\Resources\Frontend\CheckAvailabilityResource;
 use App\Http\Resources\Frontend\TableBookingResource;
 use App\Models\RTable;
 use App\Models\RTableBooking_RTable;
+use App\Models\RTableBookingPayment;
 use App\Models\RTablesBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -131,44 +134,32 @@ class TableBookingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTableBooking $request)
     {
-        $data = $request->all();
-
-        // Add validation rules for start_time and end_time
-        $validation = Validator::make($data, [
-            'restaurant_id' => 'required|exists:restaurants,id',
-            'no_of_seats' => 'required|integer|min:2|max:10',
-            'tables' => 'required|array',
-            'tables.*' => 'exists:rtables,id',
-            'start_time' => 'required|date_format:Y-m-d H:i',
-            'end_time' => 'required|date_format:Y-m-d H:i|after:start_time',
-        ]);
-
-        if ($validation->fails()) {
-            return self::failure($validation->errors()->first());
-        }
+        // Retrieve validated data from the request
+        $data = $request->validated();
 
         $restaurant_id = $data['restaurant_id'];
         $selected_tables = $data['tables'];
-        $start_time = $data['start_time'];
-        $end_time = $data['end_time'];
+        $start_time = DateHelper::parseDate($data['start_time'])->format('Y-m-d H:i:s');
+        $end_time = DateHelper::parseDate($data['end_time'])->format('Y-m-d H:i:s');
         $no_of_seats = $data['no_of_seats'];
 
+        // Create booking
         $booking = RTablesBooking::create([
-            'customer_id' => 1,
+            'customer_id' => auth()->id() ?? 1, // Fallback for customer_id
             'restaurant_id' => $restaurant_id,
             'no_of_seats' => $no_of_seats,
             'booking_start' => $start_time,
             'booking_end' => $end_time,
-            'description' => 'Table booking for ' . $restaurant_id,
+            'description' => $data['description'] ?? 'Table booking for ' . $restaurant_id,
             'status' => 'pending',
         ]);
 
+        // Link tables to the booking
         $booked_tables = [];
         foreach ($selected_tables as $table_id) {
             RTableBooking_RTable::create([
-
                 'restaurant_id' => $restaurant_id,
                 'rtable_id' => $table_id,
                 'rtable_booking_id' => $booking->id,
@@ -176,18 +167,22 @@ class TableBookingController extends Controller
                 'booking_end' => $end_time,
             ]);
             $booked_tables[] = $table_id;
-        };
-            $result = [
-                'booking_id' => $booking->id,
-                'restaurant_id' => $restaurant_id,
-                'tables' => $booked_tables,
-                'booking_start' => $start_time,
-                'booking_end' => $end_time,
-                'status' => $booking->status,
+        }
+
+        $result = [
+            'booking_id' => $booking->id,
+            'restaurant_id' => $restaurant_id,
+            'no_of_seats' => $no_of_seats,
+            'tables' => $booked_tables,
+            'booking_start' => $start_time,
+            'booking_end' => $end_time,
+            'status' => $booking->status,
         ];
-        return self::success('Tables successfully booked for the restaurant',[$result]
-        );
+
+
+        return ServiceResponse::success('Tables successfully booked for the restaurant', ['result' => $result]);
     }
+
 
 
 
@@ -272,5 +267,26 @@ class TableBookingController extends Controller
 
 
         return ServiceResponse::success('Table availability', ['data' => $data]);
+    }
+
+    public function onPayment(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required|exists:rtable_bookings,id',
+            'status' => 'required|string',
+            'payment_id' => 'required|exists:rtable_booking_payment,id',
+
+        ]);
+
+        RTableBookingPayment::findOrFail($validatedData['payment_id']);
+        // if(){
+
+        // }
+        RTablesBooking::where('id', $validatedData['id'])->update([
+            'status' => $validatedData['status'],
+            'payment_id' => $validatedData['payment_id'],
+        ]);
+        $updatedBooking = RTablesBooking::findOrFail($validatedData['id']);
+        return ServiceResponse::success('Payment details updated successfully', ['result' => $updatedBooking]);
     }
 }
