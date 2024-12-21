@@ -12,6 +12,6 @@ class ProductsController extends Controller
     public function popdishes()
     {
         $popdishes = Product::limit(8)->get();
-        return ServiceResponse::success($popdishes);
+        return ServiceResponse::success('Popular dishes available', ['popDishes' => $popdishes]);
     }
 }
