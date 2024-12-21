@@ -108,7 +108,7 @@ class RtableController extends Controller
         // Fetch and group the data as before
         $restaurants = Rtable::with('restaurant:id,name')
             ->where('restaurant_id', $id)
-            ->select('id','restaurant_id', 'floor', 'identifier')
+            ->select('id','restaurant_id', 'floor', 'identifier','no_of_seats')
             ->get()
             ->groupBy('restaurant_id');
 
