@@ -10,13 +10,15 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function popdishes()
+    public function popdishes(Request $request)
     {
-        $products = Product::limit(8)->get();
-
-        $products->getCollection()->transform(function ($item) {
+        $query = Product::query()->limit(8);
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+        $data->getCollection()->transform(function ($item) {
             return new ProductResource($item);
         });
-        return ServiceResponse::success('Popular dishes available', ['products' => $products]);
+        return ServiceResponse::success('Popular dishes available', ['products' => $data]);
     }
 }
