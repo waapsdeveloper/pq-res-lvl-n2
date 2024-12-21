@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return  ServiceResponse::error($validator->errors()->first());
         }
 
         $user = User::create([
@@ -32,9 +33,11 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->accessToken;
 
-        return self::success('register successful', ['user' => $user, 'token' => $token]);
+
+
+        return ServiceResponse::success('register successful', ['user' => $user, 'token' => $token]);
     }
 
     /**
