@@ -51,6 +51,12 @@ class User extends Authenticatable
         ];
     }
 
+    // role
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     public static function superAdmin(int $roleId = 1)
     {
         return self::where('role_id', $roleId)->get();

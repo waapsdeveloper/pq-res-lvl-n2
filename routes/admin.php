@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\RestaurantTimingController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TableBookingController;
 use App\Http\Controllers\Admin\RTableBookingController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
@@ -87,7 +88,6 @@ Route::prefix('order')->group(function () {
 });
 
 
-
 Route::prefix('rtable')->group(function () {
     Route::resource('/', RtableController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
@@ -101,6 +101,14 @@ Route::prefix('customer')->group(function () {
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('customer'); // Restrict to specific CRUD actions.
+});
+
+//
+Route::prefix('table-booking')->group(function () {
+    Route::resource('/', TableBookingController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('table-booking'); // Restrict to specific CRUD actions.
 });
 
 Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact.index');

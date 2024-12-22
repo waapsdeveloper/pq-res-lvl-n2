@@ -25,6 +25,8 @@ class UserResource extends JsonResource
             "name" => $obj->name,
             "email" => $obj->email,
             "phone" => $obj->phone,
+            "address" => $obj->address,
+            "role" => $obj->role ? $obj->role->name : "Customer",
             "status" => $obj->status,
         ];
     }
