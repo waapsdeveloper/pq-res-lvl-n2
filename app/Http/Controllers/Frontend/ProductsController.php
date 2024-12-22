@@ -11,7 +11,50 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function popdishes(Request $request)
+    public function getProducts(Request $request)
+    {
+        // Set default pagination parameters
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 100);
+
+        // Query to fetch products
+        $query = Product::query();
+
+        // if category_id
+        if ($request->has('category_id')) {
+            $query->where('category_id', $request->input('category_id'));
+        }
+
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        // Transform the collection into the desired format
+        $data->getCollection()->transform(function ($product) {
+            return [
+                "id" => $product->id,
+                "description" => $product->description,
+                "category_id" => $product->category_id,
+                "name" => $product->name,
+                "price" => $product->price,
+                "image" => Helper::returnFullImageUrl($product->image),
+                "status" => $product->status,
+            ];
+        });
+
+        $categories = Category::get()->transform(function ($category) {
+            return [
+                "id" => $category->id,
+                "name" => $category->name,
+                "description" => $category->description,
+                "category_id" => $category->category_id,
+                "image" => Helper::returnFullImageUrl($category->image),
+                "status" => $category->status,
+            ];
+        });
+
+        return ServiceResponse::success('Products retrieved successfully', ['products' => $data, 'categories' => $categories]);
+    }
+
+    public function getPopularProducts(Request $request)
     {
         // Set default pagination parameters
         $page = $request->input('page', 1);
@@ -25,6 +68,7 @@ class ProductsController extends Controller
         $data->getCollection()->transform(function ($product) {
             return [
                 "id" => $product->id,
+                "description" => $product->description,
                 "category_id" => $product->category_id,
                 "name" => $product->name,
                 "price" => $product->price,

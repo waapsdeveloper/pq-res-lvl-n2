@@ -180,7 +180,7 @@ class TableBookingController extends Controller
         ];
 
 
-        return ServiceResponse::success('Tables successfully booked for the restaurant', ['result' => $result]);
+        return ServiceResponse::success('Tables successfully booked for the restaurant', ['booking' => $result]);
     }
 
 

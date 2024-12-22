@@ -6,6 +6,7 @@ use App\Helpers\DateHelper;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Carbon\Carbon;
 
 class StoreTableBooking extends FormRequest
 {
@@ -30,14 +31,16 @@ class StoreTableBooking extends FormRequest
             'start_time' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    $startTime = DateHelper::parseDate($value);
+
+                    $startTime = Carbon::parse($value);
                     if (!$startTime) {
                         $fail("The :attribute is not in a valid format. Accepted formats are: d-m-Y H:i:s, Y-m-d H:i:s, m/d/Y H:i, d-m-y H:i.");
                         return;
                     }
-                    if (!DateHelper::isAtLeastMinutesAhead($startTime, 30)) {
+                    if ($startTime->lt(Carbon::now()->addMinutes(30))) {
                         $fail("The :attribute must be at least 30 minutes ahead of the current time.");
                     }
+
                 },
             ],
             'end_time' => 'required|after:start_time',
