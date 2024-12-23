@@ -47,12 +47,12 @@ class ProductController extends Controller
             if (isset($filters['discount'])) {
                 $query->where('discount', 'like', '%' . $filters['discount'] . '%');
             }
-            if (isset($filters['is_today_deal'])) {
-                $query->where('is_today_deal', 'like', '%' . $filters['is_today_deal'] . '%');
-            }
-            if (isset($filters['noOfOrders'])) {
-                $query->where('noOfOrders', 'like', '%' . $filters['noOfOrders'] . '%');
-            }
+            // if (isset($filters['is_today_deal'])) {
+            //     $query->where('is_today_deal', 'like', '%' . $filters['is_today_deal'] . '%');
+            // }
+            // if (isset($filters['noOfOrders'])) {
+            //     $query->where('noOfOrders', 'like', '%' . $filters['noOfOrders'] . '%');
+            // }
 
             if (isset($filters['status'])) {
                 $query->where('status', $filters['status']);
