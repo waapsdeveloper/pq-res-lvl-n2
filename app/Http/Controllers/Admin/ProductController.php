@@ -25,22 +25,22 @@ class ProductController extends Controller
         $filters = $request->input('filters', null);
 
 
-        $query = Product::query();
+        $query = Product::query()->with('category');
 
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
         }
 
+
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON string into an associative array
-
             if (isset($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
             if (isset($filters['category'])) {
-                $query->where('category_id', function ($query) use ($filters) {
-                    $query->select('id')->from('categories')->where('name', 'like', '%' . $filters['category'] . '%');
+                $query->whereHas('category', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%' . $filters['category'] . '%');
                 });
             }
             if (isset($filters['price'])) {
