@@ -112,7 +112,7 @@ class ProductsController extends Controller
         $perpage = $request->input('perpage', 8);
 
         // Query to fetch products by category_id
-        $query = Product::where('category_id', $id)->limit($perpage);
+        $query = Product::where('category_id', $id);
 
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
