@@ -38,9 +38,11 @@ class ProductController extends Controller
             if (isset($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
-            // if (isset($filters['category'])) {
-            //     $query->where('category_id', 'like', '%' . $filters['category'] . '%');
-            // }
+            if (isset($filters['category'])) {
+                $query->where('category_id', function ($query) use ($filters) {
+                    $query->select('id')->from('categories')->where('name', 'like', '%' . $filters['category'] . '%');
+                });
+            }
             if (isset($filters['price'])) {
                 $query->where('price', 'like', '%' . $filters['price'] . '%');
             }
