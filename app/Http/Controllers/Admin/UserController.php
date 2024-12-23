@@ -30,8 +30,7 @@ class UserController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = User::query();
-
+        $query = User::query()->with('role');
         // Optionally apply search filter if needed
         $query->where('role_id', '!=', 1);
 
@@ -141,15 +140,14 @@ class UserController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = User::find($id);
-
+        $user = User::with('role')->find($id);
         // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
+        if (!$user) {
             return self::failure("User not found", 404);
         }
 
         // Return a success response with the restaurant data
-        return self::success("User details retrieved successfully", ['user' => $restaurant]);
+        return self::success("User details retrieved successfully", ['user' => $user]);
     }
 
     /**
@@ -245,15 +243,15 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         // Attempt to find the restaurant by ID
-        $restaurant = User::find($id);
+        $user = User::find($id);
 
         // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
+        if (!$user) {
             return self::failure("user not found", 404);
         }
 
         // Delete the restaurant
-        $restaurant->delete();
+        $user->delete();
 
         // Return a success response
         return self::success("User deleted successfully.");
