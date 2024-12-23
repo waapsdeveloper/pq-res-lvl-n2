@@ -22,8 +22,8 @@ class ProductController extends Controller
         $search = $request->input('search', '');
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
 
-        $category = $request->input('category_id', '');
 
         $query = Product::query();
 
@@ -32,8 +32,31 @@ class ProductController extends Controller
             $query->where('name', 'like', '%' . $search . '%');
         }
 
-        if ($category) {
-            $query->where('category_id', $category);
+        if ($filters) {
+            $filters = json_decode($filters, true); // Decode JSON string into an associative array
+
+            if (isset($filters['name'])) {
+                $query->where('name', 'like', '%' . $filters['name'] . '%');
+            }
+            if (isset($filters['category'])) {
+                $query->where('category', 'like', '%' . $filters['category'] . '%');
+            }
+            if (isset($filters['price'])) {
+                $query->where('price', 'like', '%' . $filters['price'] . '%');
+            }
+            if (isset($filters['discount'])) {
+                $query->where('discount', 'like', '%' . $filters['discount'] . '%');
+            }
+            if (isset($filters['is_today_deal'])) {
+                $query->where('is_today_deal', 'like', '%' . $filters['is_today_deal'] . '%');
+            }
+            if (isset($filters['noOfOrders'])) {
+                $query->where('noOfOrders', 'like', '%' . $filters['noOfOrders'] . '%');
+            }
+
+            if (isset($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
         }
 
         // Paginate the results
