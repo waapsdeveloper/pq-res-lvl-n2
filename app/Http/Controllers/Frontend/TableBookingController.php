@@ -68,7 +68,7 @@ class TableBookingController extends Controller
     //     });
 
     //     // Return the response with image URLs included
-    //     return self::success("Trial list successfully", ['data' => $data]);
+    //     return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     // }
 
     public function index()
@@ -77,7 +77,7 @@ class TableBookingController extends Controller
             ->with('rTableBookings')
             ->get();
 
-        return self::success(
+        return ServiceResponse::success(
             'Bookings fetched successfully.',
             [
                 $bookings
@@ -105,7 +105,7 @@ class TableBookingController extends Controller
 
         // If there are no bookings, return an empty result
         if ($bookings->isEmpty()) {
-            return self::failure('No bookings found for this customer.');
+            return ServiceResponse::error('No bookings found for this customer.');
         }
 
         // Format the bookings for the response
@@ -123,7 +123,7 @@ class TableBookingController extends Controller
             ];
         });
 
-        return self::success([
+        return ServiceResponse::success([
             'message' => 'Bookings fetched successfully.',
             'result' => $formattedBookings
         ]);

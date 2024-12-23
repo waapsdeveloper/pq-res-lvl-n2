@@ -55,7 +55,7 @@ class RTableBookingController extends Controller
         });
 
         // Return a successful response with the transformed data
-        return self::success("Rtables booking list retrieved successfully", ['data' => $data]);
+        return ServiceResponse::success("Rtables booking list retrieved successfully", ['data' => $data]);
     }
 
     /**
@@ -116,11 +116,11 @@ class RTableBookingController extends Controller
 
         // If the booking doesn't exist, return an error response
         if (!$booking) {
-            return self::failure("RtablesBooking not found", 404);
+            return ServiceResponse::error("RtablesBooking not found", 404);
         }
 
         // Return a success response with the booking data
-        return self::success("RtablesBooking details retrieved successfully", ['booking' => $booking]);
+        return ServiceResponse::success("RtablesBooking details retrieved successfully", ['booking' => $booking]);
     }
 
     /**
@@ -140,7 +140,7 @@ class RTableBookingController extends Controller
 
         $booking = RtablesBooking::find($id);
         if (!$booking) {
-            return self::failure('Rtables booking not found');
+            return ServiceResponse::error('Rtables booking not found');
         }
 
         $booking->update([
@@ -166,13 +166,13 @@ class RTableBookingController extends Controller
 
         // If the booking doesn't exist, return an error response
         if (!$booking) {
-            return self::failure("RtablesBooking not found", 404);
+            return ServiceResponse::error("RtablesBooking not found", 404);
         }
 
         // Delete the booking
         $booking->delete();
 
         // Return a success response
-        return self::success("RtablesBooking deleted successfully.");
+        return ServiceResponse::success("RtablesBooking deleted successfully.");
     }
 }

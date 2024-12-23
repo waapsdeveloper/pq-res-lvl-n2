@@ -45,7 +45,7 @@ class ProductController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Product list successfully", ['data' => $data]);
+        return ServiceResponse::success("Product list successfully", ['data' => $data]);
     }
 
     /**
@@ -76,7 +76,7 @@ class ProductController extends Controller
 
         // // If validation fails
         // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
+        //     return ServiceResponse::error($validation->errors()->first());
         // }
 
         // Create a new user (assuming the user model exists)
@@ -102,11 +102,11 @@ class ProductController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
-            return self::failure("Product not found", 404);
+            return ServiceResponse::error("Product not found", 404);
         }
 
         // Return a success response with the restaurant data
-        return self::success("Product details retrieved successfully", ['product' => $restaurant]);
+        return ServiceResponse::success("Product details retrieved successfully", ['product' => $restaurant]);
     }
 
 
@@ -137,12 +137,12 @@ class ProductController extends Controller
         // ]);
 
         // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
+        //     return ServiceResponse::error($validation->errors()->first());
         // }
 
         $item = Product::find($id);
         if (!$item) {
-            return self::failure('Product not found');
+            return ServiceResponse::error('Product not found');
         }
 
         $item->update([
@@ -167,13 +167,13 @@ class ProductController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
-            return self::failure("user not found", 404);
+            return ServiceResponse::error("user not found", 404);
         }
 
         // Delete the restaurant
         $restaurant->delete();
 
         // Return a success response
-        return self::success("User deleted successfully.");
+        return ServiceResponse::success("User deleted successfully.");
     }
 }

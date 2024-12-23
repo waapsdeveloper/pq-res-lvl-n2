@@ -50,8 +50,7 @@ class OrderController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Order list successfully", ['data' => $data]);
-
+        return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
 
 
@@ -81,7 +80,7 @@ class OrderController extends Controller
             $product = Product::find($item['product_id']);
             if (!$product) {
                 continue;
-                // return self::failure("Product with ID {$item['product_id']} not found.");
+                // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
 
@@ -132,7 +131,7 @@ class OrderController extends Controller
 
         $data = new OrderResource($order);
 
-        return self::success("Order list successfully", ['data' => $data]);
+        return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
     /**
      * Display the specified resource.
@@ -166,7 +165,7 @@ class OrderController extends Controller
 
         $order = Order::find($id);
         if (!$order) {
-            return self::failure("Order with ID $id not found.");
+            return ServiceResponse::error("Order with ID $id not found.");
         }
 
 
@@ -180,7 +179,7 @@ class OrderController extends Controller
             $product = Product::find($item['product_id']);
             if (!$product) {
                 continue; // Ignore invalid products
-                // return self::failure("Product with ID {$item['product_id']} not found.");
+                // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
 
             }
 
@@ -235,7 +234,7 @@ class OrderController extends Controller
 
         $data = new OrderResource($order);
 
-        return self::success("Order updated successfully", ['data' => $data]);
+        return ServiceResponse::success("Order updated successfully", ['data' => $data]);
     }
 
 

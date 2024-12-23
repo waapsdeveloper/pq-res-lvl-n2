@@ -39,9 +39,7 @@ class RoleController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Trial list successfully", ['data' => $data]);
-
-
+        return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     }
 
     /**
@@ -65,7 +63,6 @@ class RoleController extends Controller
         ]);
 
         return ServiceResponse::success('Roles store successful', ['role' => $role]);
-
     }
 
     /**
@@ -79,11 +76,11 @@ class RoleController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$role) {
-            return self::failure("Role $id not found", 404);
+            return ServiceResponse::error("Role $id not found", 404);
         }
 
         // Return a success response with the restaurant data
-        return self::success("Role details retrieved successfully", ['role' => $role]);
+        return ServiceResponse::success("Role details retrieved successfully", ['role' => $role]);
     }
 
     /**
@@ -106,7 +103,7 @@ class RoleController extends Controller
 
         // If role does not exist
         if (!$role) {
-            return self::failure("role '$id' not found");
+            return ServiceResponse::error("role '$id' not found");
         }
 
         // Update the role
@@ -127,10 +124,9 @@ class RoleController extends Controller
 
         // If role does not exist
         if (!$role) {
-            return self::failure("Role $id not found");
+            return ServiceResponse::error("Role $id not found");
         }
         $role->delete();
         return ServiceResponse::success('Role delete successful');
-
     }
 }

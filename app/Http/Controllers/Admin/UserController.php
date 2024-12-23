@@ -65,7 +65,7 @@ class UserController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Trial list successfully", ['data' => $data]);
+        return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     }
 
     /**
@@ -143,11 +143,11 @@ class UserController extends Controller
         $user = User::with('role')->find($id);
         // If the restaurant doesn't exist, return an error response
         if (!$user) {
-            return self::failure("User not found", 404);
+            return ServiceResponse::error("User not found", 404);
         }
 
         // Return a success response with the restaurant data
-        return self::success("User details retrieved successfully", ['user' => $user]);
+        return ServiceResponse::success("User details retrieved successfully", ['user' => $user]);
     }
 
     /**
@@ -247,14 +247,14 @@ class UserController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$user) {
-            return self::failure("user not found", 404);
+            return ServiceResponse::error("user not found", 404);
         }
 
         // Delete the restaurant
         $user->delete();
 
         // Return a success response
-        return self::success("User deleted successfully.");
+        return ServiceResponse::success("User deleted successfully.");
     }
 
     public function getAuthUser(Request $request)
@@ -264,9 +264,9 @@ class UserController extends Controller
         $user = User::where('email', $auth->email)->first();
 
         if (!$user) {
-            return self::failure("user not found", 404);
+            return ServiceResponse::error("user not found", 404);
         }
 
-        return self::success("User fetch successfully.", ['user' => $user]);
+        return ServiceResponse::success("User fetch successfully.", ['user' => $user]);
     }
 }

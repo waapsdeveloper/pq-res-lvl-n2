@@ -60,7 +60,7 @@ class RestaurantTimingController extends Controller
         });
 
         // Return a successful response with the transformed data
-        return self::success("Restaurant timing list retrieved successfully", ['data' => $data]);
+        return ServiceResponse::success("Restaurant timing list retrieved successfully", ['data' => $data]);
     }
 
 
@@ -107,11 +107,11 @@ class RestaurantTimingController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant_timing) {
-            return self::failure("Restaurant Timing not found", 404);
+            return ServiceResponse::error("Restaurant Timing not found", 404);
         }
 
         // Return a success response with the restaurant data
-        return self::success("Restaurant Timing details retrieved successfully", ['restaurant_timing' => $restaurant_timing]);
+        return ServiceResponse::success("Restaurant Timing details retrieved successfully", ['restaurant_timing' => $restaurant_timing]);
     }
 
     /**
@@ -131,7 +131,7 @@ class RestaurantTimingController extends Controller
 
         $restaurant_timing = RestaurantTiming::find($id);
         if (!$restaurant_timing) {
-            return self::failure('Restaurant timing not found');
+            return ServiceResponse::error('Restaurant timing not found');
         }
 
         $restaurant_timing->update([
@@ -156,13 +156,13 @@ class RestaurantTimingController extends Controller
 
         // If the RestaurantTiming doesn't exist, return an error response
         if (!$RestaurantTiming) {
-            return self::failure("RestaurantTiming not found", 404);
+            return ServiceResponse::error("RestaurantTiming not found", 404);
         }
 
         // Delete the RestaurantTiming
         $RestaurantTiming->delete();
 
         // Return a success response
-        return self::success("RestaurantTiming deleted successfully.");
+        return ServiceResponse::success("RestaurantTiming deleted successfully.");
     }
 }

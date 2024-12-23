@@ -18,7 +18,8 @@ class Category extends Model
         'restaurant_id',
         'description',
         'image',
-        'status'
+        'status',
+        'identifier',
     ];
 
     // Define the relationship

@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Auth\LoginAuthRequest;
 use App\Models\User;
 // use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Validator;
+use App\Helpers\ServiceResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +30,7 @@ class AuthController extends Controller
 
         // // If validation fails
         // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
+        //     return ServiceResponse::error($validation->errors()->first());
         // }
 
         // Retrieve the user by email
@@ -37,21 +38,19 @@ class AuthController extends Controller
 
         // Check if the user exists
         if (!$user) {
-            return self::failure('Invalid Email');
+            return ServiceResponse::error('Invalid Email');
         }
 
         // Check if the password matches
         if (!Hash::check($data['password'], $user->password)) {
-            return self::failure('Invalid credentials');
+            return ServiceResponse::error('Invalid credentials');
         }
 
 
         $token = $user->createToken('AuthToken')->accessToken;
 
 
-        return self::success('Login successful', ['user' => $user, 'token' => $token]);
-
-
+        return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
     }
 
     public function registerViaEmail(LoginAuthRequest $request)
@@ -70,7 +69,7 @@ class AuthController extends Controller
 
         // If validation fails
         // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
+        //     return ServiceResponse::error($validation->errors()->first());
         // }
 
         // Retrieve the user by email
@@ -79,7 +78,7 @@ class AuthController extends Controller
         // Check if the user exists
         if ($user) {
             // User already exists with this email
-            return self::failure('You have already signed up with this email.');
+            return ServiceResponse::error('You have already signed up with this email.');
         }
 
         // Create a new user
@@ -106,7 +105,7 @@ class AuthController extends Controller
         ]);
 
         if (!$authAttempt) {
-            return self::failure("Authentication failed. Please check your email or password");
+            return ServiceResponse::error("Authentication failed. Please check your email or password");
         }
 
         $token = $user->createToken('AuthToken')->accessToken;
@@ -124,6 +123,6 @@ class AuthController extends Controller
         //     $user = new TeacherResource($user);
         // }
 
-        return self::success('User registered successfully', ['user' => $user, 'token' => $token]);
+        return ServiceResponse::success('User registered successfully', ['user' => $user, 'token' => $token]);
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Resources\Admin\CustomerResource;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Helpers\ServiceResponse;
 
 class CustomerController extends Controller
 {
@@ -38,7 +39,7 @@ class CustomerController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Customers list successfully", ['data' => $data]);
+        return ServiceResponse::success("Customers list successfully", ['data' => $data]);
     }
 
     /**
@@ -65,10 +66,10 @@ class CustomerController extends Controller
         $customer = User::with('userDetails')->find($id);
         // If the restaurant doesn't exist, return an error response
         if (!$customer) {
-            return self::failure("customer not found", 404);
+            return ServiceResponse::error("customer not found", 404);
         }
         // Return a success response with the restaurant data
-        return self::success("customer details retrieved successfully", ['customer' => $customer]);
+        return ServiceResponse::success("customer details retrieved successfully", ['customer' => $customer]);
     }
 
     /**

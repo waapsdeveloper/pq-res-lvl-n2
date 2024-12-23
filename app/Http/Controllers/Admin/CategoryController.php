@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
+use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Category\StoreCategory;
@@ -10,6 +12,7 @@ use App\Http\Resources\Admin\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 
 class CategoryController extends Controller
 {
@@ -51,7 +54,7 @@ class CategoryController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Category list successfully", ['data' => $data]);
+        return ServiceResponse::success("Category list successfully", ['data' => $data]);
     }
 
     /**
@@ -71,26 +74,28 @@ class CategoryController extends Controller
         // $data = $request->all();
         $data = $request->validated();
 
-        // Validate the required fields
-        // $validation = Validator::make($data, [
-        //     'name' => 'required|string|min:3|max:255',
-        //     'category' => 'nullable|integer|exists:categories,id', // Ensure role is provided
-        //     'status' => 'required|string|in:active,inactive', // Validate status
-        // ]);
 
-        // // If validation fails
-        // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
-        // }
 
         // Create a new user (assuming the user model exists)
-        $user = Category::create([
+        $category = Category::create([
             'name' => $data['name'],
+            'identifier' => null,
             'category_id' => $data['category'] ?? 0,
+            'restaurant_id' => $data['restaurant_id'] ?? 0,
+            'description' => $data['description'] ?? null,
+            'image' => $data['image'],
             'status' => $data['status'],
         ]);
 
-        return ServiceResponse::success('Category store successful', ['Category' => $user]);
+        $identifier = Identifier::make('Category', $category->id);
+        $category->update(['identifier' => $identifier]);
+
+        if (isset($data['image'])) {
+            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+            $category->update(['image' => $url]);
+        }
+
+        return ServiceResponse::success('Category store successful', ['Category' => $category]);
     }
 
     /**
@@ -104,11 +109,11 @@ class CategoryController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
-            return self::failure("Category not found", 404);
+            return ServiceResponse::error("Category not found", 404);
         }
 
         // Return a success response with the restaurant data
-        return self::success("Category details retrieved successfully", ['category' => $restaurant]);
+        return ServiceResponse::success("Category details retrieved successfully", ['category' => $restaurant]);
     }
 
     /**
@@ -124,38 +129,39 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategory $request, string $id)
     {
-        // Validate the incoming data
-        // $data = $request->all();
         $data = $request->validated();
-
-        // $validation = Validator::make($data, [
-        //     'name' => 'required|string|min:3|max:255',
-        //     'category' => 'nullable|integer|exists:categories,id', // Ensure category is valid
-        //     'status' => 'required|string|in:active,inactive', // Validate status
-        // ]);
-
-        // If validation fails
-        // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
-        // }
 
         // Find the category by ID
         $category = Category::find($id);
 
         // If category does not exist
         if (!$category) {
-            return self::failure('Category not found');
+            return ServiceResponse::error('Category not found');
+        }
+
+        // Generate a new identifier if it is not provided in the request
+        $identifier = $data['identifier'] ?? Identifier::make('Category', $category->id);
+
+        // Handle image upload (if present)
+        if (isset($data['image'])) {
+            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+            $data['image'] = $url;
         }
 
         // Update the category
         $category->update([
-            'name' => $data['name'],
-            'category_id' => $data['category'] ?? 0,
-            'status' => $data['status'],
+            'name' => $data['name'] ?? $category->name,
+            'identifier' => $identifier,
+            'category_id' => $data['category'] ?? $category->category_id,
+            'restaurant_id' => $data['restaurant_id'] ?? $category->restaurant_id,
+            'description' => $data['description'] ?? $category->description,
+            'image' => $data['image'] ?? $category->image,
+            'status' => $data['status'] ?? $category->status,
         ]);
 
-        return ServiceResponse::success('Category update successful', ['Category' => $category]);
+        return ServiceResponse::success('Category updated successfully', ['category' => $category]);
     }
+
 
 
     /**
@@ -168,13 +174,13 @@ class CategoryController extends Controller
 
         // If the category doesn't exist, return an error response
         if (!$category) {
-            return self::failure("Category $id not found", 404);
+            return ServiceResponse::error("Category $id not found", 404);
         }
 
         // Delete the category
         $category->delete();
 
         // Return a success response
-        return self::success("Category deleted successfully.");
+        return ServiceResponse::success("Category deleted successfully.");
     }
 }

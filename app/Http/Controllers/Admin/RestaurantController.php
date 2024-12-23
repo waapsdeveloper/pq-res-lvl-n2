@@ -60,7 +60,7 @@ class RestaurantController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Trial list successfully", ['data' => $data]);
+        return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     }
 
 
@@ -108,11 +108,11 @@ class RestaurantController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
-            return self::failure("Restaurant not found", 404);
+            return ServiceResponse::error("Restaurant not found", 404);
         }
 
         // Return a success response with the restaurant data
-        return self::success("Restaurant details retrieved successfully", ['restaurant' => $restaurant]);
+        return ServiceResponse::success("Restaurant details retrieved successfully", ['restaurant' => $restaurant]);
     }
 
     /**
@@ -135,7 +135,7 @@ class RestaurantController extends Controller
 
 
         if (!$restaurant) {
-            return self::failure('Restaurant not found');
+            return ServiceResponse::error('Restaurant not found');
         }
 
 
@@ -175,13 +175,13 @@ class RestaurantController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
-            return self::failure("Restaurant not found", 404);
+            return ServiceResponse::error("Restaurant not found", 404);
         }
 
         // Delete the restaurant
         $restaurant->delete();
 
         // Return a success response
-        return self::success("Restaurant deleted successfully.");
+        return ServiceResponse::success("Restaurant deleted successfully.");
     }
 }

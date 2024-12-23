@@ -9,6 +9,8 @@ use App\Http\Resources\Admin\RtableResource;
 use App\Models\Rtable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\ServiceResponse;
+
 
 class RtableController extends Controller
 {
@@ -52,7 +54,7 @@ class RtableController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Category list successfully", ['data' => $data]);
+        return ServiceResponse::success("Category list successfully", ['data' => $data]);
     }
 
 
@@ -82,7 +84,7 @@ class RtableController extends Controller
             'description' => $data['description'] ?? null, // Default to null if not provided
         ]);
 
-        return self::success('Rtable store successful', ['item' => $item]);
+        return ServiceResponse::success('Rtable store successful', ['item' => $item]);
     }
 
     /**
@@ -96,11 +98,11 @@ class RtableController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
-            return self::failure("Rtable not found", 404);
+            return ServiceResponse::error("Rtable not found", 404);
         }
 
         // Return a success response with the restaurant data
-        return self::success("Rtable details retrieved successfully", ['Rtable' => $restaurant]);
+        return ServiceResponse::success("Rtable details retrieved successfully", ['Rtable' => $restaurant]);
     }
 
     public function getByRestaurantId(string $id)
@@ -108,7 +110,7 @@ class RtableController extends Controller
         // Fetch and group the data as before
         $restaurants = Rtable::with('restaurant:id,name')
             ->where('restaurant_id', $id)
-            ->select('id','restaurant_id', 'floor', 'identifier','no_of_seats')
+            ->select('id', 'restaurant_id', 'floor', 'identifier', 'no_of_seats')
             ->get()
             ->groupBy('restaurant_id');
 
@@ -120,7 +122,7 @@ class RtableController extends Controller
 
         // Return the tables and floors together
 
-        return self::success('success', [
+        return ServiceResponse::success('success', [
             'restaurant' => $restaurants->first(),
             'floors' => $floors
         ]);
@@ -146,7 +148,7 @@ class RtableController extends Controller
         $rtable = Rtable::find($id);
         // dd($data, $rtable);
         if (!$rtable) {
-            return self::failure("Rtable with ID $id not found.");
+            return ServiceResponse::error("Rtable with ID $id not found.");
         }
 
         // Update the Rtable details
@@ -159,7 +161,7 @@ class RtableController extends Controller
             'description' => $data['description'] ?? $rtable->description,
         ]);
 
-        return self::success('Rtable updated successfully', ['item' => $rtable]);
+        return ServiceResponse::success('Rtable updated successfully', ['item' => $rtable]);
     }
 
 
@@ -173,13 +175,13 @@ class RtableController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
-            return self::failure("user not found", 404);
+            return ServiceResponse::error("user not found", 404);
         }
 
         // Delete the restaurant
         $restaurant->delete();
 
         // Return a success response
-        return self::success("User deleted successfully.");
+        return ServiceResponse::success("User deleted successfully.");
     }
 }

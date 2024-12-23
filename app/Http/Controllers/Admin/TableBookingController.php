@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\Admin\TableBookingResource;
 use App\Models\RTablesBooking;
+use App\Helpers\ServiceResponse;
+
 
 
 class TableBookingController extends Controller
@@ -50,7 +52,7 @@ class TableBookingController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Table Booking list successfully", ['data' => $data]);
+        return ServiceResponse::success("Table Booking list successfully", ['data' => $data]);
     }
 
     /**

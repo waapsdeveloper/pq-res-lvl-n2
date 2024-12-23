@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Frontend\RTableResource;
 use App\Models\Rtable;
 use Illuminate\Http\Request;
+use App\Helpers\ServiceResponse;
+
 
 class RTablesController extends Controller
 {
@@ -57,6 +59,6 @@ class RTablesController extends Controller
         });
 
         // Return the response with image URLs included
-        return self::success("Trial list successfully", ['data' => $data]);
+        return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     }
 }

@@ -24,7 +24,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return self::failure($validator->errors()->first());
+            return ServiceResponse::error($validator->errors()->first());
         }
 
         $user = User::create([
@@ -48,13 +48,13 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
-            return self::failure("Invalid credentials");
+            return ServiceResponse::error("Invalid credentials");
         }
 
         $user = Auth::user();
         $token = $user->createToken('auth_token')->accessToken;
 
-        return self::success('Login successful', ['user' => $user, 'token' => $token]);
+        return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
     }
 
     /**
@@ -63,7 +63,7 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $user = Auth::user();
-        return self::success('Login successful', ['user' => $user]);
+        return ServiceResponse::success('Login successful', ['user' => $user]);
     }
 
     /**
