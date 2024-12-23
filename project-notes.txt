@@ -31,3 +31,10 @@ res id
 gest 
 date 
 time
+
+
+1 restaurant k creat form mai day or open/closing hours alag alag hone chahiye hyn 
+crud working
+
+2 user create nai chal raha role par masla hy kuch
+ postman se sai hy

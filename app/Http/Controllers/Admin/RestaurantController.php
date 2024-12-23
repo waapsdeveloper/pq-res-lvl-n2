@@ -97,28 +97,6 @@ class RestaurantController extends Controller
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
     }
 
-
-    // public function store(StoreRestaurant $request)
-    // {
-
-    //     $data = $request->validated();  // Returns only validated data
-
-
-    //     $restaurant = Restaurant::create([
-    //         'name' => $data['name'],
-    //         'address' => $data['address'],
-    //         'phone' => $data['phone'] ?? null,
-    //         'email' => $data['email'] ?? null,
-    //         'website' => $data['website'] ?? null,
-    //        // 'opening_hours' => $data['opening_hours'] ?? null,
-    //         'description' => $data['description'] ?? null,
-    //         'rating' => $data['rating'] ?? 0,
-    //         'status' => $data['status'] ?? 'active',
-    //     ]);
-
-    //     return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
-    // }
-
     /**
      * Display the specified resource.
      */
@@ -152,24 +130,6 @@ class RestaurantController extends Controller
     {
 
         $data = $request->all();
-
-
-        // $validation = Validator::make($data, [
-        //     'name' => 'required|string|min:3|max:255',
-        //     'address' => 'required|string|max:500',
-        //     'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
-        //     'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-        //     'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
-        //     'description' => 'nullable|string|max:1000',
-        //     'status' => 'nullable|string',
-        //     'rating' => 'nullable|numeric|min:0|max:5',
-        // ]);
-
-
-        // if ($validation->fails()) {
-        //     return self::failure($validation->errors()->first());
-        // }
-
 
         $restaurant = Restaurant::find($id);
 

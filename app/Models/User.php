@@ -56,6 +56,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+    public function userDetail()
+    {
+        return $this->belongsTo(UserAddresses::class);
+    }
 
     public static function superAdmin(int $roleId = 1)
     {

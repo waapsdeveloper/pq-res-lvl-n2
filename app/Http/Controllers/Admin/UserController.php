@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
+use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreUser;
 use App\Http\Requests\Admin\User\UpdateUser;
@@ -10,6 +11,7 @@ use App\Http\Resources\Admin\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -77,31 +79,56 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(StoreUser $request)
     {
         $data = $request->validated();
 
-
-        // Create a new user (assuming the user model exists)
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'] ?? null,
-            'password' => bcrypt($data['password']),
-            'role_id' => $data['role'],
-            'status' => $data['status'],
-        ]);
-
-        // Optionally, handle the image if the data contains it
-        if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data);  // Assuming a helper to handle the image upload
-            $user->update([
-                'image' => $url,
+        // Wrap the operations in a database transaction
+        DB::beginTransaction();
+        try {
+            // Create a new user
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'] ?? null,
+                'password' => bcrypt($data['password']),
+                'role_id' => $data['role'],
+                'status' => $data['status'],
             ]);
-        }
 
-        return self::success('User store successful', ['user' => $user]);
+
+            $userDetail = $user->userDetail()->create([
+                'user_id' => $user->id,
+                'address_line' => $data['address'],
+                'city' => $data['city'] ?? null,
+                'state' => $data['state'] ?? null,
+                'country' => $data['country'] ?? null,
+            ]);
+
+            if (!$userDetail) {
+                // Rollback if user details are not created
+                throw new \Exception('Failed to create user details.');
+            }
+
+            // Optionally handle the image
+            if (isset($data['image'])) {
+                $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+                $user->update(['image' => $url]);
+            }
+
+            // Commit the transaction
+            DB::commit();
+
+            return ServiceResponse::success('User store successful', ['user' => $user]);
+        } catch (\Exception $e) {
+            // Rollback the transaction on any failure
+            DB::rollBack();
+
+            return ServiceResponse::error('Failed to store user: ' . $e->getMessage());
+        }
     }
+
 
 
     /**
