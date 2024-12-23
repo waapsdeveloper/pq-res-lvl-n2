@@ -28,7 +28,7 @@ class StoreUser extends FormRequest
             'email' => 'required|email|max:255',
             'phone' => 'required|string', // You can add regex here for phone number validation
             'password' => 'required|string|min:6', // Add validation for password
-            'role_id' => 'required|integer', // Ensure role is provided
+            'role' => 'required|integer', // Ensure role is provided
             'status' => 'required|string|in:active,inactive',
             'address' => 'required|string',
             'city' => 'nullable|string',
