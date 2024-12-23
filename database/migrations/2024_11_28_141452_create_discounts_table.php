@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('identifier');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('product_id');
             $table->decimal('actual_price', 10, 2);
             $table->decimal('discount_price', 10, 2);
             $table->date('start_date');
