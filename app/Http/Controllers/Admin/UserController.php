@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -91,10 +92,11 @@ class UserController extends Controller
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'phone' => $data['phone'] ?? null,
-                'password' => bcrypt($data['password']),
+                'phone' => $data['phone'],
+                'password' => Hash::make($data['password']),
                 'role_id' => $data['role'],
                 'status' => $data['status'],
+                'restaurant_id' => $data['restaurant_id'] ?? null,
             ]);
 
 
@@ -165,38 +167,76 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        // Find the user
-        $user = User::find($id);
-        if (!$user) {
-            return self::failure("User with ID $id not found.");
-        }
+        // Wrap the operations in a database transaction
+        DB::beginTransaction();
 
-        // Update user details
-        $user->update([
-            'name' => $data['name'] ?? $user->name,
-            'email' => $data['email'] ?? $user->email,
-            'phone' => $data['phone'] ?? $user->phone,
-            'role_id' => $data['role'] ?? $user->role_id,
-            'status' => $data['status'] ?? $user->status,
-        ]);
-
-        // Optionally update the password if provided
-        if (isset($data['password']) && !empty($data['password'])) {
+        try {
+            // Find the user
+            $user = User::find($id);
+            if (!$user) {
+                return ServiceResponse::error("User with ID $id not found.");
+            }
+            // Update user details
             $user->update([
-                'password' => bcrypt($data['password']),
+                'name' => $data['name'] ?? $user->name,
+                'email' => $data['email'] ?? $user->email,
+                'phone' => $data['phone'] ?? $user->phone,
+                'role_id' => $data['role'] ?? $user->role_id,
+                'status' => $data['status'] ?? $user->status,
+                "restaurant_id" => $data['restaurant_id'] ?? $user->restaurant_id,
             ]);
-        }
 
-        // Optionally handle the image if provided
-        if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
-            $user->update([
-                'image' => $url,
-            ]);
-        }
+            // Optionally update the password if provided
+            if (isset($data['password']) && !empty($data['password'])) {
+                $user->update([
+                    'password' => Hash::make($data['password']),
+                ]);
+            }
 
-        return self::success('User updated successfully', ['user' => $user]);
+            // Update user detail record
+            $userDetail = $user->userDetail;
+            if ($userDetail) {
+                $userDetail->update([
+                    'address_line' => $data['address'] ?? $userDetail->address_line,
+                    'city' => $data['city'] ?? $userDetail->city,
+                    'state' => $data['state'] ?? $userDetail->state,
+                    'country' => $data['country'] ?? $userDetail->country,
+                ]);
+            } else {
+                // If user detail doesn't exist, create it
+                $userDetail = $user->userDetail()->create([
+                    'user_id' => $user->id,
+                    'address_line' => $data['address'] ?? null,
+                    'city' => $data['city'] ?? null,
+                    'state' => $data['state'] ?? null,
+                    'country' => $data['country'] ?? null,
+                ]);
+            }
+
+            if (!$userDetail) {
+                throw new \Exception('Failed to update or create user details.');
+            }
+
+            // Optionally handle the image if provided
+            if (isset($data['image'])) {
+                $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+                $user->update([
+                    'image' => $url,
+                ]);
+            }
+
+            // Commit the transaction
+            DB::commit();
+
+            return ServiceResponse::success('User updated successfully', ['user' => $user]);
+        } catch (\Exception $e) {
+            // Rollback the transaction on any failure
+            DB::rollBack();
+
+            return ServiceResponse::error('Failed to update user: ' . $e->getMessage());
+        }
     }
+
 
 
     /**

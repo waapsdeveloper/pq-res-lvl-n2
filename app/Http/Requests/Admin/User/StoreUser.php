@@ -35,6 +35,7 @@ class StoreUser extends FormRequest
             'state' => 'nullable|string',
             'country' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048',
+            'restaurant_id' => 'nullable|integer',
         ];
     }
     protected function failedValidation(Validator $validator)
