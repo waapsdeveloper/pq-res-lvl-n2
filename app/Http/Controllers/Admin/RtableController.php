@@ -34,9 +34,13 @@ class RtableController extends Controller
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON string into an associative array
             // return response()->json($filters);
-            if ((isset($filters['Table No']) && !empty($filters['Table No'])) || (isset($filters['tableNo']) && !empty($filters['tableNo']))) {
+            if (isset($filters['Table No']) && !empty($filters['Table No'])) {
                 $query->where('identifier', 'like', '%' . ($filters['Table No'] ?? $filters['tableNo']) . '%');
             }
+            if (isset($filters['tableNo']) && !empty($filters['tableNo'])) {
+                $query->where('identifier', 'like', '%' . ($filters['Table No'] ?? $filters['tableNo']) . '%');
+            }
+
 
             if (isset($filters['address']) && !empty($filters['address'])) {
                 $query->whereHas('restaurantDetail', function ($query) use ($filters) {
