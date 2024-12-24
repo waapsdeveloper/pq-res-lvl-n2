@@ -80,8 +80,8 @@ class RtableController extends Controller
         // Create a new user (assuming the user model exists)
         $table = Rtable::create([
             'restaurant_id' => $data['restaurant_id'],
-            'name' => $data['name'],
-            'identifier' => "Table",
+            'name' => $data['name'] ?? null,
+            'identifier' => $data['identifier'] ?? "TBL",
             'no_of_seats' => $data['no_of_seats'],
             'floor' => $data['floor'],
             'status' => $data['status'],
@@ -90,6 +90,9 @@ class RtableController extends Controller
 
         $identifier = Identifier::make('Table', $table->id, 5);
         $table->update(['identifier' =>  $identifier]);
+        if ($table->name == null) {
+            $table->update(['name' => $identifier]);
+        }
 
         return ServiceResponse::success('Rtable store successful', ['item' => $table]);
     }
