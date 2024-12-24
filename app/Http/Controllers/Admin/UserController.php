@@ -39,24 +39,25 @@ class UserController extends Controller
         }
 
         if ($filters) {
-            $filters = json_decode($filters, true); // Decode JSON string into an associative array
-
-            if (isset($filters['name'])) {
+            if (!empty($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
 
-            if (isset($filters['phone'])) {
+            if (!empty($filters['phone'])) {
                 $query->where('phone', 'like', '%' . $filters['phone'] . '%');
             }
-            if (isset($filters['email'])) {
+
+            if (!empty($filters['email'])) {
                 $query->where('email', 'like', '%' . $filters['email'] . '%');
             }
 
-            if (isset($filters['status'])) {
+            if (!empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
-            if (isset($filters['role'])) {
-                $query->where('role_id', $filters['role_id']);
+
+            if (!empty($filters['role'])) {
+                dd($filters['role']);
+                $query->where('role_id', $filters['role']);
             }
         }
 
@@ -70,6 +71,7 @@ class UserController extends Controller
             return new UserResource($item);
         });
 
+        // dd($data);
         // Return the response with image URLs included
         return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     }
