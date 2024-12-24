@@ -47,7 +47,7 @@ class ProductController extends Controller
                 });
             }
             if (isset($filters['price']) && !empty($filters['price'])) {
-                $query->where('price', '<', $filters['price']);
+                $query->where('price', '=<', $filters['price']);
             }
             if (isset($filters['discount']) && !empty($filters['discount'])) {
                 $query->where('discount', 'like', '%' . $filters['discount'] . '%');
