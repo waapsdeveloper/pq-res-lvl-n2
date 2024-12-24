@@ -147,38 +147,35 @@ class ProductController extends Controller
      */
     public function update(UpdateProduct $request, string $id)
     {
-
-        // $data = $request->all();
         $data = $request->validated();
 
-
-        // $validation = Validator::make($data, [
-        //     'name' => 'required|string|min:3|max:255',
-        //     'category' => 'nullable|integer|exists:categories,id', // Ensure category exists
-        //     'description' => 'nullable|string', // Description is optional
-        //     'price' => 'required|integer', // Price is required
-        //     'status' => 'required|string|in:active,inactive', // Validate status
-        // ]);
-
-        // if ($validation->fails()) {
-        //     return ServiceResponse::error($validation->errors()->first());
-        // }
-
-        $item = Product::find($id);
-        if (!$item) {
+        $product = Product::find($id);
+        if (!$product) {
             return ServiceResponse::error('Product not found');
         }
 
-        $item->update([
-            'name' => $data['name'],
-            'category_id' => $data['category'] ?? $item->category_id, // Only update if provided
-            'description' => $data['description'] ?? $item->description, // Only update if provided
-            'price' => $data['price'],
-            'status' => $data['status'],
+        $product->update([
+            'name' => $data['name'] ?? $product->name,
+            'category_id' => $data['category'] ?? $product->category_id,
+            'restaurant_id' => $data['restaurant_id'] ?? $product->restaurant_id,
+            'description' => $data['description'] ?? $product->description,
+            'price' => $data['price'] ?? $product->price,
+            'status' => $data['status'] ?? $product->status,
+            'discount' => $data['discount'] ?? $product->discount,
         ]);
 
-        return ServiceResponse::success('Product update successful', ['item' => $item]);
+        $identifier = Identifier::make('Product', $product->id, 4);
+        $product->update(['identifier' => $identifier]);
+
+
+        if (isset($data['image'])) {
+            $url = Helper::getBase64ImageUrl($data);
+            $product->update(['image' => $url]);
+        }
+
+        return ServiceResponse::success('Product update successful', ['item' => $product]);
     }
+
 
 
     /**
