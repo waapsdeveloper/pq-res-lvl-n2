@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Identifier;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Rtable\StoreRtable;
 use App\Http\Requests\Admin\Rtable\UpdateRtable;
@@ -77,16 +78,20 @@ class RtableController extends Controller
         // $data = $request->all();
         $data = $request->validated();
         // Create a new user (assuming the user model exists)
-        $item = Rtable::create([
+        $table = Rtable::create([
             'restaurant_id' => $data['restaurant_id'],
-            'identifier' => $data['identifier'],
+            'name' => $data['name'],
+            'identifier' => "Table",
             'no_of_seats' => $data['no_of_seats'],
             'floor' => $data['floor'],
             'status' => $data['status'],
             'description' => $data['description'] ?? null, // Default to null if not provided
         ]);
 
-        return ServiceResponse::success('Rtable store successful', ['item' => $item]);
+        $identifier = Identifier::make('Table', $table->id, 5);
+        $table->update(['identifier' => $identifier]);
+
+        return ServiceResponse::success('Rtable store successful', ['item' => $table]);
     }
 
     /**

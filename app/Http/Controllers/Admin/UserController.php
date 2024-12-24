@@ -72,7 +72,7 @@ class UserController extends Controller
             return new UserResource($item);
         });
         // Return the response with image URLs included
-        return ServiceResponse::success("Trial list successfully", ['data' => $data]);
+        return ServiceResponse::success("Users retrieved successfully", ['data' => $data]);
     }
 
     /**
@@ -254,7 +254,7 @@ class UserController extends Controller
 
         // If the restaurant doesn't exist, return an error response
         if (!$user) {
-            return ServiceResponse::error("user not found", 404);
+            return ServiceResponse::error("User not found", 404);
         }
 
         // Delete the restaurant
@@ -271,7 +271,7 @@ class UserController extends Controller
         $user = User::where('email', $auth->email)->first();
 
         if (!$user) {
-            return ServiceResponse::error("user not found", 404);
+            return ServiceResponse::error("User not found", 404);
         }
 
         return ServiceResponse::success("User fetch successfully.", ['user' => $user]);
