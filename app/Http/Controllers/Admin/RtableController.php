@@ -57,7 +57,7 @@ class RtableController extends Controller
         });
 
         // Return the response with image URLs included
-        return ServiceResponse::success("Category list successfully", ['data' => $data]);
+        return ServiceResponse::success("RTable list successfully retrived", ['data' => $data]);
     }
 
 
