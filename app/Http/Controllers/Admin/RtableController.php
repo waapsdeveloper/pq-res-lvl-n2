@@ -37,17 +37,15 @@ class RtableController extends Controller
                 $query->where('identifier', 'like', '%' . ($filters['Table No'] ?? $filters['tableNo']) . '%');
             }
 
-
-
-            if (isset($filters['address'])) {
+            if (isset($filters['address']) && !empty($filters['address'])) {
                 $query->whereHas('restaurantDetail', function ($query) use ($filters) {
-                    $query->where('address', 'like', '%' . $filters['address'] . '%');
+                    $query->where('address_line', 'like', '%' . $filters['address'] . '%');
                 });
             }
 
-            // if (isset($filters['status'])) {
-            //     $query->where('status', $filters['status']);
-            // }
+            if (isset($filters['status']) && !empty($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
         }
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
