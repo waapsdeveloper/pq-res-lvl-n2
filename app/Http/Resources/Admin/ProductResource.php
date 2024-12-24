@@ -31,6 +31,7 @@ class ProductResource extends JsonResource
             "price" => $obj->price,
             "image" => $image,
             "status" => $obj->status,
+            'discount' => $obj->discount,
         ];
     }
 }
