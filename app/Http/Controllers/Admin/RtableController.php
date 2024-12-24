@@ -81,7 +81,7 @@ class RtableController extends Controller
             'restaurant_id' => $data['restaurant_id'] ?? 1,
             'name' => $data['name'] ?? null,
             'identifier' => $data['identifier'] ?? "TBL",
-            'no_of_seats' => $data['no_of_seats'],
+            'no_of_seats' => $data['no_of_seats'] ?? 0,
             'floor' => $data['floor'],
             'status' => $data['status'],
             'description' => $data['description'] ?? null, // Default to null if not provided
