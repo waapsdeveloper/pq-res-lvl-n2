@@ -50,7 +50,7 @@ class ProductController extends Controller
                 $query->where('price', '<=', $filters['price']);
             }
             if (isset($filters['discount']) && !empty($filters['discount'])) {
-                $query->where('discount', 'like', '%' . $filters['discount'] . '%');
+                $query->where('discount', "<=", $filters['discount']);
             }
             // if (isset($filters['is_today_deal'])) {
             //     $query->where('is_today_deal', 'like', '%' . $filters['is_today_deal'] . '%');
