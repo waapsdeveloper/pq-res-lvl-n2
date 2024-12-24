@@ -99,6 +99,7 @@ class ProductController extends Controller
             'description' => $data['description'] ?? '',
             'price' => $data['price'],
             'status' => $data['status'],
+            'discount' => $data['discount'] ?? 0,
         ]);
         $identifier = Identifier::make('Product', $product->id);
         $product->update(['identifier' => $identifier]);

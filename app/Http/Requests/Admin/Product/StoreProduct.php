@@ -29,10 +29,11 @@ class StoreProduct extends FormRequest
             'restaurant_id' => 'nullable|integer|exists:restaurants,id', // Ensure role is provided
             'category_id' => 'nullable|integer|exists:categories,id', // Ensure role is provided
             'description' => 'nullable|string', // Ensure role is provided
-            'price' => 'required|integer', // Ensure role is provided
+            'price' => 'required|integer|decimal', // Ensure role is provided
             'status' => 'required|string|in:active,inactive',
             'notes' => "nullable|string",
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'discount' => 'nullable|integer|decimal',
         ];
     }
     protected function failedValidation(Validator $validator)
