@@ -12,12 +12,13 @@ return new class extends Migration {
     {
         Schema::create('rtables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('restaurant_id');
+            $table->string('name')->nullable();
+            $table->unsignedBigInteger('restaurant_id')->nullable();
             $table->string('identifier')->unique();
             $table->string('floor')->nullable();
             $table->integer('no_of_seats')->nullable();
-            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->text('description')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }
