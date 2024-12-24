@@ -25,7 +25,7 @@ class StoreRtable extends FormRequest
     {
         return [
             'name' => 'nullable|string',
-            'restaurant' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
+            'restaurant_id' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
             'identifier' => 'nullable|string|unique:rtables,identifier|min:3|max:255', // Unique table identifier
             'no_of_seats' => 'nullable|integer|max:255', // Table location
             'description' => 'nullable|string|max:500', // Table description (nullable)

@@ -89,7 +89,7 @@ class RtableController extends Controller
         ]);
 
         $identifier = Identifier::make('Table', $table->id, 5);
-        $table->update(['identifier' => $identifier]);
+        $table->update(['identifier' =>  $identifier]);
 
         return ServiceResponse::success('Rtable store successful', ['item' => $table]);
     }
