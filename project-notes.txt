@@ -42,3 +42,6 @@ crud working
 
 6 products mai is_today_deal database mai mojod nai hy ye kese chalani hy?
 or ye type kia hy filter mai
+
+7 table filter mai filters: {"tableNo":"","status":"active","noOfOrders":"","Table No":""}
+Table No-> identifer par laga dia hy

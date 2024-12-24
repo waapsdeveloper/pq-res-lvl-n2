@@ -32,18 +32,22 @@ class RtableController extends Controller
         }
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON string into an associative array
-
-            if (isset($filters['Table No'])) {
-                $query->where('identifier', 'like', '%' . $filters['name'] . '%');
+            // return response()->json($filters);
+            if ((isset($filters['Table No']) && !empty($filters['Table No'])) || (isset($filters['tableNo']) && !empty($filters['tableNo']))) {
+                $query->where('identifier', 'like', '%' . ($filters['Table No'] ?? $filters['tableNo']) . '%');
             }
+
+
 
             if (isset($filters['address'])) {
-                $query->where('address', 'like', '%' . $filters['address'] . '%');
+                $query->whereHas('restaurantDetail', function ($query) use ($filters) {
+                    $query->where('address', 'like', '%' . $filters['address'] . '%');
+                });
             }
 
-            if (isset($filters['status'])) {
-                $query->where('status', $filters['status']);
-            }
+            // if (isset($filters['status'])) {
+            //     $query->where('status', $filters['status']);
+            // }
         }
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
