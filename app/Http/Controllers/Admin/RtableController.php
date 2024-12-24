@@ -77,9 +77,8 @@ class RtableController extends Controller
         //
         // $data = $request->all();
         $data = $request->validated();
-        // Create a new user (assuming the user model exists)
         $table = Rtable::create([
-            'restaurant_id' => $data['restaurant_id'],
+            'restaurant_id' => $data['restaurant_id'] ?? 1,
             'name' => $data['name'] ?? null,
             'identifier' => $data['identifier'] ?? "TBL",
             'no_of_seats' => $data['no_of_seats'],
