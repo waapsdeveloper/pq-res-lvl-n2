@@ -56,7 +56,7 @@ class UserController extends Controller
                 $query->where('status', $filters['status']);
             }
 
-            if (isset($filters['role'])) {
+            if (isset($filters['role']) && !empty($filters['role'])) {
                 // return response()->json($filters['role']);
                 $query->whereHas('role', function ($query) use ($filters) {
                     $query->where('id', $filters['role']); // Assuming 'name' is a column in the roles table
