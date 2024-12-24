@@ -39,6 +39,10 @@ class UserController extends Controller
         }
 
         if ($filters) {
+            if (!empty($filters['role'])) {
+                dd($filters['role']);
+                $query->where('role_id', $filters['role']);
+            }
             if (!empty($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
@@ -53,11 +57,6 @@ class UserController extends Controller
 
             if (!empty($filters['status'])) {
                 $query->where('status', $filters['status']);
-            }
-
-            if (!empty($filters['role'])) {
-                dd($filters['role']);
-                $query->where('role_id', $filters['role']);
             }
         }
 
