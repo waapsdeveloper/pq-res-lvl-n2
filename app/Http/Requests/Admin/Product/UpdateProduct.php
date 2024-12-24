@@ -25,15 +25,16 @@ class UpdateProduct extends FormRequest
     {
         return [
             'name' => 'required|string|min:3|max:255',
-            'identifier' => 'nullable|string|unique:products,identifier', // Ensure role is provided
+            'identifier' => 'nullable|unique:products,identifier,' . $this->id,  // Ensure role is provided
             'restaurant_id' => 'nullable|integer|exists:restaurants,id', // Ensure role is provided
             'category_id' => 'nullable|integer|exists:categories,id', // Ensure role is provided
             'description' => 'nullable|string', // Ensure role is provided
-            'price' => 'required|integer|decimal', // Ensure role is provided
+            'price' => 'required', // Ensure role is provided
             'status' => 'required|string|in:active,inactive',
             'notes' => "nullable|string",
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'discount' => 'nullable|integer|decimal',
+            'discount' => 'nullable',
+
         ];
     }
 

@@ -153,7 +153,6 @@ class ProductController extends Controller
         if (!$product) {
             return ServiceResponse::error('Product not found');
         }
-
         $product->update([
             'name' => $data['name'] ?? $product->name,
             'category_id' => $data['category'] ?? $product->category_id,
