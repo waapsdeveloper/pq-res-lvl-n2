@@ -36,13 +36,14 @@ class ProductController extends Controller
 
 
         if ($filters) {
-            $filters = json_decode($filters, true); // Decode JSON string into an associative array
+            $filters = json_decode($filters, true);
             if (isset($filters['name']) && !empty($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
             if (isset($filters['category']) && !empty($filters['category'])) {
+                // return response()->json($filters);
                 $query->whereHas('category', function ($query) use ($filters) {
-                    $query->where('category_id', 'like', '%' . $filters['category'] . '%');
+                    $query->where('name', 'like', '%' . $filters['category'] . '%');
                 });
             }
             if (isset($filters['price']) && !empty($filters['price'])) {
