@@ -37,7 +37,7 @@ class UserController extends Controller
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
         }
-        dd($filters);
+        $filters = json_decode($filters, true);
         if ($filters) {
             if (!empty($filters['role'])) {
                 dd($filters['role']);
