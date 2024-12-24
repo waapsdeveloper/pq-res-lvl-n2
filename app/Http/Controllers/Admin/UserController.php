@@ -40,24 +40,27 @@ class UserController extends Controller
 
         if ($filters) {
             $filters = json_decode($filters, true);
-            dd($filters);
-            if (isset($filters['name'])) {
+
+            if (isset($filters['name']) && !empty($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
 
-            if (isset($filters['phone'])) {
+            if (isset($filters['phone']) && !empty($filters['phone'])) {
                 $query->where('phone', 'like', '%' . $filters['phone'] . '%');
             }
-            if (isset($filters['email'])) {
+            if (isset($filters['email']) && !empty($filters['email'])) {
                 $query->where('email', 'like', '%' . $filters['email'] . '%');
             }
 
-            if (isset($filters['status'])) {
+            if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
+
             if (isset($filters['role'])) {
-                $query->where('role_id', "=", $filters['role']);
-                dd($query->toSql(), $query->getBindings());
+                // return response()->json($filters['role']);
+                $query->whereHas('role', function ($query) use ($filters) {
+                    $query->where('name', $filters['role']); // Assuming 'name' is a column in the roles table
+                });
             }
         }
 
@@ -69,8 +72,6 @@ class UserController extends Controller
         $data->getCollection()->transform(function ($item) {
             return new UserResource($item);
         });
-
-        dd($data);
         // Return the response with image URLs included
         return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     }
