@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
+use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\StoreProduct;
@@ -25,7 +27,7 @@ class ProductController extends Controller
         $filters = $request->input('filters', null);
 
 
-        $query = Product::query()->with('category');
+        $query = Product::query();
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -39,9 +41,7 @@ class ProductController extends Controller
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
             if (isset($filters['category'])) {
-                $query->whereHas('category', function ($query) use ($filters) {
-                    $query->where('name', 'like', '%' . $filters['category'] . '%');
-                });
+                $query->where('category_id', 'like', '%' . $filters['category'] . '%');
             }
             if (isset($filters['price'])) {
                 $query->where('price', 'like', '%' . $filters['price'] . '%');
@@ -90,30 +90,25 @@ class ProductController extends Controller
         // $data = $request->all();
         $data = $request->validated();
 
-        // Validate the required fields
-        // $validation = Validator::make($data, [
-        //     'name' => 'required|string|min:3|max:255',
-        //     'category' => 'nullable|integer|exists:categories,id', // Ensure role is provided
-        //     'description' => 'nullable|string', // Ensure role is provided
-        //     'price' => 'required|integer', // Ensure role is provided
-        //     'status' => 'required|string|in:active,inactive', // Validate status
-        // ]);
-
-        // // If validation fails
-        // if ($validation->fails()) {
-        //     return ServiceResponse::error($validation->errors()->first());
-        // }
-
         // Create a new user (assuming the user model exists)
-        $item = Product::create([
+        $product = Product::create([
             'name' => $data['name'],
             'category_id' => $data['category'] ?? 0,
+            'restaurant_id' => $data['restaurant_id'] ?? null,
+            'identifier' => $data['identifier'] ?? null,
             'description' => $data['description'] ?? '',
             'price' => $data['price'],
             'status' => $data['status'],
         ]);
+        $identifier = Identifier::make('Product', $product->id);
+        $product->update(['identifier' => $identifier]);
 
-        return ServiceResponse::success('Product store successful', ['item' => $item]);
+        if (isset($data['image'])) {
+            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+            $product->update(['image' => $url]);
+        }
+
+        return ServiceResponse::success('Product store successful', ['item' => $product]);
     }
 
     /**
