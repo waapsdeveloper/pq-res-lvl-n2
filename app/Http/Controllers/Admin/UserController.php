@@ -55,7 +55,7 @@ class UserController extends Controller
             if (isset($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
-            if (isset($filters['role_id'])) {
+            if (isset($filters['role'])) {
                 $query->where('role_id', $filters['role_id']);
             }
         }
