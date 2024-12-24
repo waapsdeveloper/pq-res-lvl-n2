@@ -37,16 +37,18 @@ class ProductController extends Controller
 
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON string into an associative array
-            if (isset($filters['name'])) {
+            if (isset($filters['name']) && !empty($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
-            if (isset($filters['category'])) {
-                $query->where('category_id', 'like', '%' . $filters['category'] . '%');
+            if (isset($filters['category']) && !empty($filters['category'])) {
+                $query->whereHas('categories', function ($query) use ($filters) {
+                    $query->where('category_id', 'like', '%' . $filters['category'] . '%');
+                });
             }
-            if (isset($filters['price'])) {
+            if (isset($filters['price']) && !empty($filters['price'])) {
                 $query->where('price', 'like', '%' . $filters['price'] . '%');
             }
-            if (isset($filters['discount'])) {
+            if (isset($filters['discount']) && !empty($filters['discount'])) {
                 $query->where('discount', 'like', '%' . $filters['discount'] . '%');
             }
             // if (isset($filters['is_today_deal'])) {
@@ -56,7 +58,7 @@ class ProductController extends Controller
             //     $query->where('noOfOrders', 'like', '%' . $filters['noOfOrders'] . '%');
             // }
 
-            if (isset($filters['status'])) {
+            if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
         }
