@@ -95,7 +95,7 @@ class ProductController extends Controller
             'name' => $data['name'],
             'category_id' => $data['category'] ?? 0,
             'restaurant_id' => $data['restaurant_id'] ?? null,
-            'identifier' => $data['identifier'] ?? null,
+            'identifier' => "PROD",
             'description' => $data['description'] ?? '',
             'price' => $data['price'],
             'status' => $data['status'],
