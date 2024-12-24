@@ -48,6 +48,9 @@ class UserController extends Controller
             if (isset($filters['phone'])) {
                 $query->where('phone', 'like', '%' . $filters['phone'] . '%');
             }
+            if (isset($filters['email'])) {
+                $query->where('email', 'like', '%' . $filters['email'] . '%');
+            }
 
             if (isset($filters['status'])) {
                 $query->where('status', $filters['status']);

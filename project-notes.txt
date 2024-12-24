@@ -38,7 +38,7 @@ crud working
 
 2 user crud ok image inputs nai hyn
 
-3 category create mai description or image input nai 
+3 category create mai description or image input nai hy
 
 4 PRODUCTS sreach mai category select option honichahiye ta k category id k hisab se return ho data
 5 products mai price range select option honichahiye ta k price range k hisab se return

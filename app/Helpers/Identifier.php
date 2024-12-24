@@ -13,10 +13,14 @@ class Identifier
      * @param int $id
      * @return string
      */
-    public static function make(string $modelName, int $id): string
+    public static function make(string $modelName, int $id, int $length = 3): string
     {
-        // Take the first 3 letters of the model name, capitalize them, append '0', and the ID
-        $prefix = strtoupper(Str::substr($modelName, 0, 3));
-        return "{$prefix}0{$id}";
+        $prefix = strtoupper(Str::substr($modelName, 0, $length));
+
+        $numDigits = max(strlen($id), $length);
+
+        $paddedId = str_pad($id, $numDigits, '0', STR_PAD_LEFT);
+
+        return "{$prefix}{$paddedId}";
     }
 }

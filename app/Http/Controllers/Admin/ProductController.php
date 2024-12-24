@@ -101,7 +101,7 @@ class ProductController extends Controller
             'status' => $data['status'],
             'discount' => $data['discount'] ?? 0,
         ]);
-        $identifier = Identifier::make('Product', $product->id);
+        $identifier = Identifier::make('Product', $product->id, 4);
         $product->update(['identifier' => $identifier]);
 
         if (isset($data['image'])) {

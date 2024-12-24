@@ -87,7 +87,7 @@ class CategoryController extends Controller
             'status' => $data['status'],
         ]);
 
-        $identifier = Identifier::make('Category', $category->id);
+        $identifier = Identifier::make('Category', $category->id, 3);
         $category->update(['identifier' => $identifier]);
 
         if (isset($data['image'])) {
@@ -140,7 +140,7 @@ class CategoryController extends Controller
         }
 
         // Generate a new identifier if it is not provided in the request
-        $identifier = $data['identifier'] ?? Identifier::make('Category', $category->id);
+        $identifier = $data['identifier'] ?? Identifier::make('Category', $category->id, 3);
 
         // Handle image upload (if present)
         if (isset($data['image'])) {
