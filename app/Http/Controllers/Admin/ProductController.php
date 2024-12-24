@@ -41,7 +41,7 @@ class ProductController extends Controller
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
             if (isset($filters['category']) && !empty($filters['category'])) {
-                $query->whereHas('categories', function ($query) use ($filters) {
+                $query->whereHas('category', function ($query) use ($filters) {
                     $query->where('category_id', 'like', '%' . $filters['category'] . '%');
                 });
             }
