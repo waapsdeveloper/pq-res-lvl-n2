@@ -33,7 +33,7 @@ class RtableController extends Controller
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON string into an associative array
 
-            if (isset($filters['name'])) {
+            if (isset($filters['Table No'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
 
