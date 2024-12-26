@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
@@ -20,18 +21,16 @@ Route::prefix('auth')->group(function () {
     Route::post('/register-via-email', [AuthController::class, 'registerViaEmail'])->name('auth.registerViaEmail');
 });
 
-// Route::prefix('restaurant')->group(function () {
-
-//     Route::get('/by-id/{id}', [RestaurantController::class, 'show']);
-//     Route::get('/list', [RestaurantController::class, 'index']);
-//     Route::post('/add', [RestaurantController::class, 'store']);
-// });
 
 Route::prefix('restaurant')->group(function () {
     Route::resource('/', RestaurantController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
         ->names('restaurant');
+    Route::post('/update-favicon/{id}', [RestaurantController::class, 'updateFavicon'])
+        ->name('orderUpdateFavicon');
+    Route::post('/update-logo/{id}', [RestaurantController::class, 'updateLogo'])
+        ->name('orderUpdateLogo');
 });
 Route::prefix('restaurant-timing')->group(function () {
     Route::resource('/', RestaurantTimingController::class)

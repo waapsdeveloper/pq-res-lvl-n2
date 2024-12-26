@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
+use App\Helpers\DateHelper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Restaurant\UpdateRestaurant;
-use App\Http\Requests\Restaurant\StoreRestaurant;
+use App\Http\Requests\Admin\Restaurant\StoreRestaurant;
 use App\Http\Resources\Admin\RestaurantListResourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\RestaurantTiming;
 
 use App\Models\Restaurant;
 use App\Models\RestaurantTimings;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
+
 
 class RestaurantController extends Controller
 {
@@ -28,8 +31,7 @@ class RestaurantController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Restaurant::query();
-
+        $query = Restaurant::query()->with('timings');
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
@@ -50,7 +52,6 @@ class RestaurantController extends Controller
                 $query->where('status', $filters['status']);
             }
         }
-
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
@@ -77,25 +78,51 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurant $request)
     {
-
         $data = $request->validated();
-
+        // Create the restaurant
         $restaurant = Restaurant::create([
             'name' => $data['name'],
             'address' => $data['address'],
             'phone' => $data['phone'] ?? null,
             'email' => $data['email'] ?? null,
             'website' => $data['website'] ?? null,
-            // 'opening_hours' => $data['opening_hours'] ?? null,
             'description' => $data['description'] ?? null,
-            'rating' => $data['rating'] ?? 0, // Default rating to 0 if not provided
-            'status' => $data['status'] ?? 'active', // Default rating to 0 if not provided
+            'status' => $data['status'] ?? 'active',
+            'image' => $data['image'] ?? null,
+            'favicon' => $data['favicon'] ?? null,
+            'logo' => $data['logo'] ?? null,
+            'copyright_text' => $data['copyright_text'] ?? null,
+            'rating' => $data['rating'] ?? 0,
         ]);
 
+        // Process image, favicon, and logo (Base64 conversion)
+        foreach (['image', 'favicon', 'logo'] as $field) {
+            if (isset($data[$field]) && $data[$field]) {
+                $url = Helper::getBase64ImageUrl($data[$field]);
+                $restaurant->update([$field => $url]);
+            }
+        }
 
+        // $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
+            $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
+            $start_time = $scheduleItem['start_time'];
+            $end_time = $scheduleItem['end_time'];
+            // $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($scheduleItem['status'] ?? 'active');
+            $status = $scheduleItem['status'] ?? 'inactive';
+
+            RestaurantTiming::create([
+                'restaurant_id' => $restaurant->id,
+                'day' => ucfirst($day), // Store day with proper capitalization
+                'start_time' => $start_time,
+                'end_time' => $end_time,
+                'status' => $status,
+            ]);
+        }
 
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
     }
+
 
     /**
      * Display the specified resource.
@@ -104,7 +131,7 @@ class RestaurantController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = Restaurant::find($id);
+        $restaurant = Restaurant::with('timings')->find($id);
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
@@ -128,39 +155,66 @@ class RestaurantController extends Controller
      */
     public function update(UpdateRestaurant $request, string $id)
     {
-
-        $data = $request->all();
+        $data = $request->validated();
 
         $restaurant = Restaurant::find($id);
-
 
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
         }
 
+        // Delete old images
+        foreach (['image', 'favicon', 'logo'] as $field) {
+            if (isset($data[$field]) && $data[$field] && $restaurant->{$field}) {
+                Helper::deleteImage($restaurant->{$field});
+            }
+        }
 
-        $restaurant->update([
+        // Update restaurant details (using fill and save for cleaner code)
+        $restaurant->fill([
             'name' => $data['name'],
             'address' => $data['address'],
             'phone' => $data['phone'] ?? $restaurant->phone,
             'email' => $data['email'] ?? $restaurant->email,
             'website' => $data['website'] ?? $restaurant->website,
-            'opening_hours' => $data['opening_hours'] ?? $restaurant->opening_hours,
             'description' => $data['description'] ?? $restaurant->description,
-            'rating' => $data['rating'] ?? $restaurant->rating,
             'status' => $data['status'] ?? $restaurant->status,
+            'copyright_text' => $data['copyright_text'] ?? $restaurant->copyright_text,
+            'rating' => $data['rating'] ?? $restaurant->rating,
         ]);
 
+        $restaurant->save(); // Save the changes
 
-        // if (isset($data['image'])) {
-        //     // Assuming you have a helper method to handle image uploads
-        //     $url = Helper::getBase64ImageUrl($data);
-        //     $restaurant->update([
-        //         'image' => $url
-        //     ]);
-        // }
+        // Process new images
+        foreach (['image', 'favicon', 'logo'] as $field) {
+            if (isset($data[$field]) && $data[$field]) {
+                $url = Helper::getBase64ImageUrl($data[$field]);
+                $restaurant->update([$field => $url]); // Update only the image field
+            }
+        }
 
-        // Return a success response with the updated restaurant data
+        // *** Improved Schedule Handling ***
+        // $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+        // Delete existing timings for this restaurant before adding new ones
+        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
+
+        foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
+            $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
+            $start_time = $scheduleItem['start_time'];
+            $end_time = $scheduleItem['end_time'];
+            // $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($scheduleItem['status'] ?? 'active');
+            $status = $scheduleItem['status'] ?? 'inactive';
+
+            RestaurantTiming::create([
+                'restaurant_id' => $restaurant->id,
+                'day' => ucfirst($day), // Store day with proper capitalization
+                'start_time' => $start_time,
+                'end_time' => $end_time,
+                'status' => $status,
+            ]);
+        }
+
         return ServiceResponse::success('Update successful', ['restaurant' => $restaurant]);
     }
 
@@ -172,6 +226,7 @@ class RestaurantController extends Controller
     {
         // Attempt to find the restaurant by ID
         $restaurant = Restaurant::find($id);
+        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
@@ -183,5 +238,88 @@ class RestaurantController extends Controller
 
         // Return a success response
         return ServiceResponse::success("Restaurant deleted successfully.");
+    }
+
+    public function updateImage(Request $request, $id)
+    {
+        $restaurant = Restaurant::find($id);
+
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp.bmp|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $data = $request->all();
+
+        if (isset($data['image'])) {
+            $url = Helper::getBase64ImageUrl($data);
+            $restaurant->update([
+                'image' => $url,
+            ]);
+        }
+
+        return ServiceResponse::success('Update successful', ['restaurant' => $restaurant]);
+    }
+
+    public function updateLogo(Request $request, $id)
+    {
+        $restaurant = Restaurant::find($id);
+
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'logo' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp.bmp|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $data = $request->all();
+
+        if (isset($data['logo'])) {
+            $url = Helper::getBase64ImageUrl($data);
+            $restaurant->update([
+                'logo' => $url,
+            ]);
+        }
+
+        return ServiceResponse::success('Update successful', ['restaurant' => $restaurant]);
+    }
+    public function updateFavicon(Request $request, $id)
+    {
+        $restaurant = Restaurant::find($id);
+
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'favicon' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp.bmp|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $data = $request->all();
+
+        if (isset($data['favicon'])) {
+            $url = Helper::getBase64ImageUrl($data);
+            $restaurant->update([
+                'favicon' => $url,
+            ]);
+        }
+
+        return ServiceResponse::success('Update successful', ['restaurant' => $restaurant]);
     }
 }

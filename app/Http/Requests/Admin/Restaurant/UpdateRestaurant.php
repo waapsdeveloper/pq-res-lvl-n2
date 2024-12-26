@@ -31,7 +31,13 @@ class UpdateRestaurant extends FormRequest
             'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
             'description' => 'nullable|string|max:1000',
             'status' => 'nullable|string',
-            'rating' => 'nullable|numeric|min:0|max:5',
+            'favicon' => 'nullable|string',
+            'logo' => 'nullable|string',
+            'copyright_text' => 'nullable|string',
+            'rating' => 'nullable|numeric',
+            'image' => 'nullable|string',
+            'schedule' => 'nullable|array',
+
         ];
     }
     protected function failedValidation(Validator $validator)

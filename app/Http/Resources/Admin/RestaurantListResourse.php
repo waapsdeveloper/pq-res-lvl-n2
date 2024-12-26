@@ -20,6 +20,7 @@ class RestaurantListResourse extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
+
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -30,8 +31,20 @@ class RestaurantListResourse extends JsonResource
             "description" => $obj->description ?? null,
             "rating" => $obj->rating ?? 0, // Default rating to 0 if not set
             "status" => $obj->status,
-            // "opening_hours" => $obj->opening_hours ?? null,
-
+            "created_at" => $obj->created_at,
+            "updated_at" => $obj->updated_at,
+            "image" => $obj->image ?? null,
+            "favicon" => $obj->favicon ?? null,
+            "logo" => $obj->logo ?? null,
+            "copyright_text" => $obj->copyright_text ?? null,
+            "schedule" => $obj->timings->map(function ($item) {
+                return [
+                    'day' => $item->day,
+                    'start_time' => $item->start_time,
+                    'end_time' => $item->end_time,
+                    'status' => $item->status,
+                ];
+            }),
         ];
     }
 }

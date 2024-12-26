@@ -25,12 +25,12 @@ class StoreRtable extends FormRequest
     {
         return [
             'name' => 'nullable|string',
-            'restaurant_id' => 'nullable|integer|exists:restaurants,id', // Ensure the restaurant exists
-            'identifier' => 'nullable|string|unique:rtables,identifier|min:3|max:255', // Unique table identifier
-            'no_of_seats' => 'nullable|integer|max:255', // Table location
-            'description' => 'nullable|string|max:500', // Table description (nullable)
-            'floor' => 'nullable|string|max:500', // Table description (nullable)
-            'status' => 'nullable|string', // Table description (nullable)
+            'restaurant_id' => 'nullable|integer|exists:restaurants,id',
+            'identifier' => 'nullable|string|unique:rtables,identifier|min:3|max:255',
+            'no_of_seats' => 'nullable|integer|max:255',
+            'description' => 'nullable|string|max:500',
+            'floor' => 'nullable|string|max:500',
+            'status' => 'nullable|string',
         ];
     }
     protected function failedValidation(Validator $validator)

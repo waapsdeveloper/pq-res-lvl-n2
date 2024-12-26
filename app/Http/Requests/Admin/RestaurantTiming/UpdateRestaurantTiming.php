@@ -27,7 +27,7 @@ class UpdateRestaurantTiming extends FormRequest
             'restaurant_id' => 'required|integer|exists:restaurants,id', // Ensure it exists in restaurants table
             'day' => 'required|string',
             'start_time' => 'nullable|date_format:H:i', // Ensure time is in valid format (e.g., 14:30)
-            'end_time' => 'nullable|date_format:H:i|after:start_time',
+            'end_time' => 'nullable|after:start_time',
             'status' => 'required|string|in:active,inactive', // Must be after start_time
         ];
     }

@@ -20,17 +20,19 @@ class Restaurant extends Model
 
     // Mass assignable attributes
     protected $fillable = [
-        'image',
         'name',
-        'address',
-        'phone',
-        'email',
-        'website',
-        // 'opening_hours',
-        'description',
+        'logo',
         'rating',
-        'status'
-
+        'image',
+        'phone',
+        'website',
+        'address',
+        'email',
+        'description',
+        'favicon',
+        'copyright_text',
+        'status',
+        'image'
     ];
 
     // Attributes that should be hidden from arrays (e.g., sensitive data)
@@ -42,8 +44,15 @@ class Restaurant extends Model
     // Cast attributes to a specific type
     protected $casts = [
         'rating' => 'float',
-        'opening_hours' => 'json', // Example: If storing opening hours as a JSON object
     ];
+    public function timings()
+    {
+        return $this->hasMany(RestaurantTiming::class);
+    }
+    public function rTables()
+    {
+        return $this->hasMany(Rtable::class);
+    }
 
     // Relationships
 
@@ -64,8 +73,4 @@ class Restaurant extends Model
     // {
     //     return $this->belongsToMany(Tag::class, 'restaurant_tag', 'restaurant_id', 'tag_id');
     // }
-    public function timings()
-    {
-        return $this->hasMany(RestaurantTiming::class);
-    }
 }

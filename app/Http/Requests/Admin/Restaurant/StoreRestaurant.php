@@ -5,6 +5,7 @@ namespace App\Http\Requests\Admin\Restaurant;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+
 class StoreRestaurant extends FormRequest
 {
     /**
@@ -28,11 +29,18 @@ class StoreRestaurant extends FormRequest
             'phone' => 'nullable|string', // |regex:/^[0-9]{10,15}$/
             'email' => 'nullable|email|max:255|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
-            // 'opening_hours' => 'required|json', // Ensure valid JSON format
             'description' => 'nullable|string|max:1000',
-            'status' => 'nullable|string',
+            'status' => 'nullable|string|in:active,inactive',
+            'image' => 'nullable|string', // Base64 string validation
+            'favicon' => 'nullable|string', // Base64 string validation
+            'logo' => 'nullable|string', // Base64 string validation
+            'copyright_text' => 'nullable|string|max:255',
+            'rating' => 'nullable|numeric|min:0|max:5',
+            'schedule' => 'required|array',
+
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
         // Customize the error response if validation fails

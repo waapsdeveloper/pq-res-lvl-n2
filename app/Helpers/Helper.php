@@ -7,51 +7,39 @@ use Illuminate\Support\Facades\Storage;
 class Helper
 {
 
-    static public function getBase64ImageUrl($data)
+    static public function getBase64ImageUrl($image)
     {
-        // dd($data["image"]);
-        $image = isset($data["image"]) ? $data["image"] : null;
+        // $image = isset($data["image"]) ? $data["image"] : null;
 
         if ($image) {
-            // Strip the base64 prefix if it exists
             $base64Image = preg_replace('/^data:image\/\w+;base64,/', '', $image);
 
-            // Create a unique filename for the image
-            $filename = uniqid() . '.png'; // You can adjust the file extension as needed
-
-            // Get the path where you want to save the image
+            $filename = uniqid() . '.png';
 
             $path = base_path(env('IMAGE_BASE_FOLDER') . $filename);
-
-            // dd($path);
-
-            // Convert base64 to binary data and save it to a file
-            // Storage::disk('s3')->put('folder/file.jpg', file_get_contents($filePath));
-            // $file = file_put_contents($path, base64_decode($base64Image));
-            $file = Storage::disk('public')->put('images/' . $filename, base64_decode($base64Image));
+            $file = Storage::disk('local')->put('images/' . $filename, base64_decode($base64Image));
 
             if ($file) {
-                // File saved successfully
-                // Now you can use $path to save the image path in your database
                 $imagePath = 'images/' . $filename;
-
-                // Save $imagePath in your database for the product
-                // Example:
-                // $product->image = $imagePath;
-                // $product->save();
-
-                // Return the saved image path
+                // dd($path, $file, $imagePath);
                 return $imagePath;
             } else {
-                // Error saving the file
                 return null;
             }
         } else {
-            // No image provided
             return null;
         }
     }
 
+    public static function deleteImage(string $url)
+    {
+        $path = parse_url($url, PHP_URL_PATH); // Extract the file path from the URL
+        $filePath = public_path($path); // Convert to the full server path
+
+        if (file_exists($filePath)) {
+            unlink($filePath); // Delete the file
+        }
+    }
     static public function returnFullImageUrl($imagePath)
     {
         if (!$imagePath || $imagePath == "") {
@@ -67,7 +55,4 @@ class Helper
 
         return $fullImageUrl;
     }
-
 }
-
-?>

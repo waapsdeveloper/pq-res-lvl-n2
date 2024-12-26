@@ -13,7 +13,7 @@ class DateHelper
      * @param array $formats
      * @return Carbon|null
      */
-    public static function parseDate($date, $formats = ['d-m-Y H:i:s', 'Y-m-d H:i:s', 'm/d/Y H:i', 'd-m-y H:i'])
+    public static function parseDate($date, $formats = ['d-m-Y H:i:s', 'Y-m-d H:i:s', 'm/d/Y H:i', 'd-m-y H:i', 'd-m-y H:i A'])
     {
         foreach ($formats as $format) {
             try {
@@ -37,4 +37,11 @@ class DateHelper
     {
         return $date->diffInMinutes(Carbon::now(), false) >= $minutes;
     }
+    /**
+     * Parse and format time, handling various input formats.
+     *
+     * @param string $time The time string to parse.
+     * @param string $outputFormat The desired output format (e.g., 'H:i:s', 'h:i A').
+     * @return string|null The formatted time or null if parsing fails.
+     */
 }
