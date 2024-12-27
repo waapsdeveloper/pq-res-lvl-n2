@@ -176,60 +176,79 @@ class RestaurantController extends Controller
 
         $restaurant = Restaurant::find($id);
 
+
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
         }
+        // // Delete old images
+        // foreach (['image', 'favicon', 'logo'] as $field) {
+            //     if (isset($data[$field]) && $data[$field] && $restaurant->{$field}) {
+                //         Helper::deleteImage($restaurant->{$field});
+        //     }
+        // }
+        
+        // // Update restaurant details (using fill and save for cleaner code)
+        // $restaurant->fill([
+            //     'name' => $data['name'],
+            //     'address' => $data['address'],
+        //     'phone' => $data['phone'] ?? $restaurant->phone,
+        //     'email' => $data['email'] ?? $restaurant->email,
+        //     'website' => $data['website'] ?? $restaurant->website,
+        //     'description' => $data['description'] ?? $restaurant->description,
+        //     'status' => $data['status'] ?? $restaurant->status,
+        //     'copyright_text' => $data['copyright_text'] ?? $restaurant->copyright_text,
+        //     'rating' => $data['rating'] ?? $restaurant->rating,
+        // ]);
 
-        // Delete old images
-        foreach (['image', 'favicon', 'logo'] as $field) {
-            if (isset($data[$field]) && $data[$field] && $restaurant->{$field}) {
-                Helper::deleteImage($restaurant->{$field});
+        // $restaurant->save(); // Save the changes
+        
+        // // Process new images
+        // foreach (['image', 'favicon', 'logo'] as $field) {
+            //     if (isset($data[$field]) && $data[$field]) {
+                //         $url = Helper::getBase64ImageUrl($data[$field]);
+                //         $restaurant->update([$field => $url]); // Update only the image field
+                //     }
+                // }
+                
+                // *** Improved Schedule Handling ***
+                // $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                
+                // Delete existing timings for this restaurant before adding new ones
+                RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
+                return response()->json([$data]);
+
+        // foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
+        //     $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
+        //     $start_time = $scheduleItem['start_time'];
+        //     $end_time = $scheduleItem['end_time'];
+        //     // $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($scheduleItem['status'] ?? 'active');
+        //     $status = $scheduleItem['status'] ?? 'inactive';
+
+        //     RestaurantTiming::create([
+        //         'restaurant_id' => $restaurant->id,
+        //         'day' => ucfirst($day), // Store day with proper capitalization
+        //         'start_time' => $start_time,
+        //         'end_time' => $end_time,
+        //         'status' => $status,
+        //     ]);
+        // }
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        foreach ($days as $day) {
+            dd($days);
+            $dayData = $data['schedule'][$day . '_day'];
+            if ($dayData) {
+                $start_time = $data['schedule'][$day . '_start_time'];
+                $end_time = $data['schedule'][$day . '_end_time'];
+                $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($data['schedule'][$day . '_status'] ?? 'active');
+
+                RestaurantTiming::create([
+                    'restaurant_id' => $restaurant->id,
+                    'day' => ucfirst($dayData),
+                    'start_time' => $start_time,
+                    'end_time' => $end_time,
+                    'status' => $status,
+                ]);
             }
-        }
-
-        // Update restaurant details (using fill and save for cleaner code)
-        $restaurant->fill([
-            'name' => $data['name'],
-            'address' => $data['address'],
-            'phone' => $data['phone'] ?? $restaurant->phone,
-            'email' => $data['email'] ?? $restaurant->email,
-            'website' => $data['website'] ?? $restaurant->website,
-            'description' => $data['description'] ?? $restaurant->description,
-            'status' => $data['status'] ?? $restaurant->status,
-            'copyright_text' => $data['copyright_text'] ?? $restaurant->copyright_text,
-            'rating' => $data['rating'] ?? $restaurant->rating,
-        ]);
-
-        $restaurant->save(); // Save the changes
-
-        // Process new images
-        foreach (['image', 'favicon', 'logo'] as $field) {
-            if (isset($data[$field]) && $data[$field]) {
-                $url = Helper::getBase64ImageUrl($data[$field]);
-                $restaurant->update([$field => $url]); // Update only the image field
-            }
-        }
-
-        // *** Improved Schedule Handling ***
-        // $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-
-        // Delete existing timings for this restaurant before adding new ones
-        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
-
-        foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
-            $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
-            $start_time = $scheduleItem['start_time'];
-            $end_time = $scheduleItem['end_time'];
-            // $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($scheduleItem['status'] ?? 'active');
-            $status = $scheduleItem['status'] ?? 'inactive';
-
-            RestaurantTiming::create([
-                'restaurant_id' => $restaurant->id,
-                'day' => ucfirst($day), // Store day with proper capitalization
-                'start_time' => $start_time,
-                'end_time' => $end_time,
-                'status' => $status,
-            ]);
         }
 
         return ServiceResponse::success('Update successful', ['restaurant' => $restaurant]);
