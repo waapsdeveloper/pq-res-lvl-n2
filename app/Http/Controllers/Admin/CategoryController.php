@@ -73,9 +73,6 @@ class CategoryController extends Controller
         //
         // $data = $request->all();
         $data = $request->validated();
-
-
-
         // Create a new user (assuming the user model exists)
         $category = Category::create([
             'name' => $data['name'],
@@ -83,7 +80,7 @@ class CategoryController extends Controller
             'category_id' => $data['category'] ?? 0,
             'restaurant_id' => $data['restaurant_id'] ?? 0,
             'description' => $data['description'] ?? null,
-            'image' => $data['image'],
+            'image' => $data['image'] ?? null,
             'status' => $data['status'],
         ]);
 
@@ -91,7 +88,8 @@ class CategoryController extends Controller
         $category->update(['identifier' => $identifier]);
 
         if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data, 'category'); // Assuming a helper to handle the image upload
+
+            $url = Helper::getBase64ImageUrl($data['image'], 'category'); // Assuming a helper to handle the image upload
             $category->update(['image' => $url]);
         }
 
@@ -129,6 +127,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategory $request, string $id)
     {
+        // dd($request->validated());
         $data = $request->validated();
 
         // Find the category by ID
@@ -139,16 +138,15 @@ class CategoryController extends Controller
             return ServiceResponse::error('Category not found');
         }
 
-        // Generate a new identifier if it is not provided in the request
         $identifier = $data['identifier'] ?? Identifier::make('Category', $category->id, 3);
 
-        // Handle image upload (if present)
         if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data, 'category'); // Assuming a helper to handle the image upload
+            if ($category->image) {
+                Helper::deleteImage($category->image);
+            }
+            $url = Helper::getBase64ImageUrl($data['image'], 'category');
             $data['image'] = $url;
         }
-
-        // Update the category
         $category->update([
             'name' => $data['name'] ?? $category->name,
             'identifier' => $identifier,
