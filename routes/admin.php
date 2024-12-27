@@ -24,15 +24,21 @@ Route::prefix('auth')->group(function () {
 
 
 Route::prefix('restaurant')->group(function () {
+    Route::get('/bulk-delete', [RestaurantController::class, 'bulkDelete'])->name('bulkDelete');
+
     Route::resource('/', RestaurantController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
         ->names('restaurant');
-    Route::post('/update-favicon/{id}', [RestaurantController::class, 'updateFavicon'])
+    Route::put('/update-favicon/{id}', [RestaurantController::class, 'updateFavicon'])
         ->name('orderUpdateFavicon');
-    Route::post('/update-logo/{id}', [RestaurantController::class, 'updateLogo'])
+    Route::put('/update-image/{id}', [RestaurantController::class, 'updateImage'])
+        ->name('orderUpdateImage');
+    Route::put('/update-logo/{id}', [RestaurantController::class, 'updateLogo'])
         ->name('orderUpdateLogo');
 });
+
+
 Route::prefix('restaurant-timing')->group(function () {
     Route::resource('/', RestaurantTimingController::class)
         ->parameters(['' => 'id'])

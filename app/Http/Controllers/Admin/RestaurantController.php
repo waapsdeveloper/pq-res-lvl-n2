@@ -12,7 +12,7 @@ use App\Http\Resources\Admin\RestaurantListResourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\RestaurantTiming;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Restaurant;
 use App\Models\RestaurantTimings;
 use Illuminate\Validation\ValidationException;
@@ -338,5 +338,29 @@ class RestaurantController extends Controller
         }
 
         return ServiceResponse::success('Update successful', ['restaurant' => $restaurant]);
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:restaurants,id',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $ids = $request->input('ids');
+
+        DB::transaction(function () use ($ids) {
+            // Delete related restaurant timings
+            RestaurantTiming::whereIn('restaurant_id', $ids)->delete();
+
+            // Delete restaurants
+            Restaurant::whereIn('id', $ids)->delete();
+        });
+
+        return ServiceResponse::success('Bulk delete successful');
     }
 }
