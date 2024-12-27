@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\ProductsController;
 use App\Http\Controllers\Frontend\ContactUsController;
 use App\Http\Controllers\Admin\RtableController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\RTablesController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\TableBookingController;
@@ -49,3 +50,11 @@ Route::get('/menu', [ProductsController::class, 'menu']);
 Route::get('/product-by-category/{category_id}', [ProductsController::class, 'productByCategory']);
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
 Route::get('/today-deals', [ProductsController::class, 'todayDeals']);
+
+
+Route::prefix('add-to-cart')->group(function () {
+    Route::resource('/', CartController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('cart'); // Restrict to specific CRUD actions.
+});

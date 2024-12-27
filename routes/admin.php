@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\TableBookingController;
 use App\Http\Controllers\Admin\RTableBookingController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -109,5 +110,7 @@ Route::prefix('table-booking')->group(function () {
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('table-booking'); // Restrict to specific CRUD actions.
 });
+
+
 
 Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact.index');
