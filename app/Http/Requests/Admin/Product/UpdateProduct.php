@@ -32,7 +32,7 @@ class UpdateProduct extends FormRequest
             'price' => 'required', // Ensure role is provided
             'status' => 'required|string|in:active,inactive',
             'notes' => "nullable|string",
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|string',
             'discount' => 'nullable',
 
         ];

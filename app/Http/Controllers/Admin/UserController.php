@@ -30,7 +30,7 @@ class UserController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = User::query()->with('role');
+        $query = User::query()->with('role')->with('userDetail')->orderBy('name', 'asc');
         // Optionally apply search filter if needed
         $query->where('role_id', '!=', 1);
 
@@ -100,7 +100,7 @@ class UserController extends Controller
                 'email' => $data['email'],
                 'phone' => $data['phone'],
                 'password' => Hash::make($data['password']),
-                'role_id' => $data['role'],
+                'role_id' => $data['role_id'],
                 'status' => $data['status'],
                 'restaurant_id' => $data['restaurant_id'] ?? null,
             ]);
@@ -115,17 +115,13 @@ class UserController extends Controller
             ]);
 
             if (!$userDetail) {
-                // Rollback if user details are not created
                 throw new \Exception('Failed to create user details.');
             }
 
-            // Optionally handle the image
             if (isset($data['image'])) {
-                $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+                $url = Helper::getBase64ImageUrl($data['image'], 'user'); // Assuming a helper to handle the image upload
                 $user->update(['image' => $url]);
             }
-
-            // Commit the transaction
             DB::commit();
 
             return ServiceResponse::success('User store successful', ['user' => $user]);
@@ -181,14 +177,22 @@ class UserController extends Controller
             if (!$user) {
                 return ServiceResponse::error("User with ID $id not found.");
             }
+            if (isset($data['image'])) {
+                if ($user->image) {
+                    Helper::deleteImage($user->image);
+                }
+                $url = Helper::getBase64ImageUrl($data['image'], 'user');
+                $data['image'] = $url;
+            }
             // Update user details
             $user->update([
                 'name' => $data['name'] ?? $user->name,
                 'email' => $data['email'] ?? $user->email,
                 'phone' => $data['phone'] ?? $user->phone,
-                'role_id' => $data['role'] ?? $user->role_id,
+                'role_id' => $data['role_id'] ?? $user->role_id,
                 'status' => $data['status'] ?? $user->status,
                 "restaurant_id" => $data['restaurant_id'] ?? $user->restaurant_id,
+                'image' => $data['image'] ?? $user->image,
             ]);
 
             // Optionally update the password if provided
@@ -220,14 +224,6 @@ class UserController extends Controller
 
             if (!$userDetail) {
                 throw new \Exception('Failed to update or create user details.');
-            }
-
-            // Optionally handle the image if provided
-            if (isset($data['image'])) {
-                $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
-                $user->update([
-                    'image' => $url,
-                ]);
             }
 
             // Commit the transaction

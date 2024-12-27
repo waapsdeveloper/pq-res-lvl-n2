@@ -108,7 +108,7 @@ class ProductController extends Controller
         $product->update(['identifier' => $identifier]);
 
         if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+            $url = Helper::getBase64ImageUrl($data['image'], 'product'); // Assuming a helper to handle the image upload
             $product->update(['image' => $url]);
         }
 
@@ -153,6 +153,13 @@ class ProductController extends Controller
         if (!$product) {
             return ServiceResponse::error('Product not found');
         }
+        if (isset($data['image'])) {
+            if ($product->image) {
+                Helper::deleteImage($product->image);
+            }
+            $url = Helper::getBase64ImageUrl($data['image'], 'product');
+            $data['image'] = $url;
+        }
         $product->update([
             'name' => $data['name'] ?? $product->name,
             'category_id' => $data['category'] ?? $product->category_id,
@@ -161,16 +168,14 @@ class ProductController extends Controller
             'price' => $data['price'] ?? $product->price,
             'status' => $data['status'] ?? $product->status,
             'discount' => $data['discount'] ?? $product->discount,
+            'image' => $data['image'] ?? $product->image,
         ]);
 
         $identifier = Identifier::make('Product', $product->id, 4);
         $product->update(['identifier' => $identifier]);
 
 
-        if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data);
-            $product->update(['image' => $url]);
-        }
+
 
         return ServiceResponse::success('Product update successful', ['item' => $product]);
     }

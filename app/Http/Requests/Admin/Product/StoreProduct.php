@@ -30,9 +30,9 @@ class StoreProduct extends FormRequest
             'category_id' => 'nullable|integer|exists:categories,id', // Ensure role is provided
             'description' => 'nullable|string', // Ensure role is provided
             'price' => 'required', // Ensure role is provided
-            'status' => 'required|string|in:active,inactive',
+            'status' => 'nullable|string|in:active,inactive',
             'notes' => "nullable|string",
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|string',
             'discount' => 'nullable',
         ];
     }

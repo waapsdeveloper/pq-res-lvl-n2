@@ -162,7 +162,6 @@ class RestaurantController extends Controller
         // Delete old images
         foreach (['image', 'favicon', 'logo'] as $field) {
             if (isset($data[$field]) && $data[$field] && $restaurant->{$field}) {
-                // dd(1);
                 Helper::deleteImage($restaurant->{$field});
             }
         }
@@ -240,7 +239,7 @@ class RestaurantController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp.bmp|max:2048',
+            'image' => 'nullable|string|mimes:jpg,jpeg,png,gif,webp.bmp|max:2048',
         ]);
 
         if ($validator->fails()) {

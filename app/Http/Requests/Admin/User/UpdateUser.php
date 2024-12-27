@@ -24,17 +24,17 @@ class UpdateUser extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string|min:3|max:255', // Optional, must be a string with length constraints
-            'email' => 'nullable|email|max:255|unique:users,email,' . $this->route('id'), // Unique email, excluding current user's email
-            'phone' => 'nullable|string|max:15', // Optional, with a max length
-            'password' => 'nullable|string|min:6', // Optional, with a minimum length
-            'role' => 'nullable|integer', // Optional, valid roles
-            'status' => 'nullable|string|in:active,inactive', // Optional, must be 'active' or 'inactive'
+            'name' => 'nullable|string|min:3|max:255',
+            'email' => 'nullable|email|max:255|unique:users,email,' . $this->route('id'),
+            'phone' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:6',
+            'role' => 'nullable|integer',
+            'status' => 'nullable|string|in:active,inactive',
             'address' => 'nullable|string',
             'city' => 'nullable|string',
             'state' => 'nullable|string',
             'country' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048',
+            'image' => 'nullable|string',
             'restaurant_id' => 'nullable|integer',
 
         ];

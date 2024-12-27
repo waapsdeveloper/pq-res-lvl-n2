@@ -26,15 +26,15 @@ class StoreUser extends FormRequest
         return [
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string', // You can add regex here for phone number validation
-            'password' => 'required|string|min:6', // Add validation for password
-            'role' => 'required|integer', // Ensure role is provided
+            'phone' => 'required|string',
+            'password' => 'required|string|min:6',
+            'role_id' => 'required|integer',
             'status' => 'required|string|in:active,inactive',
             'address' => 'required|string',
             'city' => 'nullable|string',
             'state' => 'nullable|string',
             'country' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048',
+            'image' => 'nullable|string',
             'restaurant_id' => 'nullable|integer',
         ];
     }
