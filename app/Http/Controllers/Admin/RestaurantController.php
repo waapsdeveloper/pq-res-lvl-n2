@@ -323,7 +323,6 @@ class RestaurantController extends Controller
         if ($validator->fails()) {
             return ServiceResponse::error('Validation failed', $validator->errors());
         }
-
         $ids = $request->input('ids', []);
 
         foreach ($ids as $id) {
@@ -333,9 +332,6 @@ class RestaurantController extends Controller
                 $restaurant->delete();
             }
         }
-
-
-
-        return ServiceResponse::success('Bulk delete successful');
+        return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
 }
