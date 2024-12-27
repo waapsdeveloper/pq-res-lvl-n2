@@ -15,6 +15,7 @@ use App\Models\RestaurantTiming;
 use Illuminate\Support\Facades\DB;
 use App\Models\Restaurant;
 use App\Models\RestaurantTimings;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
 
@@ -194,6 +195,7 @@ class RestaurantController extends Controller
 
         foreach ($data['schedule'] as $day => $scheduleItem) {
             if (!empty($scheduleItem)) {
+                Log::info("schedule", $scheduleItem);
                 RestaurantTiming::create([
                     'restaurant_id' => $restaurant->id,
                     'day' => ucfirst($scheduleItem['day']), // Din ka naam proper capitalization ke saath
