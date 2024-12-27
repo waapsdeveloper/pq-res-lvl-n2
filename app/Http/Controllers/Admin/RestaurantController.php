@@ -325,13 +325,10 @@ class RestaurantController extends Controller
         }
         $ids = $request->input('ids', []);
 
-        foreach ($ids as $id) {
-            $restaurant = Restaurant::with('timings')->find($id);
-            if ($restaurant) {
-                $restaurant->timings()->delete();
-                $restaurant->delete();
-            }
-        }
+        RestaurantTiming::whereIn('restaurant_id', $ids)->delete();
+
+        Restaurant::whereIn('id', $ids)->delete();
+
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
 }
