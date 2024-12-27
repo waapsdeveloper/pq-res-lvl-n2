@@ -176,10 +176,11 @@ class RestaurantController extends Controller
 
         $restaurant = Restaurant::find($id);
 
-
+        
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
         }
+        return response()->json([$data]);
         // // Delete old images
         // foreach (['image', 'favicon', 'logo'] as $field) {
             //     if (isset($data[$field]) && $data[$field] && $restaurant->{$field}) {
@@ -215,7 +216,6 @@ class RestaurantController extends Controller
                 
                 // Delete existing timings for this restaurant before adding new ones
                 RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
-                return response()->json([$data]);
 
         // foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
         //     $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
