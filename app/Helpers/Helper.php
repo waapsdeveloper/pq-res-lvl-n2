@@ -7,21 +7,18 @@ use Illuminate\Support\Facades\Storage;
 class Helper
 {
 
-    static public function getBase64ImageUrl($image)
+    static public function getBase64ImageUrl($image, $folder)
     {
-        // $image = isset($data["image"]) ? $data["image"] : null;
-
         if ($image) {
             $base64Image = preg_replace('/^data:image\/\w+;base64,/', '', $image);
 
             $filename = uniqid() . '.png';
 
             $path = base_path(env('IMAGE_BASE_FOLDER') . $filename);
-            $file = Storage::disk('local')->put('images/' . $filename, base64_decode($base64Image));
+            $file = Storage::disk('local')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
 
             if ($file) {
-                $imagePath = 'images/' . $filename;
-                // dd($path, $file, $imagePath);
+                $imagePath = 'images/' . $folder . '/' . $filename;
                 return $imagePath;
             } else {
                 return null;
@@ -31,15 +28,22 @@ class Helper
         }
     }
 
+
     public static function deleteImage(string $url)
     {
-        $path = parse_url($url, PHP_URL_PATH); // Extract the file path from the URL
-        $filePath = public_path($path); // Convert to the full server path
+        $path = parse_url($url, PHP_URL_PATH);
+        $filePath = ltrim($path, '/'); // Remove any leading slash
 
-        if (file_exists($filePath)) {
-            unlink($filePath); // Delete the file
+        $storage = Storage::disk('local'); // Assuming the disk is 'local'
+        if ($storage->exists($filePath)) {
+            $storage->delete($filePath); // Delete the file from storage
+        } else {
+            return "no image found"; // File does not exist
         }
+
+        return true; // File deleted successfully
     }
+
     static public function returnFullImageUrl($imagePath)
     {
         if (!$imagePath || $imagePath == "") {

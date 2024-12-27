@@ -98,7 +98,7 @@ class RestaurantController extends Controller
         // Process image, favicon, and logo (Base64 conversion)
         foreach (['image', 'favicon', 'logo'] as $field) {
             if (isset($data[$field]) && $data[$field]) {
-                $url = Helper::getBase64ImageUrl($data[$field]);
+                $url = Helper::getBase64ImageUrl($data[$field], 'restaurant');
                 $restaurant->update([$field => $url]);
             }
         }
@@ -162,6 +162,7 @@ class RestaurantController extends Controller
         // Delete old images
         foreach (['image', 'favicon', 'logo'] as $field) {
             if (isset($data[$field]) && $data[$field] && $restaurant->{$field}) {
+                // dd(1);
                 Helper::deleteImage($restaurant->{$field});
             }
         }
@@ -184,7 +185,7 @@ class RestaurantController extends Controller
         // Process new images
         foreach (['image', 'favicon', 'logo'] as $field) {
             if (isset($data[$field]) && $data[$field]) {
-                $url = Helper::getBase64ImageUrl($data[$field]);
+                $url = Helper::getBase64ImageUrl($data[$field], 'restaurant');
                 $restaurant->update([$field => $url]); // Update only the image field
             }
         }

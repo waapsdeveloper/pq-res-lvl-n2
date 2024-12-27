@@ -25,11 +25,11 @@ class StoreCategory extends FormRequest
     {
         return [
             'name' => 'required|string|min:3|max:255',
-            'category' => 'nullable|integer|exists:categories,id', // Ensure category is valid
+            'category_id' => 'nullable|integer|exists:categories,id', // Ensure category is valid
             'restaurant_id' => 'nullable|integer|exists:categories,id', // Ensure category is valid
             'status' => 'required|string|in:active,inactive', // Validate status
             'description' => 'nullable|string|max:255', // Validate description
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048', // Validate image
+            'image' => 'nullable|string', // Validate image
         ];
     }
     protected function failedValidation(Validator $validator)

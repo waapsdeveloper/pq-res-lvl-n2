@@ -91,7 +91,7 @@ class CategoryController extends Controller
         $category->update(['identifier' => $identifier]);
 
         if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+            $url = Helper::getBase64ImageUrl($data, 'category'); // Assuming a helper to handle the image upload
             $category->update(['image' => $url]);
         }
 
@@ -144,7 +144,7 @@ class CategoryController extends Controller
 
         // Handle image upload (if present)
         if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data); // Assuming a helper to handle the image upload
+            $url = Helper::getBase64ImageUrl($data, 'category'); // Assuming a helper to handle the image upload
             $data['image'] = $url;
         }
 
