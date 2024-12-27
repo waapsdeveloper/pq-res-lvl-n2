@@ -31,7 +31,7 @@ class RestaurantController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Restaurant::query()->with('timings');
+        $query = Restaurant::query()->with('timings')->orderBy('id', 'desc');
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
@@ -103,36 +103,14 @@ class RestaurantController extends Controller
             }
         }
 
-        // $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        // foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
-        //     $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
-        //     $start_time = $scheduleItem['start_time'];
-        //     $end_time = $scheduleItem['end_time'];
-        //     // $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($scheduleItem['status'] ?? 'active');
-        //     $status = $scheduleItem['status'] ?? 'inactive';
-
-        //     RestaurantTiming::create([
-        //         'restaurant_id' => $restaurant->id,
-        //         'day' => ucfirst($day), // Store day with proper capitalization
-        //         'start_time' => $start_time,
-        //         'end_time' => $end_time,
-        //         'status' => $status,
-        //     ]);
-        // }
-        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        foreach ($days as $day) {
-            $dayData = $data['schedule'][$day . '_day'] ?? null;
-            if ($dayData) {
-                $start_time = $data['schedule'][$day . '_start_time'] ?? null;
-                $end_time = $data['schedule'][$day . '_end_time'] ?? null;
-                $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($data['schedule'][$day . '_status'] ?? 'active');
-
+        foreach ($data['schedule'] as $day => $scheduleItem) {
+            if (!empty($scheduleItem)) {
                 RestaurantTiming::create([
                     'restaurant_id' => $restaurant->id,
-                    'day' => ucfirst($dayData),
-                    'start_time' => $start_time,
-                    'end_time' => $end_time,
-                    'status' => $status,
+                    'day' => ucfirst($scheduleItem['day']), // Din ka naam proper capitalization ke saath
+                    'start_time' => $scheduleItem['start_time'], // Start time
+                    'end_time' => $scheduleItem['end_time'], // End time
+                    'status' => $scheduleItem['status'] ?? 'inactive', // Status, default inactive
                 ]);
             }
         }
@@ -176,77 +154,52 @@ class RestaurantController extends Controller
 
         $restaurant = Restaurant::find($id);
 
-        
+
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
         }
-        return response()->json([$data]);
-        // // Delete old images
-        // foreach (['image', 'favicon', 'logo'] as $field) {
-            //     if (isset($data[$field]) && $data[$field] && $restaurant->{$field}) {
-                //         Helper::deleteImage($restaurant->{$field});
-        //     }
-        // }
-        
-        // // Update restaurant details (using fill and save for cleaner code)
-        // $restaurant->fill([
-            //     'name' => $data['name'],
-            //     'address' => $data['address'],
-        //     'phone' => $data['phone'] ?? $restaurant->phone,
-        //     'email' => $data['email'] ?? $restaurant->email,
-        //     'website' => $data['website'] ?? $restaurant->website,
-        //     'description' => $data['description'] ?? $restaurant->description,
-        //     'status' => $data['status'] ?? $restaurant->status,
-        //     'copyright_text' => $data['copyright_text'] ?? $restaurant->copyright_text,
-        //     'rating' => $data['rating'] ?? $restaurant->rating,
-        // ]);
+        // return response()->json([$data]);
+        // Delete old images
+        foreach (['image', 'favicon', 'logo'] as $field) {
+            if (isset($data[$field]) && $data[$field] && $restaurant->{$field}) {
+                Helper::deleteImage($restaurant->{$field});
+            }
+        }
 
-        // $restaurant->save(); // Save the changes
-        
-        // // Process new images
-        // foreach (['image', 'favicon', 'logo'] as $field) {
-            //     if (isset($data[$field]) && $data[$field]) {
-                //         $url = Helper::getBase64ImageUrl($data[$field]);
-                //         $restaurant->update([$field => $url]); // Update only the image field
-                //     }
-                // }
-                
-                // *** Improved Schedule Handling ***
-                // $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-                
-                // Delete existing timings for this restaurant before adding new ones
-                RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
+        // Update restaurant details (using fill and save for cleaner code)
+        $restaurant->fill([
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'phone' => $data['phone'] ?? $restaurant->phone,
+            'email' => $data['email'] ?? $restaurant->email,
+            'website' => $data['website'] ?? $restaurant->website,
+            'description' => $data['description'] ?? $restaurant->description,
+            'status' => $data['status'] ?? $restaurant->status,
+            'copyright_text' => $data['copyright_text'] ?? $restaurant->copyright_text,
+            'rating' => $data['rating'] ?? $restaurant->rating,
+        ]);
 
-        // foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
-        //     $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
-        //     $start_time = $scheduleItem['start_time'];
-        //     $end_time = $scheduleItem['end_time'];
-        //     // $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($scheduleItem['status'] ?? 'active');
-        //     $status = $scheduleItem['status'] ?? 'inactive';
+        $restaurant->save(); // Save the changes
 
-        //     RestaurantTiming::create([
-        //         'restaurant_id' => $restaurant->id,
-        //         'day' => ucfirst($day), // Store day with proper capitalization
-        //         'start_time' => $start_time,
-        //         'end_time' => $end_time,
-        //         'status' => $status,
-        //     ]);
-        // }
-        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        foreach ($days as $day) {
-            dd($days);
-            $dayData = $data['schedule'][$day . '_day'];
-            if ($dayData) {
-                $start_time = $data['schedule'][$day . '_start_time'];
-                $end_time = $data['schedule'][$day . '_end_time'];
-                $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($data['schedule'][$day . '_status'] ?? 'active');
+        // Process new images
+        foreach (['image', 'favicon', 'logo'] as $field) {
+            if (isset($data[$field]) && $data[$field]) {
+                $url = Helper::getBase64ImageUrl($data[$field]);
+                $restaurant->update([$field => $url]); // Update only the image field
+            }
+        }
 
+        // Delete existing timings for this restaurant before adding new ones
+        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
+
+        foreach ($data['schedule'] as $day => $scheduleItem) {
+            if (!empty($scheduleItem)) {
                 RestaurantTiming::create([
                     'restaurant_id' => $restaurant->id,
-                    'day' => ucfirst($dayData),
-                    'start_time' => $start_time,
-                    'end_time' => $end_time,
-                    'status' => $status,
+                    'day' => ucfirst($scheduleItem['day']), // Din ka naam proper capitalization ke saath
+                    'start_time' => $scheduleItem['start_time'], // Start time
+                    'end_time' => $scheduleItem['end_time'], // End time
+                    'status' => $scheduleItem['status'] ?? 'inactive', // Status, default inactive
                 ]);
             }
         }
