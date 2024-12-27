@@ -104,20 +104,37 @@ class RestaurantController extends Controller
         }
 
         // $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
-            $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
-            $start_time = $scheduleItem['start_time'];
-            $end_time = $scheduleItem['end_time'];
-            // $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($scheduleItem['status'] ?? 'active');
-            $status = $scheduleItem['status'] ?? 'inactive';
+        // foreach ($data['schedule'] as $scheduleItem) { // Iterate directly over the schedule array
+        //     $day = strtolower($scheduleItem['day']); // Get the day and convert to lowercase
+        //     $start_time = $scheduleItem['start_time'];
+        //     $end_time = $scheduleItem['end_time'];
+        //     // $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($scheduleItem['status'] ?? 'active');
+        //     $status = $scheduleItem['status'] ?? 'inactive';
 
-            RestaurantTiming::create([
-                'restaurant_id' => $restaurant->id,
-                'day' => ucfirst($day), // Store day with proper capitalization
-                'start_time' => $start_time,
-                'end_time' => $end_time,
-                'status' => $status,
-            ]);
+        //     RestaurantTiming::create([
+        //         'restaurant_id' => $restaurant->id,
+        //         'day' => ucfirst($day), // Store day with proper capitalization
+        //         'start_time' => $start_time,
+        //         'end_time' => $end_time,
+        //         'status' => $status,
+        //     ]);
+        // }
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        foreach ($days as $day) {
+            $dayData = $data['schedule'][$day . '_day'] ?? null;
+            if ($dayData) {
+                $start_time = $data['schedule'][$day . '_start_time'] ?? null;
+                $end_time = $data['schedule'][$day . '_end_time'] ?? null;
+                $status = in_array($day, ['saturday', 'sunday']) ? 'inactive' : ($data['schedule'][$day . '_status'] ?? 'active');
+
+                RestaurantTiming::create([
+                    'restaurant_id' => $restaurant->id,
+                    'day' => ucfirst($dayData),
+                    'start_time' => $start_time,
+                    'end_time' => $end_time,
+                    'status' => $status,
+                ]);
+            }
         }
 
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
