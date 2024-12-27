@@ -15,19 +15,20 @@ class CartController extends Controller
             'user_id' => 'required|integer',
             'products' => 'required|array',
             'products.*.id' => 'required|integer',
+            'products.*.quantity' => 'required|integer|min:1', // Validate quantity
         ]);
 
         // Find or create a cart for the user
         $cart = Cart::firstOrCreate(['user_id' => $validatedData['user_id']]);
 
-        // Sync the products in the cart
-        $productIds = collect($validatedData['products'])->pluck('id')->toArray();
-
-        // Clear old entries and attach the new ones
+        // Clear old entries
         $cart->cartProducts()->delete();
-        foreach ($productIds as $productId) {
+
+        // Attach the new products with quantities
+        foreach ($validatedData['products'] as $product) {
             $cart->cartProducts()->create([
-                'product_id' => $productId,
+                'product_id' => $product['id'],
+                'quantity' => $product['quantity'], // Include quantity
             ]);
         }
 
