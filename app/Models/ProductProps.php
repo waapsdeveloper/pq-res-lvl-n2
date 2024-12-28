@@ -13,4 +13,9 @@ class ProductProps extends Model
         'meta_value',
         'meta_key_type',
     ];
+    protected $casts = [
+        'meta_key' => 'array',
+        'meta_value' => 'array',
+        'meta_key_type' => 'array',
+    ];
 }

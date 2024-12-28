@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\Product\UpdateProduct;
 use App\Http\Resources\Admin\CategoryResource;
 use App\Http\Resources\Admin\ProductResource;
 use App\Models\Product;
+use App\Models\ProductProps;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -89,11 +90,9 @@ class ProductController extends Controller
      */
     public function store(StoreProduct $request)
     {
-        //
-        // $data = $request->all();
         $data = $request->validated();
-        // return response()->json([$data['image']]);
-        // Create a new user (assuming the user model exists)
+
+        // Create the product
         $product = Product::create([
             'name' => $data['name'],
             'category_id' => $data['category_id'],
@@ -104,16 +103,38 @@ class ProductController extends Controller
             'status' => $data['status'],
             'discount' => $data['discount'] ?? 0,
         ]);
+
+        // Generate and update identifier
         $identifier = Identifier::make('Product', $product->id, 4);
         $product->update(['identifier' => $identifier]);
 
+        // Handle image
         if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data['image'], 'product'); // Assuming a helper to handle the image upload
+            $url = Helper::getBase64ImageUrl($data['image'], 'product');
             $product->update(['image' => $url]);
         }
 
-        return ServiceResponse::success('Product store successful', ['item' => $product]);
+        // Save dynamic meta data as JSON strings in ProductProps
+        foreach ($data as $key => $value) {
+            if (!in_array($key, array_keys($product->getAttributes()))) {
+                // If the value is an array, convert it to a JSON string
+                $metaValue = is_array($value) ? json_encode($value) : $value;
+
+                // Create a new ProductProps entry
+                ProductProps::create([
+                    'product_id' => $product->id,
+                    'meta_key' => $key,
+                    'meta_value' => $metaValue, // Store as JSON string
+                    'meta_key_type' => 'json',  // Set type as 'json'
+                ]);
+            }
+        }
+
+        return ServiceResponse::success('Product stored successfully', ['item' => $product]);
     }
+
+
+
 
     /**
      * Display the specified resource.
@@ -150,17 +171,22 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
+        // Find the product
         $product = Product::find($id);
         if (!$product) {
             return ServiceResponse::error('Product not found');
         }
+
+        // Handle image update
         if (isset($data['image'])) {
             if ($product->image) {
-                Helper::deleteImage($product->image);
+                Helper::deleteImage($product->image); // Delete old image if it exists
             }
             $url = Helper::getBase64ImageUrl($data['image'], 'product');
-            $data['image'] = $url;
+            $data['image'] = $url; // Set the new image URL
         }
+
+        // Update product details
         $product->update([
             'name' => $data['name'] ?? $product->name,
             'category_id' => $data['category_id'] ?? $product->category_id,
@@ -172,14 +198,34 @@ class ProductController extends Controller
             'image' => $data['image'] ?? $product->image,
         ]);
 
+        // Generate and update identifier
         $identifier = Identifier::make('Product', $product->id, 4);
         $product->update(['identifier' => $identifier]);
 
+        // Delete old meta data for the product
+        ProductProps::where('product_id', $product->id)->delete();
 
+        // Insert new dynamic meta data
+        foreach ($data as $key => $value) {
+            // Skip fields that are already part of the product attributes (e.g., 'name', 'price', etc.)
+            if (!in_array($key, array_keys($product->getAttributes())) && $value !== null) {
+                // If the value is an array, convert it to a JSON string
+                $metaValue = is_array($value) ? json_encode($value) : $value;
 
+                // Create a new ProductProps entry
+                ProductProps::create([
+                    'product_id' => $product->id,
+                    'meta_key' => $key,
+                    'meta_value' => $metaValue,
+                    'meta_key_type' => 'json', // Store type as 'json'
+                ]);
+            }
+        }
 
         return ServiceResponse::success('Product update successful', ['item' => $product]);
     }
+
+
 
 
 

@@ -23,7 +23,7 @@ class UpdateProduct extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|string|min:3|max:255',
             'identifier' => 'nullable|unique:products,identifier,' . $this->id,  // Ensure role is provided
             'restaurant_id' => 'nullable|integer|exists:restaurants,id', // Ensure role is provided
@@ -42,8 +42,17 @@ class UpdateProduct extends FormRequest
                 },
             ],
             'discount' => 'nullable',
-
         ];
+
+        // Dynamically add validation rules for array inputs
+        foreach ($this->all() as $key => $value) {
+            if (is_array($value)) {
+                $rules[$key] = 'nullable|array';
+                $rules["{$key}.*"] = 'string|max:255';
+            }
+        }
+
+        return $rules;
     }
 
     protected function failedValidation(Validator $validator)

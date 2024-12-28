@@ -23,27 +23,39 @@ class StoreProduct extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|string|min:3|max:255',
-            'identifier' => 'nullable|string|unique:products,identifier,' . $this->id, // Ensure role is provided
-            'restaurant_id' => 'nullable|integer|exists:restaurants,id', // Ensure role is provided
-            'category_id' => 'nullable|integer|exists:categories,id', // Ensure role is provided
-            'description' => 'nullable|string', // Ensure role is provided
-            'price' => 'required', // Ensure role is provided
+            'identifier' => 'nullable|string|unique:products,identifier,' . $this->id,
+            'restaurant_id' => 'nullable|integer|exists:restaurants,id',
+            'category_id' => 'nullable|integer|exists:categories,id',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
             'status' => 'nullable|string|in:active,inactive',
-            'notes' => "nullable|string",
+            'notes' => 'nullable|string',
             'image' => [
                 'nullable',
                 'string',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp|svg+xml|webp|tiff);base64,/', $value)) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
                         $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
                     }
                 },
             ],
-            'discount' => 'nullable',
+            'discount' => 'nullable|numeric',
         ];
+
+
+        foreach ($this->all() as $key => $value) {
+
+            if (is_array($value)) {
+                $rules[$key] = 'nullable|array';
+                $rules["{$key}.*"] = 'string|max:255';
+            }
+        }
+
+        return $rules;
     }
+
     protected function failedValidation(Validator $validator)
     {
         // Customize the error response if validation fails
