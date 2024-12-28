@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\User\StoreUser;
 use App\Http\Requests\Admin\User\UpdateUser;
 use App\Http\Resources\Admin\UserResource;
 use App\Models\User;
+use App\Models\UserAddresses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -91,7 +92,6 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        // Wrap the operations in a database transaction
         DB::beginTransaction();
         try {
             // Create a new user
@@ -105,31 +105,35 @@ class UserController extends Controller
                 'restaurant_id' => $data['restaurant_id'] ?? null,
             ]);
 
-
-            $userDetail = $user->userDetail()->create([
-                'user_id' => $user->id,
-                'address_line' => $data['address'],
-                'city' => $data['city'] ?? null,
-                'state' => $data['state'] ?? null,
-                'country' => $data['country'] ?? null,
-            ]);
-
-            if (!$userDetail) {
-                throw new \Exception('Failed to create user details.');
+            // Create user addresses
+            foreach ($data['userDetails'] as $detail) {
+                if (!empty($detail) && isset($detail['address'], $detail['city'], $detail['state'])) {
+                    UserAddresses::create([
+                        'user_id' => $user->id,
+                        'address' => ucfirst($detail['address']),
+                        'city' => ucfirst($detail['city']),
+                        'state' => ucfirst($detail['state']),
+                        'country' => $detail['country'] ?? 'inactive',
+                    ]);
+                }
             }
 
+            // Handle image upload
             if (isset($data['image'])) {
-                $url = Helper::getBase64ImageUrl($data['image'], 'user'); // Assuming a helper to handle the image upload
+                $url = Helper::getBase64ImageUrl($data['image'], 'user');
                 $user->update(['image' => $url]);
             }
+
             DB::commit();
 
             return ServiceResponse::success('User store successful', ['user' => $user]);
         } catch (\Exception $e) {
-            // Rollback the transaction on any failure
             DB::rollBack();
 
-            return ServiceResponse::error('Failed to store user: ' . $e->getMessage());
+            // Log the error for debugging
+            // Log::error('Failed to store user: ' . $e->getMessage());
+
+            return ServiceResponse::error('Failed to store user');
         }
     }
 
@@ -170,22 +174,24 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        // Wrap the operations in a database transaction
         DB::beginTransaction();
 
         try {
             // Find the user
             $user = User::find($id);
+
             if (!$user) {
                 return ServiceResponse::error("User with ID $id not found.");
             }
+
+            // Handle image update
             if (isset($data['image'])) {
                 if ($user->image) {
-                    Helper::deleteImage($user->image);
+                    Helper::deleteImage($user->image); // Delete the old image if it exists
                 }
-                $url = Helper::getBase64ImageUrl($data['image'], 'user');
-                $data['image'] = $url;
+                $data['image'] = Helper::getBase64ImageUrl($data['image'], 'user'); // Upload the new image
             }
+
             // Update user details
             $user->update([
                 'name' => $data['name'] ?? $user->name,
@@ -193,52 +199,57 @@ class UserController extends Controller
                 'phone' => $data['phone'] ?? $user->phone,
                 'role_id' => $data['role_id'] ?? $user->role_id,
                 'status' => $data['status'] ?? $user->status,
-                "restaurant_id" => $data['restaurant_id'] ?? $user->restaurant_id,
+                'restaurant_id' => $data['restaurant_id'] ?? $user->restaurant_id,
                 'image' => $data['image'] ?? $user->image,
             ]);
 
-            // Optionally update the password if provided
+            // Update password if provided
             if (isset($data['password']) && !empty($data['password'])) {
                 $user->update([
                     'password' => Hash::make($data['password']),
                 ]);
             }
 
-            // Update user detail record
-            $userDetail = $user->userDetail;
-            if ($userDetail) {
-                $userDetail->update([
-                    'address_line' => $data['address'] ?? $userDetail->address_line,
-                    'city' => $data['city'] ?? $userDetail->city,
-                    'state' => $data['state'] ?? $userDetail->state,
-                    'country' => $data['country'] ?? $userDetail->country,
-                ]);
-            } else {
-                // If user detail doesn't exist, create it
-                $userDetail = $user->userDetail()->create([
-                    'user_id' => $user->id,
-                    'address_line' => $data['address'] ?? null,
-                    'city' => $data['city'] ?? null,
-                    'state' => $data['state'] ?? null,
-                    'country' => $data['country'] ?? null,
-                ]);
+            // Update user details (e.g., addresses)
+            if (isset($data['userDetails']) && is_array($data['userDetails'])) {
+                foreach ($data['userDetails'] as $detail) {
+                    if (!empty($detail)) {
+                        // Check if the address for this user already exists
+                        $existingAddress = UserAddresses::where('user_id', $user->id)
+                            ->where('address', ucfirst($detail['address'] ?? ''))
+                            ->first();
+
+                        if ($existingAddress) {
+                            // Update existing address if any fields are provided
+                            $existingAddress->update([
+                                'city' => ucfirst($detail['city'] ?? $existingAddress->city),
+                                'state' => ucfirst($detail['state'] ?? $existingAddress->state),
+                                'country' => ucfirst($detail['country'] ?? $existingAddress->country),
+                            ]);
+                        } else {
+                            // Create a new address if no match is found
+                            UserAddresses::create([
+                                'user_id' => $user->id,
+                                'address' => ucfirst($detail['address'] ?? 'N/A'),
+                                'city' => ucfirst($detail['city'] ?? 'N/A'),
+                                'state' => ucfirst($detail['state'] ?? 'N/A'),
+                                'country' => ucfirst($detail['country'] ?? 'Inactive'),
+                            ]);
+                        }
+                    }
+                }
             }
 
-            if (!$userDetail) {
-                throw new \Exception('Failed to update or create user details.');
-            }
-
-            // Commit the transaction
             DB::commit();
 
             return ServiceResponse::success('User updated successfully', ['user' => $user]);
         } catch (\Exception $e) {
-            // Rollback the transaction on any failure
             DB::rollBack();
 
             return ServiceResponse::error('Failed to update user: ' . $e->getMessage());
         }
     }
+
 
 
 

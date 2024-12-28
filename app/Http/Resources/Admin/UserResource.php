@@ -36,7 +36,7 @@ class UserResource extends JsonResource
             "image" => $image,
             "userDetails" => $obj->userDetail->map(function ($resSchedule) {
                 return [
-                    'address' => $resSchedule->address_line,
+                    'address' => $resSchedule->address,
                     'city' => $resSchedule->city,
                     'state' => $resSchedule->state,
                     'country' => $resSchedule->country,
