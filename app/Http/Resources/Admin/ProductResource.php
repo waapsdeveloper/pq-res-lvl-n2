@@ -25,6 +25,7 @@ class ProductResource extends JsonResource
         $image = Helper::returnFullImageUrl($obj->image);
         $category = $obj->category_id ? optional($obj->category)->name : null;
         $restaurant = $obj->restaurant_id ? optional($obj->restaurant)->name : null;
+        dd($obj->productProps);
         return [
             "id" => $obj->id,
             "name" => $obj->name,
