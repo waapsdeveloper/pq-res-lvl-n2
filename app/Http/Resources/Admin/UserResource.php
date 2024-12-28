@@ -27,24 +27,16 @@ class UserResource extends JsonResource
             "name" => $obj->name,
             "email" => $obj->email,
             "phone" => $obj->phone,
-            "address" => $obj->address,
             "role_id" => $obj->role_id ? $obj->role->name : '',
             "role" => $obj->role ? $obj->role->name : '',
             "status" => $obj->status,
             "created_at" => $obj->created_at,
             "updated_at" => $obj->updated_at,
             "image" => $image,
-            "userDetails" => $obj->userDetail->map(function ($resSchedule) {
-                return [
-                    'address' => $resSchedule->address,
-                    'city' => $resSchedule->city,
-                    'state' => $resSchedule->state,
-                    'country' => $resSchedule->country,
-                ];
-            }),
-
-
-
+            "address" => $obj->userDetail->address,
+            "city" => $obj->userDetail->city,
+            "state" => $obj->userDetail->state,
+            "country" => $obj->userDetail->country,
         ];
     }
 }
