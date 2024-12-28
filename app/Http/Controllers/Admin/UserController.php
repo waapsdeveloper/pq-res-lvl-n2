@@ -139,7 +139,8 @@ class UserController extends Controller
         //
         // Attempt to find the restaurant by ID
         $user = User::with('role', 'userDetail')->find($id);
-        $user['role'] = $user->role->name ?? $user->role_id;
+        $user['role_id'] = $user->role_id;
+        $user['role'] = $user->role->name;
         $user['address'] = $user->userDetail->address;
         $user['city'] = $user->userDetail->city;
         $user['state'] = $user->userDetail->address;
