@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\ProductProps;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -116,10 +117,17 @@ class ProductController extends Controller
         }
 
         // Store additional product properties
+        Str::swap([
+            "'" => '',
+            '"' => '',
+        ], 'sizes');
 
         ProductProps::updateOrCreate([
             'product_id' => $product->id,
-            'meta_key' => 'sizes',
+            'meta_key' => Str::swap([
+                "'" => '',
+                '"' => '',
+            ], 'sizes'),
         ], [
             'meta_value' => $data['sizes'],
             'meta_key_type' => gettype($data['sizes']),
@@ -127,7 +135,10 @@ class ProductController extends Controller
 
         ProductProps::updateOrCreate([
             'product_id' => $product->id,
-            'meta_key' => 'spicy',
+            'meta_key' => Str::swap([
+                "'" => '',
+                '"' => '',
+            ], 'spicy'),
         ], [
             'meta_value' => $data['spicy'],
             'meta_key_type' => gettype($data['spicy']),
@@ -135,7 +146,10 @@ class ProductController extends Controller
 
         ProductProps::updateOrCreate([
             'product_id' => $product->id,
-            'meta_key' => 'type',
+            'meta_key' => Str::swap([
+                "'" => '',
+                '"' => '',
+            ], 'type'),
         ], [
             'meta_value' => $data['type'],
             'meta_key_type' => gettype($data['type']),
