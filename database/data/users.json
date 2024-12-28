@@ -2,7 +2,7 @@
     {
         "name": "John Doe",
         "email": "johndoe@example.com",
-        "phone": "1234567890",
+        "phone": 1234567890,
         "password": "securePassword123",
         "role_id": 2,
         "status": "active",
@@ -11,12 +11,12 @@
         "city": "New York",
         "state": "NY",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "Jane Smith",
         "email": "janesmith@example.com",
-        "phone": "9876543210",
+        "phone": 9876543210,
         "password": "strongPassword456",
         "role_id": 3,
         "status": "inactive",
@@ -25,12 +25,12 @@
         "city": "Los Angeles",
         "state": "CA",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "Michael Johnson",
         "email": "michaelj@example.com",
-        "phone": "1231231234",
+        "phone": 1231231234,
         "password": "password789",
         "role_id": 1,
         "status": "active",
@@ -39,12 +39,12 @@
         "city": "Chicago",
         "state": "IL",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "Emily Davis",
         "email": "emilyd@example.com",
-        "phone": "4564564567",
+        "phone": 4564564567,
         "password": "password321",
         "role_id": 2,
         "status": "active",
@@ -53,12 +53,12 @@
         "city": "Houston",
         "state": "TX",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "William Brown",
         "email": "williamb@example.com",
-        "phone": "7897897890",
+        "phone": 7897897890,
         "password": "pass1234",
         "role_id": 3,
         "status": "inactive",
@@ -67,12 +67,12 @@
         "city": "Phoenix",
         "state": "AZ",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "Olivia Wilson",
         "email": "oliviaw@example.com",
-        "phone": "1010101010",
+        "phone": 1010101010,
         "password": "oliviaPass",
         "role_id": 1,
         "status": "active",
@@ -81,12 +81,12 @@
         "city": "Philadelphia",
         "state": "PA",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "James White",
         "email": "jamesw@example.com",
-        "phone": "1122334455",
+        "phone": 1122334455,
         "password": "james123",
         "role_id": 2,
         "status": "active",
@@ -95,12 +95,12 @@
         "city": "San Antonio",
         "state": "TX",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "Sophia Martinez",
         "email": "sophiam@example.com",
-        "phone": "2233445566",
+        "phone": 2233445566,
         "password": "sophiaSecure",
         "role_id": 3,
         "status": "inactive",
@@ -109,12 +109,12 @@
         "city": "San Diego",
         "state": "CA",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "Benjamin Garcia",
         "email": "benjaming@example.com",
-        "phone": "3344556677",
+        "phone": 3344556677,
         "password": "benjamin123",
         "role_id": 2,
         "status": "active",
@@ -123,12 +123,12 @@
         "city": "Dallas",
         "state": "TX",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     },
     {
         "name": "Isabella Rodriguez",
         "email": "isabellar@example.com",
-        "phone": "4455667788",
+        "phone": 4455667788,
         "password": "isabellaPass",
         "role_id": 1,
         "status": "active",
@@ -137,6 +137,6 @@
         "city": "San Jose",
         "state": "CA",
         "country": "USA",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC"
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
     }
 ]

@@ -4,7 +4,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Juicy and delicious beef, chicken, and veggie burgers.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -12,7 +12,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Crispy golden fries with a side of ketchup.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -20,7 +20,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Healthy and delicious wraps with a variety of fillings.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -28,7 +28,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Freshly baked pizzas with a variety of toppings.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -36,7 +36,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Creamy and flavorful pasta dishes.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -44,7 +44,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Fresh and healthy salads with a variety of dressings.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -52,7 +52,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Crispy fried chicken and grilled chicken options.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -60,7 +60,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Refreshing cold drinks, shakes, and smoothies.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -68,7 +68,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Sweet treats like cakes, ice creams, and puddings.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -76,7 +76,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Special meals for kids with toys included.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -84,7 +84,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Additional sides like onion rings and garlic bread.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -92,7 +92,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Thick and creamy milkshakes in various flavors.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -100,7 +100,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Start your day with our tasty breakfast options.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -108,7 +108,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Combo meals with burgers, fries, and drinks.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     },
     {
@@ -116,7 +116,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Delicious grilled options including chicken and beef.",
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
         "status": "active"
     }
 ]
