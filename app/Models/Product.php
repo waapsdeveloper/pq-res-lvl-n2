@@ -30,6 +30,6 @@ class Product extends Model
     }
     public function productProps()
     {
-        return $this->hasMany(ProductProps::class, 'product_id');
+        return $this->hasMany(ProductProps::class, 'product_id'); // Assuming 'product_id' is the foreign key
     }
 }

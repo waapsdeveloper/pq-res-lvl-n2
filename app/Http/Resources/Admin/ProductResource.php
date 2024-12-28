@@ -37,8 +37,9 @@ class ProductResource extends JsonResource
             "productProps" => $obj->productProps->map(function ($prop) {
                 return [
                     "id" => $prop->id,
-                    // "name" => $prop->name,
-                    // "value" => $prop->value,
+                    "meta_key" => $prop->meta_key,
+                    "meta_value" => $prop->meta_value,
+                    "meta_key_type" => $prop->meta_key_type,
                 ];
             }),
         ];

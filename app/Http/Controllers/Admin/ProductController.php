@@ -28,7 +28,7 @@ class ProductController extends Controller
         $filters = $request->input('filters', null);
 
 
-        $query = Product::query();
+        $query = Product::query()->with('category', 'restaurant', 'productProps')->orderBy('created_at', 'desc');
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -234,30 +234,27 @@ class ProductController extends Controller
         $product = Product::find($id);
         ProductProps::where('product_id', $product->id)->delete();
 
-        // If the product doesn't exist, return an error response
         if (!$product) {
             return ServiceResponse::error("user not found", 404);
         }
 
-        // Delete the product
         $product->delete();
-
-        // Return a success response
         return ServiceResponse::success("User deleted successfully.");
     }
     public function bulkDelete(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'ids' => 'required|array',
-            'ids.*' => 'required|exists:restaurant_timings,id',
+            'ids.*' => 'required|exists:products,id',  // Ensure valid product IDs
         ]);
 
         if ($validator->fails()) {
             return ServiceResponse::error('Validation failed', $validator->errors());
         }
-
         $ids = $request->input('ids', []);
-        RestaurantTiming::whereIn('id', $ids)->delete();
+        ProductProps::whereIn('product_id', $ids)->delete();
+
+        Product::whereIn('id', $ids)->delete();
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
