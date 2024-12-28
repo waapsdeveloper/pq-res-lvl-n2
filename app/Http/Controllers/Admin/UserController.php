@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreUser;
 use App\Http\Requests\Admin\User\UpdateUser;
 use App\Http\Resources\Admin\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -101,7 +102,7 @@ class UserController extends Controller
             'password' => Hash::make($data['password']),
             'role_id' => $data['role_id'],
             'status' => $data['status'],
-            'restaurant_id' => $data['restaurant_id'] ?? null,
+            'restaurant_id' => $data['restaurant_id'],
         ]);
 
 
@@ -137,6 +138,9 @@ class UserController extends Controller
         //
         // Attempt to find the restaurant by ID
         $user = User::with('role', 'userDetail')->find($id);
+
+        $user['role'] = Role::find($user->role_id);
+        $user['userDetails'] = UserAddresses::find($user->id)
         // If the restaurant doesn't exist, return an error response
         if (!$user) {
             return ServiceResponse::error("User not found", 404);
