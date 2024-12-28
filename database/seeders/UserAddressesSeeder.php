@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -20,7 +21,7 @@ class UserAddressesSeeder extends Seeder
         foreach ($userAddresses as $address) {
             DB::table('user_addresses')->insert([
                 'user_id' => $address['user_id'],
-                'address_line' => $address['address_line'],
+                'address' => $address['address'],
                 'city' => $address['city'],
                 'state' => $address['state'],
                 'country' => $address['country'],

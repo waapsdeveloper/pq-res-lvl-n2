@@ -42,7 +42,7 @@ class RtableController extends Controller
             }
             if (isset($filters['address']) && !empty($filters['address'])) {
                 $query->whereHas('restaurantDetail', function ($query) use ($filters) {
-                    $query->where('address_line', 'like', '%' . $filters['address'] . '%');
+                    $query->where('address', 'like', '%' . $filters['address'] . '%');
                 });
             }
             if (isset($filters['status']) && !empty($filters['status'])) {
