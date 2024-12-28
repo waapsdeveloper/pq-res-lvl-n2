@@ -23,7 +23,7 @@ class StoreProduct extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return  [
             'name' => 'required|string|min:3|max:255',
             'identifier' => 'nullable|string|unique:products,identifier,' . $this->id,
             'restaurant_id' => 'nullable|integer|exists:restaurants,id',
@@ -42,18 +42,11 @@ class StoreProduct extends FormRequest
                 },
             ],
             'discount' => 'nullable|numeric',
+            'sizes' => 'nullable|string',
+            'spicy' => 'nullable|string',
+            'type' => 'nullable|string',
+
         ];
-
-
-        foreach ($this->all() as $key => $value) {
-
-            if (is_array($value)) {
-                $rules[$key] = 'nullable|array';
-                $rules["{$key}.*"] = 'string|max:255';
-            }
-        }
-
-        return $rules;
     }
 
     protected function failedValidation(Validator $validator)

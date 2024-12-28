@@ -23,8 +23,8 @@ class ProductResource extends JsonResource
     {
 
         $image = Helper::returnFullImageUrl($obj->image);
-        $category = $obj->category_id ? $obj->category->name : null;
-        $restaurant = $obj->restaurant_id ? $obj->restaurant->name : null;
+        $category = $obj->category_id ? optional($obj->category)->name : null;
+        $restaurant = $obj->restaurant_id ? optional($obj->restaurant)->name : null;
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -37,8 +37,8 @@ class ProductResource extends JsonResource
             "productProps" => $obj->productProps->map(function ($prop) {
                 return [
                     "id" => $prop->id,
-                    "name" => $prop->name,
-                    "value" => $prop->value,
+                    // "name" => $prop->name,
+                    // "value" => $prop->value,
                 ];
             }),
         ];
