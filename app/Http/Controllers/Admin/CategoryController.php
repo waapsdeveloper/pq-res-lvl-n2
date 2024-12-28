@@ -73,6 +73,7 @@ class CategoryController extends Controller
         //
         // $data = $request->all();
         $data = $request->validated();
+        return response()->json($data);
         // Create a new user (assuming the user model exists)
         $category = Category::create([
             'name' => $data['name'],
