@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         // Use statements for seeders
         $this->call(RolesTableSeeder::class); //1
         $this->call(UsersTableSeeder::class); //2
+        $this->call(UserAddressesSeeder::class); //14
         $this->call(RestaurantsTableSeeder::class); //4
         $this->call(RestaurantTimingSeeder::class);
         $this->call(CategorySeeder::class); //3
@@ -27,7 +28,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(PaymentSeeder::class); //8
         // $this->call(ProfileSeeder::class); //11
         // $this->call(SessionSeeder::class); //13
-        // $this->call(UserAddressesSeeder::class); //14
         // $this->call(RTableReservingSeeder::class);
     }
 }
