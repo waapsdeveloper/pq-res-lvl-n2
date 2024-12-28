@@ -18,4 +18,9 @@ class ProductProps extends Model
         'meta_value' => 'array',
         'meta_key_type' => 'array',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

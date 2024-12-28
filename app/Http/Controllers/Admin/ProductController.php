@@ -28,19 +28,19 @@ class ProductController extends Controller
         $filters = $request->input('filters', null);
 
 
-        $query = Product::query()->orderBy('id', 'desc');
+        $query = Product::query()->with('productProps', 'category', 'restaurant')->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed
-        if ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-        }
+        // if ($search) {
+        //     $query->where('name', 'like', '%' . $search . '%');
+        // }
 
 
         if ($filters) {
             $filters = json_decode($filters, true);
-            if (isset($filters['name']) && !empty($filters['name'])) {
-                $query->where('name', 'like', '%' . $filters['name'] . '%');
-            }
+            // if (isset($filters['name']) && !empty($filters['name'])) {
+            //     $query->where('name', 'like', '%' . $filters['name'] . '%');
+            // }
             if (isset($filters['category']) && !empty($filters['category'])) {
                 // return response()->json($filters);
                 $query->whereHas('category', function ($query) use ($filters) {
@@ -114,6 +114,7 @@ class ProductController extends Controller
             $product->update(['image' => $url]);
         }
 
+        return response()->json([$product]);
         // Save dynamic meta data as JSON strings in ProductProps
         foreach ($data as $key => $value) {
             if (!in_array($key, array_keys($product->getAttributes()))) {
@@ -143,8 +144,8 @@ class ProductController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $product = Product::find($id);
-        $product['image'] = Helper::returnFullImageUrl($product->image);
+        $product = Product::with('category', 'productProps', 'restaurant')->find($id);
+        // $product['image'] = Helper::returnFullImageUrl($product->image);
 
         // If the product doesn't exist, return an error response
         if (!$product) {
@@ -225,29 +226,24 @@ class ProductController extends Controller
         return ServiceResponse::success('Product update successful', ['item' => $product]);
     }
 
-
-
-
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        // Attempt to find the restaurant by ID
-        $restaurant = Product::find($id);
+        // Attempt to find the product by ID
+        $product = Product::find($id);
 
-        // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
-            return ServiceResponse::error("user not found", 404);
+        if (!$product) {
+            return ServiceResponse::error("Product not found", 404);
         }
+        ProductProps::where('product_id', $id)->delete();
 
-        // Delete the restaurant
-        $restaurant->delete();
+        $product->delete();
 
-        // Return a success response
-        return ServiceResponse::success("User deleted successfully.");
+        return ServiceResponse::success("Product deleted successfully.");
     }
+
     public function bulkDelete(Request $request)
     {
         $validator = Validator::make($request->all(), [
