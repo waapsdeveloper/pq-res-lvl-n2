@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
                 'role_id' => $user['role_id'],
                 'restaurant_id' => $user['restaurant_id'] ?? 0,
                 'status' => $user['status'],
-                'image' => Helper::getBase64ImageUrl('users', $user['image']),
+                'image' => Helper::getBase64ImageUrl($user['image'], 'users'),
                 'remember_token' => str()->random(10),
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -31,7 +31,7 @@ class CategorySeeder extends Seeder
                 'restaurant_id' => $category['restaurant_id'] ?? 0,
                 'identifier' => $category['identifier'] ?? "CAT-" . uniqid(),
                 'description' => $category['description'],
-                'image' => Helper::getBase64ImageUrl('category', $category['image']),
+                'image' => Helper::getBase64ImageUrl($category['image'], 'category'),
                 'status' => $category['status'],
                 'created_at' => now(),
                 'updated_at' => now(),

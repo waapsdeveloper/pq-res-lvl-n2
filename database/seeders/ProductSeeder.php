@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
                 'description' => $product['description'],
                 'price' => $product['price'],
                 'discount' => $product['discount'],
-                'image' => Helper::getBase64ImageUrl('product', $product['image']),
+                'image' => Helper::getBase64ImageUrl($product['image'], 'product'),
                 'status' => $product['status'],
                 'created_at' => now(),
                 'updated_at' => now(),
