@@ -27,9 +27,13 @@ class CustomerResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
+        $image = Helper::returnFullImageUrl($obj->image);
         return [
             "id" => $obj->id,
             "name" => $obj->name,
+            "email" => $obj->email,
+            "phone" => $obj->phone,
+            "image" => $image,
             // "address" => $obj->address,
             "status" => $obj->status,
         ];
