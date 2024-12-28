@@ -14,8 +14,9 @@ class Helper
 
             $filename = uniqid() . '.png';
 
-            $path = base_path(env('IMAGE_BASE_FOLDER') . $filename);
-            $file = Storage::disk('local')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
+            $path = base_path(env(key: 'IMAGE_BASE_FOLDER') . $filename);
+            $file = Storage::disk('public')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
+            // $file = Storage::disk('local')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
 
             if ($file) {
                 $imagePath = 'images/' . $folder . '/' . $filename;
@@ -34,7 +35,8 @@ class Helper
         $path = parse_url($url, PHP_URL_PATH);
         $filePath = ltrim($path, '/'); // Remove any leading slash
 
-        $storage = Storage::disk('local'); // Assuming the disk is 'local'
+        $storage = Storage::disk('public'); // Assuming the disk is 'local'
+        // $storage = Storage::disk('local'); // Assuming the disk is 'local'
         if ($storage->exists($filePath)) {
             $storage->delete($filePath); // Delete the file from storage
         } else {
@@ -51,7 +53,9 @@ class Helper
         }
 
         // Get the URL from Laravel's filesystem config (the URL from 'public' disk)
-        $baseUrl = url('/'); //Storage::disk('public')->url('');
+        // $baseUrl = url('/'); 
+        $baseUrl =  Storage::disk('public')->url('/');
+        // $baseUrl =  Storage::disk('local')->url('/');
 
         // Generate the full image URL by appending the image path
         // Ensure that the image path is properly concatenated to the base URL
