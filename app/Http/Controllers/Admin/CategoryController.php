@@ -153,7 +153,7 @@ class CategoryController extends Controller
         $category->update([
             'name' => $data['name'] ?? $category->name,
             'identifier' => $identifier,
-            'category_id' => $data['category'] ?? $category->category_id,
+            'category_id' => $data['category_id'] ?? $category->category_id,
             'restaurant_id' => $data['restaurant_id'] ?? $category->restaurant_id,
             'description' => $data['description'] ?? $category->description,
             'image' => $data['image'] ?? $category->image,
