@@ -136,7 +136,7 @@ class UserController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $user = User::with('role')->find($id);
+        $user = User::with('role', 'userDetail')->find($id);
         // If the restaurant doesn't exist, return an error response
         if (!$user) {
             return ServiceResponse::error("User not found", 404);
