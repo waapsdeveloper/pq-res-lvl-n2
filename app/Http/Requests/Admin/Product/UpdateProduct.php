@@ -32,7 +32,15 @@ class UpdateProduct extends FormRequest
             'price' => 'required', // Ensure role is provided
             'status' => 'required|string|in:active,inactive',
             'notes' => "nullable|string",
-            'image' => 'nullable|string',
+            'image' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ],
             'discount' => 'nullable',
 
         ];

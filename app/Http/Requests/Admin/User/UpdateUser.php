@@ -34,7 +34,15 @@ class UpdateUser extends FormRequest
             'city' => 'nullable|string',
             'state' => 'nullable|string',
             'country' => 'nullable|string',
-            'image' => 'nullable|string',
+            'image' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ],
             'restaurant_id' => 'nullable|integer',
 
         ];
