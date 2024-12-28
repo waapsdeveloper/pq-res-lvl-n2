@@ -28,7 +28,7 @@ class UpdateUser extends FormRequest
             'email' => 'nullable|email|max:255|unique:users,email,' . $this->route('id'),
             'phone' => 'nullable|string|max:20',
             'password' => 'nullable|string|min:6',
-            'role' => 'nullable|integer',
+            'role_id' => 'nullable|integer',
             'status' => 'nullable|string|in:active,inactive',
             'address' => 'nullable|string',
             'city' => 'nullable|string',
@@ -38,7 +38,7 @@ class UpdateUser extends FormRequest
                 'nullable',
                 'string',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp|svg+xml|webp|tiff);base64,/', $value)) {
                         $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
                     }
                 },
