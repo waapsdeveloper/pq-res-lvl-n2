@@ -136,7 +136,6 @@ class UserController extends Controller
 
     public function show(string $id)
     {
-        //
         // Attempt to find the restaurant by ID
         $user = User::with('role', 'userDetail')->find($id);
         $user['role_id'] = $user->role_id;

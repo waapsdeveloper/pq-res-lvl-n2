@@ -27,7 +27,7 @@ class ProductController extends Controller
         $filters = $request->input('filters', null);
 
 
-        $query = Product::query();
+        $query = Product::query()->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed
         if ($search) {

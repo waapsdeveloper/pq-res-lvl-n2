@@ -31,7 +31,7 @@ class OrderController extends Controller
 
         $category = $request->input('category_id', '');
 
-        $query = Order::query();
+        $query = Order::query()->orderBy('id', 'desc');
 
         $query->with('orderProducts.product');
 

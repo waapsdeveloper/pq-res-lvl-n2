@@ -23,7 +23,7 @@ class RoleController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
 
-        $query = Role::query();
+        $query = Role::query()->orderBy('id', 'desc');
         $query->where('id', '!=', 1);
         // Optionally apply search filter if needed
         if ($search) {
