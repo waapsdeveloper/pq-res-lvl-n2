@@ -61,7 +61,8 @@ class User extends Authenticatable
     }
     public function userDetail()
     {
-        return $this->belongsTo(UserAddresses::class);
+        // dd($this->hasOne(UserAddresses::class, 'user_id', 'id'));
+        return $this->hasOne(UserAddresses::class, 'user_id', 'id');
     }
 
     public static function superAdmin(int $roleId = 1)
@@ -104,9 +105,5 @@ class User extends Authenticatable
     public static function receptionist(int $roleId = 10)
     {
         return self::where('role_id', $roleId)->get();
-    }
-    public function userDetails()
-    {
-        return $this->hasMany(UserAddresses::class, 'user_id');
     }
 }

@@ -22,6 +22,7 @@ class UserResource extends JsonResource
     public static function toObject($obj, $lang = 'en')
     {
         $image = Helper::returnFullImageUrl($obj->image);
+        // dd($obj->userDetail);
         return [
             "id" => $obj->id,
             "name" => $obj->name,
