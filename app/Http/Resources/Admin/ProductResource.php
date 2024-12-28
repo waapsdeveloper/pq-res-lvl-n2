@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use App\Helpers\Helper;
+use App\Models\ProductProps;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,7 +26,10 @@ class ProductResource extends JsonResource
         $image = Helper::returnFullImageUrl($obj->image);
         $category = $obj->category_id ? optional($obj->category)->name : null;
         $restaurant = $obj->restaurant_id ? optional($obj->restaurant)->name : null;
-        dd($obj->productProps);
+        $sizes = ProductProps::where('product_id', $obj->id)->where('meta_key', 'size')->first();
+        $spicy = ProductProps::where('product_id', $obj->id)->where('meta_key', 'spicy')->first();
+        $type = ProductProps::where('product_id', $obj->id)->where('meta_key', 'type')->first();
+        // dd($obj->productProps);
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -35,14 +39,9 @@ class ProductResource extends JsonResource
             'discount' => $obj->discount,
             "category_id" => $category,
             "restaurant_id" => $restaurant,
-            "productProps" => $obj->productProps->map(function ($prop) {
-                return [
-                    "id" => $prop->id,
-                    "meta_key" => $prop->meta_key,
-                    "meta_value" => $prop->meta_value,
-                    "meta_key_type" => $prop->meta_key_type,
-                ];
-            }),
+            "sizes" => $sizes,
+            "spicy" => $spicy,
+            "type" => $type,
         ];
     }
 }
