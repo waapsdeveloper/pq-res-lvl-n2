@@ -145,6 +145,7 @@ class UserController extends Controller
         $user['city'] = $user->userDetail->city;
         $user['state'] = $user->userDetail->address;
         $user['country'] = $user->userDetail->address;
+        $user['image'] = Helper::returnFullImageUrl($user->image);
 
 
 
