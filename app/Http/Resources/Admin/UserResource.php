@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,6 +21,7 @@ class UserResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
+        $image = Helper::returnFullImageUrl($obj->image);
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -31,7 +33,7 @@ class UserResource extends JsonResource
             "status" => $obj->status,
             "created_at" => $obj->created_at,
             "updated_at" => $obj->updated_at,
-            "image" => $obj->image
+            "image" => $image,
             //     "user_detail" => $obj->userDetail->map(function ($item) {
             //         return [
             //             ""
