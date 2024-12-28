@@ -116,12 +116,6 @@ class ProductController extends Controller
             $product->update(['image' => $url]);
         }
 
-        // Store additional product properties
-        Str::swap([
-            "'" => '',
-            '"' => '',
-        ], 'sizes');
-
         ProductProps::updateOrCreate([
             'product_id' => $product->id,
             'meta_key' => Str::swap([
