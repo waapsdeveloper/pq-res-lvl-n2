@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\CustomerResource;
 use App\Models\Customer;
@@ -65,6 +66,8 @@ class CustomerController extends Controller
     public function show(string $id)
     {
         $customer = User::with('userDetails')->find($id);
+        $customer['image'] = Helper::returnFullImageUrl($customer->image);
+
         // If the restaurant doesn't exist, return an error response
         if (!$customer) {
             return ServiceResponse::error("customer not found", 404);

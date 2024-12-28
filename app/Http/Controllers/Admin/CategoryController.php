@@ -103,15 +103,17 @@ class CategoryController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = Category::find($id);
+        $category = Category::find($id);
+        $category['image'] = Helper::returnFullImageUrl($category->image);
 
-        // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
+
+        // If the category doesn't exist, return an error response
+        if (!$category) {
             return ServiceResponse::error("Category not found", 404);
         }
 
-        // Return a success response with the restaurant data
-        return ServiceResponse::success("Category details retrieved successfully", ['category' => $restaurant]);
+        // Return a success response with the category data
+        return ServiceResponse::success("Category details retrieved successfully", ['category' => $category]);
     }
 
     /**

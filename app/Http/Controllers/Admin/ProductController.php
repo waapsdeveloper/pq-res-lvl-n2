@@ -122,16 +122,16 @@ class ProductController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = Product::find($id);
-        $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
+        $product = Product::find($id);
+        $product['image'] = Helper::returnFullImageUrl($product->image);
 
-        // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
+        // If the product doesn't exist, return an error response
+        if (!$product) {
             return ServiceResponse::error("Product not found", 404);
         }
 
-        // Return a success response with the restaurant data
-        return ServiceResponse::success("Product details retrieved successfully", ['product' => $restaurant]);
+        // Return a success response with the product data
+        return ServiceResponse::success("Product details retrieved successfully", ['product' => $product]);
     }
 
 
