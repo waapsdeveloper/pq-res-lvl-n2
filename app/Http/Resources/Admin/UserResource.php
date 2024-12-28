@@ -22,6 +22,10 @@ class UserResource extends JsonResource
     public static function toObject($obj, $lang = 'en')
     {
         $image = Helper::returnFullImageUrl($obj->image);
+        $address = $obj->userDetail ? $obj->userDetail->address : null;
+        $city = $obj->userDetail ? $obj->userDetail->city : null;
+        $state = $obj->userDetail ? $obj->userDetail->state : null;
+        $country = $obj->userDetail ? $obj->userDetail->country : null;
         // dd($obj->userDetail);
         return [
             "id" => $obj->id,
@@ -34,10 +38,10 @@ class UserResource extends JsonResource
             "created_at" => $obj->created_at,
             "updated_at" => $obj->updated_at,
             "image" => $image,
-            "address" => $obj->userDetail->address,
-            "city" => $obj->userDetail->city,
-            "state" => $obj->userDetail->state,
-            "country" => $obj->userDetail->country,
+            "address" => $address,
+            "city" => $city,
+            "state" => $state,
+            "country" => $country,
         ];
     }
 }
