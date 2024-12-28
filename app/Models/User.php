@@ -61,7 +61,7 @@ class User extends Authenticatable
     }
     public function userDetail()
     {
-        return $this->hasMany(UserAddresses::class, 'user_id', 'id');
+        return $this->belongsTo(UserAddresses::class);
     }
 
     public static function superAdmin(int $roleId = 1)
