@@ -123,6 +123,7 @@ class ProductController extends Controller
         //
         // Attempt to find the restaurant by ID
         $restaurant = Product::find($id);
+        $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {

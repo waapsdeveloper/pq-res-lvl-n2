@@ -127,7 +127,7 @@ class RestaurantController extends Controller
         //
         // Attempt to find the restaurant by ID
         $restaurant = Restaurant::with('timings')->find($id);
-
+        $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
             return ServiceResponse::error("Restaurant not found", 404);
