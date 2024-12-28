@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -25,9 +26,11 @@ class RestaurantsTableSeeder extends Seeder
                 'phone' => $restaurant['phone'],
                 'email' => $restaurant['email'],
                 'website' => $restaurant['website'],
-                // 'opening_hours' => json_encode($restaurant['opening_hours']), // JSON کو اسٹرنگ میں کنورٹ کریں
                 'description' => $restaurant['description'],
                 'rating' => $restaurant['rating'],
+                'image' => Helper::getBase64ImageUrl('restaurant', $restaurant['image']),
+                'favicon' => Helper::getBase64ImageUrl('restaurant', $restaurant['image']),
+                'logo' => Helper::getBase64ImageUrl('restaurant', $restaurant['image']),
                 'status' => $restaurant['status'],
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -27,7 +28,7 @@ class ProductSeeder extends Seeder
                 'description' => $product['description'],
                 'price' => $product['price'],
                 'discount' => $product['discount'],
-                'image' => $product['image'],
+                'image' => Helper::getBase64ImageUrl('product', $product['image']),
                 'status' => $product['status'],
                 'created_at' => now(),
                 'updated_at' => now(),

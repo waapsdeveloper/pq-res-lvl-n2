@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -27,10 +28,16 @@ class UsersTableSeeder extends Seeder
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'email_verified_at' => $user['email_verified_at'] ?? null, // Nullable
+                'phone' => $user['phone'] ?? "+" . 921324124,
                 'password' => Hash::make($user['password']), // Hashing password
                 'role_id' => $user['role_id'],
                 'restaurant_id' => $user['restaurant_id'] ?? 0,
                 'status' => $user['status'],
+                'address' => $user['address'],
+                'city' => $user['city'],
+                'state' => $user['state'],
+                'country' => $user['country'],
+                'image' => Helper::getBase64ImageUrl('users', $user['image']),
                 'remember_token' => str()->random(10),
                 'created_at' => now(),
                 'updated_at' => now(),

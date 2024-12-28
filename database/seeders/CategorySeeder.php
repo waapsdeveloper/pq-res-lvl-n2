@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -30,7 +31,7 @@ class CategorySeeder extends Seeder
                 'restaurant_id' => $category['restaurant_id'] ?? 0,
                 'identifier' => $category['identifier'] ?? "CAT-" . uniqid(),
                 'description' => $category['description'],
-                'image' => $category['image'],
+                'image' => Helper::getBase64ImageUrl('category', $category['image']),
                 'status' => $category['status'],
                 'created_at' => now(),
                 'updated_at' => now(),
