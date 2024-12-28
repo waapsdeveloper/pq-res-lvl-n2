@@ -23,7 +23,6 @@ return new class extends Migration
             $table->text('favicon')->nullable();
             $table->text('logo')->nullable();
             $table->text('copyright_text')->nullable();
-            $table->text('description')->nullable();
             $table->decimal('rating', 10, 2)->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();

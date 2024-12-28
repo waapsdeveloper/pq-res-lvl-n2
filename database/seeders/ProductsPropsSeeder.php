@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -19,7 +20,7 @@ class ProductsPropsSeeder extends Seeder
         // Insert product props into the database
         foreach ($productProps as $prop) {
             DB::table('product_props')->insert([
-                'product_id' => $prop['product_id'],
+                'product_id' => $prop['product_id'] ?? 1,
                 'meta_key' => $prop['meta_key'],
                 'meta_value' => $prop['meta_value'],
                 'meta_key_type' => $prop['meta_key_type'],

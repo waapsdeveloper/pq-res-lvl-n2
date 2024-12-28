@@ -8,7 +8,7 @@
         "customer_id": "1",
         "invoice_no": "INV001",
         "table_no": "5",
-        "restaurant_id": "1"
+        "restaurant_id": 1
     },
     {
         "identifier": "ORD12346",
@@ -19,7 +19,7 @@
         "customer_id": "2",
         "invoice_no": "INV002",
         "table_no": null,
-        "restaurant_id": "2"
+        "restaurant_id": 1
     },
     {
         "identifier": "ORD12347",
@@ -30,7 +30,7 @@
         "customer_id": "3",
         "invoice_no": "INV003",
         "table_no": null,
-        "restaurant_id": "3"
+        "restaurant_id": 1
     },
     {
         "identifier": "ORD12348",
@@ -41,7 +41,7 @@
         "customer_id": "4",
         "invoice_no": "INV004",
         "table_no": null,
-        "restaurant_id": "4"
+        "restaurant_id": 1
     },
     {
         "identifier": "ORD12349",
@@ -52,7 +52,7 @@
         "customer_id": "5",
         "invoice_no": "INV005",
         "table_no": null,
-        "restaurant_id": "5"
+        "restaurant_id": 1
     },
     {
         "identifier": "ORD12350",
@@ -63,6 +63,6 @@
         "customer_id": "6",
         "invoice_no": "INV006",
         "table_no": "10",
-        "restaurant_id": "1"
+        "restaurant_id": 1
     }
 ]

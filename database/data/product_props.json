@@ -1,38 +1,278 @@
 [
     {
-        "product_id": 1,
-        "meta_key": "color",
-        "meta_value": "Red",
-        "meta_key_type": "string"
-    },
-    {
-        "product_id": 2,
-        "meta_key": "size",
-        "meta_value": "Large",
-        "meta_key_type": "string"
-    },
-    {
         "product_id": 3,
-        "meta_key": "is_vegan",
-        "meta_value": "true",
-        "meta_key_type": "boolean"
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
     },
     {
-        "product_id": 4,
-        "meta_key": "spice_level",
-        "meta_value": "3",
-        "meta_key_type": "integer"
-    },
-    {
-        "product_id": 5,
-        "meta_key": "ingredients",
-        "meta_value": "Chocolate, Butter, Flour, Sugar",
+        "product_id": 8,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
         "meta_key_type": "string"
     },
     {
         "product_id": 6,
-        "meta_key": "calories",
-        "meta_value": "250",
-        "meta_key_type": "integer"
+        "meta_key": "type",
+        "meta_value": "{\"breakfast\":false,\"lunch\":false,\"dinner\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 14,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 20,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 4,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 12,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 19,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 15,
+        "meta_key": "type",
+        "meta_value": "{\"breakfast\":false,\"lunch\":false,\"dinner\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 2,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 23,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 10,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 24,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 17,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 22,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 9,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 13,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 18,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 7,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 25,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 27,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 30,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 16,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 31,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 28,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 29,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 11,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 32,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 33,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 34,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 35,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 36,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 37,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 38,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 39,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 40,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 41,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 42,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 43,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 44,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 45,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 46,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 47,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 48,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 49,
+        "meta_key": "sizes",
+        "meta_value": "{\"small\":true,\"medium\":true,\"large\":true}",
+        "meta_key_type": "string"
+    },
+    {
+        "product_id": 50,
+        "meta_key": "spicy",
+        "meta_value": "{\"mild\":true,\"medium\":true,\"hot\":false}",
+        "meta_key_type": "string"
     }
 ]

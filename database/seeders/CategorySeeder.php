@@ -28,6 +28,7 @@ class CategorySeeder extends Seeder
                 'name' => $category['name'],
                 'category_id' => $category['category_id'],
                 'restaurant_id' => $category['restaurant_id'] ?? 0,
+                'identifier' => $category['identifier'] ?? "CAT-" . uniqid(),
                 'description' => $category['description'],
                 'image' => $category['image'],
                 'status' => $category['status'],
@@ -35,6 +36,5 @@ class CategorySeeder extends Seeder
                 'updated_at' => now(),
             ]);
         }
-}
-
+    }
 }

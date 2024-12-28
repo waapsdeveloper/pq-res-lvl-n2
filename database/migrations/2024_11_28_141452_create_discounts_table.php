@@ -14,12 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('identifier');
+            $table->string('identifier')->nullable();
             $table->foreignId('product_id');
             $table->decimal('actual_price', 10, 2);
             $table->decimal('discount_price', 10, 2);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->timestamps();
         });
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -19,7 +20,7 @@ class OrderSeeder extends Seeder
         // Insert orders into the database
         foreach ($orders as $order) {
             DB::table('orders')->insert([
-                'identifier' => $order['identifier'],
+                'identifier' => $order['identifier'] ?? "ORD-" . uniqid(),
                 'order_number' => $order['order_number'],
                 'type' => $order['type'],
                 'status' => $order['status'],

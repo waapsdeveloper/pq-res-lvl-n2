@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -21,7 +22,7 @@ class ProductSeeder extends Seeder
             DB::table('products')->insert([
                 'category_id' => $product['category_id'],
                 'restaurant_id' => $product['restaurant_id'],
-                'identifier' => $product['identifier'],
+                'identifier' => $product['identifier'] ?? "PROD-" . uniqid(),
                 'name' => $product['name'],
                 'description' => $product['description'],
                 'price' => $product['price'],

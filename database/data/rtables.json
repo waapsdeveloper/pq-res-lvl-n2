@@ -1,7 +1,7 @@
 [
     {
         "restaurant_id": 1,
-        "identifier": "TABLE291199",
+        "name": "Table-04First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 4,
@@ -9,7 +9,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE8572",
+        "name": "Table-05First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 5,
@@ -17,7 +17,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE77633",
+        "name": "Table-08First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 8,
@@ -25,7 +25,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE231",
+        "name": "Table-06First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 6,
@@ -33,7 +33,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE761",
+        "name": "Table-08First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 8,
@@ -41,7 +41,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE339",
+        "name": "Table-08First",
         "status": "inactive",
         "floor": "First",
         "no_of_seats": 8,
@@ -49,7 +49,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE359",
+        "name": "Table-03First",
         "status": "inactive",
         "floor": "First",
         "no_of_seats": 3,
@@ -57,7 +57,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE413",
+        "name": "Table-07First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 7,
@@ -65,7 +65,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE911",
+        "name": "Table-09First",
         "status": "inactive",
         "floor": "First",
         "no_of_seats": 9,
@@ -73,7 +73,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE169",
+        "name": "Table-03First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 3,
@@ -81,7 +81,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE204",
+        "name": "Table-05Secon",
         "status": "active",
         "floor": "Second",
         "no_of_seats": 5,
@@ -89,7 +89,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE547",
+        "name": "Table-04Secon",
         "status": "active",
         "floor": "Second",
         "no_of_seats": 4,
@@ -97,7 +97,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE348",
+        "name": "Table-06Secon",
         "status": "inactive",
         "floor": "Second",
         "no_of_seats": 6,
@@ -105,7 +105,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE756",
+        "name": "Table-07Secon",
         "status": "active",
         "floor": "Second",
         "no_of_seats": 7,
@@ -113,7 +113,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE512",
+        "name": "Table-02Secon",
         "status": "inactive",
         "floor": "Second",
         "no_of_seats": 2,
@@ -121,7 +121,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE287",
+        "name": "Table-05Secon",
         "status": "active",
         "floor": "Second",
         "no_of_seats": 5,
@@ -129,7 +129,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE637",
+        "name": "Table-08Secon",
         "status": "inactive",
         "floor": "Second",
         "no_of_seats": 8,
@@ -137,7 +137,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE492",
+        "name": "Table-09Secon",
         "status": "active",
         "floor": "Second",
         "no_of_seats": 9,
@@ -145,7 +145,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE9641",
+        "name": "Table-04Secon",
         "status": "active",
         "floor": "Second",
         "no_of_seats": 4,
@@ -153,7 +153,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE501",
+        "name": "Table-03Secon",
         "status": "inactive",
         "floor": "Second",
         "no_of_seats": 3,
@@ -161,7 +161,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE279",
+        "name": "Table-08Third",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 8,
@@ -169,7 +169,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE689",
+        "name": "Table-05Third",
         "status": "inactive",
         "floor": "Third",
         "no_of_seats": 5,
@@ -177,7 +177,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE302",
+        "name": "Table-06Third",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 6,
@@ -185,7 +185,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE474",
+        "name": "Table-07Third",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 7,
@@ -193,7 +193,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE980",
+        "name": "Table-05Third",
         "status": "inactive",
         "floor": "Third",
         "no_of_seats": 5,
@@ -201,7 +201,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE133",
+        "name": "Table-04Third",
         "status": "inactive",
         "floor": "Third",
         "no_of_seats": 4,
@@ -209,7 +209,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE731",
+        "name": "Table-08Third",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 8,
@@ -217,7 +217,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE260",
+        "name": "Table-09Third",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 9,
@@ -225,7 +225,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE574",
+        "name": "Table-02Third",
         "status": "inactive",
         "floor": "Third",
         "no_of_seats": 2,
@@ -233,7 +233,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE461",
+        "name": "Table-07Third",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 7,
@@ -241,7 +241,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE297",
+        "name": "Table-05First",
         "status": "inactive",
         "floor": "First",
         "no_of_seats": 5,
@@ -249,7 +249,6 @@
     },
     {
         "restaurant_id": 7,
-        "identifier": "TABLE378",
         "status": "active",
         "floor": "Second",
         "no_of_seats": 9,
@@ -257,7 +256,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE455",
+        "name": "Table-06Third",
         "status": "inactive",
         "floor": "Third",
         "no_of_seats": 6,
@@ -265,7 +264,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE503",
+        "name": "Table-03First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 3,
@@ -273,7 +272,6 @@
     },
     {
         "restaurant_id": 6,
-        "identifier": "TABLE829",
         "status": "inactive",
         "floor": "Second",
         "no_of_seats": 4,
@@ -281,7 +279,6 @@
     },
     {
         "restaurant_id": 2,
-        "identifier": "TABLE964",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 6,
@@ -289,7 +286,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE724",
+        "name": "Table-07First",
         "status": "inactive",
         "floor": "First",
         "no_of_seats": 7,
@@ -297,7 +294,6 @@
     },
     {
         "restaurant_id": 4,
-        "identifier": "TABLE288",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 9,
@@ -305,7 +301,6 @@
     },
     {
         "restaurant_id": 3,
-        "identifier": "TABLE982",
         "status": "inactive",
         "floor": "Second",
         "no_of_seats": 2,
@@ -313,7 +308,6 @@
     },
     {
         "restaurant_id": 7,
-        "identifier": "TABLE693",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 5,
@@ -321,7 +315,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE123",
+        "name": "Table-04First",
         "status": "active",
         "floor": "First",
         "no_of_seats": 4,
@@ -329,7 +323,6 @@
     },
     {
         "restaurant_id": 6,
-        "identifier": "TABLE753",
         "status": "inactive",
         "floor": "Second",
         "no_of_seats": 6,
@@ -337,7 +330,6 @@
     },
     {
         "restaurant_id": 2,
-        "identifier": "TABLE493",
         "status": "active",
         "floor": "Third",
         "no_of_seats": 8,
@@ -345,7 +337,7 @@
     },
     {
         "restaurant_id": 1,
-        "identifier": "TABLE687",
+        "name": "Table-03First",
         "status": "inactive",
         "floor": "First",
         "no_of_seats": 3,
@@ -353,7 +345,6 @@
     },
     {
         "restaurant_id": 8,
-        "identifier": "TABLE344",
         "status": "active",
         "floor": "Second",
         "no_of_seats": 5,

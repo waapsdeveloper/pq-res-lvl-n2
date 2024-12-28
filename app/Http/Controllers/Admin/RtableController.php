@@ -160,11 +160,10 @@ class RtableController extends Controller
         if (!$rtable) {
             return ServiceResponse::error("Rtable with ID $id not found.");
         }
-
         // Update the Rtable details
         $rtable->update([
             'restaurant_id' => $data['restaurant_id'] ?? $rtable->restaurant_id,
-            'identifier' => $data['identifier'] ?? $rtable->identifier,
+            'identifier' => $data['identifier'] ?? Identifier::make('Table', $rtable->id, 5),
             'no_of_seats' => $data['no_of_seats'] ?? $rtable->no_of_seats,
             'floor' => $data['floor'] ?? $rtable->floor,
             'status' => $data['status'] ?? $rtable->status,

@@ -7,136 +7,53 @@
         "website": "https://www.gourmetkitchen.com",
         "description": "A fine dining experience with globally inspired cuisine.",
         "rating": 4.8,
-        "status": "active"
-    },
-    {
-        "name": "Pizza Paradise",
-        "address": "456 Cheesy Blvd, Chicago, IL",
-        "phone": "987-654-3210",
-        "email": "info@pizzaparadise.com",
-        "website": "https://www.pizzaparadise.com",
-        "description": "Home of the best Chicago-style pizza.",
-        "rating": 4.7,
-        "status": "active"
-    },
-    {
-        "name": "Vegan Delights",
-        "address": "789 Plant Lane, San Francisco, CA",
-        "phone": "555-123-4567",
-        "email": "hello@vegandelights.com",
-        "website": "https://www.vegandelights.com",
-        "description": "Delicious and healthy vegan meals.",
-        "rating": 4.9,
-        "status": "active"
-    },
-    {
-        "name": "Ocean Breeze Cafe",
-        "address": "321 Coastline Ave, Miami, FL",
-        "phone": "321-654-0987",
-        "email": "contact@oceanbreezecafe.com",
-        "website": "https://www.oceanbreezecafe.com",
-        "description": "Relax with ocean views and fresh seafood dishes.",
-        "rating": 4.6,
-        "status": "active"
-    },
-    {
-        "name": "The Breakfast Club",
-        "address": "654 Morning Rd, Austin, TX",
-        "phone": "789-456-1230",
-        "email": "info@breakfastclub.com",
-        "website": "https://www.breakfastclub.com",
-        "description": "Start your day right with a hearty breakfast.",
-        "rating": 4.8,
-        "status": "active"
-    },
-    {
-        "name": "Spicy Affair",
-        "address": "111 Curry St, Houston, TX",
-        "phone": "333-222-1111",
-        "email": "spicy@affair.com",
-        "website": "https://www.spicyaffair.com",
-        "description": "Authentic Indian curries and more.",
-        "rating": 4.5,
-        "status": "active"
-    },
-    {
-        "name": "Steakhouse Prime",
-        "address": "999 Meat Lovers Lane, Dallas, TX",
-        "phone": "444-555-6666",
-        "email": "contact@steakhouseprime.com",
-        "website": "https://www.steakhouseprime.com",
-        "description": "Premium cuts of steak grilled to perfection.",
-        "rating": 4.7,
-        "status": "active"
-    },
-    {
-        "name": "Sushi Samurai",
-        "address": "123 Fishy Way, Los Angeles, CA",
-        "phone": "123-321-1234",
-        "email": "sushi@samurai.com",
-        "website": "https://www.sushisamurai.com",
-        "description": "Exquisite sushi crafted by expert chefs.",
-        "rating": 4.9,
-        "status": "active"
-    },
-    {
-        "name": "Burger Haven",
-        "address": "456 Patty Ln, Orlando, FL",
-        "phone": "987-654-4321",
-        "email": "burgers@haven.com",
-        "website": "https://www.burgerhaven.com",
-        "description": "Juicy burgers and crispy fries.",
-        "rating": 4.6,
-        "status": "active"
-    },
-    {
-        "name": "Burger Haven 3",
-        "address": "456 Patty Ln, Orlando, FL",
-        "phone": "987-654-4321",
-        "email": "burgers@haven.com",
-        "website": "https://www.burgerhaven.com",
-        "description": "Juicy burgers and crispy fries.",
-        "rating": 4.6,
-        "status": "active"
-    },
-    {
-        "name": "Burger Haven44",
-        "address": "456 Patty Ln, Orlando, FL",
-        "phone": "987-654-4321",
-        "email": "burgers@haven.com",
-        "website": "https://www.burgerhaven.com",
-        "description": "Juicy burgers and crispy fries.",
-        "rating": 4.6,
-        "status": "active"
-    },
-    {
-        "name": "Burger Haven55",
-        "address": "456 Patty Ln, Orlando, FL",
-        "phone": "987-654-4321",
-        "email": "burgers@haven.com",
-        "website": "https://www.burgerhaven.com",
-        "description": "Juicy burgers and crispy fries.",
-        "rating": 4.6,
-        "status": "active"
-    },
-    {
-        "name": "Burger Haven77",
-        "address": "456 Patty Ln, Orlando, FL",
-        "phone": "987-654-4321",
-        "email": "burgers@haven.com",
-        "website": "https://www.burgerhaven.com",
-        "description": "Juicy burgers and crispy fries.",
-        "rating": 4.6,
-        "status": "active"
-    },
-    {
-        "name": "Pasta Palace",
-        "address": "789 Noodle Rd, Boston, MA",
-        "phone": "555-666-7777",
-        "email": "pasta@palace.com",
-        "website": "https://www.pastapalace.com",
-        "description": "Fresh handmade pasta and authentic Italian flavors.",
-        "rating": 4.7,
-        "status": "active"
+        "status": "active",
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "favicon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAkFBMVEUAAJIAAJEAAJBdn/8HFaA1NaoCBpl7sv8wMqoSEp0CA5YuLqkZKKyJrOytyfiyzfqFmeFTYsUiNbItU79Yl+9hov+Ft/9hdM86QrSLs/Zpp/8zXMRCdNFZmveXvfqlwfVzrP9If9pPiuIkRLYXLq1mle0uQrpifNd1mus5Sbp+o+9PieJIf9l+qvURJKZkg91m0toeAAAApUlEQVQYlUWO2RaCMAxEE1IKVEDRFrVQRTaXov7/31lBMC9zZs7cJACAnuchAPwEgIe+HyGIlR+yr8c4SdcbjlmaJtuxInZS5fvDUctCjAjy0qjTuTIXNu0AbGtSmmQD8ziIyJQc58BBRHW7eEDWKdL9PxDXgEjfojnBe67IUJAtwEMbOxj1jHEBZPMaTPUW0+udtYXAfrDddIgzxrgrTjJ23CzyAQaCCjIJn2ojAAAAAElFTkSuQmCC",
+        "schedule": [
+            {
+                "day": "monday",
+                "start_time": "09:00",
+                "end_time": "22:00",
+                "status": "active"
+            },
+            {
+                "day": "tuesday",
+                "start_time": "09:00",
+                "end_time": "22:00",
+                "status": "active"
+            },
+            {
+                "day": "wednesday",
+                "start_time": "09:00",
+                "end_time": "22:00",
+                "status": "active"
+            },
+            {
+                "day": "thursday",
+                "start_time": "09:00",
+                "end_time": "22:00",
+                "status": "active"
+            },
+            {
+                "day": "friday",
+                "start_time": "09:00",
+                "end_time": "23:00",
+                "status": "active"
+            },
+            {
+                "day": "saturday",
+                "start_time": "10:00",
+                "end_time": "23:00",
+                "status": "active"
+            },
+            {
+                "day": "sunday",
+                "start_time": "10:00",
+                "end_time": "20:00",
+                "status": "active"
+            }
+        ]
     }
 ]
