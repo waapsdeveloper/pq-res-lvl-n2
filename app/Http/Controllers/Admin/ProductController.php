@@ -116,17 +116,44 @@ class ProductController extends Controller
         }
 
         // Store additional product properties
-        foreach ($data as $key => $value) {
-            if (!in_array($key, array_keys($product->getAttributes()))) {
-                // Store the property in ProductProps
-                ProductProps::create([
-                    'product_id' => $product->id,
-                    'meta_key' => $key,
-                    'meta_value' => is_array($value) ? json_encode($value) : $value,
-                    'meta_key_type' => gettype($value), // Get the data type of the value
-                ]);
-            }
-        }
+
+        ProductProps::updateOrCreate( [
+            'product_id' => $product->id,
+            'meta_key' => 'sizes',
+        ], [
+            'meta_value' => $data['sizes'],
+            'meta_key_type' => gettype($data['sizes']),
+        ]);
+
+        ProductProps::updateOrCreate( [
+            'product_id' => $product->id,
+            'meta_key' => 'spicy',
+        ], [
+            'meta_value' => $data['spicy'],
+            'meta_key_type' => gettype($data['spicy']),
+        ]);
+
+        ProductProps::updateOrCreate( [
+            'product_id' => $product->id,
+            'meta_key' => 'type',
+        ], [
+            'meta_value' => $data['type'],
+            'meta_key_type' => gettype($data['type']),
+        ]);
+
+
+
+        // foreach ($data as $key => $value) {
+        //     if (!in_array($key, array_keys($product->getAttributes()))) {
+        //         // Store the property in ProductProps
+        //         ProductProps::create([
+        //             'product_id' => $product->id,
+        //             'meta_key' => $key,
+        //             'meta_value' => is_array($value) ? json_encode($value) : $value,
+        //             'meta_key_type' => gettype($value), // Get the data type of the value
+        //         ]);
+        //     }
+        // }
 
         return ServiceResponse::success('Product store successful', ['item' => $product]);
     }
@@ -351,7 +378,7 @@ class ProductController extends Controller
 //         //     }
 //         // }
 
-     
+
 
 //         return ServiceResponse::success('Product stored successfully', ['item' => $product]);
 //     }
