@@ -104,7 +104,7 @@ class UserController extends Controller
                 'status' => $data['status'],
                 'restaurant_id' => $data['restaurant_id'] ?? null,
             ]);
-
+            dd($data['userDetails']);
             // Create user addresses
             foreach ($data['userDetails'] as $detail) {
                 if (!empty($detail) && isset($detail['address'], $detail['city'], $detail['state'])) {
