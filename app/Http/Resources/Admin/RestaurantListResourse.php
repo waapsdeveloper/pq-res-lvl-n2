@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,6 +21,9 @@ class RestaurantListResourse extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
+        $image = Helper::returnFullImageUrl($obj->image);
+        $favicon = Helper::returnFullImageUrl($obj->favicon);
+        $logo = Helper::returnFullImageUrl($obj->logo);
 
         return [
             "id" => $obj->id,
@@ -33,9 +37,9 @@ class RestaurantListResourse extends JsonResource
             "status" => $obj->status,
             "created_at" => $obj->created_at,
             "updated_at" => $obj->updated_at,
-            "image" => $obj->image ?? null,
-            "favicon" => $obj->favicon ?? null,
-            "logo" => $obj->logo ?? null,
+            "image" => $image,
+            "favicon" => $favicon,
+            "logo" => $logo,
             "copyright_text" => $obj->copyright_text ?? null,
             "schedule" => $obj->timings->map(function ($item) {
                 return [
