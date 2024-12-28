@@ -113,7 +113,7 @@ class UserController extends Controller
                         'address' => ucfirst($detail['address']),
                         'city' => ucfirst($detail['city']),
                         'state' => ucfirst($detail['state']),
-                        'country' => $detail['country'] ?? 'inactive',
+                        'country' => $detail['country'],
                     ]);
                 }
             }
