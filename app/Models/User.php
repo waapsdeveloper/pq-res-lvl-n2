@@ -61,49 +61,12 @@ class User extends Authenticatable
     }
     public function userDetail()
     {
-        // dd($this->hasOne(UserAddresses::class, 'user_id', 'id'));
         return $this->hasOne(UserAddresses::class, 'user_id', 'id');
     }
 
-    public static function superAdmin(int $roleId = 1)
-    {
-        return self::where('role_id', $roleId)->get();
-    }
-    public static function admin(int $roleId = 2)
-    {
-        return self::where('role_id', $roleId)->get();
-    }
 
-    public static function manager(int $roleId = 3)
+    public function userDetails()
     {
-        return self::where('role_id', $roleId)->get();
-    }
-    public static function chef(int $roleId = 4)
-    {
-        return self::where('role_id', $roleId)->get();
-    }
-    public static function waiter(int $roleId = 5)
-    {
-        return self::where('role_id', $roleId)->get();
-    }
-    public static function cashier(int $roleId = 6)
-    {
-        return self::where('role_id', $roleId)->get();
-    }
-    public static function deliveryBoy(int $roleId = 7)
-    {
-        return self::where('role_id', $roleId)->get();
-    }
-    public static function customer(int $roleId = 8)
-    {
-        return self::where('role_id', $roleId)->get();
-    }
-    public static function cleaner(int $roleId = 9)
-    {
-        return self::where('role_id', $roleId)->get();
-    }
-    public static function receptionist(int $roleId = 10)
-    {
-        return self::where('role_id', $roleId)->get();
+        return $this->hasMany(UserAddresses::class, 'user_id');
     }
 }
