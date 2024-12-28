@@ -24,7 +24,7 @@ Route::prefix('auth')->group(function () {
 
 
 Route::prefix('restaurant')->group(function () {
-    Route::get('/bulk-delete', [RestaurantController::class, 'bulkDelete'])->name('bulkDelete');
+    Route::get('/bulk-delete', [RestaurantController::class, 'bulkDelete'])->name('restaurant-bulkDelete');
 
     Route::resource('/', RestaurantController::class)
         ->parameters(['' => 'id'])
@@ -40,12 +40,16 @@ Route::prefix('restaurant')->group(function () {
 
 
 Route::prefix('restaurant-timing')->group(function () {
+    Route::get('/bulk-delete', [RestaurantTimingController::class, 'bulkDelete'])->name('restaurantTiming-bulkDelete');
+
     Route::resource('/', RestaurantTimingController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
         ->names('restaurant-timing');
 });
 Route::prefix('r-table-booking')->group(function () {
+    Route::get('/bulk-delete', [RTableBookingController::class, 'bulkDelete'])->name('rTableBooking-bulkDelete');
+
     Route::resource('/', RTableBookingController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
@@ -55,6 +59,8 @@ Route::prefix('r-table-booking')->group(function () {
 
 
 Route::prefix('role')->group(function () {
+    Route::get('/bulk-delete', [RoleController::class, 'bulkDelete'])->name('role-bulkDelete');
+
     Route::resource('/', RoleController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
@@ -62,6 +68,8 @@ Route::prefix('role')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
+    Route::get('/bulk-delete', [UserController::class, 'bulkDelete'])->name('user-bulkDelete');
+
     Route::resource('/', UserController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'store', 'destroy', 'update'])
@@ -71,6 +79,8 @@ Route::prefix('user')->group(function () {
 Route::get('/auth-user', [UserController::class, 'getAuthUser'])->middleware('auth:api');
 
 Route::prefix('category')->group(function () {
+    Route::get('/bulk-delete', [CategoryController::class, 'bulkDelete'])->name('category-bulkDelete');
+
     Route::resource('/', CategoryController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
@@ -78,6 +88,8 @@ Route::prefix('category')->group(function () {
 });
 
 Route::prefix('product')->group(function () {
+    Route::get('/bulk-delete', [ProductController::class, 'bulkDelete'])->name('product-bulkDelete');
+
     Route::resource('/', ProductController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
@@ -85,6 +97,8 @@ Route::prefix('product')->group(function () {
 });
 
 Route::prefix('order')->group(function () {
+    Route::get('/bulk-delete', [OrderController::class, 'bulkDelete'])->name('order-bulkDelete');
+
     Route::resource('/', OrderController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'update', 'store', 'destroy'])
@@ -95,6 +109,8 @@ Route::prefix('order')->group(function () {
 
 
 Route::prefix('rtable')->group(function () {
+    Route::get('/bulk-delete', [RtableController::class, 'bulkDelete'])->name('rTable-bulkDelete');
+
     Route::resource('/', RtableController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'store', 'destroy', 'update',])
@@ -103,6 +119,8 @@ Route::prefix('rtable')->group(function () {
 
 
 Route::prefix('customer')->group(function () {
+    Route::get('/bulk-delete', [CustomerController::class, 'bulkDelete'])->name('customer-bulkDelete');
+
     Route::resource('/', CustomerController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
@@ -111,6 +129,8 @@ Route::prefix('customer')->group(function () {
 
 //
 Route::prefix('table-booking')->group(function () {
+    Route::get('/bulk-delete', [TableBookingController::class, 'bulkDelete'])->name('tableBooking-bulkDelete');
+
     Route::resource('/', TableBookingController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
@@ -118,5 +138,8 @@ Route::prefix('table-booking')->group(function () {
 });
 
 
+Route::prefix('contact-us')->group(function () {
 
-Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact.index');
+    Route::get('/', [ContactUsController::class, 'index'])->name('contact.index');
+    Route::get('/bulk-delete', [ContactUsController::class, 'bulkDelete'])->name('contactBulkDelete');
+});

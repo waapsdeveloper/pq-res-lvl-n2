@@ -263,4 +263,20 @@ class OrderController extends Controller
 
         return ServiceResponse::success('Order status updated successfully', $order);
     }
+    public function bulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:restaurant_timings,id',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $ids = $request->input('ids', []);
+        Order::whereIn('id', $ids)->delete();
+
+        return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
+    }
 }

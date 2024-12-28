@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Helpers\ServiceResponse;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -94,5 +95,21 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function bulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:restaurant_timings,id',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $ids = $request->input('ids', []);
+        $deleted = User::whereIn('id', $ids)->delete();
+
+        return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
 }

@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\Admin\TableBookingResource;
 use App\Models\RTablesBooking;
 use App\Helpers\ServiceResponse;
-
-
+use Illuminate\Support\Facades\Validator;
 
 class TableBookingController extends Controller
 {
@@ -101,5 +100,21 @@ class TableBookingController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function bulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:restaurant_timings,id',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $ids = $request->input('ids', []);
+        RTablesBooking::whereIn('id', $ids)->delete();
+
+        return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
 }

@@ -12,6 +12,7 @@ use App\Models\RTablesBooking;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class RTableBookingController extends Controller
 {
@@ -174,5 +175,21 @@ class RTableBookingController extends Controller
 
         // Return a success response
         return ServiceResponse::success("RtablesBooking deleted successfully.");
+    }
+    public function bulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:restaurant_timings,id',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $ids = $request->input('ids', []);
+        RTablesBooking::whereIn('id', $ids)->delete();
+
+        return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
 }

@@ -11,6 +11,7 @@ use App\Models\Restaurant;
 use App\Models\RestaurantTiming;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RestaurantTimingController extends Controller
 {
@@ -164,5 +165,21 @@ class RestaurantTimingController extends Controller
 
         // Return a success response
         return ServiceResponse::success("RestaurantTiming deleted successfully.");
+    }
+    public function bulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:restaurant_timings,id',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $ids = $request->input('ids', []);
+        RestaurantTiming::whereIn('id', $ids)->delete();
+
+        return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
 }
