@@ -31,7 +31,7 @@ class UserController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = User::query()->with('role')->with('userDetail')->orderBy('name', 'asc');
+        $query = User::query()->with('role')->with('userDetail')->orderBy('id', 'desc');
         // Optionally apply search filter if needed
         $query->where('role_id', '!=', 1);
 
