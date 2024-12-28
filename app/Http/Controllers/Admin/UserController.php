@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\User\UpdateUser;
 use App\Http\Resources\Admin\UserResource;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserAddresses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -140,7 +141,7 @@ class UserController extends Controller
         $user = User::with('role', 'userDetail')->find($id);
 
         $user['role'] = Role::find($user->role_id);
-        $user['userDetails'] = UserAddresses::find($user->id)
+        $user['userDetails'] = UserAddresses::find($user->id);
         // If the restaurant doesn't exist, return an error response
         if (!$user) {
             return ServiceResponse::error("User not found", 404);
