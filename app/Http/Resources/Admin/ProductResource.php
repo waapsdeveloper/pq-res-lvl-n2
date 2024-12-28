@@ -26,9 +26,7 @@ class ProductResource extends JsonResource
         $image = Helper::returnFullImageUrl($obj->image);
         $category = $obj->category_id ? optional($obj->category)->name : null;
         $restaurant = $obj->restaurant_id ? optional($obj->restaurant)->name : null;
-        $sizes = ProductProps::where('product_id', $obj->id)->where('meta_key', 'size')->first();
-        $spicy = ProductProps::where('product_id', $obj->id)->where('meta_key', 'spicy')->first();
-        $type = ProductProps::where('product_id', $obj->id)->where('meta_key', 'type')->first();
+        $props = ProductProps::where('product_id', $obj->id)->get();
         // dd($obj->productProps);
         return [
             "id" => $obj->id,
@@ -39,9 +37,7 @@ class ProductResource extends JsonResource
             'discount' => $obj->discount,
             "category_id" => $category,
             "restaurant_id" => $restaurant,
-            "sizes" => $sizes,
-            "spicy" => $spicy,
-            "type" => $type,
+            "props" => $props
         ];
     }
 }
