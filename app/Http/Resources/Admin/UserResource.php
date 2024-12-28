@@ -34,10 +34,14 @@ class UserResource extends JsonResource
             "created_at" => $obj->created_at,
             "updated_at" => $obj->updated_at,
             "image" => $image,
-            //     "user_detail" => $obj->userDetail->map(function ($item) {
-            //         return [
-            //             ""
-            //         ];
+            "userDetails" => $obj->userDetail->map(function ($resSchedule) {
+                return [
+                    'address' => $resSchedule->address_line,
+                    'city' => $resSchedule->city,
+                    'state' => $resSchedule->state,
+                    'country' => $resSchedule->country,
+                ];
+            }),
 
 
 
