@@ -118,10 +118,7 @@ class ProductController extends Controller
 
         ProductProps::updateOrCreate([
             'product_id' => $product->id,
-            'meta_key' => Str::swap([
-                "'" => '',
-                '"' => '',
-            ], 'sizes'),
+            'meta_key' => Str::remove('"', 'sizes')
         ], [
             'meta_value' => $data['sizes'],
             'meta_key_type' => gettype($data['sizes']),
@@ -129,10 +126,7 @@ class ProductController extends Controller
 
         ProductProps::updateOrCreate([
             'product_id' => $product->id,
-            'meta_key' => Str::swap([
-                "'" => '',
-                '"' => '',
-            ], 'spicy'),
+            'meta_key' => Str::remove('"', 'spicy')
         ], [
             'meta_value' => $data['spicy'],
             'meta_key_type' => gettype($data['spicy']),
@@ -140,10 +134,7 @@ class ProductController extends Controller
 
         ProductProps::updateOrCreate([
             'product_id' => $product->id,
-            'meta_key' => Str::swap([
-                "'" => '',
-                '"' => '',
-            ], 'type'),
+            'meta_key' => Str::remove('"', 'type')
         ], [
             'meta_value' => $data['type'],
             'meta_key_type' => gettype($data['type']),
