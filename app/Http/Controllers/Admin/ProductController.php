@@ -92,7 +92,7 @@ class ProductController extends Controller
         //
         // $data = $request->all();
         $data = $request->validated();
-        return response()->json([$data]);
+        return response()->json([$data['image']]);
         // Create a new user (assuming the user model exists)
         $product = Product::create([
             'name' => $data['name'],
