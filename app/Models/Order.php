@@ -18,7 +18,8 @@ class Order extends Model
         'customer_id',
         'invoice_no',
         'table_no',
-        'restaurant_id'
+        'restaurant_id',
+        'total_price',
     ];
 
     // Define relationship with OrderProduct
