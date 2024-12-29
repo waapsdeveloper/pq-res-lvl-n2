@@ -15,7 +15,7 @@ class UserAddresses extends Model
         'country'
     ];
 
-    protected function userDetail()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

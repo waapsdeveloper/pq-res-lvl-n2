@@ -22,17 +22,17 @@ class UserResource extends JsonResource
     public static function toObject($obj, $lang = 'en')
     {
         $image = Helper::returnFullImageUrl($obj->image);
-        $address = $obj->userDetail ? optional($obj->userDetail)->address : null;
-        $city = $obj->userDetail ? optional($obj->userDetail)->city : null;
-        $state = $obj->userDetail ? optional($obj->userDetail)->state : null;
-        $country = $obj->userDetail ? optional($obj->userDetail)->country : null;
+        $address = $obj->userDetail ? $obj->userDetail->address : null;
+        $city = $obj->userDetail ? $obj->userDetail->city : null;
+        $state = $obj->userDetail ? $obj->userDetail->state : null;
+        $country = $obj->userDetail ? $obj->userDetail->country : null;
         // dd($obj->userDetail);
         return [
             "id" => $obj->id,
             "name" => $obj->name,
             "email" => $obj->email,
             "phone" => $obj->phone,
-            "role_id" => $obj->role_id,
+            "role_id" => $obj->role_id ? $obj->role->name : '',
             "role" => $obj->role ? $obj->role->name : '',
             "status" => $obj->status,
             "created_at" => $obj->created_at,

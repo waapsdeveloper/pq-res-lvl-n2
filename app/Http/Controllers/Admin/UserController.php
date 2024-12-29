@@ -136,20 +136,21 @@ class UserController extends Controller
 
     public function show(string $id)
     {
-        // Attempt to find the restaurant by ID
-        $user = User::with('role', 'userDetail')->find($id);
+        // Attempt to find the user with relationships
+        $user = User::with(['role', 'userDetail'])->find($id);
 
-
-
-
-        // If the restaurant doesn't exist, return an error response
+        // If the user doesn't exist, return an error response
         if (!$user) {
             return ServiceResponse::error("User not found", 404);
         }
+
+        // Transform user data using resource
         $data = new UserResource($user);
-        // Return a success response with the restaurant data
+
+        // Return a success response with the user data
         return ServiceResponse::success("User details retrieved successfully", ['user' => $data]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
