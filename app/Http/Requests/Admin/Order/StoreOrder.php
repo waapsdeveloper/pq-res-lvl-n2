@@ -30,7 +30,7 @@ class StoreOrder extends FormRequest
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
             'products.*.price' => 'required',
-            'products.*.notes' => 'required|string',
+            'products.*.notes' => 'nullable|string',
             'discount' => 'nullable|numeric|min:0|max:100',
             'notes' => 'nullable|string',
             'status' => 'required|string|in:pending,accepted,in_progress,ready,delivered',

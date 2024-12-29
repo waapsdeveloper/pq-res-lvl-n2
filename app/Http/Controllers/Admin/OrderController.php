@@ -80,6 +80,7 @@ class OrderController extends Controller
             $user = User::create([
                 'name' => $customerName,
                 'phone' => $customerPhone,
+                'email' => $customerPhone . "@phone.text",
             ]);
         }
 
