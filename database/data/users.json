@@ -10,7 +10,7 @@
         "city": "New York",
         "state": "NY",
         "country": "USA",
-        "image": "images/user/user-1.jpg"
+        "image": "images/user/user-1.png"
     },
     {
         "name": "John Doe",
@@ -24,7 +24,7 @@
         "city": "New York",
         "state": "NY",
         "country": "USA",
-        "image": "images/user/user-2.jpg"
+        "image": "images/user/user-2.png"
     },
     {
         "name": "Jane Smith",
@@ -38,7 +38,7 @@
         "city": "Los Angeles",
         "state": "CA",
         "country": "USA",
-        "image": "images/user/user-3.jpg"
+        "image": "images/user/user-3.png"
     },
     {
         "name": "Alice Johnson",
@@ -52,7 +52,7 @@
         "city": "Chicago",
         "state": "IL",
         "country": "USA",
-        "image": "images/user/user-4.jpg"
+        "image": "images/user/user-4.png"
     },
     {
         "name": "Bob Brown",
@@ -66,7 +66,7 @@
         "city": "Houston",
         "state": "TX",
         "country": "USA",
-        "image": "images/user/user-4.jpg"
+        "image": "images/user/user-4.png"
     },
     {
         "name": "Charlie Davis",
@@ -80,7 +80,7 @@
         "city": "Phoenix",
         "state": "AZ",
         "country": "USA",
-        "image": "images/user/user-5.jpg"
+        "image": "images/user/user-5.png"
     },
     {
         "name": "David Wilson",
@@ -94,7 +94,7 @@
         "city": "Philadelphia",
         "state": "PA",
         "country": "USA",
-        "image": "images/user/user-6.jpg"
+        "image": "images/user/user-6.png"
     },
     {
         "name": "Eve Thomas",
@@ -108,7 +108,7 @@
         "city": "San Antonio",
         "state": "TX",
         "country": "USA",
-        "image": "images/user/user-7.jpg"
+        "image": "images/user/user-7.png"
     },
     {
         "name": "Frank Martinez",
@@ -122,7 +122,7 @@
         "city": "San Diego",
         "state": "CA",
         "country": "USA",
-        "image": "images/user/user-8.jpg"
+        "image": "images/user/user-8.png"
     },
     {
         "name": "Grace Rodriguez",
@@ -136,7 +136,7 @@
         "city": "Dallas",
         "state": "TX",
         "country": "USA",
-        "image": "images/user/user-9.jpg"
+        "image": "images/user/user-9.png"
     },
     {
         "name": "Hank Perez",
@@ -150,7 +150,7 @@
         "city": "Austin",
         "state": "TX",
         "country": "USA",
-        "image": "images/user/user-10.jpg"
+        "image": "images/user/user-10.png"
     },
     {
         "name": "Ivy Lee",
@@ -164,7 +164,7 @@
         "city": "Jacksonville",
         "state": "FL",
         "country": "USA",
-        "image": "images/user/user-11.jpg"
+        "image": "images/user/user-11.png"
     },
     {
         "name": "Jack Walker",
@@ -178,7 +178,7 @@
         "city": "Fort Worth",
         "state": "TX",
         "country": "USA",
-        "image": "images/user/user-12.jpg"
+        "image": "images/user/user-12.png"
     },
     {
         "name": "Karen Hall",
@@ -192,7 +192,7 @@
         "city": "Columbus",
         "state": "OH",
         "country": "USA",
-        "image": "images/user/user-13.jpg"
+        "image": "images/user/user-13.png"
     },
     {
         "name": "Leo Allen",
@@ -206,6 +206,6 @@
         "city": "Charlotte",
         "state": "NC",
         "country": "USA",
-        "image": "images/user/user-14.jpg"
+        "image": "images/user/user-14.png"
     }
 ]
