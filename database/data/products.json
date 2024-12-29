@@ -6,7 +6,7 @@
         "description": "Decadent chocolate milkshake with a whipped cream topping.",
         "price": 3.99,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD001.png",
         "status": "active"
     },
     {
@@ -16,7 +16,7 @@
         "description": "Smooth vanilla milkshake topped with vanilla cream.",
         "price": 3.79,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD002.png",
         "status": "active"
     },
     {
@@ -26,7 +26,7 @@
         "description": "Sweet strawberry milkshake with a creamy finish.",
         "price": 3.89,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD003.png",
         "status": "active"
     },
     {
@@ -36,7 +36,7 @@
         "description": "Chilled coffee served with ice for a refreshing experience.",
         "price": 2.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD004.png",
         "status": "active"
     },
     {
@@ -46,7 +46,7 @@
         "description": "Freshly squeezed lemonade to keep you refreshed.",
         "price": 2.49,
         "discount": 0.05,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD005.png",
         "status": "active"
     },
     {
@@ -56,7 +56,7 @@
         "description": "Delicious mango smoothie packed with flavor.",
         "price": 4.49,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD006.png",
         "status": "active"
     },
     {
@@ -66,7 +66,7 @@
         "description": "Cool and refreshing peach iced tea.",
         "price": 2.99,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD007.png",
         "status": "active"
     },
     {
@@ -76,7 +76,7 @@
         "description": "Freshly pressed apple cider to soothe your thirst.",
         "price": 3.19,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD008.png",
         "status": "active"
     },
     {
@@ -86,7 +86,7 @@
         "description": "Natural coconut water for hydration.",
         "price": 2.69,
         "discount": 0.05,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD009.png",
         "status": "active"
     },
     {
@@ -96,7 +96,7 @@
         "description": "A chilled latte coffee with a smooth finish.",
         "price": 3.49,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD010.png",
         "status": "active"
     },
     {
@@ -106,7 +106,7 @@
         "description": "Crispy rolls filled with vegetables, served with dipping sauce.",
         "price": 2.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD011.png",
         "status": "active"
     },
     {
@@ -116,7 +116,7 @@
         "description": "Buttered garlic bread served warm.",
         "price": 1.99,
         "discount": 0.05,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD012.png",
         "status": "active"
     },
     {
@@ -126,7 +126,7 @@
         "description": "Toasted bread with tomatoes, basil, and balsamic glaze.",
         "price": 3.49,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD013.png",
         "status": "active"
     },
     {
@@ -136,7 +136,7 @@
         "description": "Golden brown cheese sticks served with marinara sauce.",
         "price": 4.29,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD014.png",
         "status": "active"
     },
     {
@@ -146,7 +146,7 @@
         "description": "Deep-fried mozzarella sticks served with marinara dip.",
         "price": 3.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD015.png",
         "status": "active"
     },
     {
@@ -156,7 +156,7 @@
         "description": "Crispy battered onion rings served with ranch sauce.",
         "price": 2.49,
         "discount": 0.05,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD016.png",
         "status": "active"
     },
     {
@@ -166,7 +166,7 @@
         "description": "Crispy fried calamari served with cocktail sauce.",
         "price": 5.99,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD017.png",
         "status": "active"
     },
     {
@@ -176,7 +176,7 @@
         "description": "Mushrooms stuffed with a creamy filling, baked to perfection.",
         "price": 4.49,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD018.png",
         "status": "active"
     },
     {
@@ -186,7 +186,7 @@
         "description": "Spicy or mild chicken wings served with blue cheese dip.",
         "price": 6.99,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD019.png",
         "status": "active"
     },
     {
@@ -196,7 +196,7 @@
         "description": "Creamy hummus served with warm pita bread.",
         "price": 3.79,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD020.png",
         "status": "active"
     },
     {
@@ -206,7 +206,7 @@
         "description": "Creamy vanilla ice cream served with chocolate sauce.",
         "price": 2.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD021.png",
         "status": "active"
     },
     {
@@ -216,7 +216,7 @@
         "description": "Warm apple pie with a flaky crust and cinnamon.",
         "price": 4.49,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD022.png",
         "status": "active"
     },
     {
@@ -226,7 +226,7 @@
         "description": "Rich and moist chocolate cake with a smooth frosting.",
         "price": 5.99,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD023.png",
         "status": "active"
     },
     {
@@ -236,7 +236,7 @@
         "description": "Creamy cheesecake topped with fresh strawberries.",
         "price": 6.49,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD024.png",
         "status": "active"
     },
     {
@@ -246,7 +246,7 @@
         "description": "Tart lemon filling with a light meringue topping.",
         "price": 4.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD025.png",
         "status": "active"
     },
     {
@@ -256,7 +256,7 @@
         "description": "Chewy chocolate brownie with a fudgy center.",
         "price": 3.49,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD026.png",
         "status": "active"
     },
     {
@@ -266,7 +266,7 @@
         "description": "Layered coffee-flavored dessert with mascarpone cheese.",
         "price": 6.99,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD027.png",
         "status": "active"
     },
     {
@@ -276,7 +276,7 @@
         "description": "Creamy Italian dessert topped with berry compote.",
         "price": 5.49,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD028.png",
         "status": "active"
     },
     {
@@ -286,7 +286,7 @@
         "description": "Moist carrot cake with cream cheese frosting.",
         "price": 4.99,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD029.png",
         "status": "active"
     },
     {
@@ -296,7 +296,7 @@
         "description": "Light and airy milk chocolate mousse with a velvety finish.",
         "price": 5.99,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD030.png",
         "status": "active"
     },
     {
@@ -306,7 +306,7 @@
         "description": "Crisp lettuce with Caesar dressing, croutons, and Parmesan.",
         "price": 5.99,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD031.png",
         "status": "active"
     },
     {
@@ -316,7 +316,7 @@
         "description": "A mix of cucumbers, tomatoes, olives, and feta cheese.",
         "price": 6.49,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD032.png",
         "status": "active"
     },
     {
@@ -326,7 +326,7 @@
         "description": "Fresh tuna mixed with vegetables and light dressing.",
         "price": 7.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD033.png",
         "status": "active"
     },
     {
@@ -336,7 +336,7 @@
         "description": "Grilled chicken with greens, avocado, and a honey mustard dressing.",
         "price": 8.49,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD034.png",
         "status": "active"
     },
     {
@@ -346,7 +346,7 @@
         "description": "A refreshing combination of seasonal fruits.",
         "price": 4.99,
         "discount": 0.05,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD035.png",
         "status": "active"
     },
     {
@@ -356,7 +356,7 @@
         "description": "Creamy avocado with mixed greens and vinaigrette.",
         "price": 6.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD036.png",
         "status": "active"
     },
     {
@@ -366,7 +366,7 @@
         "description": "A healthy mix of quinoa, vegetables, and light dressing.",
         "price": 7.49,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD037.png",
         "status": "active"
     },
     {
@@ -376,7 +376,7 @@
         "description": "Chicken, bacon, eggs, and avocado served with a blue cheese dressing.",
         "price": 9.99,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD038.png",
         "status": "active"
     },
     {
@@ -386,7 +386,7 @@
         "description": "Tomato, fresh mozzarella, basil, and a balsamic glaze.",
         "price": 5.49,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD039.png",
         "status": "active"
     },
     {
@@ -396,7 +396,7 @@
         "description": "Fresh spinach with walnuts, cranberries, and a balsamic dressing.",
         "price": 6.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD040.png",
         "status": "active"
     },
     {
@@ -406,7 +406,7 @@
         "description": "Tender grilled chicken breast served with roasted vegetables.",
         "price": 12.99,
         "discount": 1.0,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD041.png",
         "status": "active"
     },
     {
@@ -416,7 +416,7 @@
         "description": "Juicy beef steak cooked to your preferred level of doneness.",
         "price": 18.99,
         "discount": 2.0,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD042.png",
         "status": "active"
     },
     {
@@ -426,7 +426,7 @@
         "description": "Pasta served with fresh seasonal vegetables in a garlic cream sauce.",
         "price": 9.99,
         "discount": 1.5,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD043.png",
         "status": "active"
     },
     {
@@ -436,7 +436,7 @@
         "description": "Slow-cooked BBQ ribs with a tangy barbecue sauce.",
         "price": 15.99,
         "discount": 2.5,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD044.png",
         "status": "active"
     },
     {
@@ -446,7 +446,7 @@
         "description": "Fresh salmon grilled to perfection, served with a side of vegetables.",
         "price": 14.99,
         "discount": 1.75,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD045.png",
         "status": "active"
     },
     {
@@ -456,7 +456,7 @@
         "description": "Breaded chicken cutlet topped with marinara sauce and melted cheese.",
         "price": 11.99,
         "discount": 1.0,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD046.png",
         "status": "active"
     },
     {
@@ -466,7 +466,7 @@
         "description": "Mixed vegetables stir-fried in soy sauce with a hint of ginger.",
         "price": 8.99,
         "discount": 1.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD047.png",
         "status": "active"
     },
     {
@@ -476,7 +476,7 @@
         "description": "Grilled lamb chops served with mint sauce and roasted potatoes.",
         "price": 20.99,
         "discount": 3.0,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD048.png",
         "status": "active"
     },
     {
@@ -486,7 +486,7 @@
         "description": "Shrimp sautéed in garlic butter sauce served with pasta.",
         "price": 16.99,
         "discount": 2.0,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD049.png",
         "status": "active"
     },
     {
@@ -496,7 +496,7 @@
         "description": "A delicious vegetarian patty served with lettuce, tomato, and pickles.",
         "price": 9.49,
         "discount": 1.0,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD050.png",
         "status": "active"
     },
     {
@@ -506,7 +506,7 @@
         "description": "Grilled chicken with fresh veggies and mayo.",
         "price": 5.99,
         "discount": 0.5,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD051.png",
         "status": "active"
     },
     {
@@ -516,7 +516,7 @@
         "description": "A mix of fresh vegetables with a tangy sauce.",
         "price": 4.49,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD052.png",
         "status": "active"
     },
     {
@@ -526,7 +526,7 @@
         "description": "Bacon, lettuce, and tomato with mayo on toasted bread.",
         "price": 6.49,
         "discount": 0.4,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD053.png",
         "status": "active"
     },
     {
@@ -536,7 +536,7 @@
         "description": "Turkey slices with melted cheese and mustard.",
         "price": 5.99,
         "discount": 0.45,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD054.png",
         "status": "active"
     },
     {
@@ -546,7 +546,7 @@
         "description": "Classic ham with Swiss cheese on a fresh baguette.",
         "price": 5.49,
         "discount": 0.35,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD055.png",
         "status": "active"
     },
     {
@@ -556,7 +556,7 @@
         "description": "Creamy tuna salad with lettuce and pickles.",
         "price": 4.99,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD056.png",
         "status": "active"
     },
     {
@@ -566,7 +566,7 @@
         "description": "Grilled chicken with Caesar dressing in a soft wrap.",
         "price": 6.99,
         "discount": 0.5,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD057.png",
         "status": "active"
     },
     {
@@ -576,7 +576,7 @@
         "description": "Tomato, mozzarella, basil, and balsamic vinaigrette.",
         "price": 5.49,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD058.png",
         "status": "active"
     },
     {
@@ -586,7 +586,7 @@
         "description": "Tender pulled pork with BBQ sauce on a toasted bun.",
         "price": 7.49,
         "discount": 0.6,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD059.png",
         "status": "active"
     },
     {
@@ -596,7 +596,7 @@
         "description": "Crispy falafel with hummus and fresh vegetables.",
         "price": 5.99,
         "discount": 0.4,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD060.png",
         "status": "active"
     },
     {
@@ -606,7 +606,7 @@
         "description": "Grilled chicken, Caesar dressing, and lettuce wrapped in a soft tortilla.",
         "price": 6.99,
         "discount": 0.5,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD061.png",
         "status": "active"
     },
     {
@@ -616,7 +616,7 @@
         "description": "Seasoned beef, rice, and beans wrapped in a warm flour tortilla.",
         "price": 7.49,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD062.png",
         "status": "active"
     },
     {
@@ -626,7 +626,7 @@
         "description": "Grilled vegetables, hummus, and spinach wrapped in a whole-wheat tortilla.",
         "price": 5.99,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD063.png",
         "status": "active"
     },
     {
@@ -636,7 +636,7 @@
         "description": "Spicy grilled chicken with jalapeños, lettuce, and cheese wrapped in a soft tortilla.",
         "price": 6.49,
         "discount": 0.4,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD064.png",
         "status": "active"
     },
     {
@@ -646,7 +646,7 @@
         "description": "Crispy falafel balls with tzatziki sauce and veggies wrapped in pita bread.",
         "price": 6.99,
         "discount": 0.35,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD065.png",
         "status": "active"
     },
     {
@@ -656,7 +656,7 @@
         "description": "Grilled chicken, BBQ sauce, and coleslaw wrapped in a flour tortilla.",
         "price": 7.19,
         "discount": 0.45,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD066.png",
         "status": "active"
     },
     {
@@ -666,7 +666,7 @@
         "description": "Tender steak, sautéed onions, and bell peppers wrapped in a soft tortilla.",
         "price": 8.49,
         "discount": 0.5,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD067.png",
         "status": "active"
     },
     {
@@ -676,7 +676,7 @@
         "description": "Marinated chicken shawarma, pickles, and garlic sauce wrapped in pita bread.",
         "price": 7.79,
         "discount": 0.4,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD068.png",
         "status": "active"
     },
     {
@@ -686,7 +686,7 @@
         "description": "Buffalo chicken tenders, lettuce, and ranch dressing wrapped in a flour tortilla.",
         "price": 6.99,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD069.png",
         "status": "active"
     },
     {
@@ -696,7 +696,7 @@
         "description": "Grilled shrimp, avocado, and mixed greens wrapped in a soft tortilla.",
         "price": 8.29,
         "discount": 0.6,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD070.png",
         "status": "active"
     },
     {
@@ -706,7 +706,7 @@
         "description": "A classic cheeseburger with melted cheese and a juicy patty.",
         "price": 5.99,
         "discount": 0.5,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD071.png",
         "status": "active"
     },
     {
@@ -716,7 +716,7 @@
         "description": "A burger with crispy bacon, cheese, and lettuce.",
         "price": 6.49,
         "discount": 0.4,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD072.png",
         "status": "active"
     },
     {
@@ -726,7 +726,7 @@
         "description": "A burger with BBQ sauce, grilled onions, and cheese.",
         "price": 7.29,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD073.png",
         "status": "active"
     },
     {
@@ -736,7 +736,7 @@
         "description": "A burger with sautéed mushrooms, Swiss cheese, and a savory sauce.",
         "price": 6.99,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD074.png",
         "status": "active"
     },
     {
@@ -746,7 +746,7 @@
         "description": "A delicious veggie patty with fresh lettuce, tomato, and avocado.",
         "price": 5.49,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD075.png",
         "status": "active"
     },
     {
@@ -756,7 +756,7 @@
         "description": "A spicy burger with jalapenos, cheese, and a hot sauce.",
         "price": 6.29,
         "discount": 0.35,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD076.png",
         "status": "active"
     },
     {
@@ -766,7 +766,7 @@
         "description": "A double patty burger with two layers of melted cheese.",
         "price": 7.99,
         "discount": 0.5,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD077.png",
         "status": "active"
     },
     {
@@ -776,7 +776,7 @@
         "description": "A simple, classic hamburger with all the essentials.",
         "price": 4.99,
         "discount": 0.4,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD078.png",
         "status": "active"
     },
     {
@@ -786,7 +786,7 @@
         "description": "A juicy chicken patty with lettuce, tomato, and mayo.",
         "price": 6.19,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD079.png",
         "status": "active"
     },
     {
@@ -796,7 +796,7 @@
         "description": "A crispy fish patty with tartar sauce and fresh veggies.",
         "price": 6.49,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD080.png",
         "status": "active"
     },
     {
@@ -806,7 +806,7 @@
         "description": "Crispy golden fries seasoned with salt.",
         "price": 2.49,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD081.png",
         "status": "active"
     },
     {
@@ -816,7 +816,7 @@
         "description": "Battered onion rings fried to a golden brown.",
         "price": 3.49,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD082.png",
         "status": "active"
     },
     {
@@ -826,7 +826,7 @@
         "description": "Breaded mozzarella sticks fried until golden and gooey.",
         "price": 4.49,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD083.png",
         "status": "active"
     },
     {
@@ -836,7 +836,7 @@
         "description": "Crispy fries tossed in garlic butter and Parmesan cheese.",
         "price": 3.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD084.png",
         "status": "active"
     },
     {
@@ -846,7 +846,7 @@
         "description": "Sweet and savory fries made from fresh sweet potatoes.",
         "price": 4.29,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD085.png",
         "status": "active"
     },
     {
@@ -856,7 +856,7 @@
         "description": "Battered onion rings fried to a golden brown.",
         "price": 3.49,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD086.png",
         "status": "active"
     },
     {
@@ -866,7 +866,7 @@
         "description": "Breaded mozzarella sticks fried until golden and gooey.",
         "price": 4.49,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD087.png",
         "status": "active"
     },
     {
@@ -876,7 +876,7 @@
         "description": "Crispy fries tossed in garlic butter and Parmesan cheese.",
         "price": 3.99,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD088.png",
         "status": "active"
     },
     {
@@ -886,7 +886,7 @@
         "description": "Sweet and savory fries made from fresh sweet potatoes.",
         "price": 4.29,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD089.png",
         "status": "active"
     },
     {
@@ -896,7 +896,7 @@
         "description": "Breaded mozzarella sticks fried until golden and gooey.",
         "price": 4.49,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD090.png",
         "status": "active"
     },
     {
@@ -906,7 +906,7 @@
         "description": "Fresh strawberries blended with yogurt for a sweet treat.",
         "price": 3.99,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD091.png",
         "status": "active"
     },
     {
@@ -916,7 +916,7 @@
         "description": "A chilled matcha latte with a touch of sweetness.",
         "price": 4.99,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD092.png",
         "status": "active"
     },
     {
@@ -926,7 +926,7 @@
         "description": "A blended ice drink with blueberries and a creamy base.",
         "price": 5.29,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD093.png",
         "status": "active"
     },
     {
@@ -936,7 +936,7 @@
         "description": "A refreshing lemonade with a hint of lavender.",
         "price": 3.79,
         "discount": 0.05,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD094.png",
         "status": "active"
     },
     {
@@ -946,7 +946,7 @@
         "description": "A sweet espresso drink with caramel syrup and steamed milk.",
         "price": 4.89,
         "discount": 0.3,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD095.png",
         "status": "active"
     },
     {
@@ -956,7 +956,7 @@
         "description": "Iced tea infused with natural peach flavor.",
         "price": 3.59,
         "discount": 0.1,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD096.png",
         "status": "active"
     },
     {
@@ -966,7 +966,7 @@
         "description": "A cool slush made with fresh watermelon juice.",
         "price": 4.29,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD097.png",
         "status": "active"
     },
     {
@@ -976,7 +976,7 @@
         "description": "A cold brew coffee with creamy coconut milk.",
         "price": 5.49,
         "discount": 0.25,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD098.png",
         "status": "active"
     },
     {
@@ -986,7 +986,7 @@
         "description": "A fizzy drink with raspberry and lime for a tart taste.",
         "price": 3.89,
         "discount": 0.15,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD099.png",
         "status": "active"
     },
     {
@@ -996,7 +996,7 @@
         "description": "A spiced tea latte with milk and a touch of sweetness.",
         "price": 4.69,
         "discount": 0.2,
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/product/PROD100.png"
         "status": "active"
     }
 ]

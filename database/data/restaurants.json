@@ -8,9 +8,9 @@
         "description": "A fine dining experience with globally inspired cuisine.",
         "rating": 4.8,
         "status": "active",
-        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
-        "favicon": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
-        "logo": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+        "image": "images/restaurant/REST01.svg",
+        "favicon": "images/restaurant/REST02.svg",
+        "logo": "images/restaurant/REST03.svg",
         "schedule": [
             {
                 "day": "monday",
