@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->string('invoice_no')->nullable();
             $table->string('table_no')->nullable();
             $table->string('total_price')->nullable();
+            $table->string('discount')->nullable();
             $table->string('restaurant_id')->nullable();
 
             $table->timestamps();
