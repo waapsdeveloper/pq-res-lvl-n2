@@ -124,7 +124,7 @@ class OrderController extends Controller
             'order_number' => $orderNumber,
             'type' => $type,
             'status' => $orderStatus,
-            "notes" => $orderNote,
+            'notes' => $orderNote,
             'customer_id' => $user->id,
             'discount' => $discount,
             'invoice' => 'INV-' . uniqid(),
