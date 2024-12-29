@@ -42,10 +42,10 @@ class ProductController extends Controller
             if (isset($filters['name']) && !empty($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
-            if (isset($filters['category']) && !empty($filters['category'])) {
+            if (isset($filters['category_id']) && !empty($filters['category_id'])) {
                 // return response()->json($filters);
                 $query->whereHas('category', function ($query) use ($filters) {
-                    $query->where('name', 'like', '%' . $filters['category'] . '%');
+                    $query->where('name', 'like', '%' . $filters['category_id'] . '%');
                 });
             }
             if (isset($filters['price']) && !empty($filters['price'])) {
