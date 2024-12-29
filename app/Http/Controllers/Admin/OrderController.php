@@ -161,20 +161,13 @@ class OrderController extends Controller
         if (!$order) {
             return ServiceResponse::error('Order not found');
         }
-
+        // dd($order->toArray());
         // Get product details for all products in the order
-        $products = $order->orderProducts->map(function ($orderProduct) {
-            return [
-                'product_id' => $orderProduct->product_id,
-                'quantity' => $orderProduct->quantity,
-                'price' => $orderProduct->price,
-                'product_name' => $orderProduct->product->name ?? 'N/A', // Handle missing product
-            ];
-        });
+
 
         // Transform the order using OrderResource
         $data = new OrderResource($order);
-        $data->additional(['products' => $products]); // Add the products to the resource
+        // Add the products to the resource
 
         return ServiceResponse::success('Order details fetched successfully', [
             'order' => $data,
