@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('identifier')->nullable();
-            $table->string('order_number');
+            $table->string('order_no')->nullable();
             $table->enum('type', ['dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation'])->default('dine-in'); // Enum column
             $table->enum('status', ['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed', 'cancelled'])->default('pending'); // Status enum
             $table->text('notes')->nullable();

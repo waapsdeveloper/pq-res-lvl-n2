@@ -83,7 +83,6 @@ class OrderController extends Controller
                 // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
-
             // $pricePerUnit = $product->price;
             $pricePerUnit = $item['price'];
 

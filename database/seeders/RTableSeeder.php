@@ -20,6 +20,7 @@ class RTableSeeder extends Seeder
         // Insert rtables into the database
         foreach ($rtables as $rtable) {
             DB::table('rtables')->insert([
+                'name' => $rtable['name'],
                 'restaurant_id' => $rtable['restaurant_id'],
                 'identifier' => $rtable['identifier'] ?? "RTABLE-" . uniqid(),
                 'status' => $rtable['status'],

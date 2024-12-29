@@ -22,6 +22,7 @@ class RtableResource extends JsonResource
     {
         return [
             "id" => $obj->id,
+            "name" => $obj->name,
             "restaurant_id" => $obj->restaurant_id,
             "identifier" => $obj->identifier,
             "no_of_seats" => $obj->no_of_seats,
