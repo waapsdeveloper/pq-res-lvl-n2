@@ -29,16 +29,37 @@ class OrderController extends Controller
         $search = $request->input('search', '');
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
 
         $category = $request->input('category_id', '');
 
         $query = Order::query()->orderBy('id', 'desc');
 
-        $query->with('orderProducts.product');
+        $query->with('orderProducts.product')->with('user', 'rtable')->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed
         if ($search) {
-            // $query->where('name', 'like', '%' . $search . '%');
+            $query->where('order_number', 'like', '%' . $search . '%');
+        }
+        if ($filters) {
+            $filters = json_decode($filters, true); // Decode JSON string into an associative array
+            // Customer_name: '',
+            // phone: '',
+            // table: '',
+            if (isset($filters['order_id']) && !empty($filters['order_id'])) {
+                $query->where('order_number', 'like', '%' . $filters['order_id'] . '%');
+            }
+
+            if (isset($filters['total_price']) && !empty($filters['total_price'])) {
+                $query->where('total_price', '<=',  $filters['total_price']);
+            }
+            if (isset($filters['type']) && !empty($filters['type'])) {
+                $query->where('type', 'like', '%' . $filters['type'] . '%');
+            }
+
+            if (isset($filters['status']) && !empty($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
         }
 
         // Paginate the results

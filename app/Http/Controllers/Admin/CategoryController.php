@@ -37,14 +37,13 @@ class CategoryController extends Controller
 
             $filters = json_decode($filters, true); // Decode JSON to array
 
-            if (isset($filters['name'])) {
+            if (isset($filters['name']) && !empty($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
 
-            if (isset($filters['status'])) {
+            if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
-
         }
 
         // Paginate the results
