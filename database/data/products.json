@@ -996,7 +996,7 @@
         "description": "A spiced tea latte with milk and a touch of sweetness.",
         "price": 4.69,
         "discount": 0.2,
-        "image": "images/product/PROD100.png"
+        "image": "images/product/PROD100.png",
         "status": "active"
     }
 ]
