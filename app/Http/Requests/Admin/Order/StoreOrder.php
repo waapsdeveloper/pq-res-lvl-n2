@@ -26,8 +26,8 @@ class StoreOrder extends FormRequest
 
         return [
             'customer_name' => 'nullable|string',
-            'customer_phone' => 'nullable|string',
-            'products' => 'required|array|min:1',
+            'customer_phone' => 'nullable',
+            'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
             'products.*.price' => 'required',
