@@ -23,6 +23,7 @@ class StoreOrder extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'customer_name' => 'nullable|string',
             'customer_phone' => 'nullable|string',
@@ -33,7 +34,10 @@ class StoreOrder extends FormRequest
             'products.*.notes' => 'nullable|string',
             'discount' => 'nullable|numeric|min:0|max:100',
             'notes' => 'nullable|string',
-            'status' => 'required|string|in:pending,accepted,in_progress,ready,delivered',
+            'type' => 'nullable|string',
+            'status' => 'required|string',
+            'table_no' => 'nullable|string',
+            'total_price' => 'required|numeric',
         ];
     }
     protected function failedValidation(Validator $validator)

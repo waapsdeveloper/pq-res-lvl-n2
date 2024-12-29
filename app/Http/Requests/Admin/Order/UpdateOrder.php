@@ -24,8 +24,7 @@ class UpdateOrder extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_name' => 'nullable|string',
-            'customer_phone' => 'nullable|string',
+            'customer_id' => 'nullable|string',
             'products' => 'required|array|min:1',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
