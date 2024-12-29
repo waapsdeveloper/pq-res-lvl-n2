@@ -32,7 +32,7 @@ class UserResource extends JsonResource
             "name" => $obj->name,
             "email" => $obj->email,
             "phone" => $obj->phone,
-            "role_id" => $obj->role_id ? $obj->role->name : '',
+            "role_id" => $obj->role_id,
             "role" => $obj->role ? $obj->role->name : '',
             "status" => $obj->status,
             "created_at" => $obj->created_at,
