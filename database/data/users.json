@@ -165,47 +165,5 @@
         "state": "FL",
         "country": "USA",
         "image": "images/user/user-11.png"
-    },
-    {
-        "name": "Jack Walker",
-        "email": "jack.walker@example.com",
-        "phone": 1011223344,
-        "password": "admin123$",
-        "role_id": 3,
-        "status": "active",
-        "restaurant_id": 1,
-        "address": "901 Willow St",
-        "city": "Fort Worth",
-        "state": "TX",
-        "country": "USA",
-        "image": "images/user/user-12.png"
-    },
-    {
-        "name": "Karen Hall",
-        "email": "karen.hall@example.com",
-        "phone": 1122334455,
-        "password": "admin123$",
-        "role_id": 8,
-        "status": "active",
-        "restaurant_id": 1,
-        "address": "1010 Fir St",
-        "city": "Columbus",
-        "state": "OH",
-        "country": "USA",
-        "image": "images/user/user-13.png"
-    },
-    {
-        "name": "Leo Allen",
-        "email": "leo.allen@example.com",
-        "phone": 2233445566,
-        "password": "admin123$",
-        "role_id": 2,
-        "status": "inactive",
-        "restaurant_id": 1,
-        "address": "1111 Chestnut St",
-        "city": "Charlotte",
-        "state": "NC",
-        "country": "USA",
-        "image": "images/user/user-14.png"
     }
 ]
