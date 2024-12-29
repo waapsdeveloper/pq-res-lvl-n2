@@ -11,6 +11,7 @@ use App\Http\Resources\Admin\OrderResource;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -73,9 +74,18 @@ class OrderController extends Controller
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         $customerPhone = $data['customer_phone'] ?? 'XXXX';
 
+        $user = User::where('phone', $customerPhone)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name' => $customerName,
+                'phone' => $customerPhone,
+            ]);
+        }
+
+
         $totalPrice = 0;
         $orderProducts = [];
-        // dd($data['products']);
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
@@ -100,6 +110,8 @@ class OrderController extends Controller
         }
 
         $discount = $data['discount'] ?? 0;
+        $type = $data['type'] ?? null;
+        $tableNo = $data['tableNo'] ?? null;
         // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $finalPrice = $totalPrice - $discount;
         // dd($finalPrice);
@@ -107,13 +119,16 @@ class OrderController extends Controller
         $orderNote = $request->notes;
         $orderStatus = $request->status;
         $order = Order::create([
-            'customer_name' => $customerName,
-            'customer_phone' => $customerPhone,
-            'discount' => $discount,
+            'identifier' => 'ORD-' . uniqid(),
             'order_number' => $orderNumber,
-            'total_price' => $finalPrice,
-            "notes" => $orderNote,
+            'type' => $type,
             'status' => $orderStatus,
+            "notes" => $orderNote,
+            'customer_id' => $user->id,
+            'discount' => $discount,
+            'invoice' => 'INV-' . uniqid(),
+            'table_no' => $tableNo,
+            'total_price' => $finalPrice,
         ]);
 
         foreach ($orderProducts as $orderProduct) {
