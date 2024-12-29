@@ -13,6 +13,22 @@ Here’s a **README.md** file for your Laravel project setup:
 
 ## **Setup Instructions**
 
+If you already have cloned and setup before - run the following commands:
+
+```bash
+cd <project-directory>
+```
+
+1. **Migrate the Database:**
+
+    ```bash
+    <!-- php artisan migrate -->
+    php artisan migrate:fresh
+    ```
+
+
+
+
 ### 1. Clone the Repository
 
 Clone the project repository to your local machine:
@@ -71,6 +87,7 @@ Run the following commands to set up the database schema and seed data:
     <!-- php artisan migrate -->
     php artisan migrate:fresh
     ```
+
 
 2. **Create a Personal Access Client:**
 
