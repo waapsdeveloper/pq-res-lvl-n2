@@ -29,7 +29,15 @@ class StoreCategory extends FormRequest
             'restaurant_id' => 'nullable|integer|exists:restaurants,id', // Ensure category is valid
             'status' => 'required|string|in:active,inactive', // Validate status
             'description' => 'nullable|string|max:255', // Validate description
-            'image' => 'nullable|string', // Validate image
+            'image' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ],
         ];
     }
     protected function failedValidation(Validator $validator)
