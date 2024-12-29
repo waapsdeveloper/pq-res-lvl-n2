@@ -27,7 +27,7 @@ class ProductResource extends JsonResource
         $category = $obj->category_id ? optional($obj->category)->name : null;
         $restaurant = $obj->restaurant_id ? optional($obj->restaurant) : null;
         $props = ProductProps::where('product_id', $obj->id)->get();
-        // dd($obj->productProps);
+        // dd($obj->restaurant);
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -40,7 +40,7 @@ class ProductResource extends JsonResource
             "category_id" => $obj->category_id,
             "category" => $category,
             "restaurant_id" => $obj->restaurant_id,
-            "restaurant" => $restaurant,
+            "restaurant" => $obj->restaurant,
             "props" => $props
         ];
     }
