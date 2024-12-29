@@ -31,11 +31,35 @@ class UpdateRestaurant extends FormRequest
             'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
             'description' => 'nullable|string|max:1000',
             'status' => 'nullable|string',
-            'favicon' => 'nullable|string',
-            'logo' => 'nullable|string',
+            'image' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ], // Base64 string validation
+            'favicon' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ], // Base64 string validation
+            'logo' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ],
             'copyright_text' => 'nullable|string',
             'rating' => 'nullable|numeric',
-            'image' => 'nullable|string',
             'schedule' => 'nullable|array',
 
         ];

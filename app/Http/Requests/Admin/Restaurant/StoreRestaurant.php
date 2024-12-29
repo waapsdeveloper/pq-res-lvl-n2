@@ -31,9 +31,33 @@ class StoreRestaurant extends FormRequest
             'website' => ['nullable', 'regex:/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/'],
             'description' => 'nullable|string|max:1000',
             'status' => 'nullable|string|in:active,inactive',
-            'image' => 'nullable|string', // Base64 string validation
-            'favicon' => 'nullable|string', // Base64 string validation
-            'logo' => 'nullable|string', // Base64 string validation
+            'image' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ], // Base64 string validation
+            'favicon' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ], // Base64 string validation
+            'logo' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    }
+                },
+            ], // Base64 string validation
             'copyright_text' => 'nullable|string|max:255',
             'rating' => 'nullable|numeric|min:0|max:5',
             'schedule' => 'required|array',
