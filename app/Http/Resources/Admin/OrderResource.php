@@ -8,16 +8,21 @@ class OrderResource extends JsonResource
 {
     public function toArray($request)
     {
+        $obj = self::toObject($this);
+        return $obj;
+    }
+    public function toObject($obj, $lang = 'en')
+    {
         return [
-            'id' => $this->id,
-            'customer_name' => $this->customer_name,
-            'customer_phone' => $this->customer_phone,
-            'order_number' => $this->order_number,
-            'status' => $this->status,
-            'total_price' => $this->total_price,
-            'discount' => $this->discount,
-            'created_at' => $this->created_at,
-            'products' => $this->orderProducts->map(function ($orderProduct) {
+            'id' => $obj->id,
+            'customer_id' => $obj->customer_id,
+            'customer' => $obj->customer,
+            'order_number' => $obj->order_number,
+            'status' => $obj->status,
+            'total_price' => $obj->total_price,
+            'discount' => $obj->discount,
+            'created_at' => $obj->created_at->toDateTimeString(),
+            'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
                     'product_id' => $orderProduct->product_id,
                     'quantity' => $orderProduct->quantity,
@@ -26,5 +31,23 @@ class OrderResource extends JsonResource
                 ];
             }),
         ];
+        // return [
+        //     'id' => $obj->id,
+        //     'customer_name' => $obj->customer_name,
+        //     'customer_phone' => $obj->customer_phone,
+        //     'order_number' => $obj->order_number,
+        //     'status' => $obj->status,
+        //     'total_price' => $obj->total_price,
+        //     'discount' => $obj->discount,
+        //     'created_at' => $obj->created_at,
+        //     'products' => $obj->orderProducts->map(function ($orderProduct) {
+        //         return [
+        //             'product_id' => $orderProduct->product_id,
+        //             'quantity' => $orderProduct->quantity,
+        //             'price' => $orderProduct->price,
+        //             'product_name' => $orderProduct->product->name,
+        //         ];
+        //     }),
+        // ];
     }
 }
