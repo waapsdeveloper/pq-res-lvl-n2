@@ -41,27 +41,31 @@ class UserController extends Controller
         }
 
         if ($filters) {
-            $filters = json_decode($filters, true);
-
-            if (isset($filters['name']) && !empty($filters['name'])) {
-                $query->where('name', 'like', '%' . $filters['name'] . '%');
+            if (is_string($filters)) {
+                $filters = json_decode($filters, true); // Decode JSON to array
             }
+            if (is_array($filters)) {
 
-            if (isset($filters['phone']) && !empty($filters['phone'])) {
-                $query->where('phone', 'like', '%' . $filters['phone'] . '%');
-            }
-            if (isset($filters['email']) && !empty($filters['email'])) {
-                $query->where('email', 'like', '%' . $filters['email'] . '%');
-            }
+                if (isset($filters['name']) && !empty($filters['name'])) {
+                    $query->where('name', 'like', '%' . $filters['name'] . '%');
+                }
 
-            if (isset($filters['status']) && !empty($filters['status'])) {
-                $query->where('status', $filters['status']);
-            }
+                if (isset($filters['phone']) && !empty($filters['phone'])) {
+                    $query->where('phone', 'like', '%' . $filters['phone'] . '%');
+                }
+                if (isset($filters['email']) && !empty($filters['email'])) {
+                    $query->where('email', 'like', '%' . $filters['email'] . '%');
+                }
 
-            if (isset($filters['role']) && !empty($filters['role'])) {
-                $query->whereHas('role', function ($query) use ($filters) {
-                    $query->where('id', $filters['role']); // Assuming 'name' is a column in the roles table
-                });
+                if (isset($filters['status']) && !empty($filters['status'])) {
+                    $query->where('status', $filters['status']);
+                }
+
+                if (isset($filters['role']) && !empty($filters['role'])) {
+                    $query->whereHas('role', function ($query) use ($filters) {
+                        $query->where('id', $filters['role']); // Assuming 'name' is a column in the roles table
+                    });
+                }
             }
         }
 

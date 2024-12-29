@@ -34,14 +34,18 @@ class CategoryController extends Controller
         }
 
         if ($filters) {
-            $filters = json_decode($filters, true); // Decode JSON string into an associative array
-
-            if (isset($filters['name'])) {
-                $query->where('name', 'like', '%' . $filters['name'] . '%');
+            if (is_string($filters)) {
+                $filters = json_decode($filters, true); // Decode JSON to array
             }
+            if (is_array($filters)) {
 
-            if (isset($filters['status'])) {
-                $query->where('status', $filters['status']);
+                if (isset($filters['name'])) {
+                    $query->where('name', 'like', '%' . $filters['name'] . '%');
+                }
+
+                if (isset($filters['status'])) {
+                    $query->where('status', $filters['status']);
+                }
             }
         }
 

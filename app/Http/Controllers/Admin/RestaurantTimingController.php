@@ -33,17 +33,20 @@ class RestaurantTimingController extends Controller
             $query->where('day', 'like', '%' . $search . '%');
         }
         if ($filters) {
-            $filters = json_decode($filters, true); // Decode JSON string into an associative array
-
-            if (isset($filters['day'])) {
-                $query->where('day', 'like', '%' . $filters['day'] . '%');
+            if (is_string($filters)) {
+                $filters = json_decode($filters, true); // Decode JSON to array
             }
-            if (isset($filters['restaurant_id'])) {
-                $query->where('restaurant_id', 'like', '%' . $filters['restaurant_id'] . '%');
-            }
+            if (is_array($filters)) {
+                if (isset($filters['day'])) {
+                    $query->where('day', 'like', '%' . $filters['day'] . '%');
+                }
+                if (isset($filters['restaurant_id'])) {
+                    $query->where('restaurant_id', 'like', '%' . $filters['restaurant_id'] . '%');
+                }
 
-            if (isset($filters['status'])) {
-                $query->where('status', $filters['status']);
+                if (isset($filters['status'])) {
+                    $query->where('status', $filters['status']);
+                }
             }
         }
 
