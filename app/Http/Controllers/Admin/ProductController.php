@@ -96,39 +96,36 @@ class ProductController extends Controller
 
         // Decode filters if it's a JSON string
         if ($filters) {
-            if (is_string($filters)) {
-                $filters = json_decode($filters, true); // Decode JSON to array
+            $filters = json_decode($filters, true); // Decode JSON to array
+
+            // Apply filters to query
+            if (isset($filters['name']) && !empty($filters['name'])) {
+                $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
 
-            if (is_array($filters)) {
-                // Apply filters to query
-                if (isset($filters['name']) && !empty($filters['name'])) {
-                    $query->where('name', 'like', '%' . $filters['name'] . '%');
-                }
-
-                if (isset($filters['category_id']) && !empty($filters['category_id'])) {
-                    $query->where('category_id', $filters['category_id']);
-                }
-
-                if (isset($filters['price']) && !empty($filters['price'])) {
-                    $query->where('price', '<=', $filters['price']);
-                }
-
-                if (isset($filters['discount']) && !empty($filters['discount'])) {
-                    $query->where('discount', '<=', $filters['discount']);
-                }
-
-                if (isset($filters['status']) && !empty($filters['status'])) {
-                    $query->where('status', $filters['status']);
-                }
-                // if (isset($filters['is_today_deal'])) {
-                //     $query->where('is_today_deal', 'like', '%' . $filters['is_today_deal'] . '%');
-                // }
-                // if (isset($filters['noOfOrders'])) {
-                //     $query->where('noOfOrders', 'like', '%' . $filters['noOfOrders'] . '%');
-                // }
+            if (isset($filters['category_id']) && !empty($filters['category_id'])) {
+                $query->where('category_id', $filters['category_id']);
             }
+
+            if (isset($filters['price']) && !empty($filters['price'])) {
+                $query->where('price', '<=', $filters['price']);
+            }
+
+            if (isset($filters['discount']) && !empty($filters['discount'])) {
+                $query->where('discount', '<=', $filters['discount']);
+            }
+
+            if (isset($filters['status']) && !empty($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
+            // if (isset($filters['is_today_deal'])) {
+            //     $query->where('is_today_deal', 'like', '%' . $filters['is_today_deal'] . '%');
+            // }
+            // if (isset($filters['noOfOrders'])) {
+            //     $query->where('noOfOrders', 'like', '%' . $filters['noOfOrders'] . '%');
+            // }
         }
+
 
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
