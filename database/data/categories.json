@@ -78,45 +78,5 @@
         "description": "Delicious grilled options including chicken and beef.",
         "image": "images/category/CAT10.jpg",
         "status": "active"
-    },
-    {
-        "name": "Burgers",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Juicy and delicious beef, chicken, and veggie burgers.",
-        "image": "images/category/CAT11.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Fries",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Crispy golden fries with a side of ketchup.",
-        "image": "images/category/CAT12.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Wraps",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Healthy and delicious wraps with a variety of fillings.",
-        "image": "images/category/CAT13.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Pizza",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Freshly baked pizzas with a variety of toppings.",
-        "image": "images/category/CAT14.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Pasta",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Creamy and flavorful pasta dishes.",
-        "image": "images/category/CAT15.jpg",
-        "status": "active"
     }
 ]
