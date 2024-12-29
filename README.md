@@ -26,6 +26,14 @@ cd <project-directory>
     php artisan migrate:fresh
     ```
 
+2. **Copy this we transfer for image:**
+
+use the folder storage\app\public
+download link to images is as follows
+
+https://we.tl/t-pR6V33m3DE
+
+
 
 
 
@@ -99,7 +107,7 @@ Run the following commands to set up the database schema and seed data:
 
 3. **Seed the Database:**
     ```bash
-    php artisan db:seed
+    /
     ```
 
 ---
