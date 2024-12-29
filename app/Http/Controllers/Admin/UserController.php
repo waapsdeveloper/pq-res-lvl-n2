@@ -138,13 +138,7 @@ class UserController extends Controller
     {
         // Attempt to find the restaurant by ID
         $user = User::with('role', 'userDetail')->find($id);
-        $user['role_id'] = $user->role_id;
-        $user['role'] = $user->role->name;
-        $user['address'] = $user->userDetail->address;
-        $user['city'] = $user->userDetail->city;
-        $user['state'] = $user->userDetail->address;
-        $user['country'] = $user->userDetail->address;
-        $user['image'] = Helper::returnFullImageUrl($user->image);
+
 
 
 
@@ -152,9 +146,9 @@ class UserController extends Controller
         if (!$user) {
             return ServiceResponse::error("User not found", 404);
         }
-
+        $data = new UserResource($user);
         // Return a success response with the restaurant data
-        return ServiceResponse::success("User details retrieved successfully", ['user' => $user]);
+        return ServiceResponse::success("User details retrieved successfully", ['user' => $data]);
     }
 
     /**

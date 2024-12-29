@@ -24,8 +24,12 @@ class OrderProduct extends Model
     }
 
     // Relationship with Product
+    // public function product()
+    // {
+    //     return $this->belongsTo(Product::class, 'product_id', 'id');
+    // }
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
+        return $this->belongsTo(Product::class);
     }
 }

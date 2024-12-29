@@ -22,12 +22,26 @@ class Order extends Model
     ];
 
     // Define relationship with OrderProduct
+    // public function orderProducts()
+    // {
+    //     return $this->hasMany(OrderProduct::class, 'order_id', 'id');
+    // }
     public function orderProducts()
     {
-        return $this->hasMany(OrderProduct::class, 'order_id', 'id');
+        return $this->hasMany(OrderProduct::class, 'order_id');
     }
     public function customer()
     {
         return $this->belongsTo(User::class, 'customer_id', 'id');
     }
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
+    }
+
+
+    // public function tableNo()
+    // {
+    //     return $this->belongsTo(Restaurant::class, 'rtable_id', 'id');
+    // }
 }

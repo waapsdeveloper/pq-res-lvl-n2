@@ -1,68 +1,119 @@
 [
     {
-        "identifier": "ORD12345",
-        "order_number": "1001",
+        "identifier": "ORD-001",
+        "order_number": "ORDER-001",
         "type": "dine-in",
-        "status": "pending",
-        "notes": "Customer requested extra napkins.",
-        "customer_id": "1",
-        "invoice_no": "INV001",
-        "table_no": "5",
-        "restaurant_id": 1
-    },
-    {
-        "identifier": "ORD12346",
-        "order_number": "1002",
-        "type": "take-away",
-        "status": "confirmed",
-        "notes": "Add extra ketchup packets.",
-        "customer_id": "2",
-        "invoice_no": "INV002",
-        "table_no": null,
-        "restaurant_id": 1
-    },
-    {
-        "identifier": "ORD12347",
-        "order_number": "1003",
-        "type": "delivery",
-        "status": "out_for_delivery",
-        "notes": "Deliver to the back door.",
-        "customer_id": "3",
-        "invoice_no": "INV003",
-        "table_no": null,
-        "restaurant_id": 1
-    },
-    {
-        "identifier": "ORD12348",
-        "order_number": "1004",
-        "type": "drive-thru",
-        "status": "ready_for_pickup",
-        "notes": "No onions in the burger.",
-        "customer_id": "4",
-        "invoice_no": "INV004",
-        "table_no": null,
-        "restaurant_id": 1
-    },
-    {
-        "identifier": "ORD12349",
-        "order_number": "1005",
-        "type": "curbside-pickup",
-        "status": "preparing",
-        "notes": "Add a small fries to the order.",
-        "customer_id": "5",
-        "invoice_no": "INV005",
-        "table_no": null,
-        "restaurant_id": 1
-    },
-    {
-        "identifier": "ORD12350",
-        "order_number": "1006",
-        "type": "reservation",
         "status": "completed",
-        "notes": "Birthday party reservation for 10 people.",
-        "customer_id": "6",
-        "invoice_no": "INV006",
-        "table_no": "10",
-        "restaurant_id": 1
+        "notes": "First order",
+        "customer_id": 1,
+        "invoice_no": "INV-001",
+        "table_no": 5,
+        "restaurant_id": 1,
+        "total_price": 500.0,
+        "discount": 50.0,
+        "products": [
+            {
+                "product_id": 101,
+                "quantity": 2,
+                "price": 200.0,
+                "product_name": "Pizza"
+            },
+            {
+                "product_id": 102,
+                "quantity": 1,
+                "price": 100.0,
+                "product_name": "Burger"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-002",
+        "order_number": "ORDER-002",
+        "type": "takeaway",
+        "status": "pending",
+        "notes": "Second order",
+        "customer_id": 2,
+        "invoice_no": "INV-002",
+        "table_no": null,
+        "restaurant_id": 1,
+        "total_price": 300.0,
+        "discount": 30.0,
+        "products": [
+            {
+                "product_id": 103,
+                "quantity": 3,
+                "price": 100.0,
+                "product_name": "Pasta"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-003",
+        "order_number": "ORDER-003",
+        "type": "delivery",
+        "status": "completed",
+        "notes": "Third order",
+        "customer_id": 3,
+        "invoice_no": "INV-003",
+        "table_no": null,
+        "restaurant_id": 1,
+        "total_price": 450.0,
+        "discount": 50.0,
+        "products": [
+            {
+                "product_id": 104,
+                "quantity": 2,
+                "price": 150.0,
+                "product_name": "Fries"
+            },
+            {
+                "product_id": 105,
+                "quantity": 1,
+                "price": 150.0,
+                "product_name": "Drink"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-004",
+        "order_number": "ORDER-004",
+        "type": "dine-in",
+        "status": "in-progress",
+        "notes": "Fourth order",
+        "customer_id": 4,
+        "invoice_no": "INV-004",
+        "table_no": 7,
+        "restaurant_id": 1,
+        "total_price": 700.0,
+        "discount": 100.0,
+        "products": [
+            {
+                "product_id": 106,
+                "quantity": 4,
+                "price": 150.0,
+                "product_name": "Steak"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-005",
+        "order_number": "ORDER-005",
+        "type": "takeaway",
+        "status": "completed",
+        "notes": "Fifth order",
+        "customer_id": 5,
+        "invoice_no": "INV-005",
+        "table_no": null,
+        "restaurant_id": 1,
+        "total_price": 200.0,
+        "discount": 20.0,
+        "products": [
+            {
+                "product_id": 107,
+                "quantity": 2,
+                "price": 100.0,
+                "product_name": "Sandwich"
+            }
+        ]
     }
 ]

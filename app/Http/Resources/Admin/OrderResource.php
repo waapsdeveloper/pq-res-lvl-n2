@@ -13,6 +13,7 @@ class OrderResource extends JsonResource
     }
     public function toObject($obj, $lang = 'en')
     {
+        dd($obj->orderProducts);
         return [
             'id' => $obj->id,
             'customer_id' => $obj->customer_id,

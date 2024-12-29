@@ -153,15 +153,34 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
-        $order = Order::where('id', $id)->with('orderProducts.product')->first();
+        // Fetch the order with its related products and restaurant
+        $order = Order::where('id', $id)
+            ->with('orderProducts.product', 'restaurant')
+            ->first();
 
         if (!$order) {
             return ServiceResponse::error('Order not found');
         }
 
-        return ServiceResponse::success('Order details fetched successfully', ['order' => new OrderResource($order)]);
+        // Get product details for all products in the order
+        $products = $order->orderProducts->map(function ($orderProduct) {
+            return [
+                'product_id' => $orderProduct->product_id,
+                'quantity' => $orderProduct->quantity,
+                'price' => $orderProduct->price,
+                'product_name' => $orderProduct->product->name ?? 'N/A', // Handle missing product
+            ];
+        });
+
+        // Transform the order using OrderResource
+        $data = new OrderResource($order);
+        $data->additional(['products' => $products]); // Add the products to the resource
+
+        return ServiceResponse::success('Order details fetched successfully', [
+            'order' => $data,
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

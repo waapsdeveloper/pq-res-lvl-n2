@@ -19,19 +19,32 @@ class OrderSeeder extends Seeder
 
         // Insert orders into the database
         foreach ($orders as $order) {
-            DB::table('orders')->insert([
-                'identifier' => $order['identifier'] ?? 'ORD-' . uniqid(),
+            $orderId = DB::table('orders')->insertGetId([
+                'identifier' => $order['identifier'],
                 'order_number' => $order['order_number'],
                 'type' => $order['type'],
                 'status' => $order['status'],
-                'notes' => $order['notes'] ?? null,
+                'notes' => $order['notes'],
                 'customer_id' => $order['customer_id'],
                 'invoice_no' => $order['invoice_no'],
-                'table_no' => $order['table_no'] ?? null,
+                'table_no' => $order['table_no'],
                 'restaurant_id' => $order['restaurant_id'],
+                'total_price' => $order['total_price'],
+                'discount' => $order['discount'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            foreach ($order['products'] as $product) {
+                DB::table('order_products')->insert([
+                    'order_id' => $orderId,
+                    'product_id' => $product['product_id'],
+                    'quantity' => $product['quantity'],
+                    'price' => $product['price'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
 
         $this->command->info('Orders imported successfully from JSON file.');
