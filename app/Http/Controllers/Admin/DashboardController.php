@@ -34,6 +34,18 @@ class DashboardController extends Controller
 
         return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $orderProducts]);
     }
+    public function topSellingProducts()
+    {
+        // Sabhi products ke liye total quantity aur price ko sum karna
+        $orderProducts = OrderProduct::select('product_id', DB::raw('SUM(quantity) as total_quantity_sell'))  // Total quantity ko sum kar rahe hain
+            ->groupBy('product_id')  // Product ID ke hisaab se group kar rahe hain
+            ->orderByDesc('total_quantity_sell')  // Total quantity ke hisaab se sort kar rahe hain
+            ->with('product')  // Product model ke saath join kar rahe hain
+            ->limit(5)  // Limit 5 products
+            ->get();
+
+        return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $orderProducts]);
+    }
     public function totalRevenue()
     {
         $totalRevenue = Order::sum('total_price');
