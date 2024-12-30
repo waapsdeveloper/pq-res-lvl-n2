@@ -32,4 +32,8 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
 }

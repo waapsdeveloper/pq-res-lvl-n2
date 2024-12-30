@@ -1,102 +1,26 @@
-[
-  "images/product/PROD001.png",
-  "images/product/PROD002.png",
-  "images/product/PROD003.png",
-  "images/product/PROD004.png",
-  "images/product/PROD005.png",
-  "images/product/PROD006.png",
-  "images/product/PROD007.png",
-  "images/product/PROD008.png",
-  "images/product/PROD009.png",
-  "images/product/PROD010.png",
-  "images/product/PROD011.png",
-  "images/product/PROD012.png",
-  "images/product/PROD013.png",
-  "images/product/PROD014.png",
-  "images/product/PROD015.png",
-  "images/product/PROD016.png",
-  "images/product/PROD017.png",
-  "images/product/PROD018.png",
-  "images/product/PROD019.png",
-  "images/product/PROD020.png",
-  "images/product/PROD021.png",
-  "images/product/PROD022.png",
-  "images/product/PROD023.png",
-  "images/product/PROD024.png",
-  "images/product/PROD025.png",
-  "images/product/PROD026.png",
-  "images/product/PROD027.png",
-  "images/product/PROD028.png",
-  "images/product/PROD029.png",
-  "images/product/PROD030.png",
-  "images/product/PROD031.png",
-  "images/product/PROD032.png",
-  "images/product/PROD033.png",
-  "images/product/PROD034.png",
-  "images/product/PROD035.png",
-  "images/product/PROD036.png",
-  "images/product/PROD037.png",
-  "images/product/PROD038.png",
-  "images/product/PROD039.png",
-  "images/product/PROD040.png",
-  "images/product/PROD041.png",
-  "images/product/PROD042.png",
-  "images/product/PROD043.png",
-  "images/product/PROD044.png",
-  "images/product/PROD045.png",
-  "images/product/PROD046.png",
-  "images/product/PROD047.png",
-  "images/product/PROD048.png",
-  "images/product/PROD049.png",
-  "images/product/PROD050.png",
-  "images/product/PROD051.png",
-  "images/product/PROD052.png",
-  "images/product/PROD053.png",
-  "images/product/PROD054.png",
-  "images/product/PROD055.png",
-  "images/product/PROD056.png",
-  "images/product/PROD057.png",
-  "images/product/PROD058.png",
-  "images/product/PROD059.png",
-  "images/product/PROD060.png",
-  "images/product/PROD061.png",
-  "images/product/PROD062.png",
-  "images/product/PROD063.png",
-  "images/product/PROD064.png",
-  "images/product/PROD065.png",
-  "images/product/PROD066.png",
-  "images/product/PROD067.png",
-  "images/product/PROD068.png",
-  "images/product/PROD069.png",
-  "images/product/PROD070.png",
-  "images/product/PROD071.png",
-  "images/product/PROD072.png",
-  "images/product/PROD073.png",
-  "images/product/PROD074.png",
-  "images/product/PROD075.png",
-  "images/product/PROD076.png",
-  "images/product/PROD077.png",
-  "images/product/PROD078.png",
-  "images/product/PROD079.png",
-  "images/product/PROD080.png",
-  "images/product/PROD081.png",
-  "images/product/PROD082.png",
-  "images/product/PROD083.png",
-  "images/product/PROD084.png",
-  "images/product/PROD085.png",
-  "images/product/PROD086.png",
-  "images/product/PROD087.png",
-  "images/product/PROD088.png",
-  "images/product/PROD089.png",
-  "images/product/PROD090.png",
-  "images/product/PROD091.png",
-  "images/product/PROD092.png",
-  "images/product/PROD093.png",
-  "images/product/PROD094.png",
-  "images/product/PROD095.png",
-  "images/product/PROD096.png",
-  "images/product/PROD097.png",
-  "images/product/PROD098.png",
-  "images/product/PROD099.png",
-  "images/product/PROD100.png"
-]
+in user section only name filter is working 
+category mai category ka view nhi chal raha
+ Call to undefined relationship [restaurant] on model [App\Models\Category].
+edit bhi show nhi horaha ye error araha hai 
+exception
+: 
+"Illuminate\\Database\\Eloquent\\RelationNotFoundException"
+file
+: 
+"/var/www/restaurant/api/vendor/laravel/framework/src/Illuminate/Database/Eloquent/RelationNotFoundException.php"
+line
+: 
+35
+message
+: 
+"Call to undefined relationship [restaurant] on model [App\\Models\\Categories
+category restaurant filter is not working 
+product mai edit karne ke baad category update nhi horahi 
+product mai sirf name ka filter chal raha hai 
+order create nhi horaha 
+
+
+images are not working /done
+if we create the restaurant and upload the image of the restaurant wo image bhi show nhi horhai  
+in user edit user ko edit karne par uska role update nhi horaha 
+

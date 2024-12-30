@@ -127,7 +127,7 @@ class OrderController extends Controller
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
-                'notes' => $item['notes'],
+                'notes' => $item['notes'] ?? null,
             ];
         }
 
@@ -146,7 +146,7 @@ class OrderController extends Controller
             'type' => $type,
             'status' => $orderStatus,
             'notes' => $orderNote,
-            'customer_id' => $user->id,
+            'customer_id' => $user->id ?? null,
             'discount' => $discount,
             'invoice' => 'INV-' . uniqid(),
             'table_no' => $tableNo,
@@ -159,7 +159,7 @@ class OrderController extends Controller
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
-                'notes' => $orderProduct['notes'],
+                'notes' => $orderProduct['notes'] ?? null,
             ]);
         }
 

@@ -2,8 +2,8 @@
     {
         "identifier": "ORD-001",
         "order_number": "ORDER-001",
-        "type": "dine-in",
-        "status": "completed",
+        "type": "reservation",
+        "status": "pending",
         "notes": "First order",
         "customer_id": 1,
         "invoice_no": "INV-001",
@@ -13,13 +13,13 @@
         "discount": 50.0,
         "products": [
             {
-                "product_id": 101,
+                "product_id": 1,
                 "quantity": 2,
                 "price": 200.0,
                 "product_name": "Pizza"
             },
             {
-                "product_id": 102,
+                "product_id": 2,
                 "quantity": 1,
                 "price": 100.0,
                 "product_name": "Burger"
@@ -29,7 +29,7 @@
     {
         "identifier": "ORD-002",
         "order_number": "ORDER-002",
-        "type": "takeaway",
+        "type": "reservation",
         "status": "pending",
         "notes": "Second order",
         "customer_id": 2,
@@ -40,7 +40,7 @@
         "discount": 30.0,
         "products": [
             {
-                "product_id": 103,
+                "product_id": 3,
                 "quantity": 3,
                 "price": 100.0,
                 "product_name": "Pasta"
@@ -50,8 +50,8 @@
     {
         "identifier": "ORD-003",
         "order_number": "ORDER-003",
-        "type": "delivery",
-        "status": "completed",
+        "type": "reservation",
+        "status": "pending",
         "notes": "Third order",
         "customer_id": 3,
         "invoice_no": "INV-003",
@@ -61,13 +61,13 @@
         "discount": 50.0,
         "products": [
             {
-                "product_id": 104,
+                "product_id": 4,
                 "quantity": 2,
                 "price": 150.0,
                 "product_name": "Fries"
             },
             {
-                "product_id": 105,
+                "product_id": 5,
                 "quantity": 1,
                 "price": 150.0,
                 "product_name": "Drink"
@@ -77,8 +77,8 @@
     {
         "identifier": "ORD-004",
         "order_number": "ORDER-004",
-        "type": "dine-in",
-        "status": "in-progress",
+        "type": "reservation",
+        "status": "pending",
         "notes": "Fourth order",
         "customer_id": 4,
         "invoice_no": "INV-004",
@@ -88,7 +88,7 @@
         "discount": 100.0,
         "products": [
             {
-                "product_id": 106,
+                "product_id": 6,
                 "quantity": 4,
                 "price": 150.0,
                 "product_name": "Steak"
@@ -98,8 +98,8 @@
     {
         "identifier": "ORD-005",
         "order_number": "ORDER-005",
-        "type": "takeaway",
-        "status": "completed",
+        "type": "reservation",
+        "status": "pending",
         "notes": "Fifth order",
         "customer_id": 5,
         "invoice_no": "INV-005",
@@ -109,7 +109,7 @@
         "discount": 20.0,
         "products": [
             {
-                "product_id": 107,
+                "product_id": 7,
                 "quantity": 2,
                 "price": 100.0,
                 "product_name": "Sandwich"

@@ -82,7 +82,6 @@ class CategoryController extends Controller
             'category_id' => $data['category_id'],
             'restaurant_id' => $data['restaurant_id'],
             'description' => $data['description'] ?? null,
-            'image' => $data['image'] ?? null,
             'status' => $data['status'],
         ]);
 
@@ -133,6 +132,7 @@ class CategoryController extends Controller
         // dd($request->validated());
         $data = $request->validated();
 
+        // dd($data['image']);
         // Find the category by ID
         $category = Category::find($id);
 

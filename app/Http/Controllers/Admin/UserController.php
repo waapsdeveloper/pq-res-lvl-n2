@@ -32,52 +32,57 @@ class UserController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = User::query()->with('role')->with('userDetail')->orderBy('id', 'desc');
-        // Optionally apply search filter if needed
-        $query->where('role_id', '!=', 1);
+        // Start the query and exclude Super Admin from the results
+        $query = User::query()->with('role', 'userDetail')->orderBy('id', 'desc');
+        $query->where('role_id', '!=', 1);  // Exclude Super Admin
 
+        // Apply search if provided
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
         }
 
+        // Apply filters if provided
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON to array
 
-
+            // Apply name filter
             if (isset($filters['name']) && !empty($filters['name'])) {
                 $query->where('name', 'like', '%' . $filters['name'] . '%');
             }
 
+            // Apply phone filter
             if (isset($filters['phone']) && !empty($filters['phone'])) {
                 $query->where('phone', 'like', '%' . $filters['phone'] . '%');
             }
+
+            // Apply email filter
             if (isset($filters['email']) && !empty($filters['email'])) {
                 $query->where('email', 'like', '%' . $filters['email'] . '%');
             }
 
+            // Apply status filter
             if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
 
-            if (isset($filters['role']) && !empty($filters['role'])) {
-                $query->whereHas('role', function ($query) use ($filters) {
-                    $query->where('id', $filters['role']); // Assuming 'name' is a column in the roles table
-                });
+            // Apply role filter (if role is provided and is not Super Admin)
+            if (isset($filters['role_id']) && !empty($filters['role_id'])) {
+                $query->where('role_id', $filters['role_id']);
             }
         }
-
-
 
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
-        // Loop through the results and generate full URL for image
+        // Loop through the results and transform them using UserResource
         $data->getCollection()->transform(function ($item) {
             return new UserResource($item);
         });
-        // Return the response with image URLs included
+
+        // Return the response with the data
         return ServiceResponse::success("Users retrieved successfully", ['data' => $data]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -183,6 +188,7 @@ class UserController extends Controller
             $data['image'] = $url;
         }
         // Update user details
+        // return response()->json($data);
         $user->update([
             'name' => $data['name'] ?? $user->name,
             'email' => $data['email'] ?? $user->email,

@@ -33,27 +33,24 @@ class UpdateRestaurant extends FormRequest
             'status' => 'nullable|string',
             'image' => [
                 'nullable',
-                'string',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp|svg+xml|webp|tiff);base64,/', $value)) {
                         $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
                     }
                 },
             ], // Base64 string validation
             'favicon' => [
                 'nullable',
-                'string',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp|svg+xml|webp|tiff);base64,/', $value)) {
                         $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
                     }
                 },
             ], // Base64 string validation
             'logo' => [
                 'nullable',
-                'string',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp);base64,/', $value)) {
+                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp|svg+xml|webp|tiff);base64,/', $value)) {
                         $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
                     }
                 },

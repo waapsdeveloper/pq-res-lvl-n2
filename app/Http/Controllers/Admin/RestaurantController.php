@@ -88,9 +88,6 @@ class RestaurantController extends Controller
             'website' => $data['website'] ?? null,
             'description' => $data['description'] ?? null,
             'status' => $data['status'] ?? 'active',
-            'image' => $data['image'] ?? null,
-            'favicon' => $data['favicon'] ?? null,
-            'logo' => $data['logo'] ?? null,
             'copyright_text' => $data['copyright_text'] ?? null,
             'rating' => $data['rating'] ?? 0,
         ]);
@@ -127,14 +124,14 @@ class RestaurantController extends Controller
         //
         // Attempt to find the restaurant by ID
         $restaurant = Restaurant::with('timings')->find($id);
-        $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
+        // $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
             return ServiceResponse::error("Restaurant not found", 404);
         }
-
+        $data = new RestaurantListResourse($restaurant);
         // Return a success response with the restaurant data
-        return ServiceResponse::success("Restaurant details retrieved successfully", ['restaurant' => $restaurant]);
+        return ServiceResponse::success("Restaurant details retrieved successfully", ['restaurant' => $data]);
     }
 
     /**
@@ -249,7 +246,7 @@ class RestaurantController extends Controller
         $data = $request->all();
 
         if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data);
+            $url = Helper::getBase64ImageUrl($data, 'restaurant');
             $restaurant->update([
                 'image' => $url,
             ]);
@@ -277,7 +274,7 @@ class RestaurantController extends Controller
         $data = $request->all();
 
         if (isset($data['logo'])) {
-            $url = Helper::getBase64ImageUrl($data);
+            $url = Helper::getBase64ImageUrl($data, 'restaurant');
             $restaurant->update([
                 'logo' => $url,
             ]);
@@ -304,7 +301,7 @@ class RestaurantController extends Controller
         $data = $request->all();
 
         if (isset($data['favicon'])) {
-            $url = Helper::getBase64ImageUrl($data);
+            $url = Helper::getBase64ImageUrl($data, 'restaurant');
             $restaurant->update([
                 'favicon' => $url,
             ]);

@@ -39,10 +39,13 @@ class Order extends Model
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
-
-    // public function tableNo()
-    // {
-    //     return $this->belongsTo(Restaurant::class, 'rtable_id', 'id');
-    // }
+    public function rtable()
+    {
+        return $this->belongsTo(Restaurant::class, 'rtable_id', 'id');
+    }
 }

@@ -24,19 +24,19 @@ class OrderResource extends JsonResource
             'total_price' => $obj->total_price,
             'discount' => $obj->discount,
             'created_at' => $obj->created_at->toDateTimeString(),
-            'products' => $obj->orderProducts->map(function ($orderProduct) {
+            'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
+                $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [
                     'product_id' => $orderProduct->product_id,
-                    'product_name' => $orderProduct->product->name,
-                    'product_price' => $orderProduct->product->price,
-                    'product_discount' => $orderProduct->product->discount,
-                    'product_status' => $orderProduct->product->status,
-                    'product_image' => Helper::returnFullImageUrl($orderProduct->product->image),
+                    'product_name' => $orderProduct->product->name ?? null,
+                    'product_price' => $orderProduct->product->price ?? null,
+                    'product_discount' => $orderProduct->product->discount ?? null,
+                    'product_status' => $orderProduct->product->status ?? null,
+                    'product_image' => $image,
                     'quantity' => $orderProduct->quantity,
                     'price' => $orderProduct->price,
-                    'name' => $orderProduct->name,
                 ];
-            }),
+            }) : [],
         ];
 
         // return [

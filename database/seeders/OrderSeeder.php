@@ -20,7 +20,7 @@ class OrderSeeder extends Seeder
         // Insert orders into the database
         foreach ($orders as $order) {
             $orderId = DB::table('orders')->insertGetId([
-                'identifier' => $order['identifier'],
+                'identifier' => $order['identifier'] ?? "OD-" . uniqid(),
                 'order_number' => $order['order_number'],
                 'type' => $order['type'],
                 'status' => $order['status'],
