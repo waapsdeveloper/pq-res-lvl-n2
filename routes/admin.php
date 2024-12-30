@@ -146,5 +146,7 @@ Route::prefix('contact-us')->group(function () {
 
 
 Route::prefix('dashboard')->group(function () {
-    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.index');
+    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.orders');
+    Route::get('/products', [DashboardController::class, 'products'])->name('dashboard.products');
+    Route::get('/order-products', [DashboardController::class, 'orderProducts'])->name('dashboard.orderProducts');
 });
