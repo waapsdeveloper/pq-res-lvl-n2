@@ -59,7 +59,7 @@ class DashboardController extends Controller
     public function customer()
     {
         $customer = User::whereNull('role_id')->get(); // Sirf IDs fetch karte hain
-        $customer['total_customers']->count();
+        $customer['total_customers'] = $customer->count();
         return ServiceResponse::success(' customer fetched successfully', ['customer' => $customer]);
     }
 }
