@@ -1,7 +1,4 @@
 in user section only name filter is working 
-category mai category ka view nhi chal raha
- Call to undefined relationship [restaurant] on model [App\Models\Category].
-edit bhi show nhi horaha ye error araha hai 
 exception
 : 
 "Illuminate\\Database\\Eloquent\\RelationNotFoundException"
@@ -24,3 +21,7 @@ images are not working /done
 if we create the restaurant and upload the image of the restaurant wo image bhi show nhi horhai  
 in user edit user ko edit karne par uska role update nhi horaha 
 
+
+category mai category ka view nhi chal raha
+ Call to undefined relationship [restaurant] on model [App\Models\Category].
+edit bhi show nhi horaha ye error araha hai 

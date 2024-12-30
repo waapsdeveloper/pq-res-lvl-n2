@@ -23,7 +23,6 @@ class StoreCategory extends FormRequest
      */
     public function rules(): array
     {
-        // dd($this->all());
         return [
             'name' => 'required|string|min:3|max:255',
             'category_id' => 'nullable|integer|exists:categories,id', // Ensure category is valid

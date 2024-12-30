@@ -44,6 +44,9 @@ class CategoryController extends Controller
             if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
+            if (isset($filters['restaurant_id']) && !empty($filters['restaurant_id'])) {
+                $query->where('restaurant_id', $filters['restaurant_id']);
+            }
         }
 
         // Paginate the results
