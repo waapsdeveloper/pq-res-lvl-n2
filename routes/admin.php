@@ -143,3 +143,8 @@ Route::prefix('contact-us')->group(function () {
     Route::get('/', [ContactUsController::class, 'index'])->name('contact.index');
     Route::get('/bulk-delete', [ContactUsController::class, 'bulkDelete'])->name('contactBulkDelete');
 });
+
+
+Route::prefix('dashboard')->group(function () {
+    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.index');
+});
