@@ -6,7 +6,7 @@ use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderProduct;
-use App\Models\Product;
+use App\Models\User;
 use App\Models\Rtable;
 use App\Models\RTablesBooking;
 use Illuminate\Support\Facades\DB;
@@ -55,5 +55,11 @@ class DashboardController extends Controller
     {
         $tables = Rtable::with('restaurantDetail')->limit(8)->latest()->get();
         return ServiceResponse::success('Tables fetched successfully', ['tables' => $tables]);
+    }
+    public function customer()
+    {
+        $customer = User::whereNull('role_id')->get(); // Sirf IDs fetch karte hain
+        $customer['total_customers']->count();
+        return ServiceResponse::success(' customer fetched successfully', ['customer' => $customer]);
     }
 }
