@@ -148,5 +148,6 @@ Route::prefix('contact-us')->group(function () {
 Route::prefix('dashboard')->group(function () {
     Route::get('/recent-orders', [DashboardController::class, 'recentOrders'])->name('dashboard.recentOrders');
     Route::get('/most-selling-products', [DashboardController::class, 'mostSellingProducts'])->name('dashboard.mostSellingProducts');
-    Route::get('/order-products', [DashboardController::class, 'orderProducts'])->name('dashboard.orderProducts');
+    // Route::get('/total-revenue', [DashboardController::class, 'totalRevenue'])->name('dashboard.totalRevenue');
+    Route::get('/latest-tables', [DashboardController::class, 'latestTables'])->name('dashboard.latestTables');
 });
