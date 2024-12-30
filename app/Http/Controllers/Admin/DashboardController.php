@@ -18,7 +18,7 @@ class DashboardController extends Controller
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);
     }
     // mos setlling products
-    public function products()
+    public function mostSellingProducts()
     {
         $products = Product::with('restaurant')->latest()->get();
         return ServiceResponse::success('products fetched successfully', ['products' => $products]);
