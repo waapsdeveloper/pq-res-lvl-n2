@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function orders()
+    public function recentOrders()
     {
         $orders = Order::query()->with('restaurant', 'customer')->latest()->get();
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);
