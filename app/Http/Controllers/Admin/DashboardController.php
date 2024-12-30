@@ -58,8 +58,40 @@ class DashboardController extends Controller
     }
     public function customer()
     {
-        $customer = User::whereNull('role_id')->get(); // Sirf IDs fetch karte hain
-        $customer['total_customers'] = $customer->count();
-        return ServiceResponse::success(' customer fetched successfully', ['customer' => $customer]);
+        $data = []; // Final organized data
+
+        // Total customers (role_id null wale, yani sirf customers)
+        $data['total_customers'] = User::whereNull('role_id')->count();
+
+        // Daily data: Group by day
+        $data['daily_data'] = User::whereNull('role_id')
+            ->select(DB::raw('DATE(created_at) as on_date'), DB::raw('COUNT(*) as total_customers'))
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy(DB::raw('DATE(created_at)'))
+            ->get();
+
+        // Weekly data: Group by week
+        $data['weekly_data'] = User::whereNull('role_id')
+            ->select(DB::raw('WEEK(created_at) as in_weeks'), DB::raw('COUNT(*) as total_customers'))
+            ->groupBy(DB::raw('WEEK(created_at)'))
+            ->orderBy(DB::raw('WEEK(created_at)'))
+            ->get();
+
+        // Monthly data: Group by month
+        $data['monthly_data'] = User::whereNull('role_id')
+            ->select(DB::raw('MONTH(created_at) as in_months'), DB::raw('COUNT(*) as total_customers'))
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->orderBy(DB::raw('MONTH(created_at)'))
+            ->get();
+
+        // Yearly data: Group by year
+        $data['yearly_data'] = User::whereNull('role_id')
+            ->select(DB::raw('YEAR(created_at) as in_year'), DB::raw('COUNT(*) as total_customers'))
+            ->groupBy(DB::raw('YEAR(created_at)'))
+            ->orderBy(DB::raw('YEAR(created_at)'))
+            ->get();
+
+        // Response
+        return ServiceResponse::success('Customer registration data fetched successfully', ['customer', $data]);
     }
 }
