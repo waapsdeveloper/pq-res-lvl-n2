@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => $user['name'],
                 'email' => $user['email'],
-                'email_verified_at' => $user['email_verified_at'] ?? null, // Nullable
+                // 'email_verified_at' => $user['email_verified_at'] ?? null, // Nullable
                 'phone' => $user['phone'] ?? "+" . 921324124,
                 'password' => Hash::make($user['password']), // Hashing password
                 'role_id' => $user['role_id'],
