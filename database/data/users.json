@@ -153,7 +153,7 @@
         "image": "images/user/user-10.png"
     },
     {
-        "name": "Ivy Lee",
+        "name": "customer-1",
         "email": "ivy.lee@example.com",
         "phone": 9900112233,
         "password": "admin123$",
@@ -164,10 +164,10 @@
         "city": "Jacksonville",
         "state": "FL",
         "country": "USA",
-        "image": "images/user/user-11.png"
+        "image": "images/user/user-4.png"
     },
     {
-        "name": "Ivy Lee",
+        "name": "customer-3",
         "email": "ivy.le@example.com",
         "phone": 990011233,
         "password": "admin123$",
@@ -178,10 +178,10 @@
         "city": "Jacksonville",
         "state": "FL",
         "country": "USA",
-        "image": "images/user/user-11.png"
+        "image": "images/user/user-3.png"
     },
     {
-        "name": "Ivy Lee",
+        "name": "customer-3",
         "email": "iy.le@example.com",
         "phone": 990112233,
         "password": "admin123$",
@@ -192,10 +192,10 @@
         "city": "Jacksonville",
         "state": "FL",
         "country": "USA",
-        "image": "images/user/user-11.png"
+        "image": "images/user/user-2.png"
     },
     {
-        "name": "Iy Lee",
+        "name": "customer 4",
         "email": "ivy.ee@example.com",
         "phone": 990011233,
         "password": "admin123$",
@@ -206,6 +206,20 @@
         "city": "Jacksonville",
         "state": "FL",
         "country": "USA",
-        "image": "images/user/user-11.png"
+        "image": "images/user/user-1.png"
+    },
+    {
+        "name": "customer-5",
+        "email": "ivy.hee@example.com",
+        "phone": 99001123,
+        "password": "admin123$",
+        "role_id": null,
+        "status": "inactive",
+        "restaurant_id": 1,
+        "address": "890 Cypress St",
+        "city": "Jacksonville",
+        "state": "FL",
+        "country": "USA",
+        "image": "images/user/user-1.png"
     }
 ]

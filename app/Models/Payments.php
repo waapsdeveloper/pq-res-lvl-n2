@@ -11,7 +11,7 @@ class Payments extends Model
         'order_id',
         'amount',
         'customer_id',
-        'status',
-        'mode',
+        'payment_status',
+        'payment_mode',
     ];
 }

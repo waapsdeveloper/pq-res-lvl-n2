@@ -1,0 +1,31 @@
+https://www.youtube.com/watch?v=LM4OzsUAevY
+
+php artisan make:command <name>
+ in this file make command your commandas per need
+ protected $signature = 'app:<command>'; 
+ protected $signature = 'app:neworder'; i make it to this..
+
+protected $description = '<your desc>';
+
+add this line to handle function()
+ logger()->info('< your info >');
+ logger()->info('CreateRandomOrderJob is running');
+
+
+clear inside log file logs/laravel.log
+ now run command in terminal
+ php artisan app:neworder
+
+ now you will see there logger info there
+ [2024-12-31 11:09:13] local.INFO: CreateRandomOrderJob is running  
+
+
+then in routes/console.php file 
+add this line
+Schedule::command(<command name>::class)->as per time needs ();
+
+Schedule::command(CreateRandomOrderJob::class)->everyMinute();
+
+ then run in terminal command 
+ php artisan sch:list 
+you will see your class in the Schedule list in terminal

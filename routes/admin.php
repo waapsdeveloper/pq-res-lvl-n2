@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
@@ -137,7 +138,12 @@ Route::prefix('table-booking')->group(function () {
         ->names('table-booking'); // Restrict to specific CRUD actions.
 });
 
-
+Route::prefix('invoice')->group(function () {
+    Route::resource('/', InvoiceController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('invoice'); // Restrict to specific CRUD actions.
+});
 Route::prefix('contact-us')->group(function () {
 
     Route::get('/', [ContactUsController::class, 'index'])->name('contact.index');

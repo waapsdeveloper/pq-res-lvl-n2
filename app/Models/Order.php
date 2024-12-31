@@ -20,6 +20,7 @@ class Order extends Model
         'table_no',
         'restaurant_id',
         'total_price',
+        'order_at'
     ];
 
     // Define relationship with OrderProduct

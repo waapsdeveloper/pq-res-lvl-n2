@@ -14,12 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->decimal('amount', 10, 2);
-            $table->unsignedBigInteger('customer_id');
-            $table->enum('status', ['pending', 'received', 'canceled'])->default('pending');
-            $table->enum('mode', ['none', 'cash', 'card', 'transfer'])->default('none');
+            $table->string('customer_id');
+            $table->enum('payment_status', ['pending', 'received', 'canceled'])->default('pending');
+            $table->enum('payment_mode', ['none', 'cash', 'card', 'transfer'])->default('none');
+            $table->enum('payment_portal', ['none', 'cash', 'stripe', 'paypal'])->default('none');
             $table->timestamps();
-
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
