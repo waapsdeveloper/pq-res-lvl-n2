@@ -40,7 +40,7 @@ class AddOrderBookingResource extends JsonResource
                 'email' => $obj->customer->email,
             ] : null,
             'discount' => $obj->discount,
-            'invoice' => $obj->invoice,
+            'invoice_no' => $obj->invoice,
             'table_no' => $obj->table_no,
             'total_price' => $obj->total_price,
             'order_at' => $obj->order_at,
