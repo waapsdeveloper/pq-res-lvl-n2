@@ -113,15 +113,16 @@ class OrderController extends Controller
 
         $order->load('orderProducts.product');
 
-        $data = new AddOrderBookingResource($order);
-
-        return ServiceResponse::success("Order list successfully", ['data' => $data]);
+        return ServiceResponse::success(['status' => 'Order created successfully']);
     }
 
-    public function getOrderBookings(Request $request)
+    public function trackCustomerOrder(Request $request, $phone)
     {
-        $orders = Order::with('orderProducts.product')->get();
-        $data = AddOrderBookingResource::collection($orders);
-        return ServiceResponse::success("Order list successfully", ['data' => $data]);
+        $customer = User::where('phone', $phone)->first();  // Search for the customer by phone
+        $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'user', 'rtable')
+            ->where('customer_id', $customer->id)
+            ->get();
+        $data = AddOrderBookingResource::collection($order);
+        return ServiceResponse::success("Customer Order Tracked  successfully", ['customer_order' => $data]);
     }
 }
