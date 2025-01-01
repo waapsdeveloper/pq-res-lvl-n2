@@ -33,17 +33,17 @@ class AddOrderBookingResource extends JsonResource
             'type' => $obj->type,
             'status' => $obj->status,
             'notes' => $obj->notes,
+            'discount' => $obj->discount,
+            'invoice_no' => $obj->invoice_no,
+            'table_no' => $obj->table_no,
+            'total_price' => $obj->total_price,
+            'order_at' => $obj->order_at,
             'customer' => $obj->customer ? [
                 'id' => $obj->customer->id,
                 'name' => $obj->customer->name,
                 'phone' => $obj->customer->phone,
                 'email' => $obj->customer->email,
             ] : null,
-            'discount' => $obj->discount,
-            'invoice_no' => $obj->invoice_no,
-            'table_no' => $obj->table_no,
-            'total_price' => $obj->total_price,
-            'order_at' => $obj->order_at,
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
                     'product_id' => $orderProduct->product_id,
