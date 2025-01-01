@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('total_price')->nullable();
             $table->string('discount')->nullable();
             $table->string('restaurant_id')->nullable();
-
+            $table->dateTime('order_at')->nullable();
             $table->timestamps();
         });
     }
