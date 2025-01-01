@@ -15,14 +15,16 @@ class OrderController extends Controller
 {
     public function makeOrderBookings(Request $request, $rtableIdf = null)
     {
+        // dd($request->all(), $rtableIdf);
         // $data = $request->validated();
         $data = $request->all();
         $customer = $request->input('customer', null);
 
         if (!empty($customer)) {
-            $customerName = $data['customer_name'];
-            $customerPhone = $data['customer_phone'];
-            $customerPhone = $data['customer_email'];
+            $customer = json_decode($customer, true);
+            $customerName = $customer['name'];
+            $customerPhone = $customer['phone'];
+            $customerEmail = $customer['email'];
 
             $user = User::where('phone', $customerPhone)->first();
 
@@ -30,7 +32,7 @@ class OrderController extends Controller
                 $user = User::create([
                     'name' => $customerName,
                     'phone' => $customerPhone,
-                    'email' => $customerPhone . "@phone.text",
+                    'email' => $customerEmail,
                 ]);
             }
         } else {
@@ -101,6 +103,12 @@ class OrderController extends Controller
 
         $data = new AddOrderBookingResource($order);
 
+        return ServiceResponse::success("Order list successfully", ['data' => $data]);
+    }
+    public function getOrderBookings(Request $request)
+    {
+        $orders = Order::with('orderProducts.product')->get();
+        $data = AddOrderBookingResource::collection($orders);
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
 }
