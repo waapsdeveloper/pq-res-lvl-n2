@@ -94,7 +94,6 @@ class OrderController extends Controller
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
             'restaurant_id' => $restaurant_id ?? 1,
-            'order_at' => now(),
         ]);
 
         foreach ($orderProducts as $orderProduct) {
