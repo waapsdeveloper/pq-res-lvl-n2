@@ -54,13 +54,14 @@ class AddOrderBookingResource extends JsonResource
                 ];
             }),
             'restaurant' => $obj->restaurant,
-            'restaurant_timings' => $obj->restaurant->timings->map(function ($timing) {
+            'restaurant_timings' => $obj->restaurant ? $obj->restaurant->timings->map(function ($timing) {
                 return [
                     'day' => $timing->day,
                     'start_time' => $timing->start_time,
                     'end_time' => $timing->end_time,
+                    'status' => $timing->status,
                 ];
-            }),
+            }) : null,
         ];
     }
 }
