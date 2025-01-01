@@ -75,7 +75,7 @@ class OrderController extends Controller
         }
 
         $discount = $data['discount'] ?? 0;
-        $type = $data['type'] ?? null;
+        $type = $data['type'];
         $tableNo = $data['tableNo'] ?? null;
         $finalPrice = $totalPrice - $discount;
         $orderNumber = strtoupper(uniqid('ORD-'));
