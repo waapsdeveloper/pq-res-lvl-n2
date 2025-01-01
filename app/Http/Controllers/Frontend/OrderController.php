@@ -8,37 +8,49 @@ use App\Http\Resources\Frontend\AddOrderBookingResource;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\Rtable;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function makeOrderBookings(Request $request, $rtableIdf = null)
+    public function makeOrderBookings(Request $request)
     {
-        // dd($request->all(), $rtableIdf);
-        // $data = $request->validated();
+        // dd($request->all());
+        // Validate the request data
+        $validated = $request->validate([
+            'phone' => 'required', // Ensure phone is mandatory
+        ]);
+        // dd($validated);
+
         $data = $request->all();
-        $customer = $request->input('customer', null);
-
-        if (!empty($customer)) {
-            $customer = json_decode($customer, true);
-            $customerName = $customer['name'];
-            $customerPhone = $customer['phone'];
-            $customerEmail = $customer['email'];
-
-            $user = User::where('phone', $customerPhone)->first();
-
-            if (!$user) {
-                $user = User::create([
-                    'name' => $customerName,
-                    'phone' => $customerPhone,
-                    'email' => $customerEmail,
-                ]);
-            }
+        $phone = $data['phone'];
+        $rtableIdf = $request->input('table_identifier', null);
+        $customer = User::where('phone', $phone)->first();  // Search for the customer by phone
+        $customerId = null;
+        if (!$customer) {
+            // If no customer found, create a new "walk-in-customer"
+            $customer = User::create([
+                'name' => 'walk-in-customer',
+                'phone' => $phone,
+                'email' => 'walk-in-customer@domain.com',  // Use a default or dynamic email
+                'role_id' => 0,  // Default role for walk-in customers
+            ]);
+            $customerId = $customer->id;  // Use the newly created customer's ID
         } else {
-            $user = null;
+            // If customer found, get their ID
+            $customerId = $customer->id;
         }
 
+
+        if (!empty($rtableIdf)) {
+            $identifier = $rtableIdf;
+            $restaurant = Rtable::where('identifier', $identifier)->first();
+            if (!$restaurant) {
+                return ServiceResponse::error("Invalid table identifier.", [], 400);
+            }
+            $restaurant_id = $restaurant->id;
+        }
 
         $totalPrice = 0;
         $orderProducts = [];
@@ -46,12 +58,9 @@ class OrderController extends Controller
             $product = Product::find($item['product_id']);
             if (!$product) {
                 continue;
-                // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
-            // $pricePerUnit = $product->price;
             $pricePerUnit = $item['price'];
-
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
 
@@ -68,9 +77,7 @@ class OrderController extends Controller
         $discount = $data['discount'] ?? 0;
         $type = $data['type'] ?? null;
         $tableNo = $data['tableNo'] ?? null;
-        // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $finalPrice = $totalPrice - $discount;
-        // return response()->json($finalPrice);
         $orderNumber = strtoupper(uniqid('ORD-'));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
@@ -78,14 +85,15 @@ class OrderController extends Controller
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
             'order_number' => $orderNumber,
-            'type' =>  !empty($rtableIdf) ? 'dine-in' : '',
+            'type' => !empty($rtableIdf) ? 'dine-in' : '',
             'status' => $orderStatus,
             'notes' => $orderNote,
-            'customer_id' => $user->id ?? 0,
+            'customer_id' => $customerId,
             'discount' => $discount,
             'invoice' => 'INV-' . uniqid(),
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
+            'restaurant_id' => $restaurant_id ?? 1,
             'order_at' => now(),
         ]);
 
@@ -105,6 +113,7 @@ class OrderController extends Controller
 
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
+
     public function getOrderBookings(Request $request)
     {
         $orders = Order::with('orderProducts.product')->get();

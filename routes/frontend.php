@@ -59,5 +59,5 @@ Route::prefix('add-to-cart')->group(function () {
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('cart'); // Restrict to specific CRUD actions.
 });
-Route::post('/make-order-bookings/{table_identifier?}', [OrderController::class, 'makeOrderBookings']);
+Route::post('/make-order-bookings', [OrderController::class, 'makeOrderBookings']);
 Route::get('/get-order-bookings', [OrderController::class, 'getOrderBookings']);

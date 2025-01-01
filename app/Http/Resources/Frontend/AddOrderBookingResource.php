@@ -26,24 +26,39 @@ class AddOrderBookingResource extends JsonResource
      */
     public static function toObject($obj, $lang = 'en')
     {
-        dd($obj);
         return [
             'id' => $obj->id,
-            'restaurant_id' => $obj->restaurant_id,
-            'rtable_booking_id' => $obj->rtable_booking_id,
-            'rtable_id' => $obj->rtable_id,
-            'booking_start' => $obj->booking_start,
-            'booking_end' => $obj->booking_end,
-            'no_of_seats' => $obj->no_of_seats,
-            'res_timing' => $obj->restaurant->timings->map(function ($restaurant) {
-
-                // dd($restaurant->timings);
+            'order_number' => $obj->order_number,
+            'type' => $obj->type,
+            'status' => $obj->status,
+            'notes' => $obj->notes,
+            'customer_id' => $obj->customer_id,
+            'customer' => $obj->customer ? [
+                'id' => $obj->customer->id,
+                'name' => $obj->customer->name,
+                'phone' => $obj->customer->phone,
+                'email' => $obj->customer->email,
+            ] : null,
+            'discount' => $obj->discount,
+            'invoice' => $obj->invoice,
+            'table_no' => $obj->table_no,
+            'total_price' => $obj->total_price,
+            'order_at' => $obj->order_at,
+            'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
-                    'day' => $restaurant->day, // Include restaurant timings directly
-                    'start_time' => $restaurant->start_time, // Include restaurant timings directly
-                    'end_time' => $restaurant->end_time, // Include restaurant timings directly
-                    'status' => $restaurant->status, // Include restaurant timings directly
-
+                    'product_id' => $orderProduct->product_id,
+                    'product_name' => $orderProduct->product->name ?? null,
+                    'quantity' => $orderProduct->quantity,
+                    'price' => $orderProduct->price,
+                    'notes' => $orderProduct->notes,
+                ];
+            }),
+            'restaurant' => $obj->restaurant,
+            'restaurant_timings' => $obj->restaurant->timings->map(function ($timing) {
+                return [
+                    'day' => $timing->day,
+                    'start_time' => $timing->start_time,
+                    'end_time' => $timing->end_time,
                 ];
             }),
         ];
