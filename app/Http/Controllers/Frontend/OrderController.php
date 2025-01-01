@@ -55,7 +55,7 @@ class OrderController extends Controller
         $totalPrice = 0;
         $orderProducts = [];
         foreach ($data['products'] as $item) {
-            $product = Product::find($item['product_id']);
+            $product = Product::find($item['id']);
             if (!$product) {
                 continue;
             }
@@ -67,7 +67,7 @@ class OrderController extends Controller
             $totalPrice += $itemTotal;
 
             $orderProducts[] = [
-                'product_id' => $item['product_id'],
+                'product_id' => $item['id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
