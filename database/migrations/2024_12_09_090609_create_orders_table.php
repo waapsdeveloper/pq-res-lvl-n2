@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->string('identifier')->nullable();
             $table->string('order_number')->nullable();
-            $table->enum('type', ['dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation'])->nullable(); // Enum column
+            $table->enum('type', [null, 'dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation'])->nullable(); // Enum column
             $table->enum('status', ['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed', 'cancelled'])->default('pending'); // Status enum
             $table->text('notes')->nullable();
             $table->string('customer_id')->nullable();

@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\RTablesController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\TableBookingController;
+use App\Http\Controllers\Frontend\OrderController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -58,3 +59,4 @@ Route::prefix('add-to-cart')->group(function () {
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('cart'); // Restrict to specific CRUD actions.
 });
+Route::post('/make-order-bookings/{table_identifier}', [OrderController::class, 'makeOrderBookings']);

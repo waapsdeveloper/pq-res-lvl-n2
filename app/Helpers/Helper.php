@@ -63,10 +63,4 @@ class Helper
 
         return $fullImageUrl;
     }
-
-
-    public function baseUrlWithIDF()
-    {
-        return url('/');
-    }
 }

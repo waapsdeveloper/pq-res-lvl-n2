@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Frontend\AddOrderBookingResource;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -12,24 +13,28 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function newOrder(Request $request)
+    public function makeOrderBookings(Request $request, $rtableIdf = null)
     {
-
         // $data = $request->validated();
         $data = $request->all();
+        $customer = $request->input('customer', null);
 
-        $customerName = $data['customer_name'];
-        $customerPhone = $data['customer_phone'];
-        $customerPhone = $data['customer_email'];
+        if ($customer) {
+            $customerName = $data['customer_name'];
+            $customerPhone = $data['customer_phone'];
+            $customerPhone = $data['customer_email'];
 
-        $user = User::where('phone', $customerPhone)->first();
+            $user = User::where('phone', $customerPhone)->first();
 
-        if (!$user) {
-            $user = User::create([
-                'name' => $customerName,
-                'phone' => $customerPhone,
-                'email' => $customerPhone . "@phone.text",
-            ]);
+            if (!$user) {
+                $user = User::create([
+                    'name' => $customerName,
+                    'phone' => $customerPhone,
+                    'email' => $customerPhone . "@phone.text",
+                ]);
+            }
+        } else {
+            $user = null;
         }
 
 
@@ -67,13 +72,14 @@ class OrderController extends Controller
         $orderNumber = strtoupper(uniqid('ORD-'));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
+
         $order = Order::create([
-            'identifier' => 'ORD-' . uniqid(),
+            'identifier' => $rtableIdf ?? null,
             'order_number' => $orderNumber,
-            'type' => $type,
+            'type' =>  !empty($rtableIdf) ? 'dine-in' : '',
             'status' => $orderStatus,
             'notes' => $orderNote,
-            'customer_id' => $user->id ?? null,
+            'customer_id' => $user->id ?? 0,
             'discount' => $discount,
             'invoice' => 'INV-' . uniqid(),
             'table_no' => $tableNo,
@@ -92,7 +98,7 @@ class OrderController extends Controller
 
         $order->load('orderProducts.product');
 
-        // $data = new OrderResource($order);
+        $data = new AddOrderBookingResource($order);
 
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
