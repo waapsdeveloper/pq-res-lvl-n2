@@ -26,7 +26,7 @@ class TableBookingResource extends JsonResource
             "booking_start" => $obj->booking_start,
             "no_of_seats" => $obj->no_of_seats,
             // "restaurant" => $obj->restaurant,
-            // "identifier" => $obj->identifier,
+            "identifier" => $obj->identifier,
             // "no_of_seats" => $obj->no_of_seats,
             // "description" => $obj->description,
             // "floor" => $obj->floor,

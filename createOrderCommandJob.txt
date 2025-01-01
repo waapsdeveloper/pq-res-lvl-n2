@@ -29,3 +29,10 @@ Schedule::command(CreateRandomOrderJob::class)->everyMinute();
  then run in terminal command 
  php artisan sch:list 
 you will see your class in the Schedule list in terminal
+
+now you can invoke it with this.it will show you work fine and end when timeout
+php artisan schedule:run 
+
+if works fine 
+then you can add you can run. this will stop when you stop this
+php artisan schedule:work

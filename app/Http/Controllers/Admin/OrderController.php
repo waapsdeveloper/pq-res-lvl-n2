@@ -417,7 +417,7 @@ class OrderController extends Controller
 
     //     $products = Product::whereIn('id', $productIds)->get();
 
-    //     $customer_id = Arr::random([11, 12, 13, 14, 15, 'walk-in-customer']);
+    //     $customer_id = Arr::random([11, 12, 13, 14, 15, '']);
 
     //     $totalPrice = 0;
     //     $orderProducts = [];

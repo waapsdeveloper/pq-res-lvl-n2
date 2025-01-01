@@ -17,8 +17,9 @@ class OrderResource extends JsonResource
         // dd($obj->orderProducts);
         return [
             'id' => $obj->id,
-            'customer_id' => $obj->customer_id,
-            'customer' => $obj->customer,
+            'customer_id' => $obj->customer_id == 'walk-in-customer' ? 0 : $obj->customer_id,
+            'customer' => $obj->customer ? $obj->customer->name : 'walk-in-customer',
+            // 'customer' => $obj->customer ? $obj->customer->name : 'walk-in-customer',
             'order_number' => $obj->order_number,
             'status' => $obj->status,
             'total_price' => $obj->total_price,

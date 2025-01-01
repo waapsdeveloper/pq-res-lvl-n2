@@ -104,15 +104,16 @@ class RtableController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = Rtable::find($id);
+        $restaurant = Rtable::with('restaurant', 'restaurantTimings')->find($id);
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
             return ServiceResponse::error("Rtable not found", 404);
         }
+        $data = new RtableResource($restaurant);
 
         // Return a success response with the restaurant data
-        return ServiceResponse::success("Rtable details retrieved successfully", ['Rtable' => $restaurant]);
+        return ServiceResponse::success("Rtable details retrieved successfully", ['Rtable' => $data]);
     }
 
     public function getByRestaurantId(string $id)
