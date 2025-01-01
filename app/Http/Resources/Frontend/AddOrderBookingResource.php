@@ -38,12 +38,6 @@ class AddOrderBookingResource extends JsonResource
             'table_no' => $obj->table_no,
             'total_price' => $obj->total_price,
             'order_at' => $obj->order_at,
-            'customer' => $obj->customer ? [
-                'id' => $obj->customer->id,
-                'name' => $obj->customer->name,
-                'phone' => $obj->customer->phone,
-                'email' => $obj->customer->email,
-            ] : null,
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
                     'product_id' => $orderProduct->product_id,
@@ -53,6 +47,12 @@ class AddOrderBookingResource extends JsonResource
                     'notes' => $orderProduct->notes,
                 ];
             }),
+            'customer' => $obj->customer ? [
+                'id' => $obj->customer->id,
+                'name' => $obj->customer->name,
+                'phone' => $obj->customer->phone,
+                'email' => $obj->customer->email,
+            ] : null,
             'restaurant' => $obj->restaurant ?
                 [
                     'id' => $obj->restaurant->id,
