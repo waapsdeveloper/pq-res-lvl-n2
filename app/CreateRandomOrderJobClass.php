@@ -20,6 +20,12 @@ class CreateRandomOrderJobClass
     public function __construct() {}
     public function __invoke()
     {
+        $customer = User::create([
+            'name' => 'walk-in-customer',
+            'phone' => rand(1, 15),
+            'email' => uniqid() . '@domain.com',  // Use a default or dynamic email
+            'role_id' => 0,  // Default role for walk-in customers
+        ]);
         $productIds = Product::whereBetween('id', [1, 100])
             ->inRandomOrder()
             ->take(rand(1, 6))
@@ -31,7 +37,7 @@ class CreateRandomOrderJobClass
 
         $products = Product::whereIn('id', $productIds)->get();
 
-        $customer_id = Arr::random([10, 11, 12, 13, 14, 15, '']);
+        // $customer_id = Arr::random([10, 11, 12, 13, 14, 15, '']);
 
         $totalPrice = 0;
         $orderProducts = [];
@@ -75,7 +81,7 @@ class CreateRandomOrderJobClass
             'type' => $type,
             'status' => $status,
             'notes' => 'This is a randomly generated order.',
-            'customer_id' => $customer_id,
+            'customer_id' => $customer->id,
             'discount' => $discount,
             'invoice_no' => strtoupper(uniqid('INV-')),
             'table_no' => rand(1, 20),
@@ -108,7 +114,7 @@ class CreateRandomOrderJobClass
         $payment = Payments::create([
             'order_id' => $order->id,
             'amount' => $order->total_price,
-            'customer_id' => $customer_id,
+            'customer_id' => $customer->id,
             'payment_status' => $paymentStatuses,
             'payment_mode' => $paymentMode,
             'payment_portal' => $paymentPortal,
