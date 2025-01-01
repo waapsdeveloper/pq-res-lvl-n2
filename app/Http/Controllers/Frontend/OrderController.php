@@ -97,12 +97,12 @@ class OrderController extends Controller
             'notes' => $orderNote,
             'customer_id' => $customerId,
             'discount' => $discount,
-            'invoice' => 'INV-' . uniqid(),
+            'invoice_no' => 'INV-' . uniqid(),
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
             'restaurant_id' => $restaurant_id ?? 1,
         ]);
-
+        dd($order);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
                 'order_id' => $order->id,
