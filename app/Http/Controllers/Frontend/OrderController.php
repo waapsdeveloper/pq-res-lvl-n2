@@ -91,7 +91,6 @@ class OrderController extends Controller
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
             'order_number' => $orderNumber,
-
             'type' => $type,
             'status' => $orderStatus,
             'notes' => $orderNote,
@@ -102,7 +101,6 @@ class OrderController extends Controller
             'total_price' => $finalPrice,
             'restaurant_id' => $restaurant_id ?? 1,
         ]);
-        dd($order);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
                 'order_id' => $order->id,
