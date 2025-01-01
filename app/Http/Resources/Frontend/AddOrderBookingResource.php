@@ -26,13 +26,13 @@ class AddOrderBookingResource extends JsonResource
      */
     public static function toObject($obj, $lang = 'en')
     {
+
         return [
             'id' => $obj->id,
             'order_number' => $obj->order_number,
             'type' => $obj->type,
             'status' => $obj->status,
             'notes' => $obj->notes,
-            'customer_id' => $obj->customer_id,
             'customer' => $obj->customer ? [
                 'id' => $obj->customer->id,
                 'name' => $obj->customer->name,
@@ -53,16 +53,23 @@ class AddOrderBookingResource extends JsonResource
                     'notes' => $orderProduct->notes,
                 ];
             }),
-            'restaurant' => $obj->restaurant,
-            'restaurant_timings' => $obj->restaurant->timings,
-            // 'restaurant_timings' => $obj->restaurant ? $obj->restaurant->timings->map(function ($timing) {
-            //     return [
-            //         'day' => $timing->day,
-            //         'start_time' => $timing->start_time,
-            //         'end_time' => $timing->end_time,
-            //         'status' => $timing->status,
-            //     ];
-            // }) : null,
+            'restaurant' => $obj->restaurant ?
+                [
+                    'id' => $obj->restaurant->id,
+                    'name' => $obj->restaurant->name,
+                    'phone' => $obj->restaurant->phone,
+                    'email' => $obj->restaurant->email,
+                    'status' => $obj->restaurant->status,
+                ] : null,
+            'restaurant_timings' => $obj->restaurant->timings->map(function ($timing) {
+                return [
+                    'day' => $timing->day,
+                    'start_time' => $timing->start_time,
+                    'end_time' => $timing->end_time,
+                    'status' => $timing->status,
+                ];
+            }),
+
         ];
     }
 }
