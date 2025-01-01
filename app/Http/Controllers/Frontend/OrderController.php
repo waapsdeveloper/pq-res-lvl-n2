@@ -19,7 +19,7 @@ class OrderController extends Controller
         $data = $request->all();
         $customer = $request->input('customer', null);
 
-        if ($customer) {
+        if (!empty($customer)) {
             $customerName = $data['customer_name'];
             $customerPhone = $data['customer_phone'];
             $customerPhone = $data['customer_email'];
