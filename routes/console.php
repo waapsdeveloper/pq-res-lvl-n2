@@ -16,6 +16,6 @@ Artisan::command('inspire', function () {
 //     logger()->info('This is a scheduled task');
 // })->everySecond();
 
-Schedule::call(new CreateRandomOrderJobClass)->everyTenSeconds();
+Schedule::call(new CreateRandomOrderJobClass)->everyTwentySeconds();
 
 // Schedule::command(CreateRandomOrderJob::class)->everyTenSeconds();
