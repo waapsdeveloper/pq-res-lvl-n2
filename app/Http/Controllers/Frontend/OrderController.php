@@ -75,7 +75,7 @@ class OrderController extends Controller
         }
 
         $discount = $data['discount'] ?? 0;
-        $type = $data['type'] ?? 'take-away';
+        $type = $data['type'] ?? 'dine-in';
         $tableNo = $data['tableNo'] ?? null;
         $finalPrice = $totalPrice - $discount;
         $orderNumber = strtoupper(uniqid('ORD-'));
@@ -85,7 +85,7 @@ class OrderController extends Controller
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
             'order_number' => $orderNumber,
-            'type' => !empty($rtableIdf) ? 'dine-in' : '',
+            'type' => !empty($rtableIdf) ? $type : '',
             'status' => $orderStatus,
             'notes' => $orderNote,
             'customer_id' => $customerId,
