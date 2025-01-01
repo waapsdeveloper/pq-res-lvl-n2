@@ -33,7 +33,7 @@ class OrderController extends Controller
             $customer = User::create([
                 'name' => 'walk-in-customer',
                 'phone' => $phone,
-                'email' => 'walk-in-customer@domain.com',  // Use a default or dynamic email
+                'email' => $phone'@domain.com',  // Use a default or dynamic email
                 'role_id' => 0,  // Default role for walk-in customers
             ]);
             $customerId = $customer->id;  // Use the newly created customer's ID
