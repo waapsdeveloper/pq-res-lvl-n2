@@ -1,10 +1,10 @@
 <?php
 
 // use App\Console\Commands\CreateRandomOrderJob;
-// use App\CreateRandomOrderJobClass;
+use App\CreateRandomOrderJobClass;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
-// use Illuminate\Support\Facades\Schedule;
+use Illuminate\Support\Facades\Schedule;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
@@ -16,6 +16,6 @@ Artisan::command('inspire', function () {
 //     logger()->info('This is a scheduled task');
 // })->everySecond();
 
-// Schedule::call(new CreateRandomOrderJobClass)->everyTenSeconds();
+Schedule::call(new CreateRandomOrderJobClass)->everyTenSeconds();
 
 // Schedule::command(CreateRandomOrderJob::class)->everyTenSeconds();
