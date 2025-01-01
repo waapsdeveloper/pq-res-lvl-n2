@@ -40,7 +40,7 @@ class AddOrderBookingResource extends JsonResource
                 'email' => $obj->customer->email,
             ] : null,
             'discount' => $obj->discount,
-            'invoice_no' => $obj->invoice,
+            'invoice_no' => $obj->invoice_no,
             'table_no' => $obj->table_no,
             'total_price' => $obj->total_price,
             'order_at' => $obj->order_at,
@@ -54,14 +54,15 @@ class AddOrderBookingResource extends JsonResource
                 ];
             }),
             'restaurant' => $obj->restaurant,
-            'restaurant_timings' => $obj->restaurant ? $obj->restaurant->timings->map(function ($timing) {
-                return [
-                    'day' => $timing->day,
-                    'start_time' => $timing->start_time,
-                    'end_time' => $timing->end_time,
-                    'status' => $timing->status,
-                ];
-            }) : null,
+            'restaurant_timings' => $obj->restaurant->timings,
+            // 'restaurant_timings' => $obj->restaurant ? $obj->restaurant->timings->map(function ($timing) {
+            //     return [
+            //         'day' => $timing->day,
+            //         'start_time' => $timing->start_time,
+            //         'end_time' => $timing->end_time,
+            //         'status' => $timing->status,
+            //     ];
+            // }) : null,
         ];
     }
 }
