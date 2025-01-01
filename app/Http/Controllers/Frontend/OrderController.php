@@ -84,6 +84,7 @@ class OrderController extends Controller
             'invoice' => 'INV-' . uniqid(),
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
+            'order_at' => now(),
         ]);
 
         foreach ($orderProducts as $orderProduct) {
