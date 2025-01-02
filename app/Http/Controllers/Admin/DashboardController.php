@@ -228,148 +228,225 @@ class DashboardController extends Controller
     public function getSalesChartData(Request $request)
     {
         // Get the date from the request or default to today's date
-        $thisDate = $request->input('date', Carbon::now()->toDateString());
+        $Date = $request->input('date', Carbon::now()->toDateString());
+        $selectedDate = Carbon::parse($Date);
         $param = $request->input('param', 'day');  // Default to 'day' if param is not provided
 
         // Prepare date ranges based on the requested param (day or week)
         if ($param == 'day') {
-            $lastDate = Carbon::parse($thisDate)->subDay()->toDateString();
+            // Get the start and end dates for the current day
+            $currentStart = $selectedDate->copy()->startOfDay(); // Start of the current day (00:00:00)
+            $currentEnd = $selectedDate->copy()->endOfDay();   // End of the current day (23:59:59)
 
-            // Count product prices for this day (without quantity)
-            $thisDayData = DB::table('order_products')
-                ->join('products', 'order_products.product_id', '=', 'products.id')
-                ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
-                ->whereDate('order_products.created_at', $thisDate)
-                ->groupBy('order_products.product_id', 'products.name')
-                ->orderByDesc('total_price')  // Sort by total price in descending order
-                ->get()
-                ->take(10);  // Limit to the top 10
+            $startCurrent = $currentStart->toDateTimeString();  // Format: Y-m-d H:i:s
+            $endCurrent = $currentEnd->toDateTimeString();      // Format: Y-m-d H:i:s
 
-            // Count product prices for last day (without quantity)
-            $lastDayData = DB::table('order_products')
-                ->join('products', 'order_products.product_id', '=', 'products.id')
-                ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
-                ->whereDate('order_products.created_at', $lastDate)
-                ->groupBy('order_products.product_id', 'products.name')
-                ->orderByDesc('total_price')  // Sort by total price in descending order
-                ->get()
-                ->take(10);  // Limit to the top 10
+            // Get the start and end dates for the previous day
+            $previousStart = $selectedDate->copy()->subDay()->startOfDay(); // Start of the previous day (00:00:00)
+            $previousEnd = $selectedDate->copy()->subDay()->endOfDay();   // End of the previous day (23:59:59)
 
-            // Merge categories from both days, ensuring uniqueness
-            $categories = $thisDayData->pluck('category')
-                ->merge($lastDayData->pluck('category'))
-                ->unique()
-                ->values()
-                ->all();
-
-            // Initialize the series data structure
-            $seriesData = [
-                'This Day' => array_fill(0, count($categories), 0),  // Default to 0 for this day
-                'Last Day' => array_fill(0, count($categories), 0),  // Default to 0 for last day
-            ];
-
-            // Map product prices to the correct categories (index-based)
-            $categoryIndex = array_flip($categories);  // Map category names to their index positions
-
-            // Add this day data to series data
-            foreach ($thisDayData as $item) {
-                $index = $categoryIndex[$item->category];
-                $seriesData['This Day'][$index] = $this->formatPrice($item->total_price);
-            }
-
-            // Add last day data to series data
-            foreach ($lastDayData as $item) {
-                $index = $categoryIndex[$item->category];
-                $seriesData['Last Day'][$index] = $this->formatPrice($item->total_price);
-            }
-
-            // Prepare the response data
-            $responseData = [
-                'categories' => $categories,
-                'series' => [
-                    [
-                        'name' => 'This Day',
-                        'data' => $seriesData['This Day']
-                    ],
-                    [
-                        'name' => 'Last Day',
-                        'data' => $seriesData['Last Day']
-                    ]
-                ]
-            ];
+            $startPrevious = $previousStart->toDateTimeString(); // Format: Y-m-d H:i:s
+            $endPrevious = $previousEnd->toDateTimeString();     // Format: Y-m-d
         } elseif ($param == 'week') {
-            // Calculate the start and end of this week and last week
-            $startOfWeek = Carbon::parse($thisDate)->startOfWeek()->toDateString();
-            $endOfWeek = Carbon::parse($thisDate)->endOfWeek()->toDateString();
-            $startOfLastWeek = Carbon::parse($startOfWeek)->subWeek()->toDateString();
-            $endOfLastWeek = Carbon::parse($endOfWeek)->subWeek()->toDateString();
+            // Get the start and end dates for the current week
+            $currentStart = $selectedDate->copy()->startOfWeek(); // Start of the current week
+            $currentEnd = $selectedDate->copy()->endOfWeek();   // End of the current week
 
-            // Count product prices for this week (without quantity)
-            $thisWeekData = DB::table('order_products')
-                ->join('products', 'order_products.product_id', '=', 'products.id')
-                ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
-                ->whereBetween('order_products.created_at', [$startOfWeek, $endOfWeek])
-                ->groupBy('order_products.product_id', 'products.name')
-                ->orderByDesc('total_price')  // Sort by total price in descending order
-                ->get()
-                ->take(10);  // Limit to the top 10
+            $startCurrent = $currentStart->toDateString();  // Format: Y-m-d
+            $endCurrent = $currentEnd->toDateString();      // Format: Y-m-d
 
-            // Count product prices for last week (without quantity)
-            $lastWeekData = DB::table('order_products')
-                ->join('products', 'order_products.product_id', '=', 'products.id')
-                ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
-                ->whereBetween('order_products.created_at', [$startOfLastWeek, $endOfLastWeek])
-                ->groupBy('order_products.product_id', 'products.name')
-                ->orderByDesc('total_price')  // Sort by total price in descending order
-                ->get()
-                ->take(10);  // Limit to the top 10
+            // Get the start and end dates for the previous week
+            $previousStart = $selectedDate->copy()->subWeek()->startOfWeek(); // Start of the previous week
+            $previousEnd = $selectedDate->copy()->subWeek()->endOfWeek();   // End of the previous week
 
-            // Merge categories from both weeks, ensuring uniqueness
-            $categories = $thisWeekData->pluck('category')
-                ->merge($lastWeekData->pluck('category'))
-                ->unique()
-                ->values()
-                ->all();
+            $startPrevious = $previousStart->toDateString(); // Format: Y-m-d
+            $endPrevious = $previousEnd->toDateString();     // Format: Y-m-d
+            // dd($currentStart, $currentEnd, $previousStart, $previousEnd);
+        } elseif ($param == 'month') {
+            $currentStart = $selectedDate->copy()->startOfMonth();
+            $currentEnd = $selectedDate->copy()->endOfMonth();
 
-            // Initialize the series data structure
-            $seriesData = [
-                'This Week' => array_fill(0, count($categories), 0),  // Default to 0 for this week
-                'Last Week' => array_fill(0, count($categories), 0),  // Default to 0 for last week
-            ];
+            // Get the start and end dates for the previous month
+            $previousStart = $selectedDate->copy()->subMonth()->startOfMonth();
+            $previousEnd = $selectedDate->copy()->subMonth()->endOfMonth();
 
-            // Map product prices to the correct categories (index-based)
-            $categoryIndex = array_flip($categories);  // Map category names to their index positions
+            $startCurrent = $currentStart->toDateString(); // Format: Y-m-d
+            $endCurrent = $currentEnd->toDateString();   // Format: Y-m-d
 
-            // Add this week data to series data
-            foreach ($thisWeekData as $item) {
-                $index = $categoryIndex[$item->category];
-                $seriesData['This Week'][$index] = $this->formatPrice($item->total_price);
-            }
-
-            // Add last week data to series data
-            foreach ($lastWeekData as $item) {
-                $index = $categoryIndex[$item->category];
-                $seriesData['Last Week'][$index] = $this->formatPrice($item->total_price);
-            }
-
-            // Prepare the response data
-            $responseData = [
-                'categories' => $categories,
-                'series' => [
-                    [
-                        'name' => 'This Week',
-                        'data' => $seriesData['This Week']
-                    ],
-                    [
-                        'name' => 'Last Week',
-                        'data' => $seriesData['Last Week']
-                    ]
-                ]
-            ];
+            $startPrevious = $previousStart->toDateString(); // Format: Y-m-d
+            $endPrevious = $previousEnd->toDateString();   // Ending date
         } else {
             // Return error if param is invalid
             return ServiceResponse::error('Invalid param value', 400);
         }
+
+        // dd($param, $startCurrent, $endCurrent, $startPrevious, $endPrevious);
+        $currentOrderProducts = OrderProduct::whereHas('order', function ($query) use ($startCurrent, $endCurrent) {
+            $query->whereBetween('order_at', [$startCurrent, $endCurrent]);
+        })
+            ->join('products', 'order_products.product_id', '=', 'products.id') // Join with products table
+            ->selectRaw('
+            order_products.order_id, 
+            order_products.product_id, 
+            GROUP_CONCAT(order_products.quantity) as total_quantity, 
+            SUM(order_products.quantity * order_products.price) as total_price, 
+            products.name as category
+        ')
+            ->groupBy('order_products.order_id', 'order_products.product_id', 'products.name') // Group by required fields
+            ->get();
+
+        // Transforming the data to get categories as an array
+        $currentProducts = [];
+        foreach ($currentOrderProducts as $orderProduct) {
+            // Explode product names into an array
+            $categories = explode(',', $orderProduct->category);
+            if ($orderProduct->total_price > 0) {
+                // dd($categories);
+                $currentProducts[] = [
+                    'product_name' => $categories,
+                    'total_price' => $orderProduct->total_price
+                ];
+            }
+        }
+
+        // return $currentProducts;
+
+        $previousOrderProducts = OrderProduct::whereHas('order', function ($query) use ($startPrevious, $endPrevious) {
+            $query->whereBetween('order_at', [$startPrevious, $endPrevious]);
+        })
+            ->join('products', 'order_products.product_id', '=', 'products.id') // Join with products table
+            ->selectRaw('
+            order_products.order_id, 
+            order_products.product_id, 
+            GROUP_CONCAT(order_products.quantity) as total_quantity, 
+            SUM(order_products.quantity * order_products.price) as total_price, 
+            products.name as category
+            ')
+            ->groupBy('order_products.order_id', 'order_products.product_id', 'products.name') // Group by required fields
+            ->get();
+
+        // Transforming the data to get categories as an array
+        $previousProducts = [];
+        foreach ($previousOrderProducts as $orderProduct) {
+            // Explode product names into an array
+            // dd($previousOrderProducts);
+            $categories = explode(',', $orderProduct->category);
+            if ($orderProduct->total_price > 0) {
+                $previousProducts[] = [
+                    'product_name' => $categories,
+                    'total_price' => $orderProduct->total_price
+                ];
+            }
+        }
+
+        $mergedProducts = array_merge($currentProducts, $previousProducts);
+
+        if ($param == 'day') {
+
+            $startDuration = $currentStart->format('Y-m-d');
+            $endDuraton = $previousStart->format('Y-m-d');
+        } elseif ($param == 'week') {
+            $startDuration = $currentStart->week();
+            $endDuraton = $previousStart->week();
+        } elseif ($param == 'month') {
+            $startDuration = $currentStart->format('F');
+            $endDuraton = $previousStart->format('F');
+        }
+        // $currentMonth  = $currentMonthStart->format('F');
+        // $previousMonth = $previousMonthStart->format('F');
+        $categories = [];
+        foreach ($mergedProducts as $product) {
+            foreach ($product['product_name'] as $category) {
+                if (!isset($categories[$category])) {
+                    $categories[$category] = [];
+                }
+
+                // Store products by category and month
+                $categories[$category][] = [
+                    'product_name' => $category,
+                    "{$param}_current" => $startDuration ? $startDuration : null,
+                    "{$param}_previous" => $endDuraton ? $endDuraton : null,
+                    'total_price' => $product['total_price']
+                ];
+            }
+        }
+
+        // Initialize the series data structure
+        $seriesData = [
+            "This {$param}" => [],
+            "Last {$param}" => [],
+        ];
+
+        // Fill the series data for "This Month"
+        foreach ($categories as $category => $items) {
+            $totalPriceThis = 0;
+            foreach ($items as $item) {
+                if ($item["{$param}_current"] === $startDuration) {
+                    $totalPriceThis += $item['total_price'];
+                }
+            }
+            $seriesData["This {$param}"][] = $this->formatPrice($totalPriceThis);
+        }
+
+        // Fill the series data for "Last Month"
+        $categoryTotals = [];
+
+        // Loop through categories to calculate the total price for each category
+        foreach ($categories as $category => $items) {
+            $totalPriceCurrent = 0;
+            $totalPriceLast = 0;
+
+            foreach ($items as $item) {
+                // Add current month price
+                if ($item["{$param}_current"] === $startDuration) {
+                    $totalPriceCurrent += $item['total_price'];
+                }
+
+                // Add previous month price
+                if ($item["{$param}_previous"] === $endDuraton) {
+                    $totalPriceLast += $item['total_price'];
+                }
+            }
+
+            // Store the total price for this category
+            $categoryTotals[$category] = [
+                "{$param}_current" => $totalPriceCurrent,
+                "{$param}_previous" => $totalPriceLast
+            ];
+        }
+
+        // Sort categories by total price for this month in descending order
+        arsort($categoryTotals);
+
+        // Limit to top 10 categories
+        $categoryTotals = array_slice($categoryTotals, 0, 10, true);
+
+        // Prepare the series data for top 10 categories
+        $seriesData = [
+            "This {$param}" => [],
+            "Last {$param}" => []
+        ];
+
+        // Fill series data for top 10 categories
+        foreach ($categoryTotals as $category => $totalPrice) {
+            $seriesData["This {$param}"][] = $this->formatPrice($totalPrice["{$param}_current"]);
+            $seriesData["Last {$param}"][] = $this->formatPrice($totalPrice["{$param}_previous"]);
+        }
+
+        // Prepare the response data
+        $responseData = [
+            'categories' => array_keys($categoryTotals),  // Extract top 10 category names
+            'series' => [
+                [
+                    'name' => "This {$param}",
+                    'data' => $seriesData["This {$param}"],
+                ],
+                [
+                    'name' => "Last {$param}",
+                    'data' => $seriesData["Last {$param}"],
+                ],
+            ],
+        ];
 
         return ServiceResponse::success('Sales Chart Data', $responseData);
     }
@@ -383,13 +460,13 @@ class DashboardController extends Controller
     private function formatPrice($price)
     {
         if ($price >= 1000000000) {
-            return number_format($price / 1000000000, 1) . 'B';
+            return number_format($price / 1000000000) . 'B';  // No decimal for billions
         } elseif ($price >= 1000000) {
-            return number_format($price / 1000000, 1) . 'M';
+            return number_format($price / 1000000) . 'M';  // No decimal for millions
         } elseif ($price >= 1000) {
-            return number_format($price / 1000, 1) . 'K';
+            return number_format($price / 1000) . 'K';  // No decimal for thousands
         }
 
-        return number_format($price, 2);  // Format for values less than 1000
+        return number_format($price);  // No decimal for values less than 1000
     }
 }
