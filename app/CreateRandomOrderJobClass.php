@@ -37,7 +37,8 @@ class CreateRandomOrderJobClass
 
         $products = Product::whereIn('id', $productIds)->get();
 
-        // $customer_id = Arr::random([10, 11, 12, 13, 14, 15, '']);
+        $customer_ids = User::pluck('id')->toArray();  // Get all user IDs from the users table
+        $customer_id = Arr::random($customer_ids);
 
         $totalPrice = 0;
         $orderProducts = [];
@@ -81,10 +82,10 @@ class CreateRandomOrderJobClass
             'type' => $type,
             'status' => $status,
             'notes' => 'This is a randomly generated order.',
-            'customer_id' => rand(1, 100),
+            'customer_id' =>  $customer_id,
             'discount' => $discount,
             'invoice_no' => strtoupper(uniqid('INV-')),
-            'table_no' => rand(10, 100),
+            'table_no' => rand(1, 20),
             'total_price' => $finalPrice,
             'restaurant_id' => 1,
             'order_at' => $randomDate,
