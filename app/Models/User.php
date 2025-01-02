@@ -63,4 +63,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserAddresses::class, 'user_id', 'id');
     }
+    public function orders()
+    {
+        return $this->belongsTo(Order::class, 'id', 'customer_id');
+    }
 }

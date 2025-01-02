@@ -101,7 +101,7 @@ class DashboardController extends Controller
             ->orderBy(DB::raw('YEAR(created_at)'))
             ->get();
         $data['new_customers'] = User::whereNull('role_id')
-            ->has('orders', '=', 0) // Assuming users with no orders are new
+            ->has('orders', '=', 0 || null) // Assuming users with no orders are new
             ->count();
 
         // Returning Customers: Customers with multiple orders or interactions
@@ -156,7 +156,7 @@ class DashboardController extends Controller
                 $productsData[$item->product_id] = [
                     'product_id' => $item->product_id,
                     'product_name' => $item->category,
-                    'this_day_count' => 0, // Default to 0 if not present in the this day
+                    'this_day_count' => 0,
                 ];
             }
             $productsData[$item->product_id]['last_day_count'] = $item->count;
