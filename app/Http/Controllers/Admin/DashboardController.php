@@ -160,13 +160,13 @@ class DashboardController extends Controller
         // Add this day data to series data
         foreach ($thisDayData as $item) {
             $index = $categoryIndex[$item->category];
-            $seriesData['This Day'][$index] = $item->total_price;
+            $seriesData['This Day'][$index] = $this->formatPrice($item->total_price);
         }
 
         // Add last day data to series data
         foreach ($lastDayData as $item) {
             $index = $categoryIndex[$item->category];
-            $seriesData['Last Day'][$index] = $item->total_price;
+            $seriesData['Last Day'][$index] = $this->formatPrice($item->total_price);
         }
 
         // Filter out products where both 'This Day' and 'Last Day' total prices are zero
@@ -204,5 +204,24 @@ class DashboardController extends Controller
         ];
 
         return ServiceResponse::success('Sales Chart Data', $responseData);
+    }
+
+    /**
+     * Format the price into k, M, and B notation
+     * 
+     * @param float $price
+     * @return string
+     */
+    private function formatPrice($price)
+    {
+        if ($price >= 1000000000) {
+            return number_format($price / 1000000000, 1) . 'B';
+        } elseif ($price >= 1000000) {
+            return number_format($price / 1000000, 1) . 'M';
+        } elseif ($price >= 1000) {
+            return number_format($price / 1000, 1) . 'K';
+        }
+
+        return number_format($price, 2);  // Format for values less than 1000
     }
 }
