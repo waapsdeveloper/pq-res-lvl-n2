@@ -202,12 +202,12 @@ class DashboardController extends Controller
             'categories' => $finalCategories,
             'series' => [
                 [
-                    'name' => 'This Day',
-                    'data' => $thisDayCounts
-                ],
-                [
                     'name' => 'Last Day',
                     'data' => $lastDayCounts
+                ],
+                [
+                    'name' => 'This Day',
+                    'data' => $thisDayCounts
                 ]
             ]
         ];
