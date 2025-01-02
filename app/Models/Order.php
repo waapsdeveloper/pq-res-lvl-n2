@@ -49,4 +49,8 @@ class Order extends Model
     {
         return $this->belongsTo(Restaurant::class, 'rtable_id', 'id');
     }
+    public function table()
+    {
+        return $this->belongsTo(Rtable::class, 'table_no', 'id');
+    }
 }

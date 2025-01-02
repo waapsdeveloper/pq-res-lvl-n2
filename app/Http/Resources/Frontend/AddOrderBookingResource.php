@@ -69,6 +69,7 @@ class AddOrderBookingResource extends JsonResource
                     'status' => $timing->status,
                 ];
             }),
+            'table' => $obj->table ?? null,
 
         ];
     }

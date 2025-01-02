@@ -118,10 +118,8 @@ class OrderController extends Controller
 
     public function trackCustomerOrder(Request $request, $orderId)
     {
-        $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'rtable')
+        $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table')
             ->find($orderId);
-        $customer = User::findOrfail($order->customer_id);
-        // dd($order);
         $data = new AddOrderBookingResource($order);
         return ServiceResponse::success("Customer Order Tracked Successfully", ['customer_order' => $data]);
     }
