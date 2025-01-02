@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreInvoiceRequest;
 use App\Http\Resources\Admin\InvoiceResource;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
@@ -66,9 +67,20 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreInvoiceRequest $request)
     {
-        //
+
+
+        $data = $request->validated();
+        // Create a new invoice
+        $invoice = Invoice::create([
+            'order_id' => $data['order_id'],
+            'invoice_no' => $data['invoice_no'],
+            'invoice_date' => $data['invoice_date'],
+            'payment_method' => $data['payment_method'],
+            'total' => $data['total'],
+            'status' => $data['status'],
+        ]);
     }
 
     /**

@@ -20,11 +20,12 @@ class InvoiceResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
-        // dd($obj->order->orderProducts);
+        // dd($obj->order->customer);
         return [
             "id" => $obj->id,
             'order_number' => $obj->order->order_number,
             'order_products' => $obj->order ? $obj->order->orderProducts : "",
+            'customer' => $obj->order->customer,
             "invoice_no" => $obj->invoice_no,
             "invoice_date" => $obj->invoice_date,
             "payment_method" => $obj->payment_method,

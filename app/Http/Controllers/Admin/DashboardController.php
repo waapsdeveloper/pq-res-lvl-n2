@@ -6,11 +6,13 @@ use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderProduct;
 use App\Models\User;
 use App\Models\Rtable;
 use App\Models\RTablesBooking;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -102,4 +104,70 @@ class DashboardController extends Controller
         // Response
         return ServiceResponse::success('Customer registration data fetched successfully', ['customer', $data]);
     }
+    public function getSalesChartData()
+    {
+        $thisDate = Carbon::now()->toDateString();
+        $lastDate = Carbon::yesterday()->toDateString();
+
+        // Count product_id occurrences for the this day with product names
+        $thisDayData = DB::table('order_products')
+            ->join('products', 'order_products.product_id', '=', 'products.id')
+            ->select('order_products.product_id', 'products.name as category', DB::raw('COUNT(order_products.product_id) as count'))
+            ->whereDate('order_products.created_at', $thisDate)
+            ->groupBy('order_products.product_id', 'products.name')
+            ->orderBy('count', 'desc')
+            ->get();
+
+        // Count product_id occurrences for the last day with product names
+        $lastDayData = DB::table('order_products')
+            ->join('products', 'order_products.product_id', '=', 'products.id')
+            ->select('order_products.product_id', 'products.name as category', DB::raw('COUNT(order_products.product_id) as count'))
+            ->whereDate('order_products.created_at', $lastDate)
+            ->groupBy('order_products.product_id', 'products.name')
+            ->orderBy('count', 'desc')
+            ->get();
+
+        $categories = $thisDayData->pluck('category')
+            ->merge($lastDayData->pluck('category'))
+            ->unique()
+            ->values()
+            ->all();
+
+        $productsData = [];
+
+        // Add this day data to the product array
+        foreach ($thisDayData as $item) {
+            $productsData[$item->product_id]['product_id'] = $item->product_id;
+            $productsData[$item->product_id]['product_name'] = $item->category;
+            $productsData[$item->product_id]['this_day_count'] = $item->count;
+        }
+
+        // Add last day data to the product array
+        foreach ($lastDayData as $item) {
+            if (!isset($productsData[$item->product_id])) {
+                $productsData[$item->product_id] = [
+                    'product_id' => $item->product_id,
+                    'product_name' => $item->category,
+                    'this_day_count' => 0, // Default to 0 if not present in the this day
+                ];
+            }
+            $productsData[$item->product_id]['last_day_count'] = $item->count;
+        }
+
+        // Ensure all products have 'last_day_count' set to 0 if not already set
+        foreach ($productsData as $productId => &$data) {
+            if (!isset($data['last_day_count'])) {
+                $data['last_day_count'] = 0;
+            }
+        }
+
+        // Convert products data to an array for response
+        $productsDataArray = array_values($productsData);
+
+        return response()->json([
+            'categories' => $categories,
+            'products' => $productsDataArray
+        ]);
+    }
+    // public function 
 }

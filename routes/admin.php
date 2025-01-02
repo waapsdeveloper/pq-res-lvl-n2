@@ -157,5 +157,6 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/top-selling-products', [DashboardController::class, 'topSellingProducts'])->name('dashboard.topSellingProducts');
     Route::get('/latest-tables', [DashboardController::class, 'latestTables'])->name('dashboard.latestTables');
     Route::get('/customers', [DashboardController::class, 'customer'])->name('dashboard.customer');
+    Route::get('/sales-chart-data', [DashboardController::class, 'getSalesChartData'])->name('dashboard.salesChartData');
     // Route::get('/total-revenue', [DashboardController::class, 'totalRevenue'])->name('dashboard.totalRevenue');
 });
