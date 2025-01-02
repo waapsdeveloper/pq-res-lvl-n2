@@ -113,85 +113,22 @@ class DashboardController extends Controller
         // Response
         return ServiceResponse::success('Customer registration data fetched successfully', ['customer', $data]);
     }
-    // public function getSalesChartData(Request $request)
-    // {
-    //     $thisDate = $request->input('date', Carbon::now()->toDateString());
-    //     $lastDate = Carbon::yesterday()->toDateString();
 
-    //     // Count product_id occurrences for the this day with product names
-    //     $thisDayData = DB::table('order_products')
-    //         ->join('products', 'order_products.product_id', '=', 'products.id')
-    //         ->select('order_products.product_id', 'products.name as category', DB::raw('COUNT(order_products.product_id) as count'))
-    //         ->whereDate('order_products.created_at', $thisDate)
-    //         ->groupBy('order_products.product_id', 'products.name')
-    //         ->orderBy('count', 'desc')
-    //         // ->limit(20)
-    //         ->get();
 
-    //     // Count product_id occurrences for the last day with product names
-    //     $lastDayData = DB::table('order_products')
-    //         ->join('products', 'order_products.product_id', '=', 'products.id')
-    //         ->select('order_products.product_id', 'products.name as category', DB::raw('COUNT(order_products.product_id) as count'))
-    //         ->whereDate('order_products.created_at', $lastDate)
-    //         ->groupBy('order_products.product_id', 'products.name')
-    //         ->orderBy('count', 'desc')
-    //         // ->limit(20)
-    //         ->get();
-
-    //     $categories = $thisDayData->pluck('category')
-    //         ->merge($lastDayData->pluck('category'))
-    //         ->unique()
-    //         ->values()
-    //         ->all();
-
-    //     $productsData = [];
-
-    //     // Add this day data to the product array
-    //     foreach ($thisDayData as $item) {
-    //         $productsData[$item->product_id]['product_id'] = $item->product_id;
-    //         $productsData[$item->product_id]['product_name'] = $item->category;
-    //         $productsData[$item->product_id]['this_day_count'] = $item->count;
-    //     }
-
-    //     // Add last day data to the product array
-    //     foreach ($lastDayData as $item) {
-    //         if (!isset($productsData[$item->product_id])) {
-    //             $productsData[$item->product_id] = [
-    //                 'product_id' => $item->product_id,
-    //                 'product_name' => $item->category,
-    //                 'this_day_count' => 0,
-    //             ];
-    //         }
-    //         $productsData[$item->product_id]['last_day_count'] = $item->count;
-    //     }
-
-    //     // Ensure all products have 'last_day_count' set to 0 if not already set
-    //     foreach ($productsData as $productId => &$data) {
-    //         if (!isset($data['last_day_count'])) {
-    //             $data['last_day_count'] = 0;
-    //         }
-    //     }
-
-    //     // Convert products data to an array for response
-    //     $productsDataArray = array_values($productsData);
-    //     return ServiceResponse::success('Sales Chart Data', [
-    //         'categories' => $categories,
-    //         'products' => $productsDataArray
-    //     ]);
-    // }
     public function getSalesChartData(Request $request)
     {
         $thisDate = $request->input('date', Carbon::now()->toDateString());
         $lastDate = Carbon::parse($thisDate)->subDay()->toDateString();  // Use dynamic date for last day
 
-        // Count product_id occurrences for the this day with product names
+        // Count product_id occurrences for this day with product names
         $thisDayData = DB::table('order_products')
             ->join('products', 'order_products.product_id', '=', 'products.id')
             ->select('order_products.product_id', 'products.name as category', DB::raw('COUNT(order_products.product_id) as count'))
             ->whereDate('order_products.created_at', $thisDate)
             ->groupBy('order_products.product_id', 'products.name')
-            ->orderBy('count', 'desc')
-            ->get();
+            ->orderByDesc('count')  // Sort by count in descending order
+            ->get()
+            ->take(10);  // Limit to the top 10
 
         // Count product_id occurrences for the last day with product names
         $lastDayData = DB::table('order_products')
@@ -199,8 +136,9 @@ class DashboardController extends Controller
             ->select('order_products.product_id', 'products.name as category', DB::raw('COUNT(order_products.product_id) as count'))
             ->whereDate('order_products.created_at', $lastDate)
             ->groupBy('order_products.product_id', 'products.name')
-            ->orderBy('count', 'desc')
-            ->get();
+            ->orderByDesc('count')  // Sort by count in descending order
+            ->get()
+            ->take(10);  // Limit to the top 10
 
         // Merge categories from both days, ensuring uniqueness
         $categories = $thisDayData->pluck('category')
@@ -230,17 +168,36 @@ class DashboardController extends Controller
             $seriesData['Last Day'][$index] = $item->count;
         }
 
-        // Format the response for the chart
+        // Filter out products where both 'This Day' and 'Last Day' counts are zero
+        $filteredData = [];
+        foreach ($categoryIndex as $category => $index) {
+            if ($seriesData['This Day'][$index] > 0 || $seriesData['Last Day'][$index] > 0) {
+                $filteredData[] = [
+                    'category' => $category,
+                    'this_day_count' => $seriesData['This Day'][$index],
+                    'last_day_count' => $seriesData['Last Day'][$index]
+                ];
+            }
+        }
+
+        // Take only the first 10 items for both days (after filtering)
+        $filteredData = array_slice($filteredData, 0, 10);
+
+        // Prepare the final series data
+        $finalCategories = array_column($filteredData, 'category');
+        $thisDayCounts = array_column($filteredData, 'this_day_count');
+        $lastDayCounts = array_column($filteredData, 'last_day_count');
+
         $responseData = [
-            'categories' => $categories,
+            'categories' => $finalCategories,
             'series' => [
                 [
                     'name' => 'This Day',
-                    'data' => $seriesData['This Day']
+                    'data' => $thisDayCounts
                 ],
                 [
                     'name' => 'Last Day',
-                    'data' => $seriesData['Last Day']
+                    'data' => $lastDayCounts
                 ]
             ]
         ];
