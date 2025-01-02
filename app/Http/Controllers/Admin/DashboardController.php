@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
+use App\Helpers\DateHelper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -118,6 +119,15 @@ class DashboardController extends Controller
     public function getSalesChartData(Request $request)
     {
         $thisDate = $request->input('date', Carbon::now()->toDateString());
+        // if ($request->has('date')) {
+        //     $thisDate = DateHelper::parseDate($request->input('date'));
+        //     if (!$thisDate) {
+        //         return ServiceResponse::error('Invalid date format', 400);
+        //     }
+        // } else {
+        //     $thisDate = Carbon::now()->toDateString();
+        // }
+        // dd($thisDate, $request->input('date'));
         $lastDate = Carbon::parse($thisDate)->subDay()->toDateString();  // Use dynamic date for last day
 
         // Count product_id occurrences for this day with product names
