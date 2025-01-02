@@ -40,8 +40,6 @@ class DashboardController extends Controller
             return $product;
         });
 
-
-
         return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $data]);
     }
     public function topSellingProducts()
