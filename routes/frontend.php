@@ -60,4 +60,4 @@ Route::prefix('add-to-cart')->group(function () {
         ->names('cart'); // Restrict to specific CRUD actions.
 });
 Route::post('/make-order-bookings', [OrderController::class, 'makeOrderBookings']);
-Route::get('/track-customer-order/{order_id}/{phone}', [OrderController::class, 'trackCustomerOrder']);
+Route::get('/track-customer-order/{order_id}', [OrderController::class, 'trackCustomerOrder']);

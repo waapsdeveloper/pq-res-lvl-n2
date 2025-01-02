@@ -66,9 +66,21 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        // Fetch the order with its related products and restaurant
+        $invoice = Invoice::find($id);
+
+        if (!$invoice) {
+            return ServiceResponse::error('Invoice not found');
+        }
+        // Transform the order using OrderResource
+        $data = new InvoiceResource($invoice);
+        // Add the products to the resource
+
+        return ServiceResponse::success('Invoice details fetched successfully', [
+            'invoice' => $data,
+        ]);
     }
 
     /**
