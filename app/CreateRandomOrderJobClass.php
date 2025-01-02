@@ -26,6 +26,9 @@ class CreateRandomOrderJobClass
         //     'email' => uniqid() . '@domain.com',  // Use a default or dynamic email
         //     'role_id' => 0,  // Default role for walk-in customers
         // ]);
+        $customer_ids = User::pluck('id');  // Get all user IDs from the users table
+        $customer_id = $customer_ids->isNotEmpty() ? $customer_ids->random() : null;  // Select a random customer ID if available
+
         $productIds = Product::whereBetween('id', [1, 100])
             ->inRandomOrder()
             ->take(rand(1, 6))
@@ -37,9 +40,7 @@ class CreateRandomOrderJobClass
 
         $products = Product::whereIn('id', $productIds)->get();
 
-        $customer_ids = User::pluck('id');  // Get all user IDs from the users table
-        $customer_id = Arr::rand($customer_ids); // Select a random customer ID if available
-
+        // $customer_id = Arr::random([10, 11, 12, 13, 14, 15, '']);
 
         $totalPrice = 0;
         $orderProducts = [];
@@ -116,7 +117,7 @@ class CreateRandomOrderJobClass
         $payment = Payments::create([
             'order_id' => $order->id,
             'amount' => $order->total_price,
-            'customer_id' => $customer->id,
+            'customer_id' =>  $customer_id,
             'payment_status' => $paymentStatuses,
             'payment_mode' => $paymentMode,
             'payment_portal' => $paymentPortal,
