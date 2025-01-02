@@ -116,92 +116,260 @@ class DashboardController extends Controller
     }
 
 
+    // public function getSalesChartData(Request $request)
+    // {
+    //     $thisDate = $request->input('date', Carbon::now()->toDateString());
+    //     $lastDate = Carbon::parse($thisDate)->subDay()->toDateString();  // Use dynamic date for last day
+
+    //     // Sum product prices for this day (without quantity)
+    //     $thisDayData = DB::table('order_products')
+    //         ->join('products', 'order_products.product_id', '=', 'products.id')
+    //         ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
+    //         ->whereDate('order_products.created_at', $thisDate)
+    //         ->groupBy('order_products.product_id', 'products.name')
+    //         ->orderByDesc('total_price')  // Sort by total price in descending order
+    //         ->get()
+    //         ->take(10);  // Limit to the top 10
+
+    //     // Sum product prices for the last day (without quantity)
+    //     $lastDayData = DB::table('order_products')
+    //         ->join('products', 'order_products.product_id', '=', 'products.id')
+    //         ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
+    //         ->whereDate('order_products.created_at', $lastDate)
+    //         ->groupBy('order_products.product_id', 'products.name')
+    //         ->orderByDesc('total_price')  // Sort by total price in descending order
+    //         ->get()
+    //         ->take(10);  // Limit to the top 10
+
+    //     // Merge categories from both days, ensuring uniqueness
+    //     $categories = $thisDayData->pluck('category')
+    //         ->merge($lastDayData->pluck('category'))
+    //         ->unique()
+    //         ->values()
+    //         ->all();
+
+    //     // Initialize the series data structure
+    //     $seriesData = [
+    //         'This Day' => array_fill(0, count($categories), 0),  // Default to 0 for this day
+    //         'Last Day' => array_fill(0, count($categories), 0),  // Default to 0 for last day
+    //     ];
+
+    //     // Map product prices to the correct categories (index-based)
+    //     $categoryIndex = array_flip($categories);  // Map category names to their index positions
+
+    //     // Add this day data to series data
+    //     foreach ($thisDayData as $item) {
+    //         $index = $categoryIndex[$item->category];
+    //         $seriesData['This Day'][$index] = $this->formatPrice($item->total_price);
+    //     }
+
+    //     // Add last day data to series data
+    //     foreach ($lastDayData as $item) {
+    //         $index = $categoryIndex[$item->category];
+    //         $seriesData['Last Day'][$index] = $this->formatPrice($item->total_price);
+    //     }
+
+    //     // Filter out products where both 'This Day' and 'Last Day' total prices are zero
+    //     $filteredData = [];
+    //     foreach ($categoryIndex as $category => $index) {
+    //         if ($seriesData['This Day'][$index] > 0 || $seriesData['Last Day'][$index] > 0) {
+    //             $filteredData[] = [
+    //                 'category' => $category,
+    //                 'this_day_total' => $seriesData['This Day'][$index],
+    //                 'last_day_total' => $seriesData['Last Day'][$index]
+    //             ];
+    //         }
+    //     }
+
+    //     // Take only the first 10 items for both days (after filtering)
+    //     $filteredData = array_slice($filteredData, 0, 10);
+
+    //     // Prepare the final series data
+    //     $finalCategories = array_column($filteredData, 'category');
+    //     $thisDayTotals = array_column($filteredData, 'this_day_total');
+    //     $lastDayTotals = array_column($filteredData, 'last_day_total');
+
+    //     $responseData = [
+    //         'categories' => $finalCategories,
+    //         'series' => [
+    //             [
+    //                 'name' => 'This Day',
+    //                 'data' => $thisDayTotals
+    //             ],
+    //             [
+    //                 'name' => 'Last Day',
+    //                 'data' => $lastDayTotals
+    //             ]
+    //         ]
+    //     ];
+
+    //     return ServiceResponse::success('Sales Chart Data', $responseData);
+    // }
+
+    // /**
+    //  * Format the price into k, M, and B notation
+    //  * 
+    //  * @param float $price
+    //  * @return string
+    //  */
+    // private function formatPrice($price)
+    // {
+    //     if ($price >= 1000000000) {
+    //         return number_format($price / 1000000000, 1) . 'B';
+    //     } elseif ($price >= 1000000) {
+    //         return number_format($price / 1000000, 1) . 'M';
+    //     } elseif ($price >= 1000) {
+    //         return number_format($price / 1000, 1) . 'K';
+    //     }
+
+    //     return number_format($price, 2);  // Format for values less than 1000
+    // }
+
     public function getSalesChartData(Request $request)
     {
+        // Get the date from the request or default to today's date
         $thisDate = $request->input('date', Carbon::now()->toDateString());
-        $lastDate = Carbon::parse($thisDate)->subDay()->toDateString();  // Use dynamic date for last day
+        $param = $request->input('param', 'day');  // Default to 'day' if param is not provided
 
-        // Sum product prices for this day (without quantity)
-        $thisDayData = DB::table('order_products')
-            ->join('products', 'order_products.product_id', '=', 'products.id')
-            ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
-            ->whereDate('order_products.created_at', $thisDate)
-            ->groupBy('order_products.product_id', 'products.name')
-            ->orderByDesc('total_price')  // Sort by total price in descending order
-            ->get()
-            ->take(10);  // Limit to the top 10
+        // Prepare date ranges based on the requested param (day or week)
+        if ($param == 'day') {
+            $lastDate = Carbon::parse($thisDate)->subDay()->toDateString();
 
-        // Sum product prices for the last day (without quantity)
-        $lastDayData = DB::table('order_products')
-            ->join('products', 'order_products.product_id', '=', 'products.id')
-            ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
-            ->whereDate('order_products.created_at', $lastDate)
-            ->groupBy('order_products.product_id', 'products.name')
-            ->orderByDesc('total_price')  // Sort by total price in descending order
-            ->get()
-            ->take(10);  // Limit to the top 10
+            // Count product prices for this day (without quantity)
+            $thisDayData = DB::table('order_products')
+                ->join('products', 'order_products.product_id', '=', 'products.id')
+                ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
+                ->whereDate('order_products.created_at', $thisDate)
+                ->groupBy('order_products.product_id', 'products.name')
+                ->orderByDesc('total_price')  // Sort by total price in descending order
+                ->get()
+                ->take(10);  // Limit to the top 10
 
-        // Merge categories from both days, ensuring uniqueness
-        $categories = $thisDayData->pluck('category')
-            ->merge($lastDayData->pluck('category'))
-            ->unique()
-            ->values()
-            ->all();
+            // Count product prices for last day (without quantity)
+            $lastDayData = DB::table('order_products')
+                ->join('products', 'order_products.product_id', '=', 'products.id')
+                ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
+                ->whereDate('order_products.created_at', $lastDate)
+                ->groupBy('order_products.product_id', 'products.name')
+                ->orderByDesc('total_price')  // Sort by total price in descending order
+                ->get()
+                ->take(10);  // Limit to the top 10
 
-        // Initialize the series data structure
-        $seriesData = [
-            'This Day' => array_fill(0, count($categories), 0),  // Default to 0 for this day
-            'Last Day' => array_fill(0, count($categories), 0),  // Default to 0 for last day
-        ];
+            // Merge categories from both days, ensuring uniqueness
+            $categories = $thisDayData->pluck('category')
+                ->merge($lastDayData->pluck('category'))
+                ->unique()
+                ->values()
+                ->all();
 
-        // Map product prices to the correct categories (index-based)
-        $categoryIndex = array_flip($categories);  // Map category names to their index positions
+            // Initialize the series data structure
+            $seriesData = [
+                'This Day' => array_fill(0, count($categories), 0),  // Default to 0 for this day
+                'Last Day' => array_fill(0, count($categories), 0),  // Default to 0 for last day
+            ];
 
-        // Add this day data to series data
-        foreach ($thisDayData as $item) {
-            $index = $categoryIndex[$item->category];
-            $seriesData['This Day'][$index] = $this->formatPrice($item->total_price);
-        }
+            // Map product prices to the correct categories (index-based)
+            $categoryIndex = array_flip($categories);  // Map category names to their index positions
 
-        // Add last day data to series data
-        foreach ($lastDayData as $item) {
-            $index = $categoryIndex[$item->category];
-            $seriesData['Last Day'][$index] = $this->formatPrice($item->total_price);
-        }
-
-        // Filter out products where both 'This Day' and 'Last Day' total prices are zero
-        $filteredData = [];
-        foreach ($categoryIndex as $category => $index) {
-            if ($seriesData['This Day'][$index] > 0 || $seriesData['Last Day'][$index] > 0) {
-                $filteredData[] = [
-                    'category' => $category,
-                    'this_day_total' => $seriesData['This Day'][$index],
-                    'last_day_total' => $seriesData['Last Day'][$index]
-                ];
+            // Add this day data to series data
+            foreach ($thisDayData as $item) {
+                $index = $categoryIndex[$item->category];
+                $seriesData['This Day'][$index] = $this->formatPrice($item->total_price);
             }
-        }
 
-        // Take only the first 10 items for both days (after filtering)
-        $filteredData = array_slice($filteredData, 0, 10);
+            // Add last day data to series data
+            foreach ($lastDayData as $item) {
+                $index = $categoryIndex[$item->category];
+                $seriesData['Last Day'][$index] = $this->formatPrice($item->total_price);
+            }
 
-        // Prepare the final series data
-        $finalCategories = array_column($filteredData, 'category');
-        $thisDayTotals = array_column($filteredData, 'this_day_total');
-        $lastDayTotals = array_column($filteredData, 'last_day_total');
-
-        $responseData = [
-            'categories' => $finalCategories,
-            'series' => [
-                [
-                    'name' => 'This Day',
-                    'data' => $thisDayTotals
-                ],
-                [
-                    'name' => 'Last Day',
-                    'data' => $lastDayTotals
+            // Prepare the response data
+            $responseData = [
+                'categories' => $categories,
+                'series' => [
+                    [
+                        'name' => 'This Day',
+                        'data' => $seriesData['This Day']
+                    ],
+                    [
+                        'name' => 'Last Day',
+                        'data' => $seriesData['Last Day']
+                    ]
                 ]
-            ]
-        ];
+            ];
+        } elseif ($param == 'week') {
+            // Calculate the start and end of this week and last week
+            $startOfWeek = Carbon::parse($thisDate)->startOfWeek()->toDateString();
+            $endOfWeek = Carbon::parse($thisDate)->endOfWeek()->toDateString();
+            $startOfLastWeek = Carbon::parse($startOfWeek)->subWeek()->toDateString();
+            $endOfLastWeek = Carbon::parse($endOfWeek)->subWeek()->toDateString();
+
+            // Count product prices for this week (without quantity)
+            $thisWeekData = DB::table('order_products')
+                ->join('products', 'order_products.product_id', '=', 'products.id')
+                ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
+                ->whereBetween('order_products.created_at', [$startOfWeek, $endOfWeek])
+                ->groupBy('order_products.product_id', 'products.name')
+                ->orderByDesc('total_price')  // Sort by total price in descending order
+                ->get()
+                ->take(10);  // Limit to the top 10
+
+            // Count product prices for last week (without quantity)
+            $lastWeekData = DB::table('order_products')
+                ->join('products', 'order_products.product_id', '=', 'products.id')
+                ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
+                ->whereBetween('order_products.created_at', [$startOfLastWeek, $endOfLastWeek])
+                ->groupBy('order_products.product_id', 'products.name')
+                ->orderByDesc('total_price')  // Sort by total price in descending order
+                ->get()
+                ->take(10);  // Limit to the top 10
+
+            // Merge categories from both weeks, ensuring uniqueness
+            $categories = $thisWeekData->pluck('category')
+                ->merge($lastWeekData->pluck('category'))
+                ->unique()
+                ->values()
+                ->all();
+
+            // Initialize the series data structure
+            $seriesData = [
+                'This Week' => array_fill(0, count($categories), 0),  // Default to 0 for this week
+                'Last Week' => array_fill(0, count($categories), 0),  // Default to 0 for last week
+            ];
+
+            // Map product prices to the correct categories (index-based)
+            $categoryIndex = array_flip($categories);  // Map category names to their index positions
+
+            // Add this week data to series data
+            foreach ($thisWeekData as $item) {
+                $index = $categoryIndex[$item->category];
+                $seriesData['This Week'][$index] = $this->formatPrice($item->total_price);
+            }
+
+            // Add last week data to series data
+            foreach ($lastWeekData as $item) {
+                $index = $categoryIndex[$item->category];
+                $seriesData['Last Week'][$index] = $this->formatPrice($item->total_price);
+            }
+
+            // Prepare the response data
+            $responseData = [
+                'categories' => $categories,
+                'series' => [
+                    [
+                        'name' => 'This Week',
+                        'data' => $seriesData['This Week']
+                    ],
+                    [
+                        'name' => 'Last Week',
+                        'data' => $seriesData['Last Week']
+                    ]
+                ]
+            ];
+        } else {
+            // Return error if param is invalid
+            return ServiceResponse::error('Invalid param value', 400);
+        }
 
         return ServiceResponse::success('Sales Chart Data', $responseData);
     }

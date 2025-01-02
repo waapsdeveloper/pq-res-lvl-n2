@@ -20,12 +20,12 @@ class CreateRandomOrderJobClass
     public function __construct() {}
     public function __invoke()
     {
-        $customer = User::create([
-            'name' => 'walk-in-customer',
-            'phone' => rand(1, 15),
-            'email' => uniqid() . '@domain.com',  // Use a default or dynamic email
-            'role_id' => 0,  // Default role for walk-in customers
-        ]);
+        // $customer = User::create([
+        //     'name' => 'walk-in-customer',
+        //     'phone' => rand(1, 15),
+        //     'email' => uniqid() . '@domain.com',  // Use a default or dynamic email
+        //     'role_id' => 0,  // Default role for walk-in customers
+        // ]);
         $productIds = Product::whereBetween('id', [1, 100])
             ->inRandomOrder()
             ->take(rand(1, 6))
@@ -81,10 +81,10 @@ class CreateRandomOrderJobClass
             'type' => $type,
             'status' => $status,
             'notes' => 'This is a randomly generated order.',
-            'customer_id' => $customer->id,
+            'customer_id' => rand(1, 100),
             'discount' => $discount,
             'invoice_no' => strtoupper(uniqid('INV-')),
-            'table_no' => rand(1, 20),
+            'table_no' => rand(10, 100),
             'total_price' => $finalPrice,
             'restaurant_id' => 1,
             'order_at' => $randomDate,
