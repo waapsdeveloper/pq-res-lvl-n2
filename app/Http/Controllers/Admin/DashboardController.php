@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -32,7 +33,16 @@ class DashboardController extends Controller
             ->with('product')  // Product model ke saath join kar rahe hain
             ->get();
 
-        return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $orderProducts]);
+        $data = $orderProducts->map(function ($orderProduct) {
+            $product = $orderProduct->product;
+            $product->total_quantity_sell = $orderProduct->total_quantity_sell;
+            $product->image = Helper::returnFullImageUrl($product->image);
+            return $product;
+        });
+
+
+
+        return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $data]);
     }
     public function topSellingProducts()
     {
