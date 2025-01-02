@@ -37,8 +37,9 @@ class CreateRandomOrderJobClass
 
         $products = Product::whereIn('id', $productIds)->get();
 
-        $customer_ids = User::pluck('id')->toArray();  // Get all user IDs from the users table
-        $customer_id = Arr::random($customer_ids);
+        $customer_ids = User::pluck('id');  // Get all user IDs from the users table
+        $customer_id = Arr::rand($customer_ids); // Select a random customer ID if available
+
 
         $totalPrice = 0;
         $orderProducts = [];
