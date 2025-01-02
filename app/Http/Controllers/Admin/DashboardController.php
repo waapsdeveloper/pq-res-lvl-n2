@@ -100,6 +100,14 @@ class DashboardController extends Controller
             ->groupBy(DB::raw('YEAR(created_at)'))
             ->orderBy(DB::raw('YEAR(created_at)'))
             ->get();
+        $data['new_customers'] = User::whereNull('role_id')
+            ->has('orders', '=', 0) // Assuming users with no orders are new
+            ->count();
+
+        // Returning Customers: Customers with multiple orders or interactions
+        $data['returning_customers'] = User::whereNull('role_id')
+            ->has('orders', '>', 0) // Assuming users with at least one order are returning
+            ->count();
 
         // Response
         return ServiceResponse::success('Customer registration data fetched successfully', ['customer', $data]);
@@ -163,8 +171,7 @@ class DashboardController extends Controller
 
         // Convert products data to an array for response
         $productsDataArray = array_values($productsData);
-
-        return response()->json([
+        return ServiceResponse::success('Sales Chart Data', [
             'categories' => $categories,
             'products' => $productsDataArray
         ]);
