@@ -89,12 +89,12 @@ class DashboardController extends Controller
         $totalCustomers = [];
 
         foreach ($months as $month) {
+            dd($customers);
             // Customize how to calculate new, returning, and total customers here
             $newCustomers[] = $customers->where('month', $month)->count();
             $returningCustomers[] = $customers->where('month', $month)->count();
             $totalCustomers[] = $newCustomers[count($newCustomers) - 1] + $returningCustomers[count($returningCustomers) - 1];
         }
-        dd($newCustomers, $returningCustomers, $totalCustomers);
 
         // Prepare response data
         $response = [

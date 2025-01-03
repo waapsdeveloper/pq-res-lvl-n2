@@ -92,7 +92,7 @@ class CreateRandomOrderJobClass
         $status = Arr::random($statuses);
 
         // Generate a random date
-        $startYear = 2022;
+        $startYear = 2024;
         $endYear = Carbon::now()->year;  // Current year
         $randomYear = rand($startYear, $endYear);
         $randomMonth = rand(1, 12);
