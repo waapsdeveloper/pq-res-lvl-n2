@@ -385,7 +385,12 @@ class DashboardController extends Controller
                     $totalPriceThis += $item['total_price'];
                 }
             }
-            $seriesData["This {$param}"][] = $this->formatPrice($totalPriceThis);
+
+            $currentPrice = $this->formatPrice($prices['current_total_price'] ?? 0);
+            $previousPrice = $this->formatPrice($prices['previous_total_price'] ?? 0);
+
+            $seriesData["This {$param}"][] = $currentPrice;
+            $seriesData["Last {$param}"][] = $previousPrice;
         }
 
         // Fill the series data for "Last Month"
@@ -429,8 +434,12 @@ class DashboardController extends Controller
 
         // Fill series data for top 10 categories
         foreach ($categoryTotals as $category => $totalPrice) {
-            $seriesData["This {$param}"][] = $this->formatPrice($totalPrice["{$param}_current"]);
-            $seriesData["Last {$param}"][] = $this->formatPrice($totalPrice["{$param}_previous"]);
+            // Check if $totalPrice is an array and contains the keys you expect
+            if (is_array($totalPrice)) {
+                // Add the current and previous total prices to the series data
+                $seriesData["This {$param}"][] = $this->formatPrice($totalPrice['current_total_price']);
+                $seriesData["Last {$param}"][] = $this->formatPrice($totalPrice['previous_total_price']);
+            }
         }
 
         // Prepare the response data
