@@ -21,7 +21,7 @@ class CreateRandomOrderJobClass
     public function __construct() {}
     public function __invoke()
     {
-        $startDate = Carbon::now()->subMonths(6);  // Start from months ago
+        $startDate = Carbon::now()->subMonths(2);  // Start from months ago
         $endDate = Carbon::now();  // Up to the current date
         $randomYear = rand($startDate->year, $endDate->year);
         $randomMonth = rand($startDate->month, $endDate->month);
@@ -30,10 +30,10 @@ class CreateRandomOrderJobClass
         }
         $daysInMonth = Carbon::create($randomYear, $randomMonth, 1)->daysInMonth;
         $randomDay = rand(1, $daysInMonth);
-        // $randomDate = Carbon::create($randomYear, $randomMonth, $randomDay)
-        //     ->addHours(rand(0, 23))
-        //     ->addMinutes(rand(0, 59));
-        $randomDate = Carbon::now()->subDay();
+        $randomDate = Carbon::create($randomYear, $randomMonth, $randomDay)
+            ->addHours(rand(0, 23))
+            ->addMinutes(rand(0, 59));
+        // $randomDate = Carbon::now()->subDay(1);
         $unique = uniqid(11);
         $randomStatus = Arr::random(['active', 'active', 'inactive']);
 
