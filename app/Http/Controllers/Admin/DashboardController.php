@@ -220,26 +220,26 @@ class DashboardController extends Controller
                 'series' => [
                     [
                         'name' => 'New Customers',
-                        'data' => $newCustomerCount
+                        'data' => array_reverse($newCustomerCount)
                     ],
                     [
                         'name' => 'Returning Customers',
-                        'data' => $returningCustomerCount
+                        'data' => array_reverse($returningCustomerCount)
                     ],
                     [
                         'name' => "Total Customers in {$param}",
-                        'data' => $totalCustomers
+                        'data' => array_reverse($totalCustomers)
                     ]
                 ],
                 'xaxis' => [
                     'categories' => [
-                        Carbon::now()->subDays(6)->format('D'),
-                        Carbon::now()->subDays(5)->format('D'),
-                        Carbon::now()->subDays(4)->format('D'),
-                        Carbon::now()->subDays(3)->format('D'),
-                        Carbon::now()->subDays(2)->format('D'),
+                        Carbon::now()->format('D'),
                         Carbon::now()->subDays(1)->format('D'),
-                        Carbon::now()->format('D')
+                        Carbon::now()->subDays(2)->format('D'),
+                        Carbon::now()->subDays(3)->format('D'),
+                        Carbon::now()->subDays(4)->format('D'),
+                        Carbon::now()->subDays(5)->format('D'),
+                        Carbon::now()->subDays(6)->format('D'),
                     ]
                 ]
             ];
@@ -283,26 +283,26 @@ class DashboardController extends Controller
                 'series' => [
                     [
                         'name' => 'New Customers',
-                        'data' => $newCustomerCount
+                        'data' => array_reverse($newCustomerCount)
                     ],
                     [
                         'name' => 'Returning Customers',
-                        'data' => $returningCustomerCount
+                        'data' => array_reverse($returningCustomerCount)
                     ],
                     [
                         'name' => "Total Customers in {$param}",
-                        'data' => $totalCustomers
+                        'data' => array_reverse($totalCustomers)
                     ]
                 ],
                 'xaxis' => [
                     'categories' => [
-                        'Week 7',
-                        'Week 6',
-                        'Week 5',
-                        'Week 4',
-                        'Week 3',
+                        'Week 1',
                         'Week 2',
-                        'Week 1'
+                        'Week 3',
+                        'Week 4',
+                        'Week 5',
+                        'Week 6',
+                        'Week 7',
                     ]
                 ]
             ];
