@@ -71,7 +71,7 @@ class DashboardController extends Controller
             $percentage = $totalQuantity > 0 ? ($product->total_quantity / $totalQuantity) * 100 : 0;
 
             $productLabels[] = $productName;
-            $productPercentages[] = round($percentage, 2); // Round to 2 decimal places
+            $productPercentages[] = round($percentage, 2) . '%'; // Round to 2 decimal places
         }
 
         // Pie chart data
