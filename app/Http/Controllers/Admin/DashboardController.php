@@ -116,115 +116,6 @@ class DashboardController extends Controller
     }
 
 
-    // public function getSalesChartData(Request $request)
-    // {
-    //     $thisDate = $request->input('date', Carbon::now()->toDateString());
-    //     $lastDate = Carbon::parse($thisDate)->subDay()->toDateString();  // Use dynamic date for last day
-
-    //     // Sum product prices for this day (without quantity)
-    //     $thisDayData = DB::table('order_products')
-    //         ->join('products', 'order_products.product_id', '=', 'products.id')
-    //         ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
-    //         ->whereDate('order_products.created_at', $thisDate)
-    //         ->groupBy('order_products.product_id', 'products.name')
-    //         ->orderByDesc('total_price')  // Sort by total price in descending order
-    //         ->get()
-    //         ->take(10);  // Limit to the top 10
-
-    //     // Sum product prices for the last day (without quantity)
-    //     $lastDayData = DB::table('order_products')
-    //         ->join('products', 'order_products.product_id', '=', 'products.id')
-    //         ->select('order_products.product_id', 'products.name as category', DB::raw('SUM(order_products.quantity * products.price) as total_price'))
-    //         ->whereDate('order_products.created_at', $lastDate)
-    //         ->groupBy('order_products.product_id', 'products.name')
-    //         ->orderByDesc('total_price')  // Sort by total price in descending order
-    //         ->get()
-    //         ->take(10);  // Limit to the top 10
-
-    //     // Merge categories from both days, ensuring uniqueness
-    //     $categories = $thisDayData->pluck('category')
-    //         ->merge($lastDayData->pluck('category'))
-    //         ->unique()
-    //         ->values()
-    //         ->all();
-
-    //     // Initialize the series data structure
-    //     $seriesData = [
-    //         'This Day' => array_fill(0, count($categories), 0),  // Default to 0 for this day
-    //         'Last Day' => array_fill(0, count($categories), 0),  // Default to 0 for last day
-    //     ];
-
-    //     // Map product prices to the correct categories (index-based)
-    //     $categoryIndex = array_flip($categories);  // Map category names to their index positions
-
-    //     // Add this day data to series data
-    //     foreach ($thisDayData as $item) {
-    //         $index = $categoryIndex[$item->category];
-    //         $seriesData['This Day'][$index] = $this->formatPrice($item->total_price);
-    //     }
-
-    //     // Add last day data to series data
-    //     foreach ($lastDayData as $item) {
-    //         $index = $categoryIndex[$item->category];
-    //         $seriesData['Last Day'][$index] = $this->formatPrice($item->total_price);
-    //     }
-
-    //     // Filter out products where both 'This Day' and 'Last Day' total prices are zero
-    //     $filteredData = [];
-    //     foreach ($categoryIndex as $category => $index) {
-    //         if ($seriesData['This Day'][$index] > 0 || $seriesData['Last Day'][$index] > 0) {
-    //             $filteredData[] = [
-    //                 'category' => $category,
-    //                 'this_day_total' => $seriesData['This Day'][$index],
-    //                 'last_day_total' => $seriesData['Last Day'][$index]
-    //             ];
-    //         }
-    //     }
-
-    //     // Take only the first 10 items for both days (after filtering)
-    //     $filteredData = array_slice($filteredData, 0, 10);
-
-    //     // Prepare the final series data
-    //     $finalCategories = array_column($filteredData, 'category');
-    //     $thisDayTotals = array_column($filteredData, 'this_day_total');
-    //     $lastDayTotals = array_column($filteredData, 'last_day_total');
-
-    //     $responseData = [
-    //         'categories' => $finalCategories,
-    //         'series' => [
-    //             [
-    //                 'name' => 'This Day',
-    //                 'data' => $thisDayTotals
-    //             ],
-    //             [
-    //                 'name' => 'Last Day',
-    //                 'data' => $lastDayTotals
-    //             ]
-    //         ]
-    //     ];
-
-    //     return ServiceResponse::success('Sales Chart Data', $responseData);
-    // }
-
-    // /**
-    //  * Format the price into k, M, and B notation
-    //  * 
-    //  * @param float $price
-    //  * @return string
-    //  */
-    // private function formatPrice($price)
-    // {
-    //     if ($price >= 1000000000) {
-    //         return number_format($price / 1000000000, 1) . 'B';
-    //     } elseif ($price >= 1000000) {
-    //         return number_format($price / 1000000, 1) . 'M';
-    //     } elseif ($price >= 1000) {
-    //         return number_format($price / 1000, 1) . 'K';
-    //     }
-
-    //     return number_format($price, 2);  // Format for values less than 1000
-    // }
-
     public function getSalesChartData(Request $request)
     {
         // Get the date from the request or default to today's date
@@ -295,6 +186,15 @@ class DashboardController extends Controller
             ->groupBy('order_products.order_id', 'order_products.product_id', 'products.name') // Group by required fields
             ->get();
 
+        if ($currentOrderProducts->isEmpty()) {
+            return ServiceResponse::success('No sales data available for the selected period.', [
+                'categories' => [],
+                'series' => [
+                    ['name' => "This {$param}", 'data' => []],
+                    ['name' => "Last {$param}", 'data' => []],
+                ],
+            ]);
+        }
         // Transforming the data to get categories as an array
         $currentProducts = [];
         foreach ($currentOrderProducts as $orderProduct) {
@@ -304,7 +204,9 @@ class DashboardController extends Controller
                 // dd($categories);
                 $currentProducts[] = [
                     'product_name' => $categories,
-                    'total_price' => $orderProduct->total_price
+                    'current_total_price' => $orderProduct->total_price,
+
+
                 ];
             }
         }
@@ -324,6 +226,16 @@ class DashboardController extends Controller
             ')
             ->groupBy('order_products.order_id', 'order_products.product_id', 'products.name') // Group by required fields
             ->get();
+        if ($previousOrderProducts->isEmpty()) {
+            return ServiceResponse::success('No sales data available for the selected period.', [
+                'categories' => [],
+                'series' => [
+                    ['name' => "This {$param}", 'data' => []],
+                    ['name' => "Last {$param}", 'data' => []],
+                ],
+            ]);
+        }
+        // Debugging the order products and category values
 
         // Transforming the data to get categories as an array
         $previousProducts = [];
@@ -334,13 +246,12 @@ class DashboardController extends Controller
             if ($orderProduct->total_price > 0) {
                 $previousProducts[] = [
                     'product_name' => $categories,
-                    'total_price' => $orderProduct->total_price
-                ];
+                    'previous_total_price' =>  $orderProduct->total_price,
+                ];;
             }
         }
 
         $mergedProducts = array_merge($currentProducts, $previousProducts);
-
         if ($param == 'day') {
 
             $startDuration = $currentStart->format('Y-m-d');
@@ -352,24 +263,26 @@ class DashboardController extends Controller
             $startDuration = $currentStart->format('F');
             $endDuraton = $previousStart->format('F');
         }
-        // $currentMonth  = $currentMonthStart->format('F');
-        // $previousMonth = $previousMonthStart->format('F');
-        $categories = [];
-        foreach ($mergedProducts as $product) {
-            foreach ($product['product_name'] as $category) {
-                if (!isset($categories[$category])) {
-                    $categories[$category] = [];
-                }
 
-                // Store products by category and month
-                $categories[$category][] = [
-                    'product_name' => $category,
-                    "{$param}_current" => $startDuration ? $startDuration : null,
-                    "{$param}_previous" => $endDuraton ? $endDuraton : null,
-                    'total_price' => $product['total_price']
-                ];
-            }
+        $currentPrices = [];
+        $previousPrices = [];
+
+        foreach ($currentProducts as $product) {
+            $currentPrices[] = $product['current_total_price'];
         }
+
+        foreach ($previousProducts as $product) {
+            $previousPrices[] = $product['previous_total_price'];
+        }
+        foreach ($currentProducts as $key => $product) {
+            $productName = $product['product_name'][0] ?? 'Unknown';
+
+            $categories[$productName] = [
+                'current_total_price' => $product['current_total_price'],
+                'previous_total_price' => $previousProducts[$key]['previous_total_price'] ?? 0,
+            ];
+        }
+        $topCategories = array_reverse($categories) ?? [];
 
         // Initialize the series data structure
         $seriesData = [
@@ -378,12 +291,10 @@ class DashboardController extends Controller
         ];
 
         // Fill the series data for "This Month"
-        foreach ($categories as $category => $items) {
-            $totalPriceThis = 0;
-            foreach ($items as $item) {
-                if ($item["{$param}_current"] === $startDuration) {
-                    $totalPriceThis += $item['total_price'];
-                }
+        foreach ($topCategories as $category => $prices) {
+            if (!is_array($prices)) {
+                // If $prices is not an array, skip or log the issue
+                continue; // Skip this category
             }
 
             $currentPrice = $this->formatPrice($prices['current_total_price'] ?? 0);
@@ -393,38 +304,14 @@ class DashboardController extends Controller
             $seriesData["Last {$param}"][] = $previousPrice;
         }
 
-        // Fill the series data for "Last Month"
-        $categoryTotals = [];
+        $categoryTotals = array_filter($topCategories, function ($key) {
+            return is_string($key);  // Only keep categories that are strings
+        }, ARRAY_FILTER_USE_KEY);
 
-        // Loop through categories to calculate the total price for each category
-        foreach ($categories as $category => $items) {
-            $totalPriceCurrent = 0;
-            $totalPriceLast = 0;
-
-            foreach ($items as $item) {
-                // Add current month price
-                if ($item["{$param}_current"] === $startDuration) {
-                    $totalPriceCurrent += $item['total_price'];
-                }
-
-                // Add previous month price
-                if ($item["{$param}_previous"] === $endDuraton) {
-                    $totalPriceLast += $item['total_price'];
-                }
-            }
-
-            // Store the total price for this category
-            $categoryTotals[$category] = [
-                "{$param}_current" => $totalPriceCurrent,
-                "{$param}_previous" => $totalPriceLast
-            ];
-        }
-
-        // Sort categories by total price for this month in descending order
-        arsort($categoryTotals);
-
-        // Limit to top 10 categories
+        // If you want to limit to top 10 after filtering
         $categoryTotals = array_slice($categoryTotals, 0, 10, true);
+
+        // dd($categoryTotals);
 
         // Prepare the series data for top 10 categories
         $seriesData = [
@@ -432,7 +319,7 @@ class DashboardController extends Controller
             "Last {$param}" => []
         ];
 
-        // Fill series data for top 10 categories
+        // Loop through category totals and fill the series data
         foreach ($categoryTotals as $category => $totalPrice) {
             // Check if $totalPrice is an array and contains the keys you expect
             if (is_array($totalPrice)) {
@@ -456,6 +343,7 @@ class DashboardController extends Controller
                 ],
             ],
         ];
+
 
         return ServiceResponse::success('Sales Chart Data', $responseData);
     }

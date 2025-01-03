@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class CreateRandomOrderJobClass
 {
@@ -25,6 +26,7 @@ class CreateRandomOrderJobClass
         //     'phone' => rand(1, 15),
         //     'email' => uniqid() . '@domain.com',  // Use a default or dynamic email
         //     'role_id' => 0,  // Default role for walk-in customers
+        //     'password' => Hash::make('admin123$'),  // Default password for walk-in customers
         // ]);
         $customer_ids = User::pluck('id');  // Get all user IDs from the users table
         $customer_id = $customer_ids->isNotEmpty() ? $customer_ids->random() : null;  // Select a random customer ID if available
