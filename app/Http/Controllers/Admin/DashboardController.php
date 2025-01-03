@@ -49,16 +49,40 @@ class DashboardController extends Controller
     }
     public function topSellingProducts()
     {
-        // Sabhi products ke liye total quantity aur price ko sum karna
-        $orderProducts = OrderProduct::select('product_id', DB::raw('SUM(quantity) as total_quantity_sell'))  // Total quantity ko sum kar rahe hain
-            ->groupBy('product_id')  // Product ID ke hisaab se group kar rahe hain
-            ->orderByDesc('total_quantity_sell')  // Total quantity ke hisaab se sort kar rahe hain
-            ->with('product')  // Product model ke saath join kar rahe hain
-            ->limit(5)  // Limit 5 products
+        // Fetch top 5 selling products with their quantities
+        $topSellingProducts = OrderProduct::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+            ->groupBy('product_id')
+            ->orderByDesc('total_quantity')
+            ->limit(5)
             ->get();
 
-        return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $orderProducts]);
+        // Calculate the total quantity of all top-selling products
+        $totalQuantity = $topSellingProducts->sum('total_quantity');
+
+        // Prepare data for the pie chart
+        $productLabels = [];
+        $productPercentages = [];
+
+        foreach ($topSellingProducts as $product) {
+            // Fetch product name or use product_id if name isn't available
+            $productName = DB::table('products')->where('id', $product->product_id)->value('name') ?? "Product {$product->product_id}";
+
+            // Calculate the percentage for each product
+            $percentage = $totalQuantity > 0 ? ($product->total_quantity / $totalQuantity) * 100 : 0;
+
+            $productLabels[] = $productName;
+            $productPercentages[] = round($percentage, 2); // Round to 2 decimal places
+        }
+
+        // Pie chart data
+        $chartOptions = [
+            'series' => $productPercentages,
+            'labels' => $productLabels,
+        ];
+
+        return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $chartOptions]);
     }
+
     public function totalRevenue()
     {
         $totalRevenue = Order::sum('total_price');
