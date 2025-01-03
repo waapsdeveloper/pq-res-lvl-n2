@@ -25,8 +25,6 @@ class CreateRandomOrderJobClass
         //     'phone' => rand(1, 15),
         //     'email' => uniqid() . '@domain.com',  // Use a default or dynamic email
         //     'role_id' => 0,  // Default role for walk-in customers
-        //     'password' => "admin123$",
-        //     "status" => "inactive",
         // ]);
         $customer_ids = User::pluck('id');  // Get all user IDs from the users table
         $customer_id = $customer_ids->isNotEmpty() ? $customer_ids->random() : null;  // Select a random customer ID if available
