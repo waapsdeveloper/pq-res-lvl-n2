@@ -5,11 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auth\LoginAuthRequest;
 use App\Models\User;
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Validator;
 use App\Helpers\ServiceResponse;
+use App\Mail\ForgotUser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use App\Models\PasswordReset;
+
 
 class AuthController extends Controller
 {
@@ -22,16 +28,6 @@ class AuthController extends Controller
 
         $data = $request->validated();
 
-        // Validate the required fields
-        // $validation = Validator::make($data, [
-        //     'email' => 'required|email',
-        //     'password' => 'required|string',
-        // ]);
-
-        // // If validation fails
-        // if ($validation->fails()) {
-        //     return ServiceResponse::error($validation->errors()->first());
-        // }
 
         // Retrieve the user by email
         $user = User::where('email', $data['email'])->first();
@@ -58,19 +54,7 @@ class AuthController extends Controller
         // $data = $request->all();
         $data = $request->validated();
 
-        // Validate the required fields
-        // $validation = Validator::make($data, [
-        //     'name' => 'required|string',
-        //     'email' => ['required', 'email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
-        //     'password' => 'required|string|min:8',
-        //     'confirm_password' => 'required|string|same:password',
-        //     'role_id' => 'required|integer|in:2,3,4,5',
-        // ]);
 
-        // If validation fails
-        // if ($validation->fails()) {
-        //     return ServiceResponse::error($validation->errors()->first());
-        // }
 
         // Retrieve the user by email
         $user = User::where('email', $data['email'])->first();
@@ -90,14 +74,7 @@ class AuthController extends Controller
         $user->status = "in-review";
         $user->save();
 
-        // Determine student or teacher role
-        // if ($user->role_id == 2) {
-        //     // Student
-        //     $user->student()->updateOrCreate(['user_id' => $user->id], []);
-        // } elseif ($user->role_id == 3) {
-        //     // Teacher
-        //     $user->teacher()->updateOrCreate(['user_id' => $user->id], []);
-        // }
+
 
         $authAttempt = Auth::attempt([
             'email' => $data['email'],
@@ -110,19 +87,65 @@ class AuthController extends Controller
 
         $token = $user->createToken('AuthToken')->accessToken;
 
-        // if ($user->role_id == 2) {
-        //     $user = new StudentResource($user);
-        //     $studentName = $user->name;
 
-        //     try {
-        //         Mail::to($user->email)->send(new StudentSignup($studentName));
-        //     } catch (Exception $e) {
-        //         Log::debug("Email not sent correctly", ['error' => $e->getMessage()]);
-        //     }
-        // } elseif ($user->role_id == 3) {
-        //     $user = new TeacherResource($user);
-        // }
 
         return ServiceResponse::success('User registered successfully', ['user' => $user, 'token' => $token]);
+    }
+    public function forgotPassword(Request $request)
+    {
+        // Validate the email input
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return ServiceResponse::error('User not found');
+        }
+        $token = Str::upper(Str::random(40));
+        if ($user) {
+            $user->update(['token' => $token]);
+            $duplicationToken = PasswordReset::where('email', $user->email)->first();
+            if ($duplicationToken) {
+                $duplicationToken->delete();
+            }
+            PasswordReset::create([
+                'email' => $user->email,
+                'token' => $token,
+                'created_at' => now(),
+                'updated_at' => false,
+            ]);
+
+            Mail::to($user->email)->send(new ForgotUser($user, $token));
+
+            return ServiceResponse::success('Password reset link sent to your email.');
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        // Validate the input (token, email, password, password_confirmation)
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string', // New password
+        ]);
+
+        // Attempt to reset the password
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                // Update the user password
+                $user->password = Hash::make($password);
+                $user->save();
+            }
+        );
+
+        // Check if the password reset was successful
+        if ($status === Password::PASSWORD_RESET) {
+            return ServiceResponse::success('Password reset successfully.');
+        }
+
+        return ServiceResponse::error('Failed to reset password. Please try again.');
     }
 }

@@ -22,3 +22,5 @@ yarn-error.log
 /.vscode
 /.zed
 !storage/app/public
+/app/Mail
+/resources/views/mail
