@@ -297,8 +297,10 @@ class DashboardController extends Controller
                 continue; // Skip this category
             }
 
-            $currentPrice = $this->formatPrice($prices['current_total_price'] ?? 0);
-            $previousPrice = $this->formatPrice($prices['previous_total_price'] ?? 0);
+            // $currentPrice = $this->formatPrice($prices['current_total_price'] ?? 0);
+            // $previousPrice = $this->formatPrice($prices['previous_total_price'] ?? 0);
+            $currentPrice = $prices['current_total_price'] ?? 0;
+            $previousPrice = $prices['previous_total_price'] ?? 0;
 
             $seriesData["This {$param}"][] = $currentPrice;
             $seriesData["Last {$param}"][] = $previousPrice;
@@ -324,8 +326,10 @@ class DashboardController extends Controller
             // Check if $totalPrice is an array and contains the keys you expect
             if (is_array($totalPrice)) {
                 // Add the current and previous total prices to the series data
-                $seriesData["This {$param}"][] = $this->formatPrice($totalPrice['current_total_price']);
-                $seriesData["Last {$param}"][] = $this->formatPrice($totalPrice['previous_total_price']);
+                // $seriesData["This {$param}"][] = $this->formatPrice($totalPrice['current_total_price']);
+                // $seriesData["Last {$param}"][] = $this->formatPrice($totalPrice['previous_total_price']);
+                $seriesData["This {$param}"][] = $totalPrice['current_total_price'];
+                $seriesData["Last {$param}"][] = $totalPrice['previous_total_price'];
             }
         }
 
@@ -354,16 +358,16 @@ class DashboardController extends Controller
      * @param float $price
      * @return string
      */
-    private function formatPrice($price)
-    {
-        if ($price >= 1000000000) {
-            return number_format($price / 1000000000) . 'B';  // No decimal for billions
-        } elseif ($price >= 1000000) {
-            return number_format($price / 1000000) . 'M';  // No decimal for millions
-        } elseif ($price >= 1000) {
-            return number_format($price / 1000) . 'K';  // No decimal for thousands
-        }
+    // private function formatPrice($price)
+    // {
+    //     if ($price >= 1000000000) {
+    //         return number_format($price / 1000000000) . 'B';  // No decimal for billions
+    //     } elseif ($price >= 1000000) {
+    //         return number_format($price / 1000000) . 'M';  // No decimal for millions
+    //     } elseif ($price >= 1000) {
+    //         return number_format($price / 1000) . 'K';  // No decimal for thousands
+    //     }
 
-        return number_format($price);  // No decimal for values less than 1000
-    }
+    //     return number_format($price);  // No decimal for values less than 1000
+    // }
 }
