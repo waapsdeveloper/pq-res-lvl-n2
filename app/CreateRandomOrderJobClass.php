@@ -21,19 +21,23 @@ class CreateRandomOrderJobClass
     public function __construct() {}
     public function __invoke()
     {
-        $startYear = 2022;
-        $endYear = Carbon::now()->year;
-        $randomYear = rand($startYear, $endYear);
-        $randomMonth = rand(1, 12);
+        $startDate = Carbon::now()->subMonths(6);  // Start from months ago
+        $endDate = Carbon::now();  // Up to the current date
+        $randomYear = rand($startDate->year, $endDate->year);
+        $randomMonth = rand($startDate->month, $endDate->month);
+        if ($randomYear == $endDate->year && $randomMonth > $endDate->month) {
+            $randomMonth = $endDate->month;
+        }
         $daysInMonth = Carbon::create($randomYear, $randomMonth, 1)->daysInMonth;
         $randomDay = rand(1, $daysInMonth);
-        $randomDate = Carbon::create($randomYear, $randomMonth, $randomDay)
-            ->addHours(rand(0, 23))
-            ->addMinutes(rand(0, 59));
+        // $randomDate = Carbon::create($randomYear, $randomMonth, $randomDay)
+        //     ->addHours(rand(0, 23))
+        //     ->addMinutes(rand(0, 59));
+        $randomDate = Carbon::now()->subDay();
         $unique = uniqid(11);
-        $randomStatus = Arr::random(['active', 'active', 'active', 'inactive']);
+        $randomStatus = Arr::random(['active', 'active', 'inactive']);
 
-        $createNewUser = Arr::random([true, false, false]);
+        $createNewUser = Arr::random([true, false]);
 
         if ($createNewUser) {
             // Create a new user
@@ -91,15 +95,7 @@ class CreateRandomOrderJobClass
         $type = Arr::random($types);
         $status = Arr::random($statuses);
 
-        // Generate a random date
-        $startYear = 2024;
-        $endYear = Carbon::now()->year;  // Current year
-        $randomYear = rand($startYear, $endYear);
-        $randomMonth = rand(1, 12);
-        $randomDay = rand(1, Carbon::create($randomYear, $randomMonth, 1)->daysInMonth);
-        $randomDate = Carbon::create($randomYear, $randomMonth, $randomDay)
-            ->addHours(rand(0, 23))
-            ->addMinutes(rand(0, 59));
+
         $order = Order::create([
             'identifier' => 'ORD-' . uniqid(),
             'order_number' => strtoupper(uniqid('ORD-')),
@@ -112,15 +108,12 @@ class CreateRandomOrderJobClass
             'table_no' => rand(1, 20),
             'total_price' => $finalPrice,
             'restaurant_id' => 1,
-            // 'order_at' => $randomDate,
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
 
 
         ]);
-
         foreach ($orderProducts as $orderProduct) {
-            // Add created_at and updated_at with $randomDate
             $orderProduct['created_at'] = $randomDate;
             $orderProduct['updated_at'] = $randomDate;
 
@@ -157,8 +150,11 @@ class CreateRandomOrderJobClass
         ]);
 
 
-        return ServiceResponse::success("Random order created successfully", [
-            'order' => new OrderResource($order),
-        ]);
+        return ServiceResponse::success(
+            "Random order created successfully",
+            // [
+            //     'order' => new OrderResource($order),
+            // ]
+        );
     }
 }

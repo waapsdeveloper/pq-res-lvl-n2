@@ -14,6 +14,7 @@ use App\Models\Rtable;
 use App\Models\RTablesBooking;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -70,56 +71,85 @@ class DashboardController extends Controller
     }
     public function customerChartData(Request $request)
     {
-        // Get the current date and previous 6 months (7 months total)
-        // $date = $request->input('date', Carbon::now()->toDateString());
+        $param = $request->input('param', 'day');
+        $currentCustomers = [];
+        $previousCustomers = [];
+        $totalCustomers = User::where('role_id', 0)->count();
+        $currentCustomers = DB::select("
+                SELECT customer_id, COUNT(*) as order_count 
+                FROM orders 
+                WHERE DATE(created_at) = CURDATE() 
+                GROUP BY customer_id
+            ");
+        if ($param == 'day') {
+            // Get new and returning customers based on orders for today and yesterday
+            $currentCustomers = DB::select("
+                SELECT customer_id, COUNT(*) as order_count 
+                FROM orders 
+                WHERE DATE(created_at) = CURDATE() 
+                GROUP BY customer_id
+            ");
 
-        $months = [];
-        for ($i = 0; $i < 7; $i++) {
-            $months[] = Carbon::now()->subMonths($i)->format('F'); // Get month name
+            $previousCustomers = DB::select("
+                SELECT customer_id, COUNT(*) as order_count 
+                FROM orders 
+                WHERE DATE(created_at) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) 
+                GROUP BY customer_id
+            ");
+        } elseif ($param == 'week') {
+            // Get new and returning customers based on orders for the current and previous week
+            $currentCustomers = DB::select("
+                SELECT customer_id, COUNT(*) as order_count 
+                FROM orders 
+                WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1) 
+                GROUP BY customer_id
+            ");
+
+            $previousCustomers = DB::select("
+                SELECT customer_id, COUNT(*) as order_count 
+                FROM orders 
+                WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1) - 1 
+                GROUP BY customer_id
+            ");
         }
 
-        // Retrieve customers where role _id is 0 or null
-        $customers = User::where(function ($query) {
-            $query->where('role_id', 0)
-                ->orWhereNull('role_id');
-        })->get();
-        // Prepare data for response
-        $newCustomers = [];
-        $returningCustomers = [];
-        $totalCustomers = [];
+        // Convert results to arrays for comparison
+        $currentCustomerIds = collect($currentCustomers)->pluck('customer_id')->toArray();
+        $previousCustomerIds = collect($previousCustomers)->pluck('customer_id')->toArray();
 
-        foreach ($months as $month) {
-            dd($customers);
-            // Customize how to calculate new, returning, and total customers here
-            $newCustomers[] = $customers->where('month', $month)->count();
-            $returningCustomers[] = $customers->where('month', $month)->count();
-            $totalCustomers[] = $newCustomers[count($newCustomers) - 1] + $returningCustomers[count($returningCustomers) - 1];
-        }
+        // Determine new and returning customers
+        $newCustomers = array_diff($currentCustomerIds, $previousCustomerIds);
+        $returningCustomers = array_intersect($currentCustomerIds, $previousCustomerIds);
 
-        // Prepare response data
+        // Prepare counts
+        $newCustomerCount = count($newCustomers);
+        $returningCustomerCount = count($returningCustomers);
+        $currentMonth = Carbon::now()->format('F'); // Current month name
+        $previousMonth = Carbon::now()->subWeek()->format('F');
+        // Prepare dynamic response
         $response = [
             'series' => [
                 [
                     'name' => 'New Customers',
-                    'data' => $newCustomers
+                    'data' => [$newCustomerCount]
                 ],
                 [
                     'name' => 'Returning Customers',
-                    'data' => $returningCustomers
+                    'data' => [$returningCustomerCount]
                 ],
                 [
                     'name' => 'Total Customers',
-                    'data' => $totalCustomers
+                    'data' => [$totalCustomers]
                 ]
             ],
+
             'xaxis' => [
-                'categories' => $months
+                'categories' => $param == 'day' ? ['Today', 'Yesterday'] : [$currentMonth, $previousMonth]
             ]
         ];
 
-        return ServiceResponse::success('Customer Chart data fetched successfully', ['customers', $response]);
+        return ServiceResponse::success('Customer Chart data fetched successfully', ['customers' => $response]);
     }
-
 
     public function getSalesChartData(Request $request)
     {
