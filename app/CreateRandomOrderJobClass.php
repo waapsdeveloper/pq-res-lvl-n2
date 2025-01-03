@@ -21,15 +21,36 @@ class CreateRandomOrderJobClass
     public function __construct() {}
     public function __invoke()
     {
-        // $customer = User::create([
-        //     'name' => 'walk-in-customer',
-        //     'phone' => rand(1, 15),
-        //     'email' => uniqid() . '@domain.com',  // Use a default or dynamic email
-        //     'role_id' => 0,  // Default role for walk-in customers
-        //     'password' => Hash::make('admin123$'),  // Default password for walk-in customers
-        // ]);
-        $customer_ids = User::pluck('id');  // Get all user IDs from the users table
-        $customer_id = $customer_ids->isNotEmpty() ? $customer_ids->random() : null;  // Select a random customer ID if available
+        $startYear = 2022;
+        $endYear = Carbon::now()->year;
+        $randomYear = rand($startYear, $endYear);
+        $randomMonth = rand(1, 12);
+        $daysInMonth = Carbon::create($randomYear, $randomMonth, 1)->daysInMonth;
+        $randomDay = rand(1, $daysInMonth);
+        $randomDate = Carbon::create($randomYear, $randomMonth, $randomDay)
+            ->addHours(rand(0, 23))
+            ->addMinutes(rand(0, 59));
+        $unique = uniqid(11);
+        $randomStatus = Arr::random(['active', 'active', 'active', 'inactive']);
+
+        $createNewUser = Arr::random([true, false, false]);
+
+        if ($createNewUser) {
+            // Create a new user
+            $customer = User::create([
+                'name' => 'walk-in-customer',
+                'phone' => $unique,
+                'email' => $unique . '@domain.com',  // Use a default or dynamic email
+                'role_id' => 0,  // Default role for walk-in customers
+                'password' => Hash::make('admin123$'),  // Default password for walk-in customers
+                'status' => $randomStatus,
+                'created_at' => $randomDate,  // Set fake created_at date
+                'updated_at' => $randomDate,
+            ]);
+        } else {
+            // Select a random existing customer
+            $customer = User::inRandomOrder()->first();  // Get a random user from the database
+        }
 
         $productIds = Product::whereBetween('id', [1, 100])
             ->inRandomOrder()
@@ -85,13 +106,14 @@ class CreateRandomOrderJobClass
             'type' => $type,
             'status' => $status,
             'notes' => 'This is a randomly generated order.',
-            'customer_id' =>  $customer_id,
+            'customer_id' =>  $customer->id,
             'discount' => $discount,
             'invoice_no' => strtoupper(uniqid('INV-')),
             'table_no' => rand(1, 20),
             'total_price' => $finalPrice,
             'restaurant_id' => 1,
-            'order_at' => $randomDate,
+            // 'order_at' => $randomDate,
+            'created_at' => $randomDate,
 
 
         ]);
@@ -109,6 +131,7 @@ class CreateRandomOrderJobClass
             'total' => $order->total_price,
             'status' =>  $invoiceStatuses,
             'notes' => "This is a randomly generated $order->invoice_no invoice.",
+            'created_at' => $randomDate,
 
         ]);
 
@@ -118,10 +141,11 @@ class CreateRandomOrderJobClass
         $payment = Payments::create([
             'order_id' => $order->id,
             'amount' => $order->total_price,
-            'customer_id' =>  $customer_id,
+            'customer_id' =>  $customer->id,
             'payment_status' => $paymentStatuses,
             'payment_mode' => $paymentMode,
             'payment_portal' => $paymentPortal,
+            'created_at' => $randomDate,
         ]);
 
 
