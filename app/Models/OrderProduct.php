@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class OrderProduct extends Model
 {
     use HasFactory;
-
+    protected $table = 'order_products';
+    public $timestamps = false; // for fake entries when done remove this line
     protected $fillable = [
         'order_id',
         'product_id',
         'quantity',
         'price',
         'notes',
+        'created_at', // for fake entries when done remove this line
     ];
 
     // Relationship with Order

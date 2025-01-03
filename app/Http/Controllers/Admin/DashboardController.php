@@ -68,51 +68,56 @@ class DashboardController extends Controller
         $tables = Rtable::with('restaurantDetail')->limit(8)->latest()->get();
         return ServiceResponse::success('Tables fetched successfully', ['tables' => $tables]);
     }
-    public function customer()
+    public function customerChartData(Request $request)
     {
-        $data = []; // Final organized data
+        // Get the current date and previous 6 months (7 months total)
+        // $date = $request->input('date', Carbon::now()->toDateString());
 
-        // Total customers (role_id null wale, yani sirf customers)
-        $data['total_customers'] = User::whereNull('role_id')->count();
+        $months = [];
+        for ($i = 0; $i < 7; $i++) {
+            $months[] = Carbon::now()->subMonths($i)->format('F'); // Get month name
+        }
 
-        // Daily data: Group by day
-        $data['daily_data'] = User::whereNull('role_id')
-            ->select(DB::raw('DATE(created_at) as on_date'), DB::raw('COUNT(*) as total_customers'))
-            ->groupBy(DB::raw('DATE(created_at)'))
-            ->orderBy(DB::raw('DATE(created_at)'))
-            ->get();
+        // Retrieve customers where role _id is 0 or null
+        $customers = User::where(function ($query) {
+            $query->where('role_id', 0)
+                ->orWhereNull('role_id');
+        })->get();
+        // Prepare data for response
+        $newCustomers = [];
+        $returningCustomers = [];
+        $totalCustomers = [];
 
-        // Weekly data: Group by week
-        $data['weekly_data'] = User::whereNull('role_id')
-            ->select(DB::raw('WEEK(created_at) as in_weeks'), DB::raw('COUNT(*) as total_customers'))
-            ->groupBy(DB::raw('WEEK(created_at)'))
-            ->orderBy(DB::raw('WEEK(created_at)'))
-            ->get();
+        foreach ($months as $month) {
+            // Customize how to calculate new, returning, and total customers here
+            $newCustomers[] = $customers->where('month', $month)->count();
+            $returningCustomers[] = $customers->where('month', $month)->count();
+            $totalCustomers[] = $newCustomers[count($newCustomers) - 1] + $returningCustomers[count($returningCustomers) - 1];
+        }
+        dd($newCustomers, $returningCustomers, $totalCustomers);
 
-        // Monthly data: Group by month
-        $data['monthly_data'] = User::whereNull('role_id')
-            ->select(DB::raw('MONTH(created_at) as in_months'), DB::raw('COUNT(*) as total_customers'))
-            ->groupBy(DB::raw('MONTH(created_at)'))
-            ->orderBy(DB::raw('MONTH(created_at)'))
-            ->get();
+        // Prepare response data
+        $response = [
+            'series' => [
+                [
+                    'name' => 'New Customers',
+                    'data' => $newCustomers
+                ],
+                [
+                    'name' => 'Returning Customers',
+                    'data' => $returningCustomers
+                ],
+                [
+                    'name' => 'Total Customers',
+                    'data' => $totalCustomers
+                ]
+            ],
+            'xaxis' => [
+                'categories' => $months
+            ]
+        ];
 
-        // Yearly data: Group by year
-        $data['yearly_data'] = User::whereNull('role_id')
-            ->select(DB::raw('YEAR(created_at) as in_year'), DB::raw('COUNT(*) as total_customers'))
-            ->groupBy(DB::raw('YEAR(created_at)'))
-            ->orderBy(DB::raw('YEAR(created_at)'))
-            ->get();
-        $data['new_customers'] = User::whereNull('role_id')
-            ->has('orders', '=', 0 || null) // Assuming users with no orders are new
-            ->count();
-
-        // Returning Customers: Customers with multiple orders or interactions
-        $data['returning_customers'] = User::whereNull('role_id')
-            ->has('orders', '>', 0) // Assuming users with at least one order are returning
-            ->count();
-
-        // Response
-        return ServiceResponse::success('Customer registration data fetched successfully', ['customer', $data]);
+        return ServiceResponse::success('Customer Chart data fetched successfully', ['customers', $response]);
     }
 
 

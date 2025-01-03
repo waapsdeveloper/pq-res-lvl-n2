@@ -9,6 +9,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $table = 'orders';
+    public $timestamps = false; // for fake entries when done remove this line
     protected $fillable = [
         'identifier',
         'order_number',
@@ -20,7 +21,8 @@ class Order extends Model
         'table_no',
         'restaurant_id',
         'total_price',
-        'order_at'
+        'order_at',
+        'created_at', // for fake entries when done remove this line
     ];
 
     // Define relationship with OrderProduct

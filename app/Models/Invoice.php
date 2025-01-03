@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $table = 'invoices';
+    public $timestamps = false; // for fake entries when done remove this line
     protected $fillable = [
         'order_id',
         'invoice_no',
@@ -14,6 +15,8 @@ class Invoice extends Model
         'payment_method',
         'total',
         'status',
+        'notes',
+        'created_at', // for fake entries when done remove this line
     ];
 
     public function order()

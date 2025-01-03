@@ -44,8 +44,8 @@ class CreateRandomOrderJobClass
                 'role_id' => 0,  // Default role for walk-in customers
                 'password' => Hash::make('admin123$'),  // Default password for walk-in customers
                 'status' => $randomStatus,
-                'created_at' => $randomDate,  // Set fake created_at date
-                'updated_at' => $randomDate,
+                'created_at' => $randomDate,
+                'updated_at' => $randomDate, // Set fake created_at date
             ]);
         } else {
             // Select a random existing customer
@@ -114,13 +114,19 @@ class CreateRandomOrderJobClass
             'restaurant_id' => 1,
             // 'order_at' => $randomDate,
             'created_at' => $randomDate,
+            'updated_at' => $randomDate,
 
 
         ]);
 
         foreach ($orderProducts as $orderProduct) {
+            // Add created_at and updated_at with $randomDate
+            $orderProduct['created_at'] = $randomDate;
+            $orderProduct['updated_at'] = $randomDate;
+
             $order->orderProducts()->create($orderProduct);
         }
+
         $invoiceStatuses = Arr::random(['pending', 'received']);
         $paymentMethod = Arr::random(['cash', 'card', 'transfer']);
         $invoice = Invoice::create([
@@ -132,6 +138,7 @@ class CreateRandomOrderJobClass
             'status' =>  $invoiceStatuses,
             'notes' => "This is a randomly generated $order->invoice_no invoice.",
             'created_at' => $randomDate,
+            'updated_at' => $randomDate,
 
         ]);
 
@@ -146,6 +153,7 @@ class CreateRandomOrderJobClass
             'payment_mode' => $paymentMode,
             'payment_portal' => $paymentPortal,
             'created_at' => $randomDate,
+            'updated_at' => $randomDate,
         ]);
 
 

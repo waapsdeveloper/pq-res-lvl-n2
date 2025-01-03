@@ -18,6 +18,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public $timestamps = false; // for fake entries when done remove this line
     protected $fillable = [
         'name',
         'email',
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'phone',
         'image',
         'restaurant_id',
+        'created_at', // for fake entries when done remove this line
 
     ];
 
