@@ -69,63 +69,79 @@ class DashboardController extends Controller
         $tables = Rtable::with('restaurantDetail')->limit(8)->latest()->get();
         return ServiceResponse::success('Tables fetched successfully', ['tables' => $tables]);
     }
+    // use Carbon\Carbon;
+
     public function customerChartData(Request $request)
     {
         $param = $request->input('param', 'day');
-        $currentCustomers = [];
-        $previousCustomers = [];
-        $totalCustomers = User::where('role_id', 0)->count();
-        $currentCustomers = DB::select("
-                SELECT customer_id, COUNT(*) as order_count 
-                FROM orders 
-                WHERE DATE(created_at) = CURDATE() 
-                GROUP BY customer_id
-            ");
+
+        // Initialize customer data arrays
+        $newCustomerCount = 0;
+        $returningCustomerCount = 0;
+        $totalCustomers = 0;
+
+        $currentMonth = Carbon::now()->format('F'); // Current month name
+        $previousMonth = Carbon::now()->subMonth()->format('F'); // Previous month name
+
+        // Fetch customer data based on param ('day' or 'week')
         if ($param == 'day') {
-            // Get new and returning customers based on orders for today and yesterday
-            $currentCustomers = DB::select("
-                SELECT customer_id, COUNT(*) as order_count 
+            // New customers count for today
+            $newCustomers = DB::select("
+                SELECT customer_id 
                 FROM orders 
-                WHERE DATE(created_at) = CURDATE() 
+                WHERE DATE(created_at) = CURDATE()
                 GROUP BY customer_id
+                HAVING COUNT(*) = 1
             ");
+            $newCustomerCount = count($newCustomers);
 
-            $previousCustomers = DB::select("
-                SELECT customer_id, COUNT(*) as order_count 
+            // Returning customers count for today
+            $returningCustomers = DB::select("
+                SELECT customer_id 
                 FROM orders 
-                WHERE DATE(created_at) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) 
+                WHERE DATE(created_at) = CURDATE()
                 GROUP BY customer_id
+                HAVING COUNT(*) > 1
             ");
+            $returningCustomerCount = count($returningCustomers);
+
+            // Total unique customers count for today
+            $totalCustomersData = DB::select("
+                SELECT DISTINCT customer_id
+                FROM orders
+                WHERE DATE(created_at) = CURDATE()
+            ");
+            $totalCustomers = count($totalCustomersData);
         } elseif ($param == 'week') {
-            // Get new and returning customers based on orders for the current and previous week
-            $currentCustomers = DB::select("
-                SELECT customer_id, COUNT(*) as order_count 
+            // New customers count for this week
+            $newCustomers = DB::select("
+                SELECT customer_id 
                 FROM orders 
-                WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1) 
+                WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)
                 GROUP BY customer_id
+                HAVING COUNT(*) = 1
             ");
+            $newCustomerCount = count($newCustomers);
 
-            $previousCustomers = DB::select("
-                SELECT customer_id, COUNT(*) as order_count 
+            // Returning customers count for this week
+            $returningCustomers = DB::select("
+                SELECT customer_id 
                 FROM orders 
-                WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1) - 1 
+                WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)
                 GROUP BY customer_id
+                HAVING COUNT(*) > 1
             ");
+            $returningCustomerCount = count($returningCustomers);
+
+            // Total unique customers count for this week
+            $totalCustomersData = DB::select("
+                SELECT DISTINCT customer_id
+                FROM orders
+                WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)
+            ");
+            $totalCustomers = count($totalCustomersData);
         }
 
-        // Convert results to arrays for comparison
-        $currentCustomerIds = collect($currentCustomers)->pluck('customer_id')->toArray();
-        $previousCustomerIds = collect($previousCustomers)->pluck('customer_id')->toArray();
-
-        // Determine new and returning customers
-        $newCustomers = array_diff($currentCustomerIds, $previousCustomerIds);
-        $returningCustomers = array_intersect($currentCustomerIds, $previousCustomerIds);
-
-        // Prepare counts
-        $newCustomerCount = count($newCustomers);
-        $returningCustomerCount = count($returningCustomers);
-        $currentMonth = Carbon::now()->format('F'); // Current month name
-        $previousMonth = Carbon::now()->subWeek()->format('F');
         // Prepare dynamic response
         $response = [
             'series' => [
@@ -150,6 +166,7 @@ class DashboardController extends Controller
 
         return ServiceResponse::success('Customer Chart data fetched successfully', ['customers' => $response]);
     }
+
 
     public function getSalesChartData(Request $request)
     {
