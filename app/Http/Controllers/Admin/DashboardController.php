@@ -528,8 +528,6 @@ class DashboardController extends Controller
             // Extract the dates and total prices
             $durations = array_column($mergedData, 'date');
             $totals = array_column($mergedData, 'total_price');
-
-            dd($durations, $totals);
         } elseif ($type == 'month') {
             $endOfMonth = Carbon::now()->endOfMonth();  // Current month ka last day
             $startOfYear = Carbon::now()->subMonths(11)->startOfMonth();  // 12 months back se
