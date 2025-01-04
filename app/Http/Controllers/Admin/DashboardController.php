@@ -172,36 +172,40 @@ class DashboardController extends Controller
             ];
         } elseif ($param == 'week') {
             // Loop to get data for the last 7 weeks
+            $weekNumbers = [];  // Array to store dynamic week numbers for x-axis
             for ($i = 6; $i >= 0; $i--) {
                 $week = Carbon::now()->subWeeks($i)->format('W');
                 $year = Carbon::now()->subWeeks($i)->format('Y');
 
+                // Store the week number for each iteration
+                $weekNumbers[] = "Week " . Carbon::now()->subWeeks($i)->format('W');
+
                 // New customers count for each week
                 $newCustomers = DB::select("
-                SELECT customer_id 
-                FROM orders 
-                WHERE YEARWEEK(created_at, 1) = YEARWEEK(?, 1)
-                GROUP BY customer_id
-                HAVING COUNT(*) = 1
-            ", [Carbon::now()->subWeeks($i)->startOfWeek()]);
+                    SELECT customer_id 
+                    FROM orders 
+                    WHERE YEARWEEK(created_at, 1) = YEARWEEK(?, 1)
+                    GROUP BY customer_id
+                    HAVING COUNT(*) = 1
+                ", [Carbon::now()->subWeeks($i)->startOfWeek()]);
                 $newCustomerCount[] = count($newCustomers);
 
                 // Returning customers count for each week
                 $returningCustomers = DB::select("
-                SELECT customer_id 
-                FROM orders 
-                WHERE YEARWEEK(created_at, 1) = YEARWEEK(?, 1)
-                GROUP BY customer_id
-                HAVING COUNT(*) > 1
-            ", [Carbon::now()->subWeeks($i)->startOfWeek()]);
+                    SELECT customer_id 
+                    FROM orders 
+                    WHERE YEARWEEK(created_at, 1) = YEARWEEK(?, 1)
+                    GROUP BY customer_id
+                    HAVING COUNT(*) > 1
+                ", [Carbon::now()->subWeeks($i)->startOfWeek()]);
                 $returningCustomerCount[] = count($returningCustomers);
 
                 // Total unique customers count for each week
                 $totalCustomersData = DB::select("
-                SELECT DISTINCT customer_id
-                FROM orders
-                WHERE YEARWEEK(created_at, 1) = YEARWEEK(?, 1)
-            ", [Carbon::now()->subWeeks($i)->startOfWeek()]);
+                    SELECT DISTINCT customer_id
+                    FROM orders
+                    WHERE YEARWEEK(created_at, 1) = YEARWEEK(?, 1)
+                ", [Carbon::now()->subWeeks($i)->startOfWeek()]);
                 $totalCustomers[] = count($totalCustomersData);
             }
 
@@ -222,15 +226,7 @@ class DashboardController extends Controller
                     ]
                 ],
                 'xaxis' => [
-                    'categories' => [
-                        'Week 1',
-                        'Week 2',
-                        'Week 3',
-                        'Week 4',
-                        'Week 5',
-                        'Week 6',
-                        'Week 7',
-                    ]
+                    'categories' => array_reverse($weekNumbers)
                 ]
             ];
         }
