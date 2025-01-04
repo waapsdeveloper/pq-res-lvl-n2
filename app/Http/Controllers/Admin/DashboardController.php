@@ -94,103 +94,6 @@ class DashboardController extends Controller
         return ServiceResponse::success('Tables fetched successfully', ['tables' => $tables]);
     }
 
-    // public function customerChartData(Request $request)
-    // {
-    //     $param = $request->input('param', 'day');
-
-    //     // Initialize customer data arrays
-    //     $newCustomerCount = 0;
-    //     $returningCustomerCount = 0;
-    //     $totalCustomers = 0;
-
-    //     $currentMonth = Carbon::now()->format('F'); // Current month name
-    //     $previousMonth = Carbon::now()->subMonth()->format('F'); // Previous month name
-
-    //     // Fetch customer data based on param ('day' or 'week')
-    //     if ($param == 'day') {
-    //         // New customers count for today
-    //         $newCustomers = DB::select("
-    //             SELECT customer_id 
-    //             FROM orders 
-    //             WHERE DATE(created_at) = CURDATE()
-    //             GROUP BY customer_id
-    //             HAVING COUNT(*) = 1
-    //         ");
-    //         $newCustomerCount = count($newCustomers);
-
-    //         // Returning customers count for today
-    //         $returningCustomers = DB::select("
-    //             SELECT customer_id 
-    //             FROM orders 
-    //             WHERE DATE(created_at) = CURDATE()
-    //             GROUP BY customer_id
-    //             HAVING COUNT(*) > 1
-    //         ");
-    //         $returningCustomerCount = count($returningCustomers);
-
-    //         // Total unique customers count for today
-    //         $totalCustomersData = DB::select("
-    //             SELECT DISTINCT customer_id
-    //             FROM orders
-    //             WHERE DATE(created_at) = CURDATE()
-    //         ");
-    //         $totalCustomers = count($totalCustomersData);
-    //     } elseif ($param == 'week') {
-    //         // New customers count for this week
-    //         $newCustomers = DB::select("
-    //             SELECT customer_id 
-    //             FROM orders 
-    //             WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)
-    //             GROUP BY customer_id
-    //             HAVING COUNT(*) = 1
-    //         ");
-    //         $newCustomerCount = count($newCustomers);
-
-    //         // Returning customers count for this week
-    //         $returningCustomers = DB::select("
-    //             SELECT customer_id 
-    //             FROM orders 
-    //             WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)
-    //             GROUP BY customer_id
-    //             HAVING COUNT(*) > 1
-    //         ");
-    //         $returningCustomerCount = count($returningCustomers);
-
-    //         // Total unique customers count for this week
-    //         $totalCustomersData = DB::select("
-    //             SELECT DISTINCT customer_id
-    //             FROM orders
-    //             WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)
-    //         ");
-    //         $totalCustomers = count($totalCustomersData);
-    //     }
-    //     $param = ucfirst($param);
-    //     // Prepare dynamic response
-    //     $response = [
-    //         'series' => [
-    //             [
-    //                 'name' => 'New Customers',
-    //                 'data' => [$newCustomerCount]
-    //             ],
-    //             [
-    //                 'name' => 'Returning Customers',
-    //                 'data' => [$returningCustomerCount]
-    //             ],
-    //             [
-    //                 'name' => "Total Customers in {$param}",
-    //                 'data' => [$totalCustomers]
-    //             ]
-    //         ],
-
-    //         'xaxis' => [
-    //             'categories' => $param == 'day' ? ['Today', 'Yesterday'] : [$currentMonth, $previousMonth]
-    //         ]
-    //     ];
-
-    //     return ServiceResponse::success('Customer Chart data fetched successfully', ['customers' => $response]);
-    // }
-
-
 
     public function customerChartData(Request $request)
     {
@@ -584,5 +487,82 @@ class DashboardController extends Controller
         }
 
         return number_format($price);  // No decimal for values less than 1000
+    }
+
+
+
+    public function salesSummary(Request $request)
+    {
+        $type = $request->query('type', 'week'); // Default 'perMonth'
+        $date = $request->query('date', now()->toDateString());
+
+        if ($type == 'week') {
+            $today = Carbon::today();
+            $sevenDaysAgo = Carbon::today()->subDays(7);
+
+
+            // Last 7 din ke orders ka data fetch karna
+            $ordersInWeek = Order::whereBetween('created_at', [$sevenDaysAgo, $today])
+                ->selectRaw('DATE(created_at) as date, SUM(total_price) as total_price')
+                ->groupBy('date')
+                ->orderBy('date', 'desc')
+                ->get();
+            $dates = [];
+            for ($i = 6; $i >= 0; $i--) {
+                $dates[] = Carbon::today()->subDays($i)->format('Y-m-d');
+            }
+
+            // Merge the dates with the order data
+            $mergedData = [];
+            foreach ($dates as $date) {
+                $formattedDate = Carbon::parse($date)->format('D, d M y');
+                $order = $ordersInWeek->firstWhere('date', $date);
+                $mergedData[] = [
+                    'date' => $formattedDate,
+                    'total_price' => $order ? $order->total_price : 0,
+                ];
+            }
+
+            $mergedData = array_reverse($mergedData);
+
+            // Extract the dates and total prices
+            $durations = array_column($mergedData, 'date');
+            $totals = array_column($mergedData, 'total_price');
+
+            dd($durations, $totals);
+        } elseif ($type == 'month') {
+            $endOfMonth = Carbon::now()->endOfMonth();  // Current month ka last day
+            $startOfYear = Carbon::now()->subMonths(11)->startOfMonth();  // 12 months back se
+
+            $orders = Order::whereBetween('created_at', [$startOfYear, $endOfMonth])
+                ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, SUM(total_price) as total_price')
+                ->groupBy('year', 'month')
+                ->orderBy('year', 'desc')
+                ->orderBy('month', 'desc')
+                ->get();
+            $durations = [];
+            $totals = [];
+
+            $orders->each(function ($order) use (&$durations, &$totals) {
+                // Add the combined month name (e.g., "January 2025")
+                $durations[] = Carbon::createFromDate($order->year, $order->month, 1)->format('M Y');
+                // Add the total price
+                $totals[] = $order->total_price;
+            });
+        }
+
+
+
+        return ServiceResponse::success('Sales chart data', [
+            'series' => [
+                [
+                    'name' => 'Sales',
+                    'data' => $totals,
+                ],
+            ],
+            'xaxis' => [
+                'categories' => $durations, // Set categories (week numbers or month names)
+            ],
+        ]);
     }
 }
