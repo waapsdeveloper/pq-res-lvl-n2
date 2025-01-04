@@ -21,7 +21,7 @@ class CreateRandomOrderJobClass
     public function __construct() {}
     public function __invoke()
     {
-        $startDate = Carbon::now()->subMonths(3);  // Start from 2 months ago
+        $startDate = Carbon::now()->subMonths(4);  // Start from 2 months ago
         $endDate = Carbon::now();  // Up to the current date
         $randomYear = rand($startDate->year, $endDate->year);
         $randomMonth = rand($startDate->month, $endDate->month);
@@ -41,7 +41,7 @@ class CreateRandomOrderJobClass
         $unique = uniqid(11);
         $randomStatus = Arr::random(['active', 'active', 'inactive']);
 
-        $createNewUser = Arr::random([true, false]);
+        $createNewUser = Arr::random([true, false, true]);
 
         if ($createNewUser) {
             // Create a new user
