@@ -91,61 +91,61 @@ class AuthController extends Controller
 
         return ServiceResponse::success('User registered successfully', ['user' => $user, 'token' => $token]);
     }
-    public function forgotPassword(Request $request)
-    {
-        // Validate the email input
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ]);
+    // public function forgotPassword(Request $request)
+    // {
+    //     // Validate the email input
+    //     $request->validate([
+    //         'email' => 'required|email|exists:users,email',
+    //     ]);
 
-        $user = User::where('email', $request->email)->first();
-        if (!$user) {
-            return ServiceResponse::error('User not found');
-        }
-        $token = Str::upper(Str::random(40));
-        if ($user) {
-            $user->update(['token' => $token]);
-            $duplicationToken = PasswordReset::where('email', $user->email)->first();
-            if ($duplicationToken) {
-                $duplicationToken->delete();
-            }
-            PasswordReset::create([
-                'email' => $user->email,
-                'token' => $token,
-                'created_at' => now(),
-                'updated_at' => false,
-            ]);
+    //     $user = User::where('email', $request->email)->first();
+    //     if (!$user) {
+    //         return ServiceResponse::error('User not found');
+    //     }
+    //     $token = Str::upper(Str::random(40));
+    //     if ($user) {
+    //         $user->update(['token' => $token]);
+    //         $duplicationToken = PasswordReset::where('email', $user->email)->first();
+    //         if ($duplicationToken) {
+    //             $duplicationToken->delete();
+    //         }
+    //         PasswordReset::create([
+    //             'email' => $user->email,
+    //             'token' => $token,
+    //             'created_at' => now(),
+    //             'updated_at' => false,
+    //         ]);
 
-            Mail::to($user->email)->send(new ForgotUser($user, $token));
+    //         Mail::to($user->email)->send(new ForgotUser($user, $token));
 
-            return ServiceResponse::success('Password reset link sent to your email.');
-        }
-    }
+    //         return ServiceResponse::success('Password reset link sent to your email.');
+    //     }
+    // }
 
-    public function resetPassword(Request $request)
-    {
-        // Validate the input (token, email, password, password_confirmation)
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string', // New password
-        ]);
+    // public function resetPassword(Request $request)
+    // {
+    //     // Validate the input (token, email, password, password_confirmation)
+    //     $request->validate([
+    //         'token' => 'required',
+    //         'email' => 'required|email|exists:users,email',
+    //         'password' => 'required|string', // New password
+    //     ]);
 
-        // Attempt to reset the password
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                // Update the user password
-                $user->password = Hash::make($password);
-                $user->save();
-            }
-        );
+    //     // Attempt to reset the password
+    //     $status = Password::reset(
+    //         $request->only('email', 'password', 'password_confirmation', 'token'),
+    //         function ($user, $password) {
+    //             // Update the user password
+    //             $user->password = Hash::make($password);
+    //             $user->save();
+    //         }
+    //     );
 
-        // Check if the password reset was successful
-        if ($status === Password::PASSWORD_RESET) {
-            return ServiceResponse::success('Password reset successfully.');
-        }
+    //     // Check if the password reset was successful
+    //     if ($status === Password::PASSWORD_RESET) {
+    //         return ServiceResponse::success('Password reset successfully.');
+    //     }
 
-        return ServiceResponse::error('Failed to reset password. Please try again.');
-    }
+    //     return ServiceResponse::error('Failed to reset password. Please try again.');
+    // }
 }
