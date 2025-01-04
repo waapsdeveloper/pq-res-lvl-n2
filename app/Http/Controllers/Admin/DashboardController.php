@@ -295,7 +295,7 @@ class DashboardController extends Controller
 
         // dd($param, $startCurrent, $endCurrent, $startPrevious, $endPrevious);
         $currentOrderProducts = OrderProduct::whereHas('order', function ($query) use ($startCurrent, $endCurrent) {
-            $query->whereBetween('order_at', [$startCurrent, $endCurrent]);
+            $query->whereBetween('created_at', [$startCurrent, $endCurrent]);
         })
             ->join('products', 'order_products.product_id', '=', 'products.id') // Join with products table
             ->selectRaw('
@@ -336,7 +336,7 @@ class DashboardController extends Controller
         // return $currentProducts;
 
         $previousOrderProducts = OrderProduct::whereHas('order', function ($query) use ($startPrevious, $endPrevious) {
-            $query->whereBetween('order_at', [$startPrevious, $endPrevious]);
+            $query->whereBetween('created_at', [$startPrevious, $endPrevious]);
         })
             ->join('products', 'order_products.product_id', '=', 'products.id') // Join with products table
             ->selectRaw('
