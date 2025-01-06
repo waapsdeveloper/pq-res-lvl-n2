@@ -196,8 +196,7 @@ class ProductController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $product = Product::find($id);
-        $product->load('category', 'restaurant', 'productProps');
+        $product = Product::with('category', 'restaurant', 'productProps')->find($id);
 
 
         // If the product doesn't exist, return an error response
