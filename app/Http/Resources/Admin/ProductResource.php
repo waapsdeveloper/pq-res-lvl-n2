@@ -47,7 +47,7 @@ class ProductResource extends JsonResource
                     "meta_value" => $prodProps->meta_value,
                     "meta_key_type" => $prodProps->meta_key_type
                 ];
-            }),
+            }) ?? [],
         ];
     }
 }
