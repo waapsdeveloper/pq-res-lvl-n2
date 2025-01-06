@@ -41,15 +41,10 @@ class UpdateProduct extends FormRequest
                 },
             ],
             'discount' => 'nullable',
+            'variation' => 'nullable',
         ];
 
-        // Dynamically add validation rules for array inputs
-        foreach ($this->all() as $key => $value) {
-            if (is_array($value)) {
-                $rules[$key] = 'nullable|array';
-                $rules["{$key}.*"] = 'string|max:255';
-            }
-        }
+
 
         return $rules;
     }

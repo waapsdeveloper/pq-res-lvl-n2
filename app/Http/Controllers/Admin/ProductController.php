@@ -253,7 +253,15 @@ class ProductController extends Controller
 
 
 
-
+        ProductProps::where('product_id', $product->id)->delete();
+        if (isset($data['variation']) && is_array($data['variation'])) {
+            ProductProps::create([
+                'product_id' => $product->id,
+                'meta_key' => 'variation',
+                'meta_value' => json_encode($data['variation']),
+                'meta_key_type' => gettype($data['variation']),
+            ]);
+        }
         return ServiceResponse::success('Product update successful', ['item' => $product]);
     }
 
@@ -269,11 +277,11 @@ class ProductController extends Controller
         ProductProps::where('product_id', $product->id)->delete();
 
         if (!$product) {
-            return ServiceResponse::error("user not found", 404);
+            return ServiceResponse::error("Product not found", 404);
         }
 
         $product->delete();
-        return ServiceResponse::success("User deleted successfully.");
+        return ServiceResponse::success("{roduct deleted successfully.");
     }
     public function bulkDelete(Request $request)
     {
