@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Models\ProductProps;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Str;
 
 class ProductResource extends JsonResource
 {
@@ -26,8 +27,7 @@ class ProductResource extends JsonResource
         $image = Helper::returnFullImageUrl($obj->image);
         $category = $obj->category_id ? optional($obj->category)->name : null;
         $restaurant = $obj->restaurant_id ? optional($obj->restaurant) : null;
-        $props = ProductProps::where('product_id', $obj->id)->get();
-        // dd($obj->restaurant);
+        // $productProps = $obj->productProps ? optional($obj->productProps) : null;
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -41,7 +41,13 @@ class ProductResource extends JsonResource
             "category" => $category,
             "restaurant_id" => $obj->restaurant_id,
             "restaurant" => $obj->restaurant,
-            "props" => $props
+            "props" => $obj->productProps->map(function ($prodProps) {
+                return [
+                    "meta_key" => $prodProps->meta_key,
+                    "meta_value" => $prodProps->meta_value,
+                    "meta_key_type" => $prodProps->meta_key_type
+                ];
+            }),
         ];
     }
 }

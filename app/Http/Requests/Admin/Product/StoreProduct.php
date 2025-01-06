@@ -23,6 +23,7 @@ class StoreProduct extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this);
         return  [
             'name' => 'required|string|min:3|max:255',
             'identifier' => 'nullable|string|unique:products,identifier,' . $this->id,
@@ -41,9 +42,7 @@ class StoreProduct extends FormRequest
                 },
             ],
             'discount' => 'nullable|numeric',
-            'sizes' => 'nullable|string',
-            'spicy' => 'nullable|string',
-            'type' => 'nullable|string',
+            'variation' => 'nullable|array',
 
         ];
     }
