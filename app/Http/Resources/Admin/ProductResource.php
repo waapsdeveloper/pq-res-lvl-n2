@@ -41,7 +41,7 @@ class ProductResource extends JsonResource
             "category" => $category,
             "restaurant_id" => $obj->restaurant_id,
             "restaurant" => $obj->restaurant,
-            "props" => $obj->productProps->map(function ($prodProps) {
+            "variation" => $obj->productProps->map(function ($prodProps) {
                 return [
                     "meta_key" => $prodProps->meta_key,
                     "meta_value" => $prodProps->meta_value,
