@@ -14,7 +14,6 @@ class OrderResource extends JsonResource
     }
     public function toObject($obj, $lang = 'en')
     {
-        // dd($obj->orderProducts);
         return [
             'id' => $obj->id,
             'customer_id' => $obj->customer_id == 'walk-in-customer' ? 0 : $obj->customer_id,
@@ -39,8 +38,12 @@ class OrderResource extends JsonResource
                     'product_image' => $image,
                     'quantity' => $orderProduct->quantity,
                     'price' => $orderProduct->price,
+                    "meta_key" => $orderProduct->productProp->meta_key ?? null,
+                    "meta_value" => $orderProduct->productProp->meta_value ?? null,
+                    "meta_key_type" => $orderProduct->productProp->meta_key_type ?? null,
                 ];
             }) : [],
+
         ];
 
         // return [

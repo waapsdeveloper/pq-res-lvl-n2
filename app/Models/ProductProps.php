@@ -23,4 +23,8 @@ class ProductProps extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class, 'product_id', 'product_id');
+    }
 }

@@ -38,9 +38,9 @@ class OrderController extends Controller
 
         $category = $request->input('category_id', '');
 
-        $query = Order::query()->with('customer', 'table_no')->orderBy('id', 'desc');
-
-        $query->with('orderProducts.product')->with('user', 'rtable')->orderBy('id', 'desc');
+        $query = Order::query()->with('customer', 'table_no', 'orderProducts')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
+        // dd($query);
+        // $query->with('orderProducts.product')->with('orderProducts.productProps');
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -48,9 +48,6 @@ class OrderController extends Controller
         }
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON string into an associative array
-            // Customer_name: '',
-            // phone: '',
-            // table: '',
             if (isset($filters['order_id']) && !empty($filters['order_id'])) {
                 $query->where('order_number', 'like', '%' . $filters['order_id'] . '%');
             }
@@ -200,6 +197,7 @@ class OrderController extends Controller
         // Fetch the order with its related products and restaurant
         $order = Order::where('id', $id)
             ->with('orderProducts.product', 'restaurant')
+            ->with('customer', 'table_no')->with(['orderProducts.productProp'])
             ->first();
 
         if (!$order) {
