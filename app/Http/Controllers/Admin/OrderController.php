@@ -38,7 +38,7 @@ class OrderController extends Controller
 
         $category = $request->input('category_id', '');
 
-        $query = Order::query();
+        $query = Order::query()->orderBy('id', 'desc');
 
         $query->with('orderProducts.product')->with('user', 'rtable')->orderBy('id', 'desc');
 
@@ -56,13 +56,10 @@ class OrderController extends Controller
             }
 
             if (isset($filters['total_price']) && !empty($filters['total_price'])) {
-                $query->where(function ($q) use ($filters) {
-                    $q->where('total_price', '>', $filters['total_price'])
-                        ->orWhere('total_price', '=', $filters['total_price']);
-                });
+                $query->where('total_price', '>',  $filters['total_price'])
+                    ->orWhere('total_price', '=',  $filters['total_price'])->orderByDesc('total_price');
 
-                // Sort by total_price if the filter is applied
-                $query->orderBy('total_price', 'desc');
+                // dd($filters['total_price']);
             }
             if (isset($filters['type']) && !empty($filters['type'])) {
                 $query->where('type', 'like', '%' . $filters['type'] . '%');
@@ -72,11 +69,9 @@ class OrderController extends Controller
                 $query->where('status', $filters['status']);
             }
         }
-        if (!isset($filters['total_price']) || empty($filters['total_price'])) {
-            $query->orderBy('id', 'desc');
-        }
+
         // Paginate the results
-        // $query->orderBy('id', 'desc');
+        $query->orderBy('id', 'desc');
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
         // Loop through the results and generate full URL for image
