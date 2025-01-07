@@ -56,7 +56,8 @@ class OrderController extends Controller
             }
 
             if (isset($filters['total_price']) && !empty($filters['total_price'])) {
-                $query->where('total_price', '<=',  $filters['total_price']);
+                dd($filters['total_price']);
+                $query->where('total_price', '>',  $filters['total_price']);
             }
             if (isset($filters['type']) && !empty($filters['type'])) {
                 $query->where('type', 'like', '%' . $filters['type'] . '%');
