@@ -38,7 +38,7 @@ class OrderController extends Controller
 
         $category = $request->input('category_id', '');
 
-        $query = Order::query()->orderBy('id', 'desc');
+        $query = Order::query()->with('customer', 'table_no')->orderBy('id', 'desc');
 
         $query->with('orderProducts.product')->with('user', 'rtable')->orderBy('id', 'desc');
 
@@ -68,6 +68,21 @@ class OrderController extends Controller
             if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
+            if (isset($filters['Customer_name']) && !empty($filters['Customer_name'])) {
+                $query->whereHas('customer', function ($q) use ($filters) {
+                    $q->where('name', 'like', '%' . $filters['Customer_name'] . '%');
+                });
+            }
+            if (isset($filters['phone']) && !empty($filters['phone'])) {
+                $query->whereHas('customer', function ($q) use ($filters) {
+                    $q->where('phone', 'like', '%' . $filters['phone'] . '%');
+                });
+            }
+            // if (isset($filters['table']) && !empty($filters['table'])) {
+            //     $query->whereHas('table_no', function ($q) use ($filters) {
+            //         $q->where('name', 'like', '%' . $filters['table'] . '%');
+            //     });
+            // }
         }
 
         // Paginate the results

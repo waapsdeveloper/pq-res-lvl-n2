@@ -36,7 +36,11 @@ class Order extends Model
     }
     public function customer()
     {
-        return $this->belongsTo(User::class, 'customer_id', 'id');
+        return $this->belongsTo(User::class, 'customer_id', 'id')
+            ->where(function ($query) {
+                $query->where('role_id', 0)
+                    ->orWhereNull('role_id');
+            });
     }
     public function restaurant()
     {
@@ -51,7 +55,7 @@ class Order extends Model
     {
         return $this->belongsTo(Restaurant::class, 'rtable_id', 'id');
     }
-    public function table()
+    public function table_no()
     {
         return $this->belongsTo(Rtable::class, 'table_no', 'id');
     }
