@@ -19,12 +19,15 @@ class OrderResource extends JsonResource
             'id' => $obj->id,
             'customer_id' => $obj->customer_id == 'walk-in-customer' ? 0 : $obj->customer_id,
             'customer' => $obj->customer ? $obj->customer->name : 'walk-in-customer',
-            // 'customer' => $obj->customer ? $obj->customer->name : 'walk-in-customer',
+            'customer_phone' => $obj->customer ? $obj->customer->phone : 'no contact number',
+            'customer_email' => $obj->customer ? $obj->customer->email : 'no email',
             'order_number' => $obj->order_number,
+            'type' => $obj->type,
             'status' => $obj->status,
             'total_price' => $obj->total_price,
             'discount' => $obj->discount,
             'created_at' => $obj->created_at,
+            'table' => $obj->table,
             'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [
