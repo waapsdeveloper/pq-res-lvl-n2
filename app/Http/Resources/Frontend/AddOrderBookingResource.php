@@ -31,7 +31,7 @@ class AddOrderBookingResource extends JsonResource
             'id' => $obj->id,
             'order_number' => $obj->order_number,
             'type' => $obj->type,
-            'status' => $obj->status,
+            'status' => ucFirst($obj->status),
             'notes' => $obj->notes,
             'discount' => $obj->discount,
             'invoice_no' => $obj->invoice_no,

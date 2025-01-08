@@ -27,7 +27,7 @@ class RTableBookingResource extends JsonResource
             "booking_end" => $obj->booking_end,
             "no_of_seats" => $obj->no_of_seats,
             "description" => $obj->description,
-            "status" => $obj->status,
+            "status" => ucFirst($obj->status),
         ];
     }
 }

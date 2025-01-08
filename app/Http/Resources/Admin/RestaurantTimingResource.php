@@ -36,7 +36,7 @@ class RestaurantTimingResource extends JsonResource
             "day" => $obj->day,
             "start_time" => $obj->start_time,
             "end_time" => $obj->end_time,
-            "status" => $obj->status,
+            "status" => ucFirst($obj->status),
         ];
     }
 }

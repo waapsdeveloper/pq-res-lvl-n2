@@ -30,7 +30,7 @@ class TableBookingResource extends JsonResource
             // "no_of_seats" => $obj->no_of_seats,
             // "description" => $obj->description,
             // "floor" => $obj->floor,
-            "status" => $obj->status,  // If you have a 'status' field in your rtable, you can add it here
+            "status" => ucFirst($obj->status),  // If you have a 'status' field in your rtable, you can add it here
         ];
     }
 }

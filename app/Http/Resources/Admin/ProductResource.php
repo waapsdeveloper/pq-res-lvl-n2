@@ -34,7 +34,7 @@ class ProductResource extends JsonResource
             "price" => $obj->price,
             "identifier" => $obj->identifier,
             "image" => $image,
-            "status" => $obj->status,
+            "status" => ucFirst($obj->status),
             "description" => $obj->description,
             'discount' => $obj->discount,
             "category_id" => $obj->category_id,

@@ -30,7 +30,7 @@ class CategoryResource extends JsonResource
             "description" => $obj->description,
             "image" => $image,
             "category" => $obj->category,
-            "status" => $obj->status,
+            "status" => ucFirst($obj->status),
         ];
     }
 }

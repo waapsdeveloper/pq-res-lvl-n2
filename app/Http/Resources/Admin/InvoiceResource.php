@@ -31,7 +31,7 @@ class InvoiceResource extends JsonResource
             "payment_status" => $obj->payment_status,
             "total" => $obj->total,
             "total_price" => $obj->total,
-            "status" => $obj->status,
+            "status" => ucFirst($obj->status),
             "notes" => $obj->notes,
         ];
     }

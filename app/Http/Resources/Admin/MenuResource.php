@@ -24,7 +24,7 @@ class MenuResource extends JsonResource
             "id" => $obj->id,
             "name" => $obj->name,
             "address" => $obj->address,
-            "status" => $obj->status,
+            "status" => ucFirst($obj->status),
         ];
     }
 }
