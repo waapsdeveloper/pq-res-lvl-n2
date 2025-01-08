@@ -584,7 +584,7 @@ class DashboardController extends Controller
                 ],
             ],
             'xaxis' => [
-                'categories' => $durations, // Set categories (week numbers or month names)
+                'categories' => array_reverse($durations), // Set categories (week numbers or month names)
             ],
         ]);
     }
