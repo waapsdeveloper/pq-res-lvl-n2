@@ -35,7 +35,7 @@ class CustomerResource extends JsonResource
             "phone" => $obj->phone,
             "image" => $image,
             // "address" => $obj->address,
-            "status" => ucFirst($obj->status),
+            "status" => ucfirst($obj->status),
         ];
     }
 }

@@ -34,7 +34,7 @@ class UserResource extends JsonResource
             "phone" => $obj->phone,
             "role_id" => $obj->role_id,
             "role" => $obj->role ? $obj->role->name : '',
-            "status" => ucFirst($obj->status),
+            "status" => ucfirst($obj->status),
             "created_at" => $obj->created_at,
             "updated_at" => $obj->updated_at,
             "image" => $image,

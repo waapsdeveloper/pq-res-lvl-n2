@@ -29,8 +29,8 @@ class DashboardController extends Controller
 
         $orders->each(function ($order) {
             if ($order) {
-                $order->type = ucWords(Str::replace(['_', '-'], ' ', $order->type));
-                $order->status = ucWords(Str::replace(['_', '-'], ' ', $order->status));
+                $order->type = ucwords(Str::replace(['_', '-'], ' ', $order->type));
+                $order->status = ucwords(Str::replace(['_', '-'], ' ', $order->status));
                 $order->table_no = $order->table->name ?? $order->table->identifier;
             }
         });

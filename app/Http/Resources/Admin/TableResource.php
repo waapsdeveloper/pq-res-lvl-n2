@@ -24,7 +24,7 @@ class TableResource extends JsonResource
             "id" => $obj->id,
             "name" => $obj->name,
             "address" => $obj->address,
-            "status" => ucFirst($obj->status),
+            "status" => ucfirst($obj->status),
         ];
     }
 }
