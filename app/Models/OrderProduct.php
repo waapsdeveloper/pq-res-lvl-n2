@@ -16,7 +16,9 @@ class OrderProduct extends Model
         'quantity',
         'price',
         'notes',
+        'variation',
         'created_at', // for fake entries when done remove this line
+
     ];
 
     // Relationship with Order

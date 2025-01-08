@@ -180,6 +180,7 @@ class OrderController extends Controller
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
+                'variation' => $orderProduct['variation'] ?? null,
             ]);
         }
 
@@ -366,6 +367,8 @@ class OrderController extends Controller
     //             'quantity' => $orderProduct['quantity'],
     //             'price' => $orderProduct['price'],
     //             'notes' => $orderProduct['notes'],
+    //             'variation' => $orderProduct['variation'] ?? null,
+
     //         ]);
     //     }
 
