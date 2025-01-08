@@ -170,7 +170,7 @@ class VariationController extends Controller
         }
 
         $ids = $request->input('ids', []);
-        variation::whereIn('id', $ids)->delete();
+        Variation::whereIn('id', $ids)->delete();
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }

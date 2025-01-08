@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Invoice\StoreInvoiceRequest;
+use App\Http\Requests\Admin\Invoice\UpdateInvoiceRequest;
 use App\Http\Resources\Admin\InvoiceResource;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -111,9 +113,20 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateInvoiceRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+        $invoice = Invoice::findOrFail($id);
+        // Create a new invoice
+        $invoice->update([
+            'order_id' => $data['order_id'],
+            'invoice_no' => $data['invoice_no'],
+            'invoice_date' => $data['invoice_date'],
+            'payment_method' => $data['payment_method'],
+            'total' => $data['total'],
+            'status' => $data['status'],
+        ]);
+        return ServiceResponse::success("Invoice updated successfully", ['invoice' => $invoice]);
     }
 
     /**
@@ -121,6 +134,27 @@ class InvoiceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $invoice = Invoice::findOrFail($id);
+        if (!$invoice) {
+            return ServiceResponse::error("Invoice $id not found");
+        }
+        $invoice->delete();
+        return ServiceResponse::success("Invoice deleted successfully", ['invoice' => $invoice]);
+    }
+    public function bulkDelete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:restaurant_timings,id',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $ids = $request->input('ids', []);
+        Invoice::whereIn('id', $ids)->delete();
+
+        return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
 }
