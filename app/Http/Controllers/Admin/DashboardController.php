@@ -65,7 +65,7 @@ class DashboardController extends Controller
         $topSellingProducts = OrderProduct::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('product_id')
             ->orderByDesc('total_quantity')
-            ->limit(7)
+            ->limit(6)
             ->get();
 
         // Calculate the total quantity of all top-selling products
