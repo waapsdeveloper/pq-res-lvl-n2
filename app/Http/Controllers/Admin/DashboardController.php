@@ -480,10 +480,12 @@ class DashboardController extends Controller
             'series' => [
                 [
                     'name' => "This {$param}",
+                    'current' => $param === 'week' ? $previousStart->format('Y-m-d') : $startDuration,
                     'data' => $seriesData["This {$param}"],
                 ],
                 [
                     'name' => "Last {$param}",
+                    'previous' => $param === 'week' ? $previousEnd->format('Y-m-d') : $endDuraton,
                     'data' => $seriesData["Last {$param}"],
                 ],
             ],
