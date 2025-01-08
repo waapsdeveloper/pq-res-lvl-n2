@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -27,14 +28,13 @@ class DashboardController extends Controller
             ->latest()->limit(10)->get();
 
         $orders->each(function ($order) {
-            if ($order->table) {
-                // Replace the foreign key value (table_no) with the table's name
+            if ($order) {
+                $order->type = ucFirst(Str::replace(['_', '-'], ' ', $order->type));
+                $order->status = ucFirst(Str::replace(['_', '-'], ' ', $order->status));
                 $order->table_no = $order->table->name ?? $order->table->identifier;
-            } else {
-                $order->table_no = null;  // If no table relation exists, set it as null
             }
         });
-
+        dd($orders);
         // Debug the result to ensure the table_no now holds the name
 
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);
