@@ -38,7 +38,7 @@ class OrderController extends Controller
 
         $category = $request->input('category_id', '');
 
-        $query = Order::query()->with('customer', 'table_no', 'orderProducts')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
+        $query = Order::query()->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
         // dd($query);
         // $query->with('orderProducts.product')->with('orderProducts.productProps');
 
@@ -206,7 +206,7 @@ class OrderController extends Controller
         // Fetch the order with its related products and restaurant
         $order = Order::where('id', $id)
             ->with('orderProducts.product', 'restaurant')
-            ->with('customer', 'table_no')->with(['orderProducts.productProp'])
+            ->with('customer', 'table_no', 'table')->with(['orderProducts.productProp'])
             ->first();
 
         if (!$order) {

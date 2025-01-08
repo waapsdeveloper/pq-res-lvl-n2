@@ -14,6 +14,7 @@ class OrderResource extends JsonResource
     }
     public function toObject($obj, $lang = 'en')
     {
+        // dd();
         return [
             'id' => $obj->id,
             'customer_id' => $obj->customer_id == 'walk-in-customer' ? 0 : $obj->customer_id,
@@ -26,7 +27,7 @@ class OrderResource extends JsonResource
             'total_price' => $obj->total_price,
             'discount' => $obj->discount,
             'created_at' => $obj->created_at,
-            'table' => $obj->table ?? 'no booked',
+            'table' => $obj->table ? $obj->table->name : 'no booked',
             'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [
