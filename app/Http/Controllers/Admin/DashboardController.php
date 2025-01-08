@@ -580,7 +580,7 @@ class DashboardController extends Controller
             'series' => [
                 [
                     'name' => 'Sales',
-                    'data' => $totals,
+                    'data' => array_reverse($totals),
                 ],
             ],
             'xaxis' => [
