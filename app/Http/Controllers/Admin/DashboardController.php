@@ -22,9 +22,21 @@ class DashboardController extends Controller
     public function recentOrders()
     {
         $orders = Order::query()
-            ->with('customer')
+            ->with('customer', 'table')
             // ->orderByDesc('id')
             ->latest()->limit(10)->get();
+
+        $orders->each(function ($order) {
+            if ($order->table) {
+                // Replace the foreign key value (table_no) with the table's name
+                $order->table_no = $order->table->name ?? $order->table->identifier;
+            } else {
+                $order->table_no = null;  // If no table relation exists, set it as null
+            }
+        });
+
+        // Debug the result to ensure the table_no now holds the name
+
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);
     }
 

@@ -60,6 +60,10 @@ class Order extends Model
     }
     public function table_no()
     {
-        return $this->belongsTo(Rtable::class, 'table_no', 'id');
+        return $this->belongsTo(Rtable::class, 'table_no');
+    }
+    public function table()
+    {
+        return $this->belongsTo(Rtable::class, 'table_no');
     }
 }
