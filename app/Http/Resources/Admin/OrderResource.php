@@ -38,7 +38,7 @@ class OrderResource extends JsonResource
                     'product_image' => $image,
                     'quantity' => $orderProduct->quantity,
                     'price' => $orderProduct->price,
-                    'variation' => $orderProduct->variation,
+                    'variation' => $orderProduct->variation ?? [],
                     "meta_key" => $orderProduct->productProp->meta_key ?? null,
                     "meta_value" => $orderProduct->productProp->meta_value ?? null,
                     "meta_key_type" => $orderProduct->productProp->meta_key_type ?? null,
