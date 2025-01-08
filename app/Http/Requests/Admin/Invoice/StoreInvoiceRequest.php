@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Invoice;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreInvoiceRequest extends FormRequest
 {
@@ -29,5 +31,21 @@ class StoreInvoiceRequest extends FormRequest
             'total' => 'required|numeric|min:0',
             'status' => 'required|string|in:pending,paid,cancelled',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        // Customize the error response if validation fails
+        $error = $validator->errors()->first();
+
+        // Create a custom error response object or structure
+        $response = [
+            'bool' => false,
+            'status' => 422,
+            "message" => $error,
+            "result" => null
+        ];
+
+        // Throw an HttpResponseException with the custom response
+        throw new HttpResponseException(response()->json($response, 422));
     }
 }

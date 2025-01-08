@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\TableBookingController;
 use App\Http\Controllers\Admin\RTableBookingController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\VariationController;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
@@ -125,6 +126,14 @@ Route::prefix('customer')->group(function () {
     Route::get('/bulk-delete', [CustomerController::class, 'bulkDelete'])->name('customer-bulkDelete');
 
     Route::resource('/', CustomerController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('customer'); // Restrict to specific CRUD actions.
+});
+Route::prefix('variation')->group(function () {
+    Route::get('/bulk-delete', [VariationController::class, 'bulkDelete'])->name('customer-bulkDelete');
+
+    Route::resource('/', VariationController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('customer'); // Restrict to specific CRUD actions.

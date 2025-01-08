@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreInvoiceRequest;
+use App\Http\Requests\Admin\Invoice\StoreInvoiceRequest;
 use App\Http\Resources\Admin\InvoiceResource;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
@@ -69,8 +69,6 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-
-
         $data = $request->validated();
         // Create a new invoice
         $invoice = Invoice::create([
@@ -81,6 +79,7 @@ class InvoiceController extends Controller
             'total' => $data['total'],
             'status' => $data['status'],
         ]);
+        return ServiceResponse::success("Invoice details retrieved successfully", ['invoice' => $invoice]);
     }
 
     /**

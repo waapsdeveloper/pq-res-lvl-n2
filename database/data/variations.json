@@ -1,0 +1,168 @@
+[
+    {
+        "name": "Pizza Size",
+        "meta_value": {
+            "options": ["Small", "Medium", "Large", "Extra Large"],
+            "default": "Medium"
+        },
+        "description": "Choose the size of your pizza."
+    },
+    {
+        "name": "Burger Patty",
+        "meta_value": {
+            "options": ["Beef", "Chicken", "Veggie"],
+            "default": "Beef"
+        },
+        "description": "Select your preferred burger patty."
+    },
+    {
+        "name": "Spice Level",
+        "meta_value": {
+            "options": ["Mild", "Medium", "Spicy", "Extra Spicy"],
+            "default": "Medium"
+        },
+        "description": "Choose the spice level for your dish."
+    },
+    {
+        "name": "Drink Size",
+        "meta_value": {
+            "options": ["Small", "Medium", "Large"],
+            "default": "Medium"
+        },
+        "description": "Select your drink size."
+    },
+    {
+        "name": "Fries Type",
+        "meta_value": {
+            "options": ["Regular", "Curly", "Waffle"],
+            "default": "Regular"
+        },
+        "description": "Pick your fries type."
+    },
+    {
+        "name": "Bread Type",
+        "meta_value": {
+            "options": ["White", "Whole Wheat", "Gluten-Free"],
+            "default": "White"
+        },
+        "description": "Choose your preferred bread type."
+    },
+    {
+        "name": "Topping Options",
+        "meta_value": {
+            "options": ["Cheese", "Lettuce", "Tomato", "Onions", "Pickles"],
+            "default": "Cheese"
+        },
+        "description": "Select additional toppings for your dish."
+    },
+    {
+        "name": "Sauce Choice",
+        "meta_value": {
+            "options": ["Ketchup", "Mayo", "BBQ", "Ranch"],
+            "default": "Ketchup"
+        },
+        "description": "Choose your preferred sauce."
+    },
+    {
+        "name": "Combo Options",
+        "meta_value": {
+            "options": ["Fries & Drink", "Onion Rings & Drink", "Salad"],
+            "default": "Fries & Drink"
+        },
+        "description": "Select your combo package."
+    },
+    {
+        "name": "Pizza Crust",
+        "meta_value": {
+            "options": ["Thin Crust", "Thick Crust", "Stuffed Crust"],
+            "default": "Thin Crust"
+        },
+        "description": "Pick your pizza crust type."
+    },
+    {
+        "name": "Cheese Type",
+        "meta_value": {
+            "options": ["Mozzarella", "Cheddar", "Parmesan"],
+            "default": "Mozzarella"
+        },
+        "description": "Select the type of cheese for your dish."
+    },
+    {
+        "name": "Extra Sides",
+        "meta_value": {
+            "options": ["Garlic Bread", "Coleslaw", "Chips"],
+            "default": "Garlic Bread"
+        },
+        "description": "Choose an extra side for your meal."
+    },
+    {
+        "name": "Dessert",
+        "meta_value": {
+            "options": ["Ice Cream", "Brownie", "Cheesecake"],
+            "default": "Ice Cream"
+        },
+        "description": "Pick a dessert to end your meal."
+    },
+    {
+        "name": "Drink Flavor",
+        "meta_value": {
+            "options": ["Cola", "Orange", "Lemonade", "Root Beer"],
+            "default": "Cola"
+        },
+        "description": "Select your drink flavor."
+    },
+    {
+        "name": "Pizza Toppings",
+        "meta_value": {
+            "options": [
+                "Pepperoni",
+                "Mushrooms",
+                "Onions",
+                "Bell Peppers",
+                "Olives"
+            ],
+            "default": "Pepperoni"
+        },
+        "description": "Choose your favorite pizza toppings."
+    },
+    {
+        "name": "Burger Bun",
+        "meta_value": {
+            "options": ["Sesame", "Plain", "Gluten-Free"],
+            "default": "Sesame"
+        },
+        "description": "Select your preferred burger bun."
+    },
+    {
+        "name": "Fried Chicken Type",
+        "meta_value": {
+            "options": ["Original", "Spicy", "Grilled"],
+            "default": "Original"
+        },
+        "description": "Choose the type of fried chicken you want."
+    },
+    {
+        "name": "Wrap Fillings",
+        "meta_value": {
+            "options": ["Chicken", "Beef", "Veggie"],
+            "default": "Chicken"
+        },
+        "description": "Select your preferred wrap filling."
+    },
+    {
+        "name": "Salad Dressing",
+        "meta_value": {
+            "options": ["Ranch", "Caesar", "Italian", "Thousand Island"],
+            "default": "Ranch"
+        },
+        "description": "Pick a dressing for your salad."
+    },
+    {
+        "name": "Pasta Type",
+        "meta_value": {
+            "options": ["Penne", "Spaghetti", "Fettuccine"],
+            "default": "Spaghetti"
+        },
+        "description": "Choose the type of pasta for your dish."
+    }
+]
