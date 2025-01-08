@@ -23,20 +23,20 @@ class StoreOrder extends FormRequest
      */
     public function rules(): array
     {
-
+        // return dd([$this]);
         return [
             'customer_name' => 'nullable|string',
             'customer_phone' => 'nullable',
-            'products' => 'required|array',
+            'products' => 'nullable|array',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
             'products.*.price' => 'required',
             'products.*.notes' => 'nullable|string',
-            'products.*variation' => 'nullable',
+            'products.*.variation' => 'nullable|array',
             'discount' => 'nullable|numeric|min:0|max:100',
             'notes' => 'nullable|string',
             'type' => 'nullable|string',
-            'status' => 'required|string',
+            'status' => 'nullable|string',
             'table_no' => 'nullable|string',
             'total_price' => 'nullable|numeric',
         ];

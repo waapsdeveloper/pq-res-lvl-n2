@@ -21,7 +21,7 @@ class Order extends Model
         'table_no',
         'restaurant_id',
         'total_price',
-        'order_at',
+        'variation',
         'created_at', // for fake entries when done remove this line
     ];
 

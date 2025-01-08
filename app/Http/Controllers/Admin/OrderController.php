@@ -109,8 +109,9 @@ class OrderController extends Controller
      */
     public function store(StoreOrder $request)
     {
-
-        $data = $request->validated();
+        $data = $request->all();
+        // $data = $request->validated();
+        // dd($data);
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         $customerPhone = $data['customer_phone'] ?? 'XXXX';
@@ -148,6 +149,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
+                'variation' => $item['variation'] ?? null,
             ];
         }
 
@@ -173,17 +175,19 @@ class OrderController extends Controller
             'total_price' => $finalPrice,
         ]);
 
+        // return  response()->json($orderProducts);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
+                // return,
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
-                'variation' => $orderProduct['variation'] ?? null,
+                'variation' => $orderProduct['variation'],
             ]);
         }
-
+        // return response()->json($data, $order, $orderProducts);
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
@@ -259,6 +263,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
+                'variation' => $item['variation'] ?? null,
             ];
         }
 
@@ -386,7 +391,15 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = Order::find($id);
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+        // return response()->json($id);
+        $orderProducts = OrderProduct::where('order_id', $order->id)->delete();
+        $order->delete();
+        return ServiceResponse::success('Order deleted successfully', $order);
     }
 
     public function updateStatus(UpdateOrderStatus $request, $id)
@@ -395,7 +408,7 @@ class OrderController extends Controller
 
 
         $order = Order::find($id);
-        $orderProducts = OrderProduct::where('order_id', $order->id)->delete();
+        // $orderProducts = OrderProduct::where('order_id', $order->id)->delete();
 
         if (!$order) {
             return ServiceResponse::error('Order not found');
