@@ -26,7 +26,7 @@ class OrderResource extends JsonResource
             'total_price' => $obj->total_price,
             'discount' => $obj->discount,
             'created_at' => $obj->created_at,
-            'table' => $obj->table,
+            'table' => $obj->table ?? 'no reservation',
             'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [
