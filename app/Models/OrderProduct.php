@@ -21,6 +21,10 @@ class OrderProduct extends Model
 
     ];
 
+    protected $casts = [
+        'variation' => 'array'
+    ];
+
     // Relationship with Order
     public function order()
     {
