@@ -4,6 +4,7 @@ namespace App\Http\Resources\Admin;
 
 use App\Helpers\Helper;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class OrderResource extends JsonResource
 {
@@ -22,8 +23,8 @@ class OrderResource extends JsonResource
             'customer_phone' => $obj->customer ? $obj->customer->phone : 'no contact number',
             'customer_email' => $obj->customer ? $obj->customer->email : 'no email',
             'order_number' => $obj->order_number,
-            'type' => $obj->type,
-            'status' => ucFirst($obj->status),
+            'type' => ucWords(Str::replace(['_', '-'], ' ', $obj->type)),
+            'status' => ucWords(Str::replace(['_', '-'], ' ', $obj->status)),
             'total_price' => $obj->total_price,
             'discount' => $obj->discount,
             'created_at' => $obj->created_at,
@@ -47,24 +48,5 @@ class OrderResource extends JsonResource
             }) : [],
 
         ];
-
-        // return [
-        //     'id' => $obj->id,
-        //     'customer_name' => $obj->customer_name,
-        //     'customer_phone' => $obj->customer_phone,
-        //     'order_number' => $obj->order_number,
-        //     'status' => ucFirst($obj->status),
-        //     'total_price' => $obj->total_price,
-        //     'discount' => $obj->discount,
-        //     'created_at' => $obj->created_at,
-        //     'products' => $obj->orderProducts->map(function ($orderProduct) {
-        //         return [
-        //             'product_id' => $orderProduct->product_id,
-        //             'quantity' => $orderProduct->quantity,
-        //             'price' => $orderProduct->price,
-        //             'product_name' => $orderProduct->product->name,
-        //         ];
-        //     }),
-        // ];
     }
 }
