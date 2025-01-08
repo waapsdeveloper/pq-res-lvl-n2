@@ -131,7 +131,7 @@ Route::prefix('customer')->group(function () {
         ->names('customer'); // Restrict to specific CRUD actions.
 });
 Route::prefix('variation')->group(function () {
-    Route::get('/bulk-delete', [VariationController::class, 'bulkDelete'])->name('customer-bulkDelete');
+    Route::get('/bulk-delete', [VariationController::class, 'bulkDelete'])->name('variation-bulkDelete');
 
     Route::resource('/', VariationController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
@@ -170,4 +170,5 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/customers', [DashboardController::class, 'customerChartData'])->name('dashboard.customerChartData');
     Route::get('/sales-chart-data', [DashboardController::class, 'getSalesChartData'])->name('dashboard.salesChartData');
     Route::get('/sales-summary', [DashboardController::class, 'salesSummary'])->name('dashboard.salesSummary');
+    Route::get('/total-revenue', [DashboardController::class, 'totalRevenue'])->name('dashboard.totalRevenue');
 });

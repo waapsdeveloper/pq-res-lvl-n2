@@ -22,7 +22,7 @@ class DashboardController extends Controller
     public function recentOrders()
     {
         $orders = Order::query()
-            // ->with('restaurant', 'customer')
+            ->with('customer')
             // ->orderByDesc('id')
             ->latest()->limit(10)->get();
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);
@@ -83,11 +83,38 @@ class DashboardController extends Controller
         return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $chartOptions]);
     }
 
-    public function totalRevenue()
+    public function totalRevenue(Request $request)
     {
-        $totalRevenue = Order::sum('total_price');
-        return ServiceResponse::success('Total revenue fetched successfully', ['total_revenue' => $totalRevenue]);
+        // Get the 'param' from the request, default to 'day'
+        $param = $request->input('param', 'day');
+
+        $query = Order::query();
+
+        if ($param === 'day') {
+            // Filter for current day
+            $query->whereDate('created_at', today());
+        } elseif ($param === 'week') {
+            // Filter for current week
+            $query->whereBetween('created_at', [
+                now()->startOfWeek(),
+                now()->endOfWeek(),
+            ]);
+        } elseif ($param === 'month') {
+            // Filter for current month
+            $query->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year);
+        }
+
+        // Calculate total revenue
+        $totalRevenue = $query->sum('total_price');
+
+        return ServiceResponse::success('Total revenue fetched successfully', [
+            'param' => $param,
+            'total_revenue' => $totalRevenue,
+        ]);
     }
+
+
     public function latestTables()
     {
         $tables = Rtable::with('restaurantDetail')->limit(8)->latest()->get();
