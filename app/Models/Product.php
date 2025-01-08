@@ -18,6 +18,7 @@ class Product extends Model
         'discount',
         'image',
         'status',
+        'variation_id'
     ];
 
     public function category()
@@ -31,5 +32,9 @@ class Product extends Model
     public function productProps()
     {
         return $this->hasMany(ProductProps::class, 'product_id'); // Assuming 'product_id' is the foreign key
+    }
+    public function variation()
+    {
+        return $this->belongsTo(Variation::class);
     }
 }

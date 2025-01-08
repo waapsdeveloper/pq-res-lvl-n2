@@ -48,6 +48,11 @@ class ProductResource extends JsonResource
                     "meta_key_type" => $prodProps->meta_key_type
                 ];
             }) ?? [],
+            "variation_id" => $obj->variation ? [
+                "id" => $obj->variation->id,
+                "meta_value" => $obj->variation->meta_value,
+                "description" => $obj->variation->description
+            ] : [],
         ];
     }
 }
