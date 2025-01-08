@@ -522,9 +522,9 @@ class DashboardController extends Controller
         $date = $request->query('date', now()->toDateString());
 
         if ($type == 'week') {
-            $today = Carbon::today();
-            $sevenDaysAgo = Carbon::today()->subDays(7);
-
+            $today = Carbon::now();
+            $sevenDaysAgo = Carbon::now()->subDays(6);
+            // dd($today, $sevenDaysAgo);
 
             // Last 7 din ke orders ka data fetch karna
             $ordersInWeek = Order::whereBetween('created_at', [$sevenDaysAgo, $today])
@@ -532,6 +532,7 @@ class DashboardController extends Controller
                 ->groupBy('date')
                 ->orderBy('date', 'desc')
                 ->get();
+            // dd($ordersInWeek->toArray());
             $dates = [];
             for ($i = 6; $i >= 0; $i--) {
                 $dates[] = Carbon::today()->subDays($i)->format('Y-m-d');
