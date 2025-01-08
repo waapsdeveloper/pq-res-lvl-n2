@@ -173,6 +173,8 @@ class OrderController extends Controller
             'invoice' => 'INV-' . uniqid(),
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         // return  response()->json($orderProducts);
@@ -185,6 +187,8 @@ class OrderController extends Controller
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
                 'variation' => $orderProduct['variation'],
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
         // return response()->json($data, $order, $orderProducts);
@@ -279,6 +283,7 @@ class OrderController extends Controller
             'notes' => $data['notes'] ?? $order->notes,
             'type' => $data['type'] ?? $order->type,
             'table_no' => $data['tableNo'] ?? $order->table_no,
+            'updated_at' => now(),
         ]);
 
         // Synchronize order products
