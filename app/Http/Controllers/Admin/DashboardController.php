@@ -34,7 +34,7 @@ class DashboardController extends Controller
                 $order->table_no = $order->table->name ?? $order->table->identifier;
             }
         });
-        dd($orders);
+        // dd($orders);
         // Debug the result to ensure the table_no now holds the name
 
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);
