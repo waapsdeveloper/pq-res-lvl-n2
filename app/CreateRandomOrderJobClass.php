@@ -21,8 +21,9 @@ class CreateRandomOrderJobClass
     public function __construct() {}
     public function __invoke()
     {
-        $startDate =  Carbon::now()->startOfWeek();
+        // $startDate =  Carbon::now()->startOfWeek();
         // $startDate = Carbon::now()->subMonths(1);  // Start from 2 months ago
+        $startDate = Carbon::now()->subDays(45);
         $endDate = Carbon::now();  // Up to the current date
         $randomYear = rand($startDate->year, $endDate->year);
         $randomMonth = rand($startDate->month, $endDate->month);

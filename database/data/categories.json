@@ -4,7 +4,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Refreshing cold drinks, shakes, and smoothies.",
-        "image": "images/category/CAT03.jpg",
+        "image": "images/category/67826cf2d70c0.png",
         "status": "active"
     },
     {
@@ -12,7 +12,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Delicious and juicy burgers with various toppings.",
-        "image": "images/category/CAT01.jpg",
+        "image": "images/category/67826cac04cb9.png",
         "status": "active"
     },
     {
@@ -20,7 +20,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Hot and cheesy pizzas with a variety of toppings.",
-        "image": "images/category/CAT02.jpg",
+        "image": "images/category/67826c756fa06.png",
         "status": "active"
     },
     {
@@ -28,7 +28,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Crispy fries, nuggets, and other quick bites.",
-        "image": "images/category/CAT04.jpg",
+        "image": "images/category/67826c429e75f.png",
         "status": "active"
     },
     {
@@ -36,7 +36,7 @@
         "category_id": null,
         "restaurant_id": 1,
         "description": "Sweet treats including ice creams, cakes, and pastries.",
-        "image": "images/category/CAT05.jpg",
+        "image": "images/category/67826c0795588.png",
         "status": "active"
     }
 ]

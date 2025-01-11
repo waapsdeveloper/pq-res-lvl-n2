@@ -6,7 +6,7 @@
         "description": "Chilled fizzy drink to refresh your day.",
         "price": 1.99,
         "discount": 0.1,
-        "image": "images/product/PROD001.png",
+        "image": "images/product/67826d944f443.png",
         "status": "active"
     },
     {
@@ -16,7 +16,7 @@
         "description": "Creamy and delicious mango-flavored smoothie.",
         "price": 3.49,
         "discount": 0.15,
-        "image": "images/product/PROD002.png",
+        "image": "images/product/67826de83ae7c.png",
         "status": "active"
     },
     {
@@ -26,7 +26,7 @@
         "description": "Cold coffee with a hint of caramel.",
         "price": 2.99,
         "discount": 0.2,
-        "image": "images/product/PROD003.png",
+        "image": "images/product/67826e3f64768.png",
         "status": "active"
     },
     {
@@ -36,7 +36,7 @@
         "description": "Freshly squeezed orange juice, full of vitamins.",
         "price": 2.49,
         "discount": 0.1,
-        "image": "images/product/PROD004.png",
+        "image": "images/product/67826e75b1f2c.png",
         "status": "active"
     },
     {
@@ -46,7 +46,7 @@
         "description": "Rich and creamy strawberry-flavored milkshake.",
         "price": 3.99,
         "discount": 0.25,
-        "image": "images/product/PROD005.png",
+        "image": "images/product/67826ea7e0cda.png",
         "status": "active"
     },
     {
@@ -56,7 +56,7 @@
         "description": "A juicy beef patty with melted cheese, lettuce, and tomato.",
         "price": 5.99,
         "discount": 0.1,
-        "image": "images/product/PROD001.png",
+        "image": "images/product/67826f0415543.png",
         "status": "active"
     },
     {
@@ -66,7 +66,7 @@
         "description": "Crispy chicken fillet with mayo, lettuce, and pickles.",
         "price": 4.99,
         "discount": 0.15,
-        "image": "images/product/PROD002.png",
+        "image": "images/product/67826f5661f7c.png",
         "status": "active"
     },
     {
@@ -76,7 +76,7 @@
         "description": "Two beef patties stacked with cheese and special sauce.",
         "price": 7.49,
         "discount": 0.2,
-        "image": "images/product/PROD003.png",
+        "image": "images/product/67826f7e32708.png",
         "status": "active"
     },
     {
@@ -86,7 +86,7 @@
         "description": "Grilled vegetable patty with avocado, lettuce, and tomato.",
         "price": 4.49,
         "discount": 0.1,
-        "image": "images/product/PROD004.png",
+        "image": "images/product/67826fc022c86.png",
         "status": "active"
     },
     {
@@ -96,7 +96,7 @@
         "description": "Beef patty with BBQ sauce, crispy bacon, and onion rings.",
         "price": 6.99,
         "discount": 0.25,
-        "image": "images/product/PROD005.png",
+        "image": "images/product/67826ffddd2c0.png",
         "status": "active"
     },
     {
@@ -106,7 +106,7 @@
         "description": "Classic cheese pizza topped with fresh basil.",
         "price": 6.99,
         "discount": 0.2,
-        "image": "images/product/PROD001.png",
+        "image": "images/product/678270a724cef.png",
         "status": "active"
     },
     {
@@ -116,7 +116,7 @@
         "description": "Loaded with pepperoni slices and mozzarella cheese.",
         "price": 8.99,
         "discount": 0.15,
-        "image": "images/product/PROD002.png",
+        "image": "images/product/678270d249f24.png",
         "status": "active"
     },
     {
@@ -126,7 +126,7 @@
         "description": "Grilled chicken, BBQ sauce, onions, and mozzarella.",
         "price": 9.99,
         "discount": 0.1,
-        "image": "images/product/PROD003.png",
+        "image": "images/product/67827130167ea.png",
         "status": "active"
     },
     {
@@ -136,7 +136,7 @@
         "description": "Loaded with fresh vegetables, olives, and cheese.",
         "price": 7.99,
         "discount": 0.18,
-        "image": "images/product/PROD004.png",
+        "image": "images/product/678271def3ac4.png",
         "status": "active"
     },
     {
@@ -146,7 +146,7 @@
         "description": "Topped with sausage, bacon, ham, and pepperoni.",
         "price": 10.99,
         "discount": 0.12,
-        "image": "images/product/PROD005.png",
+        "image": "images/product/67827207795ad.png",
         "status": "active"
     },
     {
@@ -156,7 +156,7 @@
         "description": "Golden crispy french fries, perfectly seasoned.",
         "price": 2.99,
         "discount": 0.1,
-        "image": "images/product/PROD001.png",
+        "image": "images/product/678272662593c.png",
         "status": "active"
     },
     {
@@ -166,7 +166,7 @@
         "description": "Juicy and tender chicken nuggets with dipping sauce.",
         "price": 3.99,
         "discount": 0.15,
-        "image": "images/product/PROD002.png",
+        "image": "images/product/678272f0a7a5a.png",
         "status": "active"
     },
     {
@@ -176,7 +176,7 @@
         "description": "Crispy fried onion rings, perfect for snacking.",
         "price": 3.49,
         "discount": 0.2,
-        "image": "images/product/PROD003.png",
+        "image": "images/product/67827298c927a.png",
         "status": "active"
     },
     {
@@ -186,7 +186,7 @@
         "description": "Cheesy mozzarella sticks with marinara dip.",
         "price": 4.49,
         "discount": 0.25,
-        "image": "images/product/PROD004.png",
+        "image": "images/product/6782731ed0914.png",
         "status": "active"
     },
     {
@@ -196,7 +196,7 @@
         "description": "Crispy bite-sized chicken pieces with flavorful seasoning.",
         "price": 3.99,
         "discount": 0.3,
-        "image": "images/product/PROD005.png",
+        "image": "images/product/6782735875477.png",
         "status": "active"
     },
     {
@@ -206,7 +206,7 @@
         "description": "Rich and fudgy chocolate brownie topped with chocolate sauce.",
         "price": 3.99,
         "discount": 0.25,
-        "image": "images/product/PROD001.png",
+        "image": "images/product/67827014368c3.png",
         "status": "active"
     },
     {
@@ -216,7 +216,7 @@
         "description": "Creamy vanilla ice cream made with natural vanilla beans.",
         "price": 2.99,
         "discount": 0.15,
-        "image": "images/product/PROD002.png",
+        "image": "images/product/6782705c0228d.png",
         "status": "active"
     },
     {
@@ -226,7 +226,7 @@
         "description": "Classic cheesecake slice with a graham cracker crust.",
         "price": 4.49,
         "discount": 0.3,
-        "image": "images/product/PROD003.png",
+        "image": "images/product/678273a300afb.png",
         "status": "active"
     },
     {
@@ -236,7 +236,7 @@
         "description": "A delightful sundae with fresh strawberries and whipped cream.",
         "price": 3.75,
         "discount": 0.2,
-        "image": "images/product/PROD004.png",
+        "image": "images/product/678273fca393e.png",
         "status": "active"
     },
     {
@@ -246,7 +246,7 @@
         "description": "Warm and gooey lava cake with molten chocolate inside.",
         "price": 5.99,
         "discount": 0.1,
-        "image": "images/product/PROD005.png",
+        "image": "images/product/6782742719d43.png",
         "status": "active"
     }
 ]
