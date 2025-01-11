@@ -11,9 +11,8 @@ yes | php artisan passport:client --personal
 echo "Seeding the database..."
 php artisan db:seed
 
-# Number of times to execute the command
 # Set the duration to run the script (in seconds). 180 minutes = 10800 seconds.
-duration=$((180 * 60))
+duration=$((1 * 60))
 
 # Get the current time (start time in seconds)
 start_time=$(date +%s)
