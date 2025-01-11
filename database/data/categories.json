@@ -1,21 +1,5 @@
 [
     {
-        "name": "Salads",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Fresh and healthy salads with a variety of dressings.",
-        "image": "images/category/CAT01.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Chicken",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Crispy fried chicken and grilled chicken options.",
-        "image": "images/category/CAT02.jpg",
-        "status": "active"
-    },
-    {
         "name": "Beverages",
         "category_id": null,
         "restaurant_id": 1,
@@ -24,59 +8,35 @@
         "status": "active"
     },
     {
-        "name": "Desserts",
+        "name": "Burgers",
         "category_id": null,
         "restaurant_id": 1,
-        "description": "Sweet treats like cakes, ice creams, and puddings.",
+        "description": "Delicious and juicy burgers with various toppings.",
+        "image": "images/category/CAT01.jpg",
+        "status": "active"
+    },
+    {
+        "name": "Pizza",
+        "category_id": null,
+        "restaurant_id": 1,
+        "description": "Hot and cheesy pizzas with a variety of toppings.",
+        "image": "images/category/CAT02.jpg",
+        "status": "active"
+    },
+    {
+        "name": "Snacks",
+        "category_id": null,
+        "restaurant_id": 1,
+        "description": "Crispy fries, nuggets, and other quick bites.",
         "image": "images/category/CAT04.jpg",
         "status": "active"
     },
     {
-        "name": "Kids Meals",
+        "name": "Desserts",
         "category_id": null,
         "restaurant_id": 1,
-        "description": "Special meals for kids with toys included.",
+        "description": "Sweet treats including ice creams, cakes, and pastries.",
         "image": "images/category/CAT05.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Sides",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Additional sides like onion rings and garlic bread.",
-        "image": "images/category/CAT06.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Shakes",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Thick and creamy milkshakes in various flavors.",
-        "image": "images/category/CAT07.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Breakfast",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Start your day with our tasty breakfast options.",
-        "image": "images/category/CAT08.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Combos",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Combo meals with burgers, fries, and drinks.",
-        "image": "images/category/CAT09.jpg",
-        "status": "active"
-    },
-    {
-        "name": "Grilled Items",
-        "category_id": null,
-        "restaurant_id": 1,
-        "description": "Delicious grilled options including chicken and beef.",
-        "image": "images/category/CAT10.jpg",
         "status": "active"
     }
 ]
