@@ -299,4 +299,30 @@ class ProductController extends Controller
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
+
+    public function bulkFetch(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'restaurant_id' => 'required|exists',
+            'ids.*' => 'required|exists:restaurants,id',  // Ensure valid restaurant IDs
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors()->first());
+        }
+
+        $query = Product::query();
+
+        $query->where('restaurant_id', $request->input('restaurant_id'));
+
+        $query->with('category', 'restaurant', 'productProps');
+        $query->orderBy('created_at', 'desc');
+        $data = $query->get();
+
+        $data->getCollection()->transform(function ($item) {
+            return new ProductResource($item);
+        });
+
+        return ServiceResponse::success("Bulk Fetch successful", ['data' => $data]);
+    }
 }
