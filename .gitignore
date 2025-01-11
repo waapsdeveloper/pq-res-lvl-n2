@@ -7,9 +7,9 @@
 /storage/*.key
 /storage/pail
 /storage/app/private
-/storage/app/framework
-/storage/app/logs
-/storage/app/*.key
+/storage/framework
+/storage/logs
+/storage/*.key
 /vendor
 .env
 .env.backup
