@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\TableBookingController;
 use App\Http\Controllers\Admin\RTableBookingController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\VariationController;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
@@ -130,6 +131,14 @@ Route::prefix('customer')->group(function () {
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('customer'); // Restrict to specific CRUD actions.
 });
+Route::prefix('variation')->group(function () {
+    Route::get('/bulk-delete', [VariationController::class, 'bulkDelete'])->name('variation-bulkDelete');
+
+    Route::resource('/', VariationController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('customer'); // Restrict to specific CRUD actions.
+});
 
 //
 Route::prefix('table-booking')->group(function () {
@@ -162,4 +171,5 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/customers', [DashboardController::class, 'customerChartData'])->name('dashboard.customerChartData');
     Route::get('/sales-chart-data', [DashboardController::class, 'getSalesChartData'])->name('dashboard.salesChartData');
     Route::get('/sales-summary', [DashboardController::class, 'salesSummary'])->name('dashboard.salesSummary');
+    Route::get('/total-revenue', [DashboardController::class, 'totalRevenue'])->name('dashboard.totalRevenue');
 });

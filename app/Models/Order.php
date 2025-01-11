@@ -21,7 +21,7 @@ class Order extends Model
         'table_no',
         'restaurant_id',
         'total_price',
-        'order_at',
+        'variation',
         'created_at', // for fake entries when done remove this line
     ];
 
@@ -32,11 +32,18 @@ class Order extends Model
     // }
     public function orderProducts()
     {
-        return $this->hasMany(OrderProduct::class, 'order_id');
+        return $this->hasMany(OrderProduct::class, 'order_id', 'id');
     }
+
+
+
     public function customer()
     {
-        return $this->belongsTo(User::class, 'customer_id', 'id');
+        return $this->belongsTo(User::class, 'customer_id', 'id')
+            ->where(function ($query) {
+                $query->where('role_id', 0)
+                    ->orWhereNull('role_id');
+            });
     }
     public function restaurant()
     {
@@ -51,8 +58,12 @@ class Order extends Model
     {
         return $this->belongsTo(Restaurant::class, 'rtable_id', 'id');
     }
+    public function table_no()
+    {
+        return $this->belongsTo(Rtable::class, 'table_no');
+    }
     public function table()
     {
-        return $this->belongsTo(Rtable::class, 'table_no', 'id');
+        return $this->belongsTo(Rtable::class, 'table_no');
     }
 }

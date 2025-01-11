@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('order_id');
             $table->string('product_id');
             $table->string('quantity');
+            $table->text('variation')->nullable();
             $table->decimal('price', 10, 2);
             $table->text('notes')->nullable();
             $table->timestamps();

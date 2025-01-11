@@ -27,11 +27,11 @@ class InvoiceResource extends JsonResource
             'customer' => $obj->order->customer,
             "invoice_no" => $obj->invoice_no,
             "invoice_date" => $obj->invoice_date,
-            "payment_method" => $obj->payment_method,
+            "payment_method" => ucwords($obj->payment_method),
             "payment_status" => $obj->payment_status,
             "total" => $obj->total,
             "total_price" => $obj->total,
-            "status" => $obj->status,
+            "status" => ucfirst($obj->status),
             "notes" => $obj->notes,
         ];
     }

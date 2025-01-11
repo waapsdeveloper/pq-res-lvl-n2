@@ -13,15 +13,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Use statements for seeders
-        $this->call(RolesTableSeeder::class); //1
-        $this->call(UsersTableSeeder::class); //2
-        $this->call(UserAddressesSeeder::class); //14
-        $this->call(RestaurantsTableSeeder::class); //4
+        $this->call(RolesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(UserAddressesSeeder::class);
+        $this->call(RestaurantsTableSeeder::class);
         $this->call(RestaurantTimingSeeder::class);
-        $this->call(CategorySeeder::class); //3
-        $this->call(ProductSeeder::class); //9
-        $this->call(ProductsPropsSeeder::class); //10
-        $this->call(RTableSeeder::class); //12
+        $this->call(CategorySeeder::class);
+        $this->call(ProductSeeder::class);
+        $this->call(ProductsPropsSeeder::class);
+        $this->call(RTableSeeder::class);
+        $this->call(VariationSeeder::class);
         // $this->call(OrderSeeder::class); //5
         // $this->call(OrderBillingSeeder::class); //6
         // $this->call(OrderProductSeeder::class); //7

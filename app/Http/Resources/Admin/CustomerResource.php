@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -35,7 +36,7 @@ class CustomerResource extends JsonResource
             "phone" => $obj->phone,
             "image" => $image,
             // "address" => $obj->address,
-            "status" => $obj->status,
+            "status" => ucfirst($obj->status),
         ];
     }
 }

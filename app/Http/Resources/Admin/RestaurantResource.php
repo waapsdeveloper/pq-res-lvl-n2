@@ -24,7 +24,7 @@ class RestaurantResource extends JsonResource
             "id" => $obj->id,
             "name" => $obj->name,
             "address" => $obj->address,
-            "status" => $obj->status,
+            "status" => ucfirst($obj->status),
         ];
     }
 }

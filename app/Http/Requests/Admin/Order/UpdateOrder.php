@@ -25,14 +25,18 @@ class UpdateOrder extends FormRequest
     {
         return [
             'customer_id' => 'nullable|string',
-            'products' => 'required|array|min:1',
+            'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
             'products.*.price' => 'required',
             'products.*.notes' => 'nullable|string',
+            'products.*.meta_value' => 'nullable',
             'discount' => 'nullable|numeric|min:0|max:100',
             'notes' => 'nullable|string',
-            'status' => 'required|string|in:pending,accepted,in_progress,ready,delivered',
+            'type' => 'nullable|string',
+            'status' => 'required|string',
+            'table_no' => 'nullable|string',
+            'total_price' => 'nullable|numeric',
         ];
     }
 

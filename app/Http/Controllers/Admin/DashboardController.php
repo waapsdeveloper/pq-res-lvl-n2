@@ -16,15 +16,27 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
     public function recentOrders()
     {
         $orders = Order::query()
-            // ->with('restaurant', 'customer')
+            ->with('customer', 'table')
             // ->orderByDesc('id')
             ->latest()->limit(10)->get();
+
+        $orders->each(function ($order) {
+            if ($order) {
+                $order->type = ucwords(Str::replace(['_', '-'], ' ', $order->type));
+                $order->status = ucwords(Str::replace(['_', '-'], ' ', $order->status));
+                $order->table_no = $order->table->name ?? $order->table->identifier;
+            }
+        });
+        // dd($orders);
+        // Debug the result to ensure the table_no now holds the name
+
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);
     }
 
@@ -71,7 +83,7 @@ class DashboardController extends Controller
             $percentage = $totalQuantity > 0 ? ($product->total_quantity / $totalQuantity) * 100 : 0;
 
             $productLabels[] = $productName;
-            $productPercentages[] = round($percentage, 2) . '%'; // Round to 2 decimal places
+            $productPercentages[] = round($percentage, 2) . ' %'; // Round to 2 decimal places
         }
 
         // Pie chart data
@@ -83,11 +95,38 @@ class DashboardController extends Controller
         return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $chartOptions]);
     }
 
-    public function totalRevenue()
+    public function totalRevenue(Request $request)
     {
-        $totalRevenue = Order::sum('total_price');
-        return ServiceResponse::success('Total revenue fetched successfully', ['total_revenue' => $totalRevenue]);
+        // Get the 'param' from the request, default to 'day'
+        $param = $request->input('param', 'day');
+
+        $query = Order::query();
+
+        if ($param === 'day') {
+            // Filter for current day
+            $query->whereDate('created_at', today());
+        } elseif ($param === 'week') {
+            // Filter for current week
+            $query->whereBetween('created_at', [
+                now()->startOfWeek(),
+                now()->endOfWeek(),
+            ]);
+        } elseif ($param === 'month') {
+            // Filter for current month
+            $query->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year);
+        }
+
+        // Calculate total revenue
+        $totalRevenue = $query->sum('total_price');
+
+        return ServiceResponse::success('Total revenue fetched successfully', [
+            'param' => $param,
+            'total_revenue' => $totalRevenue,
+        ]);
     }
+
+
     public function latestTables()
     {
         $tables = Rtable::with('restaurantDetail')->limit(8)->latest()->get();
@@ -453,10 +492,12 @@ class DashboardController extends Controller
             'series' => [
                 [
                     'name' => "This {$param}",
+                    'current' => $param === 'week' ? $previousStart->format('Y-m-d') : $startDuration,
                     'data' => $seriesData["This {$param}"],
                 ],
                 [
                     'name' => "Last {$param}",
+                    'previous' => $param === 'week' ? $previousEnd->format('Y-m-d') : $endDuraton,
                     'data' => $seriesData["Last {$param}"],
                 ],
             ],
@@ -493,9 +534,9 @@ class DashboardController extends Controller
         $date = $request->query('date', now()->toDateString());
 
         if ($type == 'week') {
-            $today = Carbon::today();
-            $sevenDaysAgo = Carbon::today()->subDays(7);
-
+            $today = Carbon::now();
+            $sevenDaysAgo = Carbon::now()->subDays(6);
+            // dd($today, $sevenDaysAgo);
 
             // Last 7 din ke orders ka data fetch karna
             $ordersInWeek = Order::whereBetween('created_at', [$sevenDaysAgo, $today])
@@ -503,6 +544,7 @@ class DashboardController extends Controller
                 ->groupBy('date')
                 ->orderBy('date', 'desc')
                 ->get();
+            // dd($ordersInWeek->toArray());
             $dates = [];
             for ($i = 6; $i >= 0; $i--) {
                 $dates[] = Carbon::today()->subDays($i)->format('Y-m-d');
@@ -551,11 +593,11 @@ class DashboardController extends Controller
             'series' => [
                 [
                     'name' => 'Sales',
-                    'data' => $totals,
+                    'data' => array_reverse($totals),
                 ],
             ],
             'xaxis' => [
-                'categories' => $durations, // Set categories (week numbers or month names)
+                'categories' => array_reverse($durations), // Set categories (week numbers or month names)
             ],
         ]);
     }

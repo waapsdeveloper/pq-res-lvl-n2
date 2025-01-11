@@ -1,0 +1,127 @@
+[
+    {
+        "name": "Pizza Size",
+        "description": "Choose the size of your pizza.",
+        "meta_value": {
+            "options": [
+                { "option": "Small", "price_change": 0 },
+                { "option": "Medium", "price_change": 50 },
+                { "option": "Large", "price_change": 100 },
+                { "option": "Extra Large", "price_change": 150 }
+            ],
+            "default": "Medium"
+        }
+    },
+    {
+        "name": "Burger Patty",
+        "description": "Select your preferred burger patty.",
+        "meta_value": {
+            "options": [
+                { "option": "Beef", "price_change": 0 },
+                { "option": "Chicken", "price_change": -20 },
+                { "option": "Veggie", "price_change": -30 }
+            ],
+            "default": "Beef"
+        }
+    },
+    {
+        "name": "Spice Level",
+        "description": "Choose the spice level for your dish.",
+        "meta_value": {
+            "options": [
+                { "option": "Mild", "price_change": 0 },
+                { "option": "Medium", "price_change": 10 },
+                { "option": "Spicy", "price_change": 20 },
+                { "option": "Extra Spicy", "price_change": 30 }
+            ],
+            "default": "Medium"
+        }
+    },
+    {
+        "name": "Drink Size",
+        "description": "Select your drink size.",
+        "meta_value": {
+            "options": [
+                { "option": "Small", "price_change": 0 },
+                { "option": "Medium", "price_change": 20 },
+                { "option": "Large", "price_change": 40 }
+            ],
+            "default": "Medium"
+        }
+    },
+    {
+        "name": "Fries Type",
+        "description": "Pick your fries type.",
+        "meta_value": {
+            "options": [
+                { "option": "Regular", "price_change": 0 },
+                { "option": "Curly", "price_change": 30 },
+                { "option": "Waffle", "price_change": 40 }
+            ],
+            "default": "Regular"
+        }
+    },
+    {
+        "name": "Bread Type",
+        "description": "Choose your preferred bread type.",
+        "meta_value": {
+            "options": [
+                { "option": "White", "price_change": 0 },
+                { "option": "Whole Wheat", "price_change": 20 },
+                { "option": "Gluten-Free", "price_change": 50 }
+            ],
+            "default": "White"
+        }
+    },
+    {
+        "name": "Topping Options",
+        "description": "Select additional toppings for your dish.",
+        "meta_value": {
+            "options": [
+                { "option": "Cheese", "price_change": 10 },
+                { "option": "Lettuce", "price_change": 5 },
+                { "option": "Tomato", "price_change": 5 },
+                { "option": "Onions", "price_change": 5 },
+                { "option": "Pickles", "price_change": 10 }
+            ],
+            "default": "Cheese"
+        }
+    },
+    {
+        "name": "Sauce Choice",
+        "description": "Choose your preferred sauce.",
+        "meta_value": {
+            "options": [
+                { "option": "Ketchup", "price_change": 0 },
+                { "option": "Mayo", "price_change": 5 },
+                { "option": "BBQ", "price_change": 10 },
+                { "option": "Ranch", "price_change": 10 }
+            ],
+            "default": "Ketchup"
+        }
+    },
+    {
+        "name": "Combo Options",
+        "description": "Select your combo package.",
+        "meta_value": {
+            "options": [
+                { "option": "Fries & Drink", "price_change": 50 },
+                { "option": "Onion Rings & Drink", "price_change": 60 },
+                { "option": "Salad", "price_change": 40 }
+            ],
+            "default": "Fries & Drink"
+        }
+    },
+    {
+        "name": "Pizza Crust",
+        "description": "Pick your pizza crust type.",
+        "meta_value": {
+            "options": [
+                { "option": "Thin Crust", "price_change": 0 },
+                { "option": "Thick Crust", "price_change": 50 },
+                { "option": "Stuffed Crust", "price_change": 100 }
+            ],
+            "default": "Thin Crust"
+        }
+    }
+]

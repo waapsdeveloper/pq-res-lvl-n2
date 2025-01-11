@@ -34,7 +34,7 @@ class RestaurantListResourse extends JsonResource
             "website" => $obj->website ?? null,
             "description" => $obj->description ?? null,
             "rating" => $obj->rating ?? 0, // Default rating to 0 if not set
-            "status" => $obj->status,
+            "status" => ucfirst($obj->status),
             "created_at" => $obj->created_at,
             "updated_at" => $obj->updated_at,
             "image" => $image,
@@ -46,7 +46,7 @@ class RestaurantListResourse extends JsonResource
                     'day' => $item->day,
                     'start_time' => $item->start_time,
                     'end_time' => $item->end_time,
-                    'status' => $item->status,
+                    'status' => ucfirst($item->status),
                 ];
             }),
         ];

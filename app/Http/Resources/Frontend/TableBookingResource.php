@@ -27,7 +27,7 @@ class TableBookingResource extends JsonResource
             "day" => $obj->day,
             "date" => $obj->date,
             "days" => $obj->days,
-            "status" => $obj->status,
+            "status" => ucfirst($obj->status),
             'restaurant_detail' => $obj->restaurantDetail ? [
                 "name" => $obj->restaurantDetail->name,
                 "address" => $obj->restaurantDetail->address,

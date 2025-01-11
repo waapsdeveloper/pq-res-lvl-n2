@@ -38,9 +38,9 @@ class OrderController extends Controller
 
         $category = $request->input('category_id', '');
 
-        $query = Order::query()->orderBy('id', 'desc');
-
-        $query->with('orderProducts.product')->with('user', 'rtable')->orderBy('id', 'desc');
+        $query = Order::query()->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
+        // dd($query);
+        // $query->with('orderProducts.product')->with('orderProducts.productProps');
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -48,15 +48,15 @@ class OrderController extends Controller
         }
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON string into an associative array
-            // Customer_name: '',
-            // phone: '',
-            // table: '',
             if (isset($filters['order_id']) && !empty($filters['order_id'])) {
                 $query->where('order_number', 'like', '%' . $filters['order_id'] . '%');
             }
 
             if (isset($filters['total_price']) && !empty($filters['total_price'])) {
-                $query->where('total_price', '<=',  $filters['total_price']);
+                $query->where('total_price', '<',  $filters['total_price'])
+                    ->orWhere('total_price', '=',  $filters['total_price'])->orderByDesc('total_price');
+
+                // dd($filters['total_price']);
             }
             if (isset($filters['type']) && !empty($filters['type'])) {
                 $query->where('type', 'like', '%' . $filters['type'] . '%');
@@ -65,6 +65,21 @@ class OrderController extends Controller
             if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
+            if (isset($filters['Customer_name']) && !empty($filters['Customer_name'])) {
+                $query->whereHas('customer', function ($q) use ($filters) {
+                    $q->where('name', 'like', '%' . $filters['Customer_name'] . '%');
+                });
+            }
+            if (isset($filters['phone']) && !empty($filters['phone'])) {
+                $query->whereHas('customer', function ($q) use ($filters) {
+                    $q->where('phone', 'like', '%' . $filters['phone'] . '%');
+                });
+            }
+            // if (isset($filters['table']) && !empty($filters['table'])) {
+            //     $query->whereHas('table_no', function ($q) use ($filters) {
+            //         $q->where('name', 'like', '%' . $filters['table'] . '%');
+            //     });
+            // }
         }
 
         // Paginate the results
@@ -94,8 +109,9 @@ class OrderController extends Controller
      */
     public function store(StoreOrder $request)
     {
-
-        $data = $request->validated();
+        $data = $request->all();
+        // $data = $request->validated();
+        // dd($data);
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         $customerPhone = $data['customer_phone'] ?? 'XXXX';
@@ -106,7 +122,7 @@ class OrderController extends Controller
             $user = User::create([
                 'name' => $customerName,
                 'phone' => $customerPhone,
-                'email' => $customerPhone . "@phone.text",
+                'email' => $customerPhone . "@phone.test",
             ]);
         }
 
@@ -133,6 +149,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
+                'variation' => $item['variation'] ?? null,
             ];
         }
 
@@ -156,18 +173,25 @@ class OrderController extends Controller
             'invoice' => 'INV-' . uniqid(),
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
+        // return  response()->json($orderProducts);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
+                // return,
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
+                'variation' => $orderProduct['variation'],
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
-
+        // return response()->json($data, $order, $orderProducts);
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
@@ -182,6 +206,7 @@ class OrderController extends Controller
         // Fetch the order with its related products and restaurant
         $order = Order::where('id', $id)
             ->with('orderProducts.product', 'restaurant')
+            ->with('customer', 'table_no', 'table')->with(['orderProducts.productProp'])
             ->first();
 
         if (!$order) {
@@ -242,6 +267,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
+                'variation' => $item['variation'] ?? null,
             ];
         }
 
@@ -257,6 +283,7 @@ class OrderController extends Controller
             'notes' => $data['notes'] ?? $order->notes,
             'type' => $data['type'] ?? $order->type,
             'table_no' => $data['tableNo'] ?? $order->table_no,
+            'updated_at' => now(),
         ]);
 
         // Synchronize order products
@@ -350,6 +377,8 @@ class OrderController extends Controller
     //             'quantity' => $orderProduct['quantity'],
     //             'price' => $orderProduct['price'],
     //             'notes' => $orderProduct['notes'],
+    //             'variation' => $orderProduct['variation'] ?? null,
+
     //         ]);
     //     }
 
@@ -367,7 +396,15 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = Order::find($id);
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+        // return response()->json($id);
+        $orderProducts = OrderProduct::where('order_id', $order->id)->delete();
+        $order->delete();
+        return ServiceResponse::success('Order deleted successfully', $order);
     }
 
     public function updateStatus(UpdateOrderStatus $request, $id)
@@ -376,7 +413,7 @@ class OrderController extends Controller
 
 
         $order = Order::find($id);
-        $orderProducts = OrderProduct::where('order_id', $order->id)->delete();
+        // $orderProducts = OrderProduct::where('order_id', $order->id)->delete();
 
         if (!$order) {
             return ServiceResponse::error('Order not found');

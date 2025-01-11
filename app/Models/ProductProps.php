@@ -14,13 +14,17 @@ class ProductProps extends Model
         'meta_key_type',
     ];
     protected $casts = [
-        'meta_key' => 'array',
+        // 'meta_key' => 'array',
         'meta_value' => 'array',
-        'meta_key_type' => 'array',
+        // 'meta_key_type' => 'array',
     ];
 
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');
+    }
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class, 'product_id', 'product_id');
     }
 }

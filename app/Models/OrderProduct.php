@@ -16,7 +16,13 @@ class OrderProduct extends Model
         'quantity',
         'price',
         'notes',
+        'variation',
         'created_at', // for fake entries when done remove this line
+
+    ];
+
+    protected $casts = [
+        'variation' => 'array'
     ];
 
     // Relationship with Order
@@ -25,14 +31,12 @@ class OrderProduct extends Model
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
-    // Relationship with Product
-    // public function product()
-    // {
-    //     return $this->belongsTo(Product::class, 'product_id', 'id');
-    // }
     public function product()
     {
-        // dd($this->hasMany(Product::class, 'product_id', 'id'));
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+    public function productProp()
+    {
+        return $this->belongsTo(ProductProps::class, 'product_id', 'product_id'); // Assuming 'product_id' is the foreign key in both OrderProduct and ProductProp tables
     }
 }

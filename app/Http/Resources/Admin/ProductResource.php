@@ -34,7 +34,7 @@ class ProductResource extends JsonResource
             "price" => $obj->price,
             "identifier" => $obj->identifier,
             "image" => $image,
-            "status" => $obj->status,
+            "status" => ucfirst($obj->status),
             "description" => $obj->description,
             'discount' => $obj->discount,
             "category_id" => $obj->category_id,
@@ -48,6 +48,11 @@ class ProductResource extends JsonResource
                     "meta_key_type" => $prodProps->meta_key_type
                 ];
             }) ?? [],
+            "variation_id" => $obj->variation ? [
+                "id" => $obj->variation->id,
+                "meta_value" => $obj->variation->meta_value,
+                "description" => $obj->variation->description
+            ] : [],
         ];
     }
 }

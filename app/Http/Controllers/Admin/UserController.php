@@ -111,6 +111,8 @@ class UserController extends Controller
             'role_id' => $data['role_id'],
             'status' => $data['status'],
             'restaurant_id' => $data['restaurant_id'],
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
 
@@ -197,6 +199,7 @@ class UserController extends Controller
             'status' => $data['status'] ?? $user->status,
             "restaurant_id" => $data['restaurant_id'] ?? $user->restaurant_id,
             'image' => $data['image'] ?? $user->image,
+            'updated_at' => now(),
         ]);
 
         // Optionally update the password if provided

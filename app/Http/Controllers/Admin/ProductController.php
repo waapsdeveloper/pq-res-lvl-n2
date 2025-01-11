@@ -86,7 +86,7 @@ class ProductController extends Controller
         $filters = $request->input('filters', null);
 
         $query = Product::query()
-            ->with('category', 'restaurant', 'productProps')
+            ->with('category', 'restaurant', 'productProps', 'variation')
             ->orderBy('created_at', 'desc');
 
         // Optionally apply search filter if needed
@@ -166,6 +166,8 @@ class ProductController extends Controller
             'price' => $data['price'],
             'status' => $data['status'],
             'discount' => $data['discount'] ?? 0,
+            'variation_id' => $data['variation_id'] ?? null,
+
         ]);
 
         // Generate and update identifier
@@ -196,7 +198,8 @@ class ProductController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $product = Product::with('category', 'restaurant', 'productProps')->find($id);
+        $product = Product::with('category', 'restaurant', 'productProps', 'variation')
+            ->find($id);
 
 
         // If the product doesn't exist, return an error response
@@ -244,6 +247,7 @@ class ProductController extends Controller
             'price' => $data['price'] ?? $product->price,
             'status' => $data['status'] ?? $product->status,
             'discount' => $data['discount'] ?? $product->discount,
+            'variation_id' => $data['variation_id'] ?? $product->variation_id,
             'image' => $data['image'] ?? $product->image,
         ]);
 
