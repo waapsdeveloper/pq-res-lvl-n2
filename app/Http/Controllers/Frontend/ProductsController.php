@@ -31,31 +31,8 @@ class ProductsController extends Controller
         $data->getCollection()->transform(function ($item) {
             return new ProductResource($item);
         });
-        // Transform the collection into the desired format
-        // $data->getCollection()->transform(function ($product) {
-        //     return [
-        //         "id" => $product->id,
-        //         "description" => $product->description,
-        //         "category_id" => $product->category_id,
-        //         "name" => $product->name,
-        //         "price" => $product->price,
-        //         "image" => Helper::returnFullImageUrl($product->image),
-        //         "status" => $product->status,
-        //     ];
-        // });
 
-        $categories = Category::get()->transform(function ($category) {
-            return [
-                "id" => $category->id,
-                "name" => $category->name,
-                "description" => $category->description,
-                "category_id" => $category->category_id,
-                "image" => Helper::returnFullImageUrl($category->image),
-                "status" => $category->status,
-            ];
-        });
-
-        return ServiceResponse::success('Products retrieved successfully', ['products' => $data, 'categories' => $categories]);
+        return ServiceResponse::success('Products retrieved successfully', ['products' => $data]);
     }
 
     public function getPopularProducts(Request $request)

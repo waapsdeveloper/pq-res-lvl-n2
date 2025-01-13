@@ -71,32 +71,28 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
+                'variation' => $item['variation'] ?? null,
+
             ];
         }
 
         $discount = $data['discount'] ?? 0;
-        // $type = $data['type'];
+        $type = $rtableIdf ? 'dine-in' : $data['type'];
         $tableNo = $data['tableNo'] ?? null;
         $finalPrice = $totalPrice - $discount;
-        $orderNumber = strtoupper(uniqid('ORD-'));
+        $uniqid = uniqid();
         $orderNote = $request->notes;
         $orderStatus = $request->status;
 
-        if ($rtableIdf) {
-            $type = 'dine-in';
-        } else {
-            $type = $data['type'];
-        }
-
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
-            'order_number' => $orderNumber,
+            'order_number' => 'ORD-' . $uniqid,
             'type' => $type,
             'status' => $orderStatus,
             'notes' => $orderNote,
             'customer_id' => $customerId,
             'discount' => $discount,
-            'invoice_no' => 'INV-' . uniqid(),
+            'invoice_no' => 'INV-' . $uniqid,
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
             'restaurant_id' => $restaurant_id ?? 1,
@@ -108,6 +104,7 @@ class OrderController extends Controller
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
+                'variation' => $orderProduct['variation'],
             ]);
         }
 
