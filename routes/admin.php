@@ -17,9 +17,12 @@ use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VariationController;
 use App\Http\Controllers\CartController;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('auth')->group(function () {
+Route::prefix('auth')->middleware([
+    AuthMiddleware::class . ':admin,user',
+])->group(function () {
     Route::post('/login-via-email', [AuthController::class, 'loginViaEmail'])->name('auth.loginViaEmail');
     Route::post('/register-via-email', [AuthController::class, 'registerViaEmail'])->name('auth.registerViaEmail');
     // Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
