@@ -16,12 +16,12 @@ class OrderController extends Controller
 {
     public function makeOrderBookings(Request $request)
     {
-        // dd($request->all());
         // Validate the request data
         $validated = $request->validate([
             'phone' => 'required', // Ensure phone is mandatory
+            'table_identifier' => 'nullable'
         ]);
-        // dd($validated);
+        // return response()->json($request->all());
 
         $data = $request->all();
         $phone = $data['phone'];
@@ -29,8 +29,7 @@ class OrderController extends Controller
         $customer = User::where('phone', $phone)->first();  // Search for the customer by phone
         $customerId = null;
         if (!$customer) {
-            // If no customer found, create a new "walk-in-customer"
-            $customer = User::create([
+            $customerNew = User::create([
                 'name' => 'walk-in-customer',
                 'phone' => $phone,
                 'email' => $phone . '@domain.com',  // Use a default or dynamic email
@@ -38,9 +37,8 @@ class OrderController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $customerId = $customer->id;  // Use the newly created customer's ID
+            $customerId = $customerNew->id;
         } else {
-            // If customer found, get their ID
             $customerId = $customer->id;
         }
 
@@ -65,7 +63,6 @@ class OrderController extends Controller
             $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
-
             $totalPrice += $itemTotal;
 
             $orderProducts[] = [

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductsController;
 use App\Http\Controllers\Frontend\ContactUsController;
 use App\Http\Controllers\Admin\RtableController;
@@ -61,3 +62,5 @@ Route::prefix('add-to-cart')->group(function () {
 });
 Route::post('/make-order-bookings', [OrderController::class, 'makeOrderBookings']);
 Route::get('/track-customer-order/{order_id}', [OrderController::class, 'trackCustomerOrder']);
+Route::post('/update-order-status', [OrderController::class, 'updateOrderStatus']);
+Route::get('/roles', [HomeController::class, 'roles']);

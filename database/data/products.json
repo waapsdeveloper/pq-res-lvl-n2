@@ -7,6 +7,7 @@
         "price": 1.99,
         "discount": 0.1,
         "image": "images/product/67826d944f443.png",
+        "variation_id": 1,
         "status": "active"
     },
     {
@@ -17,6 +18,7 @@
         "price": 3.49,
         "discount": 0.15,
         "image": "images/product/67826de83ae7c.png",
+        "variation_id": 1,
         "status": "active"
     },
     {
@@ -27,6 +29,7 @@
         "price": 2.99,
         "discount": 0.2,
         "image": "images/product/67826e3f64768.png",
+        "variation_id": 1,
         "status": "active"
     },
     {
@@ -37,6 +40,7 @@
         "price": 2.49,
         "discount": 0.1,
         "image": "images/product/67826e75b1f2c.png",
+        "variation_id": 1,
         "status": "active"
     },
     {
@@ -47,6 +51,7 @@
         "price": 3.99,
         "discount": 0.25,
         "image": "images/product/67826ea7e0cda.png",
+        "variation_id": 1,
         "status": "active"
     },
     {
@@ -57,6 +62,7 @@
         "price": 5.99,
         "discount": 0.1,
         "image": "images/product/67826f0415543.png",
+        "variation_id": 2,
         "status": "active"
     },
     {
@@ -67,6 +73,7 @@
         "price": 4.99,
         "discount": 0.15,
         "image": "images/product/67826f5661f7c.png",
+        "variation_id": 2,
         "status": "active"
     },
     {
@@ -77,6 +84,7 @@
         "price": 7.49,
         "discount": 0.2,
         "image": "images/product/67826f7e32708.png",
+        "variation_id": 2,
         "status": "active"
     },
     {
@@ -87,6 +95,7 @@
         "price": 4.49,
         "discount": 0.1,
         "image": "images/product/67826fc022c86.png",
+        "variation_id": 2,
         "status": "active"
     },
     {
@@ -97,6 +106,7 @@
         "price": 6.99,
         "discount": 0.25,
         "image": "images/product/67826ffddd2c0.png",
+        "variation_id": 2,
         "status": "active"
     },
     {
@@ -107,6 +117,7 @@
         "price": 6.99,
         "discount": 0.2,
         "image": "images/product/678270a724cef.png",
+        "variation_id": 3,
         "status": "active"
     },
     {
@@ -117,6 +128,7 @@
         "price": 8.99,
         "discount": 0.15,
         "image": "images/product/678270d249f24.png",
+        "variation_id": 3,
         "status": "active"
     },
     {
@@ -127,6 +139,7 @@
         "price": 9.99,
         "discount": 0.1,
         "image": "images/product/67827130167ea.png",
+        "variation_id": 3,
         "status": "active"
     },
     {
@@ -137,6 +150,7 @@
         "price": 7.99,
         "discount": 0.18,
         "image": "images/product/678271def3ac4.png",
+        "variation_id": 3,
         "status": "active"
     },
     {
@@ -147,6 +161,7 @@
         "price": 10.99,
         "discount": 0.12,
         "image": "images/product/67827207795ad.png",
+        "variation_id": 3,
         "status": "active"
     },
     {
@@ -157,6 +172,7 @@
         "price": 2.99,
         "discount": 0.1,
         "image": "images/product/678272662593c.png",
+        "variation_id": 4,
         "status": "active"
     },
     {
@@ -167,6 +183,7 @@
         "price": 3.99,
         "discount": 0.15,
         "image": "images/product/678272f0a7a5a.png",
+        "variation_id": 4,
         "status": "active"
     },
     {
@@ -177,6 +194,7 @@
         "price": 3.49,
         "discount": 0.2,
         "image": "images/product/67827298c927a.png",
+        "variation_id": 4,
         "status": "active"
     },
     {
@@ -187,6 +205,7 @@
         "price": 4.49,
         "discount": 0.25,
         "image": "images/product/6782731ed0914.png",
+        "variation_id": 4,
         "status": "active"
     },
     {
@@ -197,6 +216,7 @@
         "price": 3.99,
         "discount": 0.3,
         "image": "images/product/6782735875477.png",
+        "variation_id": 4,
         "status": "active"
     },
     {
@@ -207,6 +227,7 @@
         "price": 3.99,
         "discount": 0.25,
         "image": "images/product/67827014368c3.png",
+        "variation_id": 5,
         "status": "active"
     },
     {
@@ -217,6 +238,7 @@
         "price": 2.99,
         "discount": 0.15,
         "image": "images/product/6782705c0228d.png",
+        "variation_id": 5,
         "status": "active"
     },
     {
@@ -227,6 +249,7 @@
         "price": 4.49,
         "discount": 0.3,
         "image": "images/product/678273a300afb.png",
+        "variation_id": 5,
         "status": "active"
     },
     {
@@ -237,6 +260,7 @@
         "price": 3.75,
         "discount": 0.2,
         "image": "images/product/678273fca393e.png",
+        "variation_id": 5,
         "status": "active"
     },
     {
@@ -247,6 +271,7 @@
         "price": 5.99,
         "discount": 0.1,
         "image": "images/product/6782742719d43.png",
+        "variation_id": 5,
         "status": "active"
     }
 ]

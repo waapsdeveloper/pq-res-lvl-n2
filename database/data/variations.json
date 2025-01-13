@@ -18,8 +18,8 @@
         "meta_value": {
             "options": [
                 { "option": "Beef", "price_change": 0 },
-                { "option": "Chicken", "price_change": -20 },
-                { "option": "Veggie", "price_change": -30 }
+                { "option": "Chicken", "price_change": 20 },
+                { "option": "Veggie", "price_change": 30 }
             ],
             "default": "Beef"
         }
