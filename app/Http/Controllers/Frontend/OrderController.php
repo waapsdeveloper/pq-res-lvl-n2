@@ -35,6 +35,8 @@ class OrderController extends Controller
                 'phone' => $phone,
                 'email' => $phone . '@domain.com',  // Use a default or dynamic email
                 'role_id' => 0,  // Default role for walk-in customers
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
             $customerId = $customer->id;  // Use the newly created customer's ID
         } else {
@@ -96,6 +98,8 @@ class OrderController extends Controller
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
             'restaurant_id' => $restaurant_id ?? 1,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
@@ -105,6 +109,8 @@ class OrderController extends Controller
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
                 'variation' => $orderProduct['variation'],
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
 
