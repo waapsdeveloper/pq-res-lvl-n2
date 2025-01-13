@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Frontend\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class ProductsController extends Controller
         $perpage = $request->input('perpage', 100);
 
         // Query to fetch products
-        $query = Product::query();
+        $query = Product::query()->with('category', 'productProps', 'variation');
 
         // if category_id
         if ($request->has('category_id')) {
@@ -27,18 +28,21 @@ class ProductsController extends Controller
 
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
-        // Transform the collection into the desired format
-        $data->getCollection()->transform(function ($product) {
-            return [
-                "id" => $product->id,
-                "description" => $product->description,
-                "category_id" => $product->category_id,
-                "name" => $product->name,
-                "price" => $product->price,
-                "image" => Helper::returnFullImageUrl($product->image),
-                "status" => $product->status,
-            ];
+        $data->getCollection()->transform(function ($item) {
+            return new ProductResource($item);
         });
+        // Transform the collection into the desired format
+        // $data->getCollection()->transform(function ($product) {
+        //     return [
+        //         "id" => $product->id,
+        //         "description" => $product->description,
+        //         "category_id" => $product->category_id,
+        //         "name" => $product->name,
+        //         "price" => $product->price,
+        //         "image" => Helper::returnFullImageUrl($product->image),
+        //         "status" => $product->status,
+        //     ];
+        // });
 
         $categories = Category::get()->transform(function ($category) {
             return [
