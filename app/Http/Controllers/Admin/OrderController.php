@@ -136,8 +136,20 @@ class OrderController extends Controller
                 // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
-            // $pricePerUnit = $product->price;
-            $pricePerUnit = $item['price'];
+            $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
+            $productVariationPrice = 0;
+
+            if ($variations) {
+                foreach ($variations as $variation) {
+                    if (isset($variation['options']) && is_array($variation['options'])) {
+                        foreach ($variation['options'] as $option) {
+                            $productVariationPrice += $option['price'] ?? 0;
+                        }
+                    }
+                }
+            }
+
+            $pricePerUnit = $item['price'] + $productVariationPrice;
 
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
