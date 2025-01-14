@@ -117,6 +117,7 @@ class OrderController extends Controller
             'updated_at' => now(),
         ]);
         foreach ($orderProducts as $orderProduct) {
+            // dd($orderProduct['variation']);
             OrderProduct::create([
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['product_id'],
@@ -130,7 +131,6 @@ class OrderController extends Controller
         }
 
         $order->load('orderProducts.product');
-        // dd($order->order_number);
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
     }
 
@@ -139,6 +139,6 @@ class OrderController extends Controller
         $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table')
             ->where('order_number', $orderNumber)->first();
         $data = new AddOrderBookingResource($order);
-        return ServiceResponse::success("Customer Order Tracked Successfully",);
+        return ServiceResponse::success("Customer Order Tracked Successfully", ['order' => $order]);
     }
 }
