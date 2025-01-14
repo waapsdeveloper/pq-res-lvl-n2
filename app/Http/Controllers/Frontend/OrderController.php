@@ -55,7 +55,7 @@ class OrderController extends Controller
         $totalPrice = 0;
         $orderProducts = [];
         foreach ($data['products'] as $item) {
-            $product = Product::find($item['id']);
+            $product = Product::with('variationPrice')->find($item['id']);
             if (!$product) {
                 continue;
             }
@@ -63,6 +63,12 @@ class OrderController extends Controller
             $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
+            dd($product);
+            foreach ($product->variations as $variation) {
+                if ($variation->selected) {  // Assuming you have a field 'selected' in the variation table
+                    $itemTotal += $variation->price;
+                }
+            }
             $totalPrice += $itemTotal;
 
             $orderProducts[] = [
@@ -113,7 +119,7 @@ class OrderController extends Controller
 
         $order->load('orderProducts.product');
 
-        return ServiceResponse::success(['status' => 'Order created successfully', 'data' => $order->order_number]);
+        return ServiceResponse::success(['status' => 'Order created successfully'], ['order_number' => $order->order_number]);
     }
 
     public function trackCustomerOrder(Request $request, $orderNumber)
