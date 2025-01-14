@@ -22,7 +22,7 @@ class ProductsPropsSeeder extends Seeder
             DB::table('product_props')->insert([
                 'product_id' => $prop['product_id'] ?? 1,
                 'meta_key' => $prop['meta_key'],
-                'meta_value' => $prop['meta_value'],
+                'meta_value' => json_encode($prop['meta_value']),
                 'meta_key_type' => $prop['meta_key_type'],
                 'created_at' => now(),
                 'updated_at' => now(),
