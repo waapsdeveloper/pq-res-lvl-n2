@@ -2,181 +2,151 @@
     {
         "product_id": 1,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{\"type\": \"Drink\", \"selected\": false, \"options\": [{ \"name\": \"Coca-Cola\", \"description\": \"Coca-Cola\", \"price\": 50 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 2,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Shake\", \"selected\": false, \"options\": [{ \"name\": \"Mango Smoothie\", \"description\": \"Mango Smoothie\", \"price\": 60 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 3,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Drink\", \"selected\": true, \"options\": [{ \"name\": \"Iced Coffee\", \"description\": \"Iced Coffee\", \"price\": 70 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 4,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Juice\", \"selected\": false, \"options\": [{ \"name\": \"Orange Juice\", \"description\": \"Orange Juice\", \"price\": 50 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 5,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Shake\", \"selected\": false, \"options\": [{ \"name\": \"Strawberry Milkshake\", \"description\": \"Strawberry Milkshake\", \"price\": 60 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 6,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Food\", \"selected\": false, \"options\": [{ \"name\": \"Classic Cheeseburger\", \"description\": \"Classic Cheeseburger\", \"price\": 150 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 7,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Food\", \"selected\": false, \"options\": [{ \"name\": \"Chicken Burger\", \"description\": \"Chicken Burger\", \"price\": 180 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 8,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Food\", \"selected\": false, \"options\": [{ \"name\": \"Double Beef Burger\", \"description\": \"Double Beef Burger\", \"price\": 200 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 9,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Food\", \"selected\": false, \"options\": [{ \"name\": \"Veggie Burger\", \"description\": \"Veggie Burger\", \"price\": 170 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 10,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Food\", \"selected\": false, \"options\": [{ \"name\": \"BBQ Bacon Burger\", \"description\": \"BBQ Bacon Burger\", \"price\": 210 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 11,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Pizza\", \"selected\": false, \"options\": [{ \"name\": \"Margherita Pizza\", \"description\": \"Margherita Pizza\", \"price\": 300 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 12,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Pizza\", \"selected\": false, \"options\": [{ \"name\": \"Pepperoni Pizza\", \"description\": \"Pepperoni Pizza\", \"price\": 350 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 13,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Pizza\", \"selected\": false, \"options\": [{ \"name\": \"BBQ Chicken Pizza\", \"description\": \"BBQ Chicken Pizza\", \"price\": 400 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 14,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Pizza\", \"selected\": false, \"options\": [{ \"name\": \"Veggie Supreme Pizza\", \"description\": \"Veggie Supreme Pizza\", \"price\": 300 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 15,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Pizza\", \"selected\": false, \"options\": [{ \"name\": \"Meat Lovers Pizza\", \"description\": \"Meat Lovers Pizza\", \"price\": 450 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 16,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Snack\", \"selected\": false, \"options\": [{ \"name\": \"French Fries\", \"description\": \"French Fries\", \"price\": 80 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 17,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Snack\", \"selected\": false, \"options\": [{ \"name\": \"Chicken Nuggets\", \"description\": \"Chicken Nuggets\", \"price\": 120 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 18,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Snack\", \"selected\": false, \"options\": [{ \"name\": \"Onion Rings\", \"description\": \"Onion Rings\", \"price\": 90 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 19,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Snack\", \"selected\": false, \"options\": [{ \"name\": \"Mozzarella Sticks\", \"description\": \"Mozzarella Sticks\", \"price\": 110 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 20,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Snack\", \"selected\": false, \"options\": [{ \"name\": \"Popcorn Chicken\", \"description\": \"Popcorn Chicken\", \"price\": 140 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 21,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Dessert\", \"selected\": false, \"options\": [{ \"name\": \"Chocolate Brownie\", \"description\": \"Chocolate Brownie\", \"price\": 80 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 22,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Dessert\", \"selected\": false, \"options\": [{ \"name\": \"Vanilla Ice Cream\", \"description\": \"Vanilla Ice Cream\", \"price\": 60 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 23,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Dessert\", \"selected\": false, \"options\": [{ \"name\": \"Cheesecake Slice\", \"description\": \"Cheesecake Slice\", \"price\": 90 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 24,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Dessert\", \"selected\": false, \"options\": [{ \"name\": \"Strawberry Sundae\", \"description\": \"Strawberry Sundae\", \"price\": 70 }] }]",
         "meta_key_type": "array"
     },
     {
         "product_id": 25,
         "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
-        "meta_key_type": "array"
-    },
-    {
-        "product_id": 26,
-        "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
-        "meta_key_type": "array"
-    },
-    {
-        "product_id": 27,
-        "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
-        "meta_key_type": "array"
-    },
-    {
-        "product_id": 28,
-        "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
-        "meta_key_type": "array"
-    },
-    {
-        "product_id": 29,
-        "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
-        "meta_key_type": "array"
-    },
-    {
-        "product_id": 30,
-        "meta_key": "variation",
-        "meta_value": "[{\"type\":\"ne varation\",\"options\":[{\"name\":null,\"description\":null,\"price\":10}]}]",
+        "meta_value": "[{ \"type\": \"Dessert\", \"selected\": false, \"options\": [{ \"name\": \"Chocolate Lava Cake\", \"description\": \"Chocolate Lava Cake\", \"price\": 120 }] }]",
         "meta_key_type": "array"
     }
 ]
