@@ -116,10 +116,10 @@ class OrderController extends Controller
         return ServiceResponse::success(['status' => 'Order created successfully', 'data' => $order->order_number]);
     }
 
-    public function trackCustomerOrder(Request $request, $orderId)
+    public function trackCustomerOrder(Request $request, $orderNumber)
     {
         $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table')
-            ->find($orderId);
+            ->where('order_number', $orderNumber)->first();
         $data = new AddOrderBookingResource($order);
         return ServiceResponse::success("Customer Order Tracked Successfully", ['customer_order' => $data]);
     }
