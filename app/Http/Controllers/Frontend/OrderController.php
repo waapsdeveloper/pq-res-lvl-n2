@@ -128,13 +128,21 @@ class OrderController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+            $variations = $orderProduct['variation'] ? json_decode($orderProduct['variation'], true) : null;
+            $productVariationPrice = '';
+            foreach ($variations as $variation) {
+                foreach ($variation['options'] as $value) {
+                    $productVariationPrice = $value['price'];
+                }
+            }
         }
+        dd($productVariationPrice, 'hi');
 
         $order->load('orderProducts.product');
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
     }
 
-    public function trackCustomerOrder(Request $request, $orderNumber)
+    public function trackCustomerOrder($orderNumber)
     {
         $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table')
             ->where('order_number', $orderNumber)->first();
