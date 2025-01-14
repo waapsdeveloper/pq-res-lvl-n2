@@ -30,7 +30,7 @@ class UpdateOrder extends FormRequest
             'products.*.quantity' => 'required|integer|min:1',
             'products.*.price' => 'required',
             'products.*.notes' => 'nullable|string',
-            'products.*.meta_value' => 'nullable',
+            'products.*.variation' => 'nullable',
             'discount' => 'nullable|numeric|min:0|max:100',
             'notes' => 'nullable|string',
             'type' => 'nullable|string',
