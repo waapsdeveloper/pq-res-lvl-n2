@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function makeOrderBookings(Request $request)
     {
         $validated = $request->validate([
-            'phone' => 'required', // Ensure phone is mandatory
+            'phone' => 'required',
             'table_identifier' => 'nullable'
         ]);
 
@@ -61,7 +61,7 @@ class OrderController extends Controller
 
             if ($variations) {
                 foreach ($variations as $variation) {
-                    if (isset($variation['options']) && is_array($variation['options'])) {
+                    if (isset($variation['options']) && is_array($variation['options']) && $variation['options'] === true) {
                         foreach ($variation['options'] as $option) {
                             $productVariationPrice += $option['price'] ?? 0;
                         }
@@ -92,7 +92,7 @@ class OrderController extends Controller
         $orderStatus = $request->status;
 
         $order = Order::create([
-            'identifier' => $rtableIdf ?? null,
+            'identifier' =>  null,
             'order_number' => 'ORD-' . $uniqid,
             'type' => $type,
             'status' => $orderStatus,
@@ -100,7 +100,7 @@ class OrderController extends Controller
             'customer_id' => $customerId,
             'discount' => $discount,
             'invoice_no' => 'INV-' . $uniqid,
-            'table_no' => $tableNo,
+            'table_no' => $rtableIdf,
             'total_price' => $finalPrice,
             'restaurant_id' => $restaurant_id ?? 1,
             'created_at' => now(),
