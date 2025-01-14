@@ -262,8 +262,7 @@ class OrderController extends Controller
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
-                continue;
-                // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
+                return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
             $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
