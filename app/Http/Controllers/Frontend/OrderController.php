@@ -14,131 +14,6 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    // public function makeOrderBookings(Request $request)
-    // {
-    //     // Validate the request data
-    //     $validated = $request->validate([
-    //         'phone' => 'required', // Ensure phone is mandatory
-    //         'table_identifier' => 'nullable'
-    //     ]);
-    //     // return response()->json($request->all());
-
-    //     $data = $request->all();
-    //     $phone = $data['phone'];
-    //     $rtableIdf = $request->input('table_identifier', null);
-    //     $customer = User::where('phone', $phone)->first();  // Search for the customer by phone
-    //     $customerId = null;
-    //     if (!$customer) {
-    //         $customerNew = User::create([
-    //             'name' => 'walk-in-customer',
-    //             'phone' => $phone,
-    //             'email' => $phone . '@domain.com',  // Use a default or dynamic email
-    //             'role_id' => 0,  // Default role for walk-in customers
-    //             'created_at' => now(),
-    //             'updated_at' => now(),
-    //         ]);
-    //         $customerId = $customerNew->id;
-    //     } else {
-    //         $customerId = $customer->id;
-    //     }
-
-
-    //     if (!empty($rtableIdf)) {
-    //         $identifier = $rtableIdf;
-    //         $restaurant = Rtable::where('identifier', $identifier)->first();
-    //         if (!$restaurant) {
-    //             return ServiceResponse::error("Invalid table identifier.", [], 400);
-    //         }
-    //         $restaurant_id = $restaurant->id;
-    //     }
-
-    //     $totalPrice = 0;
-    //     $orderProducts = [];
-    //     foreach ($data['products'] as $item) {
-    //         $product = Product::find($item['id']);
-    //         if (!$product) {
-    //             continue;
-    //         }
-
-    //         $pricePerUnit = $item['price'];
-    //         $quantity = $item['quantity'];
-    //         $itemTotal = $pricePerUnit * $quantity;
-    //         // return response()->json($item);
-
-    //         $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
-    //         if ($variations) {
-    //             foreach ($variations as $variation) {
-    //                 // Check if the variation option is selected
-    //                 // return response()->json([$variation['selected'] == false]);
-    //                 if ($variation['selected'] == true) {
-    //                     if (isset($variation['options']) && is_array($variation['options'])) {
-    //                         foreach ($variation['options'] as $option) {
-    //                             if (isset($option['price']) && $option['price']) {
-    //                                 $itemTotal += $option['price'];  // Add the price of the selected option
-    //                             }
-    //                         }
-    //                     } else {
-    //                         $itemTotal = 0;
-    //                     }
-    //                 }
-    //             }
-    //         }
-
-    //         $totalPrice += $itemTotal;
-
-    //         $orderProducts[] = [
-    //             'product_id' => $item['id'],
-    //             'quantity' => $quantity,
-    //             'price' => $pricePerUnit,
-    //             'notes' => $item['notes'] ?? null,
-    //             'variation' => $item['variation'] ?? null,
-
-    //         ];
-    //     }
-
-    //     $discount = $data['discount'] ?? 0;
-    //     $type = $rtableIdf ? 'dine-in' : $data['type'];
-    //     $tableNo = $data['tableNo'] ?? null;
-    //     $finalPrice = $totalPrice - $discount;
-    //     $uniqid = uniqid();
-    //     $orderNote = $request->notes;
-    //     $orderStatus = $request->status;
-
-    //     $order = Order::create([
-    //         'identifier' => $rtableIdf ?? null,
-    //         'order_number' => 'ORD-' . $uniqid,
-    //         'type' => $type,
-    //         'status' => $orderStatus,
-    //         'notes' => $orderNote,
-    //         'customer_id' => $customerId,
-    //         'discount' => $discount,
-    //         'invoice_no' => 'INV-' . $uniqid,
-    //         'table_no' => $tableNo,
-    //         'total_price' => $finalPrice,
-    //         'restaurant_id' => $restaurant_id ?? 1,
-    //         'created_at' => now(),
-    //         'updated_at' => now(),
-    //     ]);
-    //     foreach ($orderProducts as $orderProduct) {
-    //         OrderProduct::create([
-    //             'order_id' => $order->id,
-    //             'product_id' => $orderProduct['product_id'],
-    //             'quantity' => $orderProduct['quantity'],
-    //             'price' => $orderProduct['price'],
-    //             'notes' => $orderProduct['notes'] ?? null,
-    //             'variation' => $orderProduct['variation'],
-    //             'created_at' => now(),
-    //             'updated_at' => now(),
-    //         ]);
-    //     }
-
-    //     $order->load('orderProducts.product');
-
-    //     return ServiceResponse::success(['status' => 'Order created successfully']);
-    // }
-
-
-
     public function makeOrderBookings(Request $request)
     {
         // Validate the request data
@@ -146,13 +21,13 @@ class OrderController extends Controller
             'phone' => 'required', // Ensure phone is mandatory
             'table_identifier' => 'nullable'
         ]);
+        // return response()->json($request->all());
 
         $data = $request->all();
         $phone = $data['phone'];
         $rtableIdf = $request->input('table_identifier', null);
         $customer = User::where('phone', $phone)->first();  // Search for the customer by phone
         $customerId = null;
-
         if (!$customer) {
             $customerNew = User::create([
                 'name' => 'walk-in-customer',
@@ -166,6 +41,7 @@ class OrderController extends Controller
         } else {
             $customerId = $customer->id;
         }
+
 
         if (!empty($rtableIdf)) {
             $identifier = $rtableIdf;
@@ -187,35 +63,15 @@ class OrderController extends Controller
             $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
-
-            // Handle variations if they exist
-            $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
-            if ($variations) {
-                foreach ($variations as $variation) {
-                    if ($variation['selected'] == true) {
-                        // Check if the variation has options and loop through them
-                        if (isset($variation['options']) && is_array($variation['options'])) {
-                            foreach ($variation['options'] as $option) {
-                                if (isset($option['price']) && $option['price']) {
-                                    // Add the price of the selected variation option
-                                    $itemTotal += $option['price'];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Add the total of the product (including variations) to the overall total price
             $totalPrice += $itemTotal;
 
-            // Prepare the order product data
             $orderProducts[] = [
                 'product_id' => $item['id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
                 'variation' => $item['variation'] ?? null,
+
             ];
         }
 
@@ -227,9 +83,8 @@ class OrderController extends Controller
         $orderNote = $request->notes;
         $orderStatus = $request->status;
 
-        // Create the order
         $order = Order::create([
-            'identifier' => 'ORD-' . $uniqid,
+            'identifier' => $rtableIdf ?? null,
             'order_number' => 'ORD-' . $uniqid,
             'type' => $type,
             'status' => $orderStatus,
@@ -243,8 +98,6 @@ class OrderController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
-        // Add the products to the order
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
                 'order_id' => $order->id,
@@ -258,10 +111,9 @@ class OrderController extends Controller
             ]);
         }
 
-        // Load the order products with product details
         $order->load('orderProducts.product');
 
-        return ServiceResponse::success(['status' => 'Order created successfully','data'=>$order]);
+        return ServiceResponse::success(['status' => 'Order created successfully']);
     }
 
     public function trackCustomerOrder(Request $request, $orderId)
