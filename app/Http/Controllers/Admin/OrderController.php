@@ -115,7 +115,6 @@ class OrderController extends Controller
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         $customerPhone = $data['customer_phone'] ?? 'XXXX';
-        $rtableIdf = $request->input('table_identifier', null);
 
         $user = User::where('phone', $customerPhone)->first();
 
@@ -127,28 +126,19 @@ class OrderController extends Controller
             ]);
         }
 
+
         $totalPrice = 0;
         $orderProducts = [];
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
                 continue;
+                // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
-            $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
-            $productVariationPrice = 0;
+            // $pricePerUnit = $product->price;
+            $pricePerUnit = $item['price'];
 
-            if ($variations) {
-                foreach ($variations as $variation) {
-                    if (isset($variation['options']) && is_array($variation['options']) && $variation['options'] === true) {
-                        foreach ($variation['options'] as $option) {
-                            $productVariationPrice += $option['price'] ?? 0;
-                        }
-                    }
-                }
-            }
-
-            $pricePerUnit = $item['price'] + $productVariationPrice;
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
 
@@ -164,23 +154,24 @@ class OrderController extends Controller
         }
 
         $discount = $data['discount'] ?? 0;
-        $type = $rtableIdf ? 'dine-in' : $data['type'];
+        $type = $data['type'] ?? null;
+        $tableNo = $data['tableNo'] ?? null;
         // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $finalPrice = $totalPrice - $discount;
+        // return response()->json($finalPrice);
         $orderNumber = strtoupper(uniqid('ORD-'));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
-        $uniqid = uniqid();
         $order = Order::create([
-            'identifier' => null,
-            'order_number' => 'ORD-' . $uniqid,
+            'identifier' => 'ORD-' . uniqid(),
+            'order_number' => $orderNumber,
             'type' => $type,
             'status' => $orderStatus,
             'notes' => $orderNote,
             'customer_id' => $user->id ?? null,
             'discount' => $discount,
-            'invoice' => 'INV-' . $uniqid,
-            'table_no' => $rtableIdf ?? null,
+            'invoice' => 'INV-' . uniqid(),
+            'table_no' => $tableNo,
             'total_price' => $finalPrice,
             'created_at' => now(),
             'updated_at' => now(),
@@ -251,34 +242,21 @@ class OrderController extends Controller
         $data = $request->validated();
 
         $order = Order::find($id);
-
         if (!$order) {
-            return ServiceResponse::error("Order not found.");
+            return ServiceResponse::error("Order with ID $id not found.");
         }
 
         $totalPrice = 0;
         $orderProducts = [];
 
+        // Process products
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
                 return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
-            $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
-            $productVariationPrice = 0;
-
-            if ($variations) {
-                foreach ($variations as $variation) {
-                    if (isset($variation['options']) && is_array($variation['options'])) {
-                        foreach ($variation['options'] as $option) {
-                            $productVariationPrice += $option['price'] ?? 0;
-                        }
-                    }
-                }
-            }
-
-            $pricePerUnit = $item['price'] + $productVariationPrice;
+            $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
 
@@ -293,39 +271,40 @@ class OrderController extends Controller
             ];
         }
 
+        // Calculate discount and final price
         $discount = $data['discount'] ?? $order->discount;
-        $type = $order->table_no ? 'dine-in' : $data['type'];
-        $tableNo = $data['tableNo'] ?? null;
         $finalPrice = $totalPrice - $discount;
 
+        // Update order details
         $order->update([
-            'type' => $type,
-            'status' => $request->status,
-            'notes' => $request->notes,
-            'customer_id' => $order->user_id ?? null,
             'discount' => $discount,
-            'table_no' => $tableNo,
             'total_price' => $finalPrice,
+            'status' => $data['status'] ?? $order->status,
+            'notes' => $data['notes'] ?? $order->notes,
+            'type' => $data['type'] ?? $order->type,
+            'table_no' => $data['tableNo'] ?? $order->table_no,
             'updated_at' => now(),
         ]);
 
-        // Delete existing order products
-        $order->orderProducts()->delete();
-
-        // Add updated order products
+        // Synchronize order products
+        $existingProducts = $order->orderProducts->keyBy('product_id');
         foreach ($orderProducts as $orderProduct) {
-            OrderProduct::create([
-                'order_id' => $order->id,
-                'product_id' => $orderProduct['product_id'],
-                'quantity' => $orderProduct['quantity'],
-                'price' => $orderProduct['price'],
-                'notes' => $orderProduct['notes'] ?? null,
-                'variation' => $orderProduct['variation'],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            if ($existingProducts->has($orderProduct['product_id'])) {
+                // Update existing product
+                $existingProducts[$orderProduct['product_id']]->update($orderProduct);
+            } else {
+                // Add new product
+                $order->orderProducts()->create($orderProduct);
+            }
         }
 
+        // Remove products that are not in the updated list
+        $newProductIds = collect($orderProducts)->pluck('product_id');
+        $order->orderProducts()
+            ->whereNotIn('product_id', $newProductIds)
+            ->delete();
+
+        // Reload the updated order with its products
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
@@ -333,7 +312,88 @@ class OrderController extends Controller
         return ServiceResponse::success("Order updated successfully", ['data' => $data]);
     }
 
+    // public function update(UpdateOrder $request, $id)
+    // {
+    //     $data = $request->validated();
 
+    //     $order = Order::find($id);
+    //     if (!$order) {
+    //         return ServiceResponse::error("Order with ID $id not found.");
+    //     }
+
+    //     $totalPrice = 0;
+    //     $orderProducts = [];
+    //     // Process products
+    //     foreach ($data['products'] as $item) {
+    //         $product = Product::find($item['product_id']);
+    //         if (!$product) {
+    //             continue; // Ignore invalid products
+    //             // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
+
+    //         }
+
+    //         // $pricePerUnit = $product->price;
+    //         $pricePerUnit = $item['price'];
+    //         $quantity = $item['quantity'];
+    //         $itemTotal = $pricePerUnit * $quantity;
+
+    //         $totalPrice += $itemTotal;
+
+    //         $orderProducts[] = [
+    //             'product_id' => $item['product_id'],
+    //             'quantity' => $quantity,
+    //             'price' => $pricePerUnit,
+    //             'notes' => $item['notes'],
+
+    //         ];
+    //     }
+
+    //     // Calculate discount and final price
+    //     $discount = $data['discount'] ?? $order->discount;
+    //     // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
+    //     $finalPrice = $totalPrice - $discount;
+
+    //     // Update order details
+    //     $order->update([
+    //         'customer_id' => $order->customer_id,
+    //         // 'customer_phone' => $customerPhone,
+    //         'discount' => $discount,
+    //         'total_price' => $finalPrice,
+    //         'status' => $data['status'] ?? $order->status,
+    //         'notes' => $data['notes'] ?? $order->notes,
+    //         'type' => $data['type'] ?? $order->type,
+    //         'table_no' => $data['tableNo'] ?? $order->table_no,
+    //     ]);
+
+    //     // Update order products
+    //     // First, delete old products
+    //     $order->orderProducts()->delete();
+
+    //     // Then, insert new ones
+    //     foreach ($orderProducts as $orderProduct) {
+    //         OrderProduct::create([
+    //             'order_id' => $order->id,
+    //             'product_id' => $orderProduct['product_id'],
+    //             'quantity' => $orderProduct['quantity'],
+    //             'price' => $orderProduct['price'],
+    //             'notes' => $orderProduct['notes'],
+    //             'variation' => $orderProduct['variation'] ?? null,
+
+    //         ]);
+    //     }
+
+    //     // Reload the updated order with its products
+    //     $order->load('orderProducts.product');
+
+    //     $data = new OrderResource($order);
+
+    //     return ServiceResponse::success("Order updated successfully", ['data' => $data]);
+    // }
+
+
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(string $id)
     {
         $order = Order::find($id);
@@ -381,4 +441,113 @@ class OrderController extends Controller
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
+    // public function orderMaker()
+    // {
+    //     $productIds = Product::whereBetween('id', [1, 100])
+    //         ->inRandomOrder()
+    //         ->take(rand(1, 6))
+    //         ->pluck('id');
+
+    //     if ($productIds->isEmpty()) {
+    //         return ServiceResponse::error("No products available to create a random order.");
+    //     }
+
+    //     $products = Product::whereIn('id', $productIds)->get();
+
+    //     $customer_id = Arr::random([11, 12, 13, 14, 15, '']);
+
+    //     $totalPrice = 0;
+    //     $orderProducts = [];
+
+    //     foreach ($products as $product) {
+    //         $quantity = rand(1, 6);
+    //         $price = $product->price;
+    //         $itemTotal = $price * $quantity;
+
+    //         $totalPrice += $itemTotal;
+
+    //         $orderProducts[] = [
+    //             'product_id' => $product->id,
+    //             'quantity' => $quantity,
+    //             'price' => $price,
+    //             'notes' => 'Random order note',
+    //         ];
+    //     }
+
+    //     $discount = rand(0, 10);
+    //     $finalPrice = max(0, $totalPrice - $discount);
+    //     $types = ['dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation'];
+    //     $statuses = ['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed'];
+
+
+    //     $type = Arr::random($types);
+    //     $status = Arr::random($statuses);
+
+    //     // Generate a random date
+    //     $startYear = 2022;
+    //     $endYear = Carbon::now()->year;  // Current year
+    //     $randomYear = rand($startYear, $endYear);
+    //     $randomMonth = rand(1, 12);
+    //     $randomDay = rand(1, Carbon::create($randomYear, $randomMonth, 1)->daysInMonth);
+    //     $randomDate = Carbon::create($randomYear, $randomMonth, $randomDay)
+    //         ->addHours(rand(0, 23))
+    //         ->addMinutes(rand(0, 59));
+    //     $order = Order::create([
+    //         'identifier' => 'ORD-' . uniqid(),
+    //         'order_number' => strtoupper(uniqid('ORD-')),
+    //         'type' => $type,
+    //         'status' => $status,
+    //         'notes' => 'This is a randomly generated order.',
+    //         'customer_id' => $customer_id,
+    //         'discount' => $discount,
+    //         'invoice_no' => strtoupper(uniqid('INV-')),
+    //         'table_no' => rand(1, 20),
+    //         'total_price' => $finalPrice,
+    //         'restaurant_id' => 1,
+    //         'order_at' => $randomDate,
+
+
+    //     ]);
+
+    //     foreach ($orderProducts as $orderProduct) {
+    //         $order->orderProducts()->create($orderProduct);
+    //     }
+    //     $invoiceStatuses = Arr::random(['pending', 'received']);
+    //     $paymentMethod = Arr::random(['cash', 'card', 'transfer']);
+    //     $invoice = Invoice::create([
+    //         'order_id' => $order->id,
+    //         'invoice_no' => $order->invoice_no,
+    //         'invoice_date' => $order->created_at,
+    //         'total' => $order->total_price,
+    //         'payment_method' => $paymentMethod,
+    //         'payment_status' =>  $invoiceStatuses,
+    //         'notes' => "This is a randomly generated $order->invoice_no invoice.",
+
+    //     ]);
+
+    //     $paymentStatuses = Arr::random(['pending', 'received']);
+    //     $paymentMode = Arr::random(['cash', 'card', 'transfer']);
+    //     $paymentPortal = Arr::random(['cash', 'stripe', 'paypal']);
+    //     $payment = Payments::create([
+    //         'order_id' => $order->id,
+    //         'amount' => $order->total_price,
+    //         'customer_id' => $customer_id,
+    //         'payment_status' => $paymentStatuses,
+    //         'payment_mode' => $paymentMode,
+    //         'payment_portal' => $paymentPortal,
+    //     ]);
+
+
+    //     return ServiceResponse::success("Random order created successfully", [
+    //         'order' => new OrderResource($order),
+    //     ]);
+    // }
+    // public function getOrders()
+    // {
+    //     // Fetch orders in descending order based on the order ID
+    //     $orders = Order::orderBy('id', 'desc')->get();
+
+    //     // Return the orders as JSON
+    //     return response()->json(['orders' => $orders]);
+    // }
 }
