@@ -55,7 +55,7 @@ class OrderController extends Controller
         $totalPrice = 0;
         $orderProducts = [];
         foreach ($data['products'] as $item) {
-            $product = Product::with('variationPrice')->find($item['id']);
+            $product = Product::find($item['id']);
             if (!$product) {
                 continue;
             }
@@ -63,12 +63,24 @@ class OrderController extends Controller
             $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
-            dd($product);
-            foreach ($product->variations as $variation) {
-                if ($variation->selected) {  // Assuming you have a field 'selected' in the variation table
-                    $itemTotal += $variation->price;
-                }
-            }
+            // Handle variations if they exist
+            // $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
+
+            // if ($variations) {
+            //     foreach ($variations as $variation) {
+            //         if ($variation['selected'] == true) {
+            //             if (isset($variation['options']) && is_array($variation['options'])) {
+            //                 foreach ($variation['options'] as $option) {
+            //                     if (isset($option['price']) && $option['price']) {
+            //                         $itemTotal += $option['price'] * $quantity;
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+
+
             $totalPrice += $itemTotal;
 
             $orderProducts[] = [
@@ -119,7 +131,7 @@ class OrderController extends Controller
 
         $order->load('orderProducts.product');
 
-        return ServiceResponse::success(['status' => 'Order created successfully'], ['order_number' => $order->order_number]);
+        return ServiceResponse::success(['status' => 'Order created successfully', 'data' => $order->order_number]);
     }
 
     public function trackCustomerOrder(Request $request, $orderNumber)
