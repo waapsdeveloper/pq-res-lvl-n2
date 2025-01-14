@@ -16,12 +16,10 @@ class OrderController extends Controller
 {
     public function makeOrderBookings(Request $request)
     {
-        // Validate the request data
         $validated = $request->validate([
             'phone' => 'required', // Ensure phone is mandatory
             'table_identifier' => 'nullable'
         ]);
-        // return response()->json($request->all());
 
         $data = $request->all();
         $phone = $data['phone'];
@@ -42,7 +40,6 @@ class OrderController extends Controller
             $customerId = $customer->id;
         }
 
-
         if (!empty($rtableIdf)) {
             $identifier = $rtableIdf;
             $restaurant = Rtable::where('identifier', $identifier)->first();
@@ -59,28 +56,22 @@ class OrderController extends Controller
             if (!$product) {
                 continue;
             }
+            $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
+            $productVariationPrice = 0;
 
-            $pricePerUnit = $item['price'];
+            if ($variations) {
+                foreach ($variations as $variation) {
+                    if (isset($variation['options']) && is_array($variation['options'])) {
+                        foreach ($variation['options'] as $option) {
+                            $productVariationPrice += $option['price'] ?? 0;
+                        }
+                    }
+                }
+            }
+
+            $pricePerUnit = $item['price'] + $productVariationPrice;
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
-            // Handle variations if they exist
-            // $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
-
-            // if ($variations) {
-            //     foreach ($variations as $variation) {
-            //         if ($variation['selected'] == true) {
-            //             if (isset($variation['options']) && is_array($variation['options'])) {
-            //                 foreach ($variation['options'] as $option) {
-            //                     if (isset($option['price']) && $option['price']) {
-            //                         $itemTotal += $option['price'] * $quantity;
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-
-
             $totalPrice += $itemTotal;
 
             $orderProducts[] = [
@@ -89,7 +80,6 @@ class OrderController extends Controller
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
                 'variation' => $item['variation'] ?? null,
-
             ];
         }
 
@@ -117,7 +107,7 @@ class OrderController extends Controller
             'updated_at' => now(),
         ]);
         foreach ($orderProducts as $orderProduct) {
-            // dd($orderProduct['variation']);
+
             OrderProduct::create([
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['product_id'],
@@ -128,15 +118,7 @@ class OrderController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $variations = $orderProduct['variation'] ? json_decode($orderProduct['variation'], true) : null;
-            $productVariationPrice = '';
-            foreach ($variations as $variation) {
-                foreach ($variation['options'] as $value) {
-                    $productVariationPrice = $value['price'];
-                }
-            }
         }
-        dd($productVariationPrice, 'hi');
 
         $order->load('orderProducts.product');
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
@@ -147,6 +129,6 @@ class OrderController extends Controller
         $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table')
             ->where('order_number', $orderNumber)->first();
         $data = new AddOrderBookingResource($order);
-        return ServiceResponse::success("Customer Order Tracked Successfully", ['order' => $order]);
+        return ServiceResponse::success("Customer Order Tracked Successfully", ['order' => $data]);
     }
 }
