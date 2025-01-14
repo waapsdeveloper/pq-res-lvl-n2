@@ -131,7 +131,7 @@ class OrderController extends Controller
 
         $order->load('orderProducts.product');
 
-        return ServiceResponse::success(['status' => 'Order created successfully', 'data' => $order->order_number]);
+        return ServiceResponse::success(['status' => 'Order created successfully', 'result' => [$order->order_number]]);
     }
 
     public function trackCustomerOrder(Request $request, $orderNumber)
