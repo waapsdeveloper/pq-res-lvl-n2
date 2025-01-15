@@ -11,12 +11,14 @@ use App\Models\Product;
 use App\Models\Rtable;
 use App\Models\User;
 use App\Traits\Traits\Frontend\CustomerTrait;
+use App\Traits\Traits\Frontend\TableBookingTrait;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
 
     use CustomerTrait;
+    use TableBookingTrait;
 
     public function makeOrderBookings(Request $request)
     {
@@ -26,32 +28,23 @@ class OrderController extends Controller
         // ]);
 
         $data = $request->all();
-        $phone = $data['phone'];
 
+        $phone = $data['phone'];
         $customer = $this->getCustomerByPhone($phone);
 
         $rtableIdf = $request->input('table_identifier', null);
-        
-
-        // if (!empty($rtableIdf)) {
-        //     $identifier = $rtableIdf;
-        //     $restaurant = Rtable::where('identifier', $identifier)->first();
-        //     if (!$restaurant) {
-        //         return ServiceResponse::error("Invalid table identifier.", [], 400);
-        //     }
-        //     $restaurant_id = $restaurant->id;
-        // }
+        $restaurant = $this->tableIdentifier($rtableIdf);
 
         $totalPrice = 0;
         $orderProducts = [];
 
         foreach ($data['products'] as $item) {
-            
+
             $product = Product::find($item['id']);
             if (!$product) {
                 continue;
             }
-            
+
             $variations = $item['variations'];
             $productVariationPrice = 0;
 
@@ -100,7 +93,7 @@ class OrderController extends Controller
             'invoice_no' => 'INV-' . $uniqid,
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
-            'restaurant_id' => $restaurant_id ?? 1,
+            'restaurant_id' => $restaurant->id ?? 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
