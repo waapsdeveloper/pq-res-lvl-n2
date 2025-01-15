@@ -22,7 +22,7 @@ class StoreVariation extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'nullable',
             'description' => 'nullable',
             'meta_value' => 'nullable|array'
         ];
