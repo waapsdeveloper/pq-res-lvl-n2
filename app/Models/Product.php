@@ -18,7 +18,7 @@ class Product extends Model
         'discount',
         'image',
         'status',
-        'variation_id'
+        // 'variation_id'
     ];
 
     public function category()

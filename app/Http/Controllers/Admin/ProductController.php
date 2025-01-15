@@ -166,7 +166,7 @@ class ProductController extends Controller
             'price' => $data['price'],
             'status' => $data['status'],
             'discount' => $data['discount'] ?? 0,
-            'variation_id' => $data['variation_id'] ?? null,
+            // 'variation_id' => $data['variation_id'] ?? null,
 
         ]);
 
@@ -247,7 +247,7 @@ class ProductController extends Controller
             'price' => $data['price'] ?? $product->price,
             'status' => $data['status'] ?? $product->status,
             'discount' => $data['discount'] ?? $product->discount,
-            'variation_id' => $data['variation_id'] ?? $product->variation_id,
+            // 'variation_id' => $data['variation_id'] ?? $product->variation_id,
             'image' => $data['image'] ?? $product->image,
         ]);
 
