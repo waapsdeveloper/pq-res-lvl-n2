@@ -47,7 +47,8 @@ class AddOrderBookingResource extends JsonResource
                     'image' => Helper::returnFullImageUrl($orderProduct->product->image),
                     'price' => $orderProduct->price,
                     'notes' => $orderProduct->notes,
-                    'variation' => json_decode($orderProduct->variation),
+                    // 'variation' => json_decode($orderProduct->variation),
+                    'variation' => $orderProduct->variation,
                 ];
             }),
             'customer' => $obj->customer ? [

@@ -14,6 +14,7 @@ use App\Models\OrderProduct;
 use App\Models\Payments;
 use App\Models\Product;
 use App\Models\User;
+use App\Traits\Admin\CustomerTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
@@ -22,6 +23,7 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
+    use CustomerTrait;
     /**
      * Display a listing of the resource.
      */
@@ -112,19 +114,19 @@ class OrderController extends Controller
         $data = $request->all();
         // $data = $request->validated();
         // dd($data);
+        $this->getCustomerByPhone($data['customer_phone']);
+        // $customerName = $data['customer_name'] ?? 'Walk-in Customer';
+        // $customerPhone = $data['customer_phone'] ?? 'XXXX';
 
-        $customerName = $data['customer_name'] ?? 'Walk-in Customer';
-        $customerPhone = $data['customer_phone'] ?? 'XXXX';
+        // $user = User::where('phone', $customerPhone)->first();
 
-        $user = User::where('phone', $customerPhone)->first();
-
-        if (!$user) {
-            $user = User::create([
-                'name' => $customerName,
-                'phone' => $customerPhone,
-                'email' => $customerPhone . "@phone.test",
-            ]);
-        }
+        // if (!$user) {
+        //     $user = User::create([
+        //         'name' => $customerName,
+        //         'phone' => $customerPhone,
+        //         'email' => $customerPhone . "@phone.test",
+        //     ]);
+        // }
 
 
         $totalPrice = 0;
@@ -143,10 +145,8 @@ class OrderController extends Controller
                 foreach ($variations as $variation) {
                     if (isset($variation['options']) && is_array($variation['options'])) {
                         foreach ($variation['options'] as $option) {
-                            if ($option['selected'] == true) {
-
+                            if (!empty($option['selected']) && $option['selected'] === true) {
                                 $productVariationPrice += $option['price'] ?? 0;
-                                // dd($product->price, $productVariationPrice);
                             }
                         }
                     }

@@ -22,12 +22,7 @@ class OrderController extends Controller
 
     public function makeOrderBookings(Request $request)
     {
-        // $validated = $request->validate([
-        //     'phone' => 'required', // Ensure phone is mandatory
-        //     'table_identifier' => 'nullable'
-        // ]);
-
-        $data = $request->all();
+        $data = $request->validated();
 
         $phone = $data['phone'];
         $customer = $this->getCustomerByPhone($phone);
@@ -97,7 +92,6 @@ class OrderController extends Controller
             'updated_at' => now(),
         ]);
         foreach ($orderProducts as $orderProduct) {
-            // dd($orderProduct['variation']);
             OrderProduct::create([
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['product_id'],
