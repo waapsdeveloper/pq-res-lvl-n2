@@ -64,7 +64,6 @@ class OrderController extends Controller
                     if (isset($variation['options']) && is_array($variation['options'])) {
                         foreach ($variation['options'] as $option) {
                             if ($option['selected'] == true) {
-
                                 $productVariationPrice += $option['price'] ?? 0;
                             }
                         }
@@ -73,7 +72,6 @@ class OrderController extends Controller
             }
 
             $pricePerUnit = $item['price'] + $productVariationPrice;
-            // $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
             $totalPrice += $itemTotal;
@@ -111,14 +109,14 @@ class OrderController extends Controller
             'updated_at' => now(),
         ]);
         foreach ($orderProducts as $orderProduct) {
-
+            // dd($orderProduct['variation']);
             OrderProduct::create([
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
-                'variation' => $orderProduct['variations'],
+                'variation' => $orderProduct['variation'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
