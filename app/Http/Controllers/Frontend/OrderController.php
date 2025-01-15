@@ -66,7 +66,6 @@ class OrderController extends Controller
                             if ($option['selected'] == true) {
 
                                 $productVariationPrice += $option['price'] ?? 0;
-                                // dd($product->price, $productVariationPrice);
                             }
                         }
                     }
@@ -84,7 +83,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
-                'variations' => $item['variations'] ?? null,
+                'variation' => $item['variations'] ?? null,
             ];
         }
 

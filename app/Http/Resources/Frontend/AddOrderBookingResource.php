@@ -41,13 +41,14 @@ class AddOrderBookingResource extends JsonResource
             'order_at' => $obj->order_at,
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
-                    dd($orderProduct),
                     'product_id' => $orderProduct->product_id,
                     'product_name' => $orderProduct->product->name ?? null,
                     'quantity' => $orderProduct->quantity,
-                    'image' => Helper::returnFullImageUrl($orderProduct->image),
+                    // dd($orderProduct->product->image),
+                    'image' => Helper::returnFullImageUrl($orderProduct->product->image),
                     'price' => $orderProduct->price,
                     'notes' => $orderProduct->notes,
+                    'variation' => $orderProduct->variation,
                 ];
             }),
             'customer' => $obj->customer ? [
@@ -64,14 +65,14 @@ class AddOrderBookingResource extends JsonResource
                     'email' => $obj->restaurant->email,
                     'status' => $obj->restaurant->status,
                 ] : null,
-            'restaurant_timings' => $obj->restaurant->timings->map(function ($timing) {
-                return [
-                    'day' => $timing->day,
-                    'start_time' => $timing->start_time,
-                    'end_time' => $timing->end_time,
-                    'status' => $timing->status,
-                ];
-            }),
+            // 'restaurant_timings' => $obj->restaurant->timings->map(function ($timing) {
+            //     return [
+            //         'day' => $timing->day,
+            //         'start_time' => $timing->start_time,
+            //         'end_time' => $timing->end_time,
+            //         'status' => $timing->status,
+            //     ];
+            // }),
             'table' => $obj->table ?? null,
 
         ];
