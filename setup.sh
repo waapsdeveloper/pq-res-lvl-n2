@@ -6,7 +6,7 @@ composer install
 
 # Laravel Commands
 echo "Running Laravel migrations..."
-yes | php artisan migrate:fresh
+php artisan migrate:fresh
 
 echo "Creating a personal access client for Laravel Passport..."
 yes | php artisan passport:client --personal
