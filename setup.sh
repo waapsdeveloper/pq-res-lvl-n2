@@ -9,7 +9,9 @@ echo "Running Laravel migrations..."
 php artisan migrate:fresh
 
 echo "Creating a personal access client for Laravel Passport..."
-yes | php artisan passport:client --personal
+php artisan passport:client --personal <<EOF
+local
+EOF
 
 echo "Seeding the database..."
 php artisan db:seed
