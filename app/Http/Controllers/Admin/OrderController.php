@@ -111,10 +111,10 @@ class OrderController extends Controller
      */
     public function store(StoreOrder $request)
     {
-        $data = $request->all();
-        // $data = $request->validated();
+        // $data = $request->all();
+        $data = $request->validated();
         // dd($data);
-        $this->getCustomerByPhone($data['customer_phone']);
+        $customer = $this->getCustomerByPhone($data['customer_phone']);
         // $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         // $customerPhone = $data['customer_phone'] ?? 'XXXX';
 
@@ -184,7 +184,7 @@ class OrderController extends Controller
             'type' => $type,
             'status' => $orderStatus,
             'notes' => $orderNote,
-            'customer_id' => $user->id ?? null,
+            'customer_id' => $customer->id ?? null,
             'discount' => $discount,
             'invoice' => 'INV-' . uniqid(),
             'table_no' => $tableNo,

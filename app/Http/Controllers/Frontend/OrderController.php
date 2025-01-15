@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Frontend\OrderBooking\MakeOrderBooking;
 use App\Http\Resources\Frontend\AddOrderBookingResource;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -20,7 +21,7 @@ class OrderController extends Controller
     use CustomerTrait;
     use TableBookingTrait;
 
-    public function makeOrderBookings(Request $request)
+    public function makeOrderBookings(MakeOrderBooking $request)
     {
         $data = $request->validated();
 
