@@ -14,7 +14,6 @@ use App\Models\OrderProduct;
 use App\Models\Payments;
 use App\Models\Product;
 use App\Models\User;
-use App\Traits\Admin\CustomerTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
@@ -23,7 +22,6 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    use CustomerTrait;
     /**
      * Display a listing of the resource.
      */
@@ -111,22 +109,22 @@ class OrderController extends Controller
      */
     public function store(StoreOrder $request)
     {
-        // $data = $request->all();
-        $data = $request->validated();
+        $data = $request->all();
+        // $data = $request->validated();
         // dd($data);
-        $customer = $this->getCustomerByPhone($data['customer_phone']);
-        // $customerName = $data['customer_name'] ?? 'Walk-in Customer';
-        // $customerPhone = $data['customer_phone'] ?? 'XXXX';
 
-        // $user = User::where('phone', $customerPhone)->first();
+        $customerName = $data['customer_name'] ?? 'Walk-in Customer';
+        $customerPhone = $data['customer_phone'] ?? 'XXXX';
 
-        // if (!$user) {
-        //     $user = User::create([
-        //         'name' => $customerName,
-        //         'phone' => $customerPhone,
-        //         'email' => $customerPhone . "@phone.test",
-        //     ]);
-        // }
+        $user = User::where('phone', $customerPhone)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name' => $customerName,
+                'phone' => $customerPhone,
+                'email' => $customerPhone . "@phone.test",
+            ]);
+        }
 
 
         $totalPrice = 0;
@@ -138,22 +136,23 @@ class OrderController extends Controller
                 // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
-            $variations = $item['variations'];
-            $productVariationPrice = 0;
+            // $variations = $item['variations'];
+            // $productVariationPrice = 0;
 
-            if ($variations) {
-                foreach ($variations as $variation) {
-                    if (isset($variation['options']) && is_array($variation['options'])) {
-                        foreach ($variation['options'] as $option) {
-                            if (!empty($option['selected']) && $option['selected'] === true) {
-                                $productVariationPrice += $option['price'] ?? 0;
-                            }
-                        }
-                    }
-                }
-            }
+            // if ($variations) {
+            //     foreach ($variations as $variation) {
+            //         if (isset($variation['options']) && is_array($variation['options'])) {
+            //             foreach ($variation['options'] as $option) {
+            //                 if (!empty($option['selected']) && $option['selected'] === true) {
+            //                     $productVariationPrice += $option['price'] ?? 0;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
-            $pricePerUnit = $item['price'] + $productVariationPrice;
+            // $pricePerUnit = $item['price'] + $productVariationPrice;
+            $pricePerUnit = $item['price'];
 
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
@@ -184,7 +183,7 @@ class OrderController extends Controller
             'type' => $type,
             'status' => $orderStatus,
             'notes' => $orderNote,
-            'customer_id' => $customer->id ?? null,
+            'customer_id' => $user->id ?? null,
             'discount' => $discount,
             'invoice' => 'INV-' . uniqid(),
             'table_no' => $tableNo,
