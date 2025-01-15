@@ -44,7 +44,6 @@ class AddOrderBookingResource extends JsonResource
                     'product_id' => $orderProduct->product_id,
                     'product_name' => $orderProduct->product->name ?? null,
                     'quantity' => $orderProduct->quantity,
-                    // dd($orderProduct->product->image),
                     'image' => Helper::returnFullImageUrl($orderProduct->product->image),
                     'price' => $orderProduct->price,
                     'notes' => $orderProduct->notes,

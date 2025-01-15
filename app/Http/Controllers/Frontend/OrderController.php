@@ -51,7 +51,7 @@ class OrderController extends Controller
                 foreach ($variations as $variation) {
                     if (isset($variation['options']) && is_array($variation['options'])) {
                         foreach ($variation['options'] as $option) {
-                            if ($option['selected'] == true) {
+                            if (!empty($option['selected']) && $option['selected'] === true) {
                                 $productVariationPrice += $option['price'] ?? 0;
                             }
                         }
