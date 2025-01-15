@@ -117,7 +117,7 @@ class OrderController extends Controller
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
-                'variation' => $orderProduct['variation'],
+                'variations' => $orderProduct['variations'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
