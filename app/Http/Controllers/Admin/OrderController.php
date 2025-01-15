@@ -109,8 +109,8 @@ class OrderController extends Controller
      */
     public function store(StoreOrder $request)
     {
-        $data = $request->all();
-        // $data = $request->validated();
+        // $data = $request->all();
+        $data = $request->validated();
         // dd($data);
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
@@ -136,22 +136,7 @@ class OrderController extends Controller
                 // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
-            // $variations = $item['variations'];
-            // $productVariationPrice = 0;
-
-            // if ($variations) {
-            //     foreach ($variations as $variation) {
-            //         if (isset($variation['options']) && is_array($variation['options'])) {
-            //             foreach ($variation['options'] as $option) {
-            //                 if (!empty($option['selected']) && $option['selected'] === true) {
-            //                     $productVariationPrice += $option['price'] ?? 0;
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-
-            // $pricePerUnit = $item['price'] + $productVariationPrice;
+            // $pricePerUnit = $product->price;
             $pricePerUnit = $item['price'];
 
             $quantity = $item['quantity'];
@@ -164,7 +149,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
-                'variation' => $item['variations'] ?? null,
+                'variation' => $item['variation'] ?? null,
             ];
         }
 
@@ -201,7 +186,7 @@ class OrderController extends Controller
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
-                'variation' => $orderProduct['variation'] ?? null,
+                'variation' => $orderProduct['variation'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
