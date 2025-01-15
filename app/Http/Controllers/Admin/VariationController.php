@@ -75,9 +75,9 @@ class VariationController extends Controller
         // $data = $request->all();
         $data = $request->validated();
         $variation = Variation::create([
-            'name' => $data['name'],
-            'meta_value' => json_encode($data['meta_value']),
-            'description' => $data['description'],
+            'name' => $data['name'] ?? null,
+            'meta_value' => json_encode($data['meta_value']) ?? null,
+            'description' => $data['description'] ?? null,
         ]);
 
         return ServiceResponse::success('Variation store successful', ['variation' => $variation]);
