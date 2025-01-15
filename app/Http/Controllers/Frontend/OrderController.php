@@ -23,8 +23,8 @@ class OrderController extends Controller
 
     public function makeOrderBookings(MakeOrderBooking $request)
     {
-        $data = $request->validated();
-
+        // $data = $request->validated();
+        $data = $request->all();
         $phone = $data['phone'];
         $customer = $this->getCustomerByPhone($phone);
 
@@ -32,7 +32,7 @@ class OrderController extends Controller
         $restaurant = $this->tableIdentifier($rtableIdf);
         $totalPrice = 0;
         $orderProducts = [];
-
+        dd($data['products']);
         foreach ($data['products'] as $item) {
 
             $product = Product::find($item['id']);
