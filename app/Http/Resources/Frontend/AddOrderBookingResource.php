@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Frontend;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -40,9 +41,11 @@ class AddOrderBookingResource extends JsonResource
             'order_at' => $obj->order_at,
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
+                    dd($orderProduct),
                     'product_id' => $orderProduct->product_id,
                     'product_name' => $orderProduct->product->name ?? null,
                     'quantity' => $orderProduct->quantity,
+                    'image' => Helper::returnFullImageUrl($orderProduct->image),
                     'price' => $orderProduct->price,
                     'notes' => $orderProduct->notes,
                 ];
