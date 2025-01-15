@@ -31,7 +31,7 @@ class OrderController extends Controller
         $rtableIdf = $request->input('table_identifier', null);
         $restaurant = $this->tableIdentifier($rtableIdf);
 
-        $totalPrice = 0;
+        // $totalPrice = 0;
         $orderProducts = [];
 
         foreach ($data['products'] as $item) {
@@ -40,25 +40,26 @@ class OrderController extends Controller
                 continue;
             }
 
-            $variations = $item['variations'];
-            $productVariationPrice = 0;
+            // $variations = $item['variations'];
+            // $productVariationPrice = 0;
 
-            if ($variations) {
-                foreach ($variations as $variation) {
-                    if (isset($variation['options']) && is_array($variation['options'])) {
-                        foreach ($variation['options'] as $option) {
-                            if (!empty($option['selected']) && $option['selected'] === true) {
-                                $productVariationPrice += $option['price'] ?? 0;
-                            }
-                        }
-                    }
-                }
-            }
+            // if ($variations) {
+            //     foreach ($variations as $variation) {
+            //         if (isset($variation['options']) && is_array($variation['options'])) {
+            //             foreach ($variation['options'] as $option) {
+            //                 if (!empty($option['selected']) && $option['selected'] === true) {
+            //                     $productVariationPrice += $option['price'] ?? 0;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
-            $pricePerUnit = $item['price'] + $productVariationPrice;
+            // $pricePerUnit = $item['price'] + $productVariationPrice;
+            $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
-            $itemTotal = $pricePerUnit * $quantity;
-            $totalPrice += $itemTotal;
+            // $itemTotal = $pricePerUnit * $quantity;
+            // $totalPrice += $itemTotal;
 
             $orderProducts[] = [
                 'product_id' => $item['id'],
@@ -72,7 +73,7 @@ class OrderController extends Controller
         $discount = $data['discount'] ?? 0;
         $type = $rtableIdf ? 'dine-in' : $data['type'];
         $tableNo = $data['tableNo'] ?? null;
-        $finalPrice = $totalPrice - $discount;
+        $finalPrice = $data['total_price'] - $discount;
         $uniqid = uniqid();
         $orderNote = $request->notes;
         $orderStatus = $request->status;
