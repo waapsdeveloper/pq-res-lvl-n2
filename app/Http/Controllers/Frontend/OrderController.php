@@ -10,52 +10,48 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Rtable;
 use App\Models\User;
+use App\Traits\Traits\Frontend\CustomerTrait;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
+    use CustomerTrait;
+
     public function makeOrderBookings(Request $request)
     {
-        $validated = $request->validate([
-            'phone' => 'required', // Ensure phone is mandatory
-            'table_identifier' => 'nullable'
-        ]);
+        // $validated = $request->validate([
+        //     'phone' => 'required', // Ensure phone is mandatory
+        //     'table_identifier' => 'nullable'
+        // ]);
 
         $data = $request->all();
         $phone = $data['phone'];
-        $rtableIdf = $request->input('table_identifier', null);
-        $customer = User::where('phone', $phone)->first();  // Search for the customer by phone
-        $customerId = null;
-        if (!$customer) {
-            $customerNew = User::create([
-                'name' => 'walk-in-customer',
-                'phone' => $phone,
-                'email' => $phone . '@domain.com',  // Use a default or dynamic email
-                'role_id' => 0,  // Default role for walk-in customers
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-            $customerId = $customerNew->id;
-        } else {
-            $customerId = $customer->id;
-        }
 
-        if (!empty($rtableIdf)) {
-            $identifier = $rtableIdf;
-            $restaurant = Rtable::where('identifier', $identifier)->first();
-            if (!$restaurant) {
-                return ServiceResponse::error("Invalid table identifier.", [], 400);
-            }
-            $restaurant_id = $restaurant->id;
-        }
+        $customer = $this->getCustomerByPhone($phone);
+
+        $rtableIdf = $request->input('table_identifier', null);
+        
+
+        // if (!empty($rtableIdf)) {
+        //     $identifier = $rtableIdf;
+        //     $restaurant = Rtable::where('identifier', $identifier)->first();
+        //     if (!$restaurant) {
+        //         return ServiceResponse::error("Invalid table identifier.", [], 400);
+        //     }
+        //     $restaurant_id = $restaurant->id;
+        // }
 
         $totalPrice = 0;
         $orderProducts = [];
+
         foreach ($data['products'] as $item) {
+            
             $product = Product::find($item['id']);
             if (!$product) {
                 continue;
             }
+            
             $variations = $item['variations'];
             $productVariationPrice = 0;
 
@@ -81,7 +77,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
-                'variation' => $item['variations'] ?? null,
+                'variation' => json_encode($item['variations']) ?? null,
             ];
         }
 
@@ -99,7 +95,7 @@ class OrderController extends Controller
             'type' => $type,
             'status' => $orderStatus,
             'notes' => $orderNote,
-            'customer_id' => $customerId,
+            'customer_id' => $customer->id,
             'discount' => $discount,
             'invoice_no' => 'INV-' . $uniqid,
             'table_no' => $tableNo,
