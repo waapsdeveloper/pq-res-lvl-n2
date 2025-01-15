@@ -23,8 +23,8 @@ class OrderController extends Controller
 
     public function makeOrderBookings(MakeOrderBooking $request)
     {
-        // $data = $request->validated();
-        $data = $request->all();
+        $data = $request->validated();
+        // $data = $request->all();
         $phone = $data['phone'];
         $customer = $this->getCustomerByPhone($phone);
 
