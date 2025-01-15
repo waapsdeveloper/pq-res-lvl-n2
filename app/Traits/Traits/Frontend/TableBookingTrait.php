@@ -10,14 +10,17 @@ trait TableBookingTrait
 {
     public function tableIdentifier($rtableIdf)
     {
-        if (!empty($rtableIdf)) {
-            $idf = Rtable::where('identifier', $rtableIdf)->first();
-            if (!$idf) {
-                return ServiceResponse::error("Invalid table identifier.", [], 400);
-            }
-
-            $restaurant = Restaurant::find($idf->restaurant_id);
+        if (empty($rtableIdf)) {
+            return ServiceResponse::error("Table identifier is required.", [], 400);
         }
-        return $restaurant;
+        $rtable = Rtable::where('identifier', $rtableIdf)->first();
+        if (!$rtable) {
+            return ServiceResponse::error("Invalid table identifier.", [], 400);
+        }
+        $restaurant = Restaurant::find($rtable->restaurant_id);
+        if (!$restaurant) {
+            return ServiceResponse::error("Restaurant not found for the given table identifier.", [], 404);
+        }
+        return  $restaurant;
     }
 }

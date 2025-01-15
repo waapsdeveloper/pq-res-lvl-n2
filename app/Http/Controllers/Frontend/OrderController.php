@@ -34,7 +34,7 @@ class OrderController extends Controller
 
         $rtableIdf = $request->input('table_identifier', null);
         $restaurant = $this->tableIdentifier($rtableIdf);
-
+        // dd($restaurant);
         $totalPrice = 0;
         $orderProducts = [];
 
