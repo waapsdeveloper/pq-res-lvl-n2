@@ -56,23 +56,25 @@ class OrderController extends Controller
             if (!$product) {
                 continue;
             }
-            // $variations = isset($item['variations'])
-            //     //  ? json_decode($item['variation'], true) : null
-            // ;
-            // $productVariationPrice = 0;
+            $variations = $item['variations'];
+            $productVariationPrice = 0;
 
-            // if ($variations) {
-            //     foreach ($variations as $variation) {
-            //         if (isset($variation['options']) && is_array($variation['options'])) {
-            //             foreach ($variation['options'] as $option) {
-            //                 $productVariationPrice += $option['price'] ?? 0;
-            //             }
-            //         }
-            //     }
-            // }
+            if ($variations) {
+                foreach ($variations as $variation) {
+                    if (isset($variation['options']) && is_array($variation['options'])) {
+                        foreach ($variation['options'] as $option) {
+                            if ($option['selected'] == true) {
 
-            // $pricePerUnit = $item['price'] + $productVariationPrice;
-            $pricePerUnit = $item['price'];
+                                $productVariationPrice += $option['price'] ?? 0;
+                                // dd($product->price, $productVariationPrice);
+                            }
+                        }
+                    }
+                }
+            }
+
+            $pricePerUnit = $item['price'] + $productVariationPrice;
+            // $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
             $totalPrice += $itemTotal;
@@ -117,7 +119,7 @@ class OrderController extends Controller
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
-                'variations' => $orderProduct['variations'],
+                'variation' => $orderProduct['variations'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

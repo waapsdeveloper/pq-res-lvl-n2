@@ -136,14 +136,18 @@ class OrderController extends Controller
                 // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
 
-            $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
+            $variations = $item['variations'];
             $productVariationPrice = 0;
 
             if ($variations) {
                 foreach ($variations as $variation) {
                     if (isset($variation['options']) && is_array($variation['options'])) {
                         foreach ($variation['options'] as $option) {
-                            $productVariationPrice += $option['price'] ?? 0;
+                            if ($option['selected'] == true) {
+
+                                $productVariationPrice += $option['price'] ?? 0;
+                                // dd($product->price, $productVariationPrice);
+                            }
                         }
                     }
                 }
@@ -198,7 +202,7 @@ class OrderController extends Controller
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
-                'variation' => $orderProduct['variation'],
+                'variation' => $orderProduct['variations'] ?? null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
