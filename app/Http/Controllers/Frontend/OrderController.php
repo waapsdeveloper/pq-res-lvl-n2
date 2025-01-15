@@ -56,20 +56,23 @@ class OrderController extends Controller
             if (!$product) {
                 continue;
             }
-            $variations = isset($item['variation']) ? json_decode($item['variation'], true) : null;
-            $productVariationPrice = 0;
+            // $variations = isset($item['variations'])
+            //     //  ? json_decode($item['variation'], true) : null
+            // ;
+            // $productVariationPrice = 0;
 
-            if ($variations) {
-                foreach ($variations as $variation) {
-                    if (isset($variation['options']) && is_array($variation['options'])) {
-                        foreach ($variation['options'] as $option) {
-                            $productVariationPrice += $option['price'] ?? 0;
-                        }
-                    }
-                }
-            }
+            // if ($variations) {
+            //     foreach ($variations as $variation) {
+            //         if (isset($variation['options']) && is_array($variation['options'])) {
+            //             foreach ($variation['options'] as $option) {
+            //                 $productVariationPrice += $option['price'] ?? 0;
+            //             }
+            //         }
+            //     }
+            // }
 
-            $pricePerUnit = $item['price'] + $productVariationPrice;
+            // $pricePerUnit = $item['price'] + $productVariationPrice;
+            $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
             $totalPrice += $itemTotal;
@@ -79,7 +82,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
-                'variation' => $item['variation'] ?? null,
+                'variations' => $item['variations'] ?? null,
             ];
         }
 
