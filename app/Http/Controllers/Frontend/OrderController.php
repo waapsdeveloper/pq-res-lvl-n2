@@ -32,7 +32,7 @@ class OrderController extends Controller
         $restaurant = $this->tableIdentifier($rtableIdf);
         $totalPrice = 0;
         $orderProducts = [];
-        dd($data['products']);
+        // dd($data['products']);
         foreach ($data['products'] as $item) {
 
             $product = Product::find($item['id']);
