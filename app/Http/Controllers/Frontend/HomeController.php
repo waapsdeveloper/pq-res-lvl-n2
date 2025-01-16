@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Models\Role;
 
@@ -14,5 +15,11 @@ class HomeController extends Controller
     {
         $roles = Role::get();
         return ServiceResponse::success('roles are retrived successfully', ['data' => $roles]);
+    }
+
+    public function restautantDetail($id = 1)
+    {
+        $restuarant = Restaurant::findOrFail($id);
+        return ServiceResponse::success('Restaurant are retrived successfully', ['data' => $restuarant]);
     }
 }
