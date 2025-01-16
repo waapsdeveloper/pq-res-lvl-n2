@@ -19,7 +19,7 @@ class HomeController extends Controller
 
     public function restautantDetail($id = 1)
     {
-        $restuarant = Restaurant::findOrFail($id);
+        $restuarant = Restaurant::with('timings', 'rTables')->findOrFail($id);
         return ServiceResponse::success('Restaurant are retrived successfully', ['data' => $restuarant]);
     }
 }
