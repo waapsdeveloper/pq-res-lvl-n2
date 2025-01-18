@@ -9,13 +9,15 @@ echo "Running Laravel migrations..."
 php artisan migrate:fresh
 
 echo "Creating a personal access client for Laravel Passport..."
-yes | php artisan passport:client --personal 
+php artisan passport:client --personal <<EOF
+local
+EOF
 
 echo "Seeding the database..."
-yes | php artisan db:seed
+php artisan db:seed
 
 # Set the duration to run the script (in seconds). 2 hours = 7200 seconds
-duration=$((1.5 * 60))  # 2 hours in seconds
+duration=$((1* 60))  # 2 hours in seconds
 
 # Get the current time (start time in seconds)
 start_time=$(date +%s)
