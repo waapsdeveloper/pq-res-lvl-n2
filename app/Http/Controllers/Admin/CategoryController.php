@@ -82,7 +82,7 @@ class CategoryController extends Controller
         $category = Category::create([
             'name' => $data['name'],
             'identifier' => null,
-            'category_id' => $data['category_id'],
+            'category_id' => $data['category_id'] ?? null,
             'restaurant_id' => $data['restaurant_id'],
             'description' => $data['description'] ?? null,
             'status' => $data['status'],
