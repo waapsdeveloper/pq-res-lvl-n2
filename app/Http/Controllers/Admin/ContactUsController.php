@@ -17,7 +17,7 @@ class ContactUsController extends Controller
     {
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
-        $query = ContactUs::query();
+        $query = ContactUs::query()->where('restaurant_id', $request->restaurant_id);
 
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);

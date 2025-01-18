@@ -23,7 +23,8 @@ class InvoiceController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Invoice::query()->orderBy('id', 'desc');
+        $query = Invoice::query()
+            ->where('restaurant_id', $request->restaurant_id)->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed
         if ($search) {

@@ -86,6 +86,7 @@ class ProductController extends Controller
         $filters = $request->input('filters', null);
 
         $query = Product::query()
+            ->where('restaurant_id', $request->restaurant_id)
             ->with('category', 'restaurant', 'productProps', 'variation')
             ->orderBy('created_at', 'desc');
 
@@ -160,7 +161,7 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $data['name'],
             'category_id' => $data['category_id'] ?? 0,
-            'restaurant_id' => $data['restaurant_id'] ,
+            'restaurant_id' => $data['restaurant_id'],
             'identifier' => "PROD",
             'description' => $data['description'] ?? '',
             'price' => $data['price'],

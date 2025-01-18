@@ -33,7 +33,7 @@ class UserController extends Controller
         $filters = $request->input('filters', null);
 
         // Start the query and exclude Super Admin from the results
-        $query = User::query()->with('role', 'userDetail')->orderBy('id', 'desc');
+        $query = User::query()->where('restaurant_id', $request->restaurant_id)->with('role', 'userDetail')->orderBy('id', 'desc');
         $query->where('role_id', '!=', 1);  // Exclude Super Admin
 
         // Apply search if provided
