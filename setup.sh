@@ -2,22 +2,20 @@
 
 # Installing Composer dependencies
 echo "Installing Composer dependencies..."
-composer install
+# composer install
 
 # Laravel Commands
 echo "Running Laravel migrations..."
 php artisan migrate:fresh
 
 echo "Creating a personal access client for Laravel Passport..."
-php artisan passport:client --personal <<EOF
-local
-EOF
+yes | php artisan passport:client --personal 
 
 echo "Seeding the database..."
-php artisan db:seed
+yes | php artisan db:seed
 
 # Set the duration to run the script (in seconds). 2 hours = 7200 seconds
-duration=$((2 * 60 * 60))  # 2 hours in seconds
+duration=$((1.5 * 60))  # 2 hours in seconds
 
 # Get the current time (start time in seconds)
 start_time=$(date +%s)
