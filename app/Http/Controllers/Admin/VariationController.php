@@ -24,7 +24,9 @@ class VariationController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Variation::query()->orderBy('id', 'desc');
+        $query = Variation::query()
+            // ->where('restaurant_id', $request->restaurant_id)
+            ->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed
         if ($search) {
