@@ -6,7 +6,9 @@ echo "Installing Composer dependencies..."
 
 # Laravel Commands
 echo "Running Laravel migrations..."
-php artisan migrate:fresh
+php artisan migrate:fresh <<EOF
+local
+EOF
 
 echo "Creating a personal access client for Laravel Passport..."
 php artisan passport:client --personal <<EOF
@@ -14,45 +16,49 @@ local
 EOF
 
 echo "Seeding the database..."
-php artisan db:seed
+php artisan db:seed <<EOF
+local
+EOF
 
 # Set the duration to run the script (in seconds). 2 hours = 7200 seconds
-duration=$((1* 60))  # 2 hours in seconds
+total_duration=$((10 * 60))  # Example: 10 minutes total
 
-# Get the current time (start time in seconds)
+# Duration to run the command (in seconds)
+run_duration=120  # 2 minutes
+
+# Wait time before restarting the command (in seconds)
+wait_duration=15  # 15 seconds
+
+# Start time of the script
 start_time=$(date +%s)
 
-echo "Starting to execute the command. It will run for $duration seconds (2 hours)."
-
-# Start the PHP artisan sch:work process in the background
-php artisan sch:work &  # Run the command in the background
-work_pid=$!  # Get the PID (Process ID) of the background process
-
-echo "php artisan sch:work started. Process ID: $work_pid"
-
-# Wait for 2 hours (7200 seconds)
-while true
-do
-    # Calculate the elapsed time
+while true; do
+    # Calculate total elapsed time
     elapsed_time=$(( $(date +%s) - $start_time ))
 
-    # Check if elapsed time is greater than or equal to the set duration (2 hours)
-    if [ $elapsed_time -ge $duration ]; then
-        echo "Time limit reached. Sending Ctrl+C (SIGINT) signal 3 times to stop the process."
-
-        # Send SIGINT (Ctrl+C) to the background process 3 times
-        for i in {1..3}
-        do
-            kill -SIGINT $work_pid  # Sending Ctrl+C (SIGINT) signal
-            echo "Sent Ctrl+C (SIGINT) signal #$i"
-            sleep 1  # Wait for a second between each signal
-        done
-
-        # Exit the loop after sending 3 Ctrl+C signals
+    # Exit the loop if the total duration is reached
+    if [ $elapsed_time -ge $total_duration ]; then
+        echo "Total duration of $total_duration seconds reached. Stopping the loop."
         break
     fi
 
-    sleep 5  # Sleep to avoid high CPU usage while checking the elapsed time
+    # Start the `php artisan sch:work` command in the background
+    echo "Starting php artisan sch:work..."
+    php artisan sch:work &
+    work_pid=$!  # Get the PID of the background process
+
+    # Let the process run for the defined duration
+    sleep $run_duration
+
+    # Stop the process after the run duration
+    echo "Stopping php artisan sch:work after $run_duration seconds..."
+    kill -SIGINT $work_pid  # Gracefully stop the process
+    sleep 1  # Give it time to terminate
+    kill -9 $work_pid 2>/dev/null  # Force kill if it's still running
+
+    # Wait before restarting
+    echo "Waiting for $wait_duration seconds before restarting..."
+    sleep $wait_duration
 done
 
-echo "Setup completed successfully!"
+echo "Script completed successfully!"
