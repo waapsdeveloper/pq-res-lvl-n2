@@ -6,9 +6,7 @@ echo "Installing Composer dependencies..."
 
 # Laravel Commands
 echo "Running Laravel migrations..."
-php artisan migrate:fresh <<EOF
-local
-EOF
+php artisan migrate:fresh 
 
 echo "Creating a personal access client for Laravel Passport..."
 php artisan passport:client --personal <<EOF
@@ -16,9 +14,7 @@ local
 EOF
 
 echo "Seeding the database..."
-php artisan db:seed <<EOF
-local
-EOF
+php artisan db:seed 
 
 # Set the duration to run the script (in seconds). 2 hours = 7200 seconds
 total_duration=$((10 * 60))  # Example: 10 minutes total
