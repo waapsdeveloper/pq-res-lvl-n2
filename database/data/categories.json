@@ -26,7 +26,7 @@
     {
         "name": "Snacks",
         "category_id": null,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "description": "Crispy fries, nuggets, and other quick bites.",
         "image": "images/category/67826c429e75f.png",
         "status": "active"
@@ -34,7 +34,7 @@
     {
         "name": "Desserts",
         "category_id": null,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "description": "Sweet treats including ice creams, cakes, and pastries.",
         "image": "images/category/67826c0795588.png",
         "status": "active"

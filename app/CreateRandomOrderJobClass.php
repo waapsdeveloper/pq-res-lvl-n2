@@ -113,7 +113,7 @@ class CreateRandomOrderJobClass
             'invoice_no' => strtoupper(uniqid('INV-')),
             'table_no' => rand(1, 20),
             'total_price' => $finalPrice,
-            'restaurant_id' => 1,
+            'restaurant_id' => Arr::random([1, 2]),
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
 

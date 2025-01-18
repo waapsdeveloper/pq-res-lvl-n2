@@ -17,7 +17,7 @@ class HomeController extends Controller
         return ServiceResponse::success('roles are retrived successfully', ['data' => $roles]);
     }
 
-    public function restautantDetail($id = 1)
+    public function restautantDetail($id)
     {
         $restuarant = Restaurant::with('timings', 'rTables')->findOrFail($id);
         return ServiceResponse::success('Restaurant are retrived successfully', ['data' => $restuarant]);

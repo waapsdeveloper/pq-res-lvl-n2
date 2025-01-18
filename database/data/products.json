@@ -166,7 +166,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "French Fries",
         "description": "Golden crispy french fries, perfectly seasoned.",
         "price": 2.99,
@@ -177,7 +177,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Chicken Nuggets",
         "description": "Juicy and tender chicken nuggets with dipping sauce.",
         "price": 3.99,
@@ -188,7 +188,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Onion Rings",
         "description": "Crispy fried onion rings, perfect for snacking.",
         "price": 3.49,
@@ -199,7 +199,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Mozzarella Sticks",
         "description": "Cheesy mozzarella sticks with marinara dip.",
         "price": 4.49,
@@ -210,7 +210,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Popcorn Chicken",
         "description": "Crispy bite-sized chicken pieces with flavorful seasoning.",
         "price": 3.99,
@@ -221,7 +221,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Chocolate Brownie",
         "description": "Rich and fudgy chocolate brownie topped with chocolate sauce.",
         "price": 3.99,
@@ -232,7 +232,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Vanilla Ice Cream",
         "description": "Creamy vanilla ice cream made with natural vanilla beans.",
         "price": 2.99,
@@ -243,7 +243,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Cheesecake Slice",
         "description": "Classic cheesecake slice with a graham cracker crust.",
         "price": 4.49,
@@ -254,7 +254,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Strawberry Sundae",
         "description": "A delightful sundae with fresh strawberries and whipped cream.",
         "price": 3.75,
@@ -265,7 +265,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Chocolate Lava Cake",
         "description": "Warm and gooey lava cake with molten chocolate inside.",
         "price": 5.99,

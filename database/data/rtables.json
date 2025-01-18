@@ -112,7 +112,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-02Secon",
         "status": "inactive",
         "floor": "Second",
@@ -120,7 +120,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-05Secon",
         "status": "active",
         "floor": "Second",
@@ -128,7 +128,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-08Secon",
         "status": "inactive",
         "floor": "Second",
@@ -136,7 +136,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-09Secon",
         "status": "active",
         "floor": "Second",
@@ -144,7 +144,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-04Secon",
         "status": "active",
         "floor": "Second",
@@ -152,7 +152,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-03Secon",
         "status": "inactive",
         "floor": "Second",
@@ -160,7 +160,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-08Third",
         "status": "active",
         "floor": "Third",
@@ -168,7 +168,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-05Third",
         "status": "inactive",
         "floor": "Third",
@@ -176,7 +176,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-06Third",
         "status": "active",
         "floor": "Third",
@@ -184,7 +184,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-07Third",
         "status": "active",
         "floor": "Third",
@@ -192,7 +192,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-05Third",
         "status": "inactive",
         "floor": "Third",
@@ -200,7 +200,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-04Third",
         "status": "inactive",
         "floor": "Third",
@@ -208,7 +208,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-08Third",
         "status": "active",
         "floor": "Third",
@@ -216,7 +216,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-09Third",
         "status": "active",
         "floor": "Third",
@@ -224,7 +224,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-02Third",
         "status": "inactive",
         "floor": "Third",
@@ -232,7 +232,7 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-07Third",
         "status": "active",
         "floor": "Third",
@@ -240,12 +240,11 @@
         "description": "Random table description."
     },
     {
-        "restaurant_id": 1,
+        "restaurant_id": 2,
         "name": "Table-05First",
         "status": "inactive",
         "floor": "First",
         "no_of_seats": 5,
         "description": "Random table description."
     }
-
 ]

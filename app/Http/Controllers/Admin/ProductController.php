@@ -160,7 +160,7 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $data['name'],
             'category_id' => $data['category_id'] ?? 0,
-            'restaurant_id' => $data['restaurant_id'] ?? null,
+            'restaurant_id' => $data['restaurant_id'] ,
             'identifier' => "PROD",
             'description' => $data['description'] ?? '',
             'price' => $data['price'],
