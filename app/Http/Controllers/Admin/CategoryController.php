@@ -26,7 +26,7 @@ class CategoryController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Category::query()->orderBy('id', 'desc');
+        $query = Category::query()->where('restaurant_id', $request->restaurant_id)->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed
         if ($search) {
