@@ -23,12 +23,12 @@ class CategoryResource extends JsonResource
     {
 
         $image = Helper::returnFullImageUrl($obj->image);
-
         return [
             "id" => $obj->id,
             "name" => $obj->name,
             "description" => $obj->description,
             "image" => $image,
+            "restaurant_id" => $obj->restaurant_id,
             "category" => $obj->category,
             "status" => ucfirst($obj->status),
         ];
