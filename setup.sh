@@ -2,7 +2,7 @@
 
 # Installing Composer dependencies
 echo "Installing Composer dependencies..."
-# composer install
+composer install
 
 # Laravel Commands
 echo "Running Laravel migrations..."
