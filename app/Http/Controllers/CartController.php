@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    //
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([

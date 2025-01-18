@@ -20,17 +20,10 @@ Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth
 
 Route::get('/restaurant-detail/{id}', [HomeController::class, 'restautantDetail']);
 
-
-// Route::resource('/restaurant', RTablesController::class)
-//     ->parameters(['' => 'id'])
-//     ->only(['index', 'show', 'store', 'update', 'destroy'])
-//     ->names('rtables');
-
 Route::resource('/rtables', RTablesController::class)
     ->parameters(['' => 'id'])
     ->only(['index', 'show', 'store', 'update', 'destroy'])
     ->names('rtables');
-
 
 Route::prefix('table-booking')->group(function () {
     // Route::get('/getRestaurantsTables', [TableBookingController::class, 'getRestaurantsTables'])->name('getRestaurantsTables');
