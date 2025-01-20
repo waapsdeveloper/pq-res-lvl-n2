@@ -16,8 +16,7 @@ EOF
 echo "Seeding the database..."
 php artisan db:seed 
 
-# Set the duration to run the script (in seconds). 2 hours = 7200 seconds
-duration=$((1* 60))  # 2 hours in seconds
+duration=$((60 * 60))  # 1 hour in seconds
 
 # Get the current time (start time in seconds)
 start_time=$(date +%s)

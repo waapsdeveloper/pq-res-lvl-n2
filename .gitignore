@@ -27,4 +27,3 @@ yarn-error.log
 /.zed
 /app/Mail
 /resources/views/mail
-app/CreateRandomOrderJobClass.php

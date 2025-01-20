@@ -15,65 +15,72 @@ use Illuminate\Support\Facades\Hash;
 
 class CreateRandomOrderJobClass
 {
-    /**
-     * Create a new class instance.
-     */
     public function __construct() {}
+
     public function __invoke()
     {
-        // $startDate =  Carbon::now()->startOfWeek();
-        // $startDate = Carbon::now()->subMonths(1);  // Start from 2 months ago
+        logger()->info('Job execution started.');
+
+        // Random Date Generation
         $startDate = Carbon::now()->subDays(45);
-        $endDate = Carbon::now();  // Up to the current date
+        $endDate = Carbon::now();
         $randomYear = rand($startDate->year, $endDate->year);
         $randomMonth = rand($startDate->month, $endDate->month);
+
         if ($randomYear == $endDate->year && $randomMonth > $endDate->month) {
             $randomMonth = $endDate->month;
         }
+
         $daysInMonth = Carbon::create($randomYear, $randomMonth, 1)->daysInMonth;
         $randomDate = [];
+
         for ($day = 1; $day <= $daysInMonth; $day++) {
-            $randomDay = Carbon::create($randomYear, $randomMonth, $day);
-            $randomDateSingle = $randomDay
-                ->addHours(rand(0, 23))  // Random hour
-                ->addMinutes(rand(0, 59));  // Random minute
-            $randomDate[] = $randomDateSingle->toDateTimeString();
+            $randomDay = Carbon::create($randomYear, $randomMonth, $day)
+                ->addHours(rand(0, 23))
+                ->addMinutes(rand(0, 59));
+            $randomDate[] = $randomDay->toDateTimeString();
         }
+
         $randomDate = Arr::random($randomDate);
+        logger()->info('Random date generated', ['random_date' => $randomDate]);
+
+        // Random User Creation or Selection
         $unique = uniqid(11);
         $randomStatus = Arr::random(['active', 'active', 'inactive']);
-
         $createNewUser = Arr::random([true, false, true]);
+        $restaurant_id = Arr::random([1, 2]);
 
         if ($createNewUser) {
-            // Create a new user
             $customer = User::create([
                 'name' => 'walk-in-customer',
                 'phone' => $unique,
-                'email' => $unique . '@domain.com',  // Use a default or dynamic email
-                'role_id' => 0,  // Default role for walk-in customers
-                'password' => Hash::make('admin123$'),  // Default password for walk-in customers
+                'email' => $unique . '@domain.com',
+                'role_id' => 0,
+                'restaurant_id' => $restaurant_id,
+                'password' => Hash::make('admin123$'),
                 'status' => $randomStatus,
                 'created_at' => $randomDate,
-                'updated_at' => $randomDate, // Set fake created_at date
+                'updated_at' => $randomDate,
             ]);
+            logger()->info('New user created', ['user_id' => $customer->id]);
         } else {
-            // Select a random existing customer
-            $customer = User::inRandomOrder()->first();  // Get a random user from the database
+            $customer = User::inRandomOrder()->first();
+            logger()->info('Random user selected', ['user_id' => $customer->id ?? 'N/A']);
         }
 
-        $productIds = Product::whereBetween('id', [1, 100])
+        // Fetch Random Products
+        $productIds = Product::whereBetween('id', [1, 25])
             ->inRandomOrder()
             ->take(rand(1, 4))
             ->pluck('id');
 
         if ($productIds->isEmpty()) {
-            return ServiceResponse::error("No products available to create a random order.");
+            logger()->error('No products available for order creation.');
+            return;
         }
+        logger()->info('Products fetched', ['product_ids' => $productIds]);
 
         $products = Product::whereIn('id', $productIds)->get();
-
-
         $totalPrice = 0;
         $orderProducts = [];
 
@@ -91,16 +98,13 @@ class CreateRandomOrderJobClass
                 'notes' => 'Random order note',
             ];
         }
+        logger()->info('Order products prepared', ['order_products' => $orderProducts]);
 
+        // Order Creation
         $discount = rand(0, 10);
         $finalPrice = max(0, $totalPrice - $discount);
-        $types = ['dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation'];
-        $statuses = ['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed'];
-
-
-        $type = Arr::random($types);
-        $status = Arr::random($statuses);
-
+        $type = Arr::random(['dine-in', 'take-away']);
+        $status = Arr::random(['pending', 'confirmed']);
 
         $order = Order::create([
             'identifier' => 'ORD-' . uniqid(),
@@ -108,59 +112,58 @@ class CreateRandomOrderJobClass
             'type' => $type,
             'status' => $status,
             'notes' => 'This is a randomly generated order.',
-            'customer_id' =>  $customer->id,
+            'customer_id' => $customer->id,
             'discount' => $discount,
             'invoice_no' => strtoupper(uniqid('INV-')),
             'table_no' => rand(1, 20),
             'total_price' => $finalPrice,
-            'restaurant_id' => Arr::random([1, 2]),
+            'restaurant_id' => $restaurant_id,
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
-
-
         ]);
+        logger()->info('Order created successfully', ['order_id' => $order->id]);
+
         foreach ($orderProducts as $orderProduct) {
             $orderProduct['created_at'] = $randomDate;
             $orderProduct['updated_at'] = $randomDate;
 
             $order->orderProducts()->create($orderProduct);
         }
+        logger()->info('Order products saved.');
 
+        // Invoice Creation
         $invoiceStatuses = Arr::random(['pending', 'received']);
         $paymentMethod = Arr::random(['cash', 'card', 'transfer']);
         $invoice = Invoice::create([
             'order_id' => $order->id,
             'invoice_no' => $order->invoice_no,
             'invoice_date' => $randomDate,
+            'restaurant_id' => $restaurant_id,
             'payment_method' => $paymentMethod,
             'total' => $order->total_price,
-            'status' =>  $invoiceStatuses,
-            'notes' => "This is a randomly generated $order->invoice_no invoice.",
+            'status' => $invoiceStatuses,
+            'notes' => "Random invoice generated.",
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
-
         ]);
+        logger()->info('Invoice created successfully', ['invoice_id' => $invoice->id]);
 
+        // Payment Creation
         $paymentStatuses = Arr::random(['pending', 'received']);
         $paymentMode = Arr::random(['cash', 'card', 'transfer']);
         $paymentPortal = Arr::random(['cash', 'stripe', 'paypal']);
         $payment = Payments::create([
             'order_id' => $order->id,
             'amount' => $order->total_price,
-            'customer_id' =>  $customer->id,
+            'customer_id' => $customer->id,
             'payment_status' => $paymentStatuses,
             'payment_mode' => $paymentMode,
             'payment_portal' => $paymentPortal,
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
         ]);
+        logger()->info('Payment created successfully', ['payment_id' => $payment->id]);
 
-
-        return ServiceResponse::success(
-            "Random order created successfully",
-            // [
-            //     'order' => new OrderResource($order),
-            // ]
-        );
+        logger()->info('Random order job completed successfully.');
     }
 }
