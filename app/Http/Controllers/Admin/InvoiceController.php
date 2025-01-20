@@ -24,7 +24,7 @@ class InvoiceController extends Controller
         $filters = $request->input('filters', null);
 
         $query = Invoice::query()
-            ->where('restaurant_id', $request->restaurant_id)->orderBy('id', 'desc');
+            ->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed
         if ($search) {
