@@ -15,4 +15,12 @@ class RestaurantSetting extends Model
     protected $casts = [
         'meta_value',
     ];
+    public function timings()
+    {
+        return $this->hasMany(RestaurantTiming::class);
+    }
+    public function settings()
+    {
+        return $this->belongsTo(RestaurantSetting::class);
+    }
 }

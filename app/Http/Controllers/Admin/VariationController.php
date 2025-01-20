@@ -25,7 +25,6 @@ class VariationController extends Controller
         $filters = $request->input('filters', null);
 
         $query = Variation::query()
-            // ->where('restaurant_id', $request->restaurant_id)
             ->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed

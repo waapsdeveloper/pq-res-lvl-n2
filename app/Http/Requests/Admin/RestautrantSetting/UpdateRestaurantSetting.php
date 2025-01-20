@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Admin\RestautrantSetting;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateRestaurantSetting extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateRestaurantSetting extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,25 @@ class UpdateRestaurantSetting extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id'         => 'nullable|integer', // Optional for existing record
+            'meta_key'   => 'required|string',
+            'meta_value' => 'required|string',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        // Customize the error response if validation fails
+        $error = $validator->errors()->first();
+
+        // Create a custom error response object or structure
+        $response = [
+            'bool' => false,
+            'status' => 422,
+            "message" => $error,
+            "result" => null
+        ];
+
+        // Throw an HttpResponseException with the custom response
+        throw new HttpResponseException(response()->json($response, 422));
     }
 }

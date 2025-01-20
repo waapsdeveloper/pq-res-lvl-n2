@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
+use App\Http\Controllers\Admin\RestaurantSettingController;
 use App\Http\Controllers\Admin\RestaurantTimingController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TableBookingController;
@@ -45,6 +46,14 @@ Route::prefix('restaurant')->group(function () {
         ->name('orderUpdateLogo');
 });
 
+
+Route::prefix('restaurant-setting')->group(function () {
+
+    Route::resource('/', RestaurantSettingController::class)
+        ->parameters(['' => 'id'])
+        ->only(['index', 'show', 'store', 'update', 'destroy'])
+        ->names('restaurant-timing');
+});
 
 Route::prefix('restaurant-timing')->group(function () {
     Route::get('/bulk-delete', [RestaurantTimingController::class, 'bulkDelete'])->name('restaurantTiming-bulkDelete');

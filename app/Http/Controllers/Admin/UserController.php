@@ -31,9 +31,10 @@ class UserController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
+        $resID = $request->restaurant_id == -1 ? 1 : $request->restaurant_id;
 
         // Start the query and exclude Super Admin from the results
-        $query = User::query()->where('restaurant_id', $request->restaurant_id)->with('role', 'userDetail')->orderBy('id', 'desc');
+        $query = User::query()->where('restaurant_id', $resID)->with('role', 'userDetail')->orderBy('id', 'desc');
         $query->where('role_id', '!=', 1);  // Exclude Super Admin
 
         // Apply search if provided

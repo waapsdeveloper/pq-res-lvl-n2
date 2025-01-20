@@ -49,6 +49,10 @@ class Restaurant extends Model
     {
         return $this->hasMany(RestaurantTiming::class);
     }
+    public function settings()
+    {
+        return $this->hasOne(RestaurantTiming::class);
+    }
     public function rTables()
     {
         return $this->hasMany(Rtable::class);

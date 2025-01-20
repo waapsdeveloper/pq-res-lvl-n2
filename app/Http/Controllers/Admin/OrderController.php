@@ -37,9 +37,10 @@ class OrderController extends Controller
         $filters = $request->input('filters', null);
 
         $category = $request->input('category_id', '');
+        $resID = $request->restaurant_id == -1 ? 1 : $request->restaurant_id;
 
         $query = Order::query()
-            ->where('restaurant_id', $request->restaurant_id)
+            ->where('restaurant_id', $resID)
             ->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
         // dd($query);
         // $query->with('orderProducts.product')->with('orderProducts.productProps');

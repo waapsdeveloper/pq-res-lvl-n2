@@ -84,9 +84,10 @@ class ProductController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
+        $resID = $request->restaurant_id == -1 ? 1 : $request->restaurant_id;
 
         $query = Product::query()
-            ->where('restaurant_id', $request->restaurant_id)
+            ->where('restaurant_id', $resID)
             ->with('category', 'restaurant', 'productProps', 'variation')
             ->orderBy('created_at', 'desc');
 

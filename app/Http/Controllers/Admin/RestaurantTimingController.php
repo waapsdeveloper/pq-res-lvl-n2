@@ -25,8 +25,9 @@ class RestaurantTimingController extends Controller
         $perPage = $request->input('perpage', 10);
         $restaurantId = $request->input('restaurant_id', '');
         $filters = $request->input('filters', null);
+        $resID = $request->restaurant_id == -1 ? 1 : $request->restaurant_id;
 
-        $query = RestaurantTiming::query()->where('restaurant_id', $request->restaurant_id);
+        $query = RestaurantTiming::query()->where('restaurant_id', $resID);
 
         // Apply search filter if a search term is provided
         if ($search) {
