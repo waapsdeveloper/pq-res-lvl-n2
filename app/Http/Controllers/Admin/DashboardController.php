@@ -22,12 +22,10 @@ class DashboardController extends Controller
 {
     public function recentOrders()
     {
-        $orders = Order::
-            // query()
-            //     ->with('customer', 'table')
-            //     ->orderByDesc('id')
-            //     ->limit(10)->
-            get();
+        $orders = Order::query()
+            ->with('customer', 'table')
+            ->orderByDesc('id')
+            ->limit(10)->get();
 
         $orders->each(function ($order) {
             if ($order) {
@@ -36,7 +34,7 @@ class DashboardController extends Controller
                 $order->table_no =  $order->table->identifier;
             }
         });
-        dd('orders', $orders);
+        // dd('orders', $orders);
         // Debug the result to ensure the table_no now holds the name
 
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);
