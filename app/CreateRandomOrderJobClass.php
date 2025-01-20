@@ -103,8 +103,8 @@ class CreateRandomOrderJobClass
         // Order Creation
         $discount = rand(0, 10);
         $finalPrice = max(0, $totalPrice - $discount);
-        $type = Arr::random(['dine-in', 'take-away']);
-        $status = Arr::random(['pending', 'confirmed']);
+        $type = Arr::random(['dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation']);
+        $status = Arr::random(['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed']);
 
         $order = Order::create([
             'identifier' => 'ORD-' . uniqid(),
