@@ -54,30 +54,31 @@ class RestaurantSettingController extends Controller
         // Return the response with image URLs included
         return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     }
-    public function store(StoreRestaurantSetting $request)
-    {
-        $data = $request->validated();
-        // $data = $request->all();
-        $setting = RestaurantSetting::create(
-            [
-                'restaurant_id' => $data['restaurant_id'],
-                'meta_key'   => $data['meta_key'],
-                'meta_value' => json_encode($data['meta_value']),
-            ]
-        );
-        return ServiceResponse::success('Store successful', ['restaurant_setting' => $setting]);
-    }
-    public function update(UpdateRestaurantSetting $request)
-    {
-        $data = $request->validated();
-        // $data = $request->all();
-        $setting = RestaurantSetting::create(
-            [
-                'restaurant_id' => $data['restaurant_id'] ?? $data->restaurant_id,
-                'meta_key'   => $data['meta_key'] ?? $data->meta_key,
-                'meta_value' => json_encode($data['meta_value']) ?? $data->meta_value,
-            ]
-        );
-        return ServiceResponse::success('Store successful', ['restaurant_setting' => $setting]);
-    }
+    // public function store(StoreRestaurantSetting $request)
+    // {
+    //     $data = $request->validated();
+    //     // $data = $request->all();
+    //     $setting = RestaurantSetting::create(
+    //         [
+    //             'restaurant_id' => $data['restaurant_id'],
+    //             'meta_key'   => $data['meta_key'],
+    //             'meta_value' => json_encode($data['meta_value']),
+    //         ]
+    //     );
+    //     return ServiceResponse::success('Store successful', ['restaurant_setting' => $setting]);
+    // }
+    // public function update(UpdateRestaurantSetting $request)
+    // {
+    //     $data = $request->validated();
+    //     // $data = $request->all();
+    //     $setting = RestaurantSetting::create(
+    //         [
+    //             'restaurant_id' => $data['restaurant_id'] ?? $data->restaurant_id,
+    //             'meta_key'   => $data['meta_key'] ?? $data->meta_key,
+    //             'meta_value' => json_encode($data['meta_value']) ?? $data->meta_value,
+    //         ]
+    //     );
+    //     return ServiceResponse::success('Store successful', ['restaurant_setting' => $setting]);
+    // }
+
 }

@@ -32,6 +32,7 @@ Route::prefix('auth')->middleware([
 
 
 Route::prefix('restaurant')->group(function () {
+    Route::post('/setting', [RestaurantController::class, 'setting']);
     Route::get('/bulk-delete', [RestaurantController::class, 'bulkDelete'])->name('restaurant-bulkDelete');
 
     Route::resource('/', RestaurantController::class)
@@ -47,13 +48,6 @@ Route::prefix('restaurant')->group(function () {
 });
 
 
-Route::prefix('restaurant-setting')->group(function () {
-
-    Route::resource('/', RestaurantSettingController::class)
-        ->parameters(['' => 'id'])
-        ->only(['index', 'show', 'store', 'update', 'destroy'])
-        ->names('restaurant-timing');
-});
 
 Route::prefix('restaurant-timing')->group(function () {
     Route::get('/bulk-delete', [RestaurantTimingController::class, 'bulkDelete'])->name('restaurantTiming-bulkDelete');

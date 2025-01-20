@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('restaurant_settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restaurant_id');
+            $table->foreignId('restaurant_id')->nullable();
             $table->string('meta_key')->nullable();
             $table->text('meta_value')->nullable();
             $table->timestamps();

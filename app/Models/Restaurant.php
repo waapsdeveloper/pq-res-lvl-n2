@@ -51,7 +51,7 @@ class Restaurant extends Model
     }
     public function settings()
     {
-        return $this->hasOne(RestaurantTiming::class);
+        return $this->hasOne(RestaurantSetting::class);
     }
     public function rTables()
     {

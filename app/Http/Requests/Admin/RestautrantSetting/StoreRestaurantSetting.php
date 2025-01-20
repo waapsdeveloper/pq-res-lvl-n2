@@ -25,8 +25,8 @@ class StoreRestaurantSetting extends FormRequest
     {
         return [
             'restaurant_id' => 'nullable|integer', // Optional for existing record
-            'meta_key'   => 'required|string',
-            'meta_value' => 'required|string',
+            'meta_key'   => 'nullable',
+            'meta_value' => 'nullable',
         ];
     }
     protected function failedValidation(Validator $validator)

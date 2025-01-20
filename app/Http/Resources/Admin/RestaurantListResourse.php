@@ -24,7 +24,6 @@ class RestaurantListResourse extends JsonResource
         $image = Helper::returnFullImageUrl($obj->image);
         $favicon = Helper::returnFullImageUrl($obj->favicon);
         $logo = Helper::returnFullImageUrl($obj->logo);
-
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -41,6 +40,12 @@ class RestaurantListResourse extends JsonResource
             "favicon" => $favicon,
             "logo" => $logo,
             "copyright_text" => $obj->copyright_text ?? null,
+            "settings" => $obj->settings ?
+                [
+                    'id' => $obj->settings->id,
+                    'meta_key' => $obj->settings->meta_key,
+                    'meta_value' => json_decode($obj->settings->meta_value),
+                ] : [],
             "schedule" => $obj->timings->map(function ($item) {
                 return [
                     'day' => $item->day,
@@ -49,6 +54,7 @@ class RestaurantListResourse extends JsonResource
                     'status' => ucfirst($item->status),
                 ];
             }),
+
         ];
     }
 }

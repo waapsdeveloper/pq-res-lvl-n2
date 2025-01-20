@@ -15,6 +15,8 @@ use App\Models\RestaurantTiming;
 use App\Models\Restaurant;
 use App\Models\RestaurantTimings;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\Admin\RestautrantSetting\StoreRestaurantSetting;
+use App\Models\RestaurantSetting;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
 
@@ -31,7 +33,7 @@ class RestaurantController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Restaurant::query()->with('timings')->orderBy('id', 'desc');
+        $query = Restaurant::query()->with('timings', 'settings')->orderBy('id', 'desc');
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
@@ -55,7 +57,6 @@ class RestaurantController extends Controller
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
-        // Loop through the results and generate full URL for image
         $data->getCollection()->transform(function ($item) {
             return new RestaurantListResourse($item);
         });
@@ -123,7 +124,7 @@ class RestaurantController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = Restaurant::with('timings')->find($id);
+        $restaurant = Restaurant::with('timings', 'settings')->find($id);
         // $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
@@ -327,5 +328,19 @@ class RestaurantController extends Controller
         Restaurant::whereIn('id', $ids)->delete();
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
+    }
+    public function setting(StoreRestaurantSetting $request)
+    {
+        $data = $request->validated();
+
+        $setting = RestaurantSetting::updateOrCreate(
+            ['id' => $data['id'] ?? null],
+            [
+                'restaurant_id' => $data['restaurant_id'],
+                'meta_key'   => $data['meta_key'],
+                'meta_value' => $data['meta_value'],
+            ]
+        );
+        return ServiceResponse::success('Store successful', ['restaurant_setting' => $setting]);
     }
 }
