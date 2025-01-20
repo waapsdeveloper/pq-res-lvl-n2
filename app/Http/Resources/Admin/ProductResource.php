@@ -45,7 +45,8 @@ class ProductResource extends JsonResource
                 return [
                     "meta_key" => $prodProps->meta_key,
                     "meta_value" => json_decode($prodProps->meta_value),
-                    "meta_key_type" => $prodProps->meta_key_type
+                    "meta_key_type" => $prodProps->meta_key_type,
+                    // "meta_value_encode" => $prodProps->meta_value,
                 ];
             }) ?? [],
             // "variation_id" => $obj->variation ? [
