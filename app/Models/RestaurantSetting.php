@@ -17,10 +17,14 @@ class RestaurantSetting extends Model
     ];
     public function timings()
     {
-        return $this->hasMany(RestaurantTiming::class);
+        return $this->hasMany(RestaurantTiming::class, 'restaurant_id', 'id');
     }
     public function settings()
     {
-        return $this->belongsTo(RestaurantSetting::class);
+        return $this->hasOne(RestaurantSetting::class, 'restaurant_id', 'id');
+    }
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
 }

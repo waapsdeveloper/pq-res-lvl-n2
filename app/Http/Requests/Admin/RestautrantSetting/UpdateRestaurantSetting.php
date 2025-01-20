@@ -24,7 +24,7 @@ class UpdateRestaurantSetting extends FormRequest
     public function rules(): array
     {
         return [
-            'id'         => 'nullable|integer', // Optional for existing record
+            'restaurant_id' => 'nullable|integer', // Optional for existing record
             'meta_key'   => 'required|string',
             'meta_value' => 'required|string',
         ];
