@@ -22,19 +22,21 @@ class DashboardController extends Controller
 {
     public function recentOrders()
     {
-        $orders = Order::query()
-            ->with('customer', 'table')
-            ->orderByDesc('id')
-            ->limit(10)->get();
+        $orders = Order::
+            // query()
+            //     ->with('customer', 'table')
+            //     ->orderByDesc('id')
+            //     ->limit(10)->
+            get();
 
         $orders->each(function ($order) {
             if ($order) {
                 $order->type = ucwords(Str::replace(['_', '-'], ' ', $order->type));
                 $order->status = ucwords(Str::replace(['_', '-'], ' ', $order->status));
-                // $order->table_no = $order->table->name ?? $order->table->identifier;
+                $order->table_no =  $order->table->identifier;
             }
         });
-        // dd($orders);
+        dd('orders', $orders);
         // Debug the result to ensure the table_no now holds the name
 
         return ServiceResponse::success('order fetched successfully', ['order' => $orders]);

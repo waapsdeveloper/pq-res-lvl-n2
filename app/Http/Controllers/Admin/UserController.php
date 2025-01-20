@@ -108,7 +108,7 @@ class UserController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
-            'role_id' => $data['role_id'],
+            'role_id' => $data['role_id'] ?? 0,
             'status' => $data['status'],
             'restaurant_id' => $data['restaurant_id'],
             'created_at' => now(),
