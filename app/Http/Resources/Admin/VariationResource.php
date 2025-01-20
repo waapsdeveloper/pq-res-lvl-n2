@@ -24,7 +24,7 @@ class VariationResource extends JsonResource
             "id" => $obj->id,
             "name" => $obj->name,
             "description" => $obj->description,
-            "meta_value" => $obj->meta_value ?? null,
+            "meta_value" => json_decode($obj->meta_value) ?? null,
         ];
     }
 }
