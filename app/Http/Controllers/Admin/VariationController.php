@@ -89,10 +89,7 @@ class VariationController extends Controller
      */
     public function show(string $id)
     {
-        //
         $Variation = Variation::find($id);
-
-
         // If the Variation doesn't exist, return an error response
         if (!$Variation) {
             return ServiceResponse::error("Variation not found", 404);

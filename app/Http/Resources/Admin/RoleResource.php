@@ -23,6 +23,7 @@ class RoleResource extends JsonResource
         return [
             "id" => $obj->id,
             "name" => $obj->name,
+            "slug" => $obj->slug,
         ];
     }
 }
