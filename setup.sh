@@ -1,38 +1,37 @@
 #!/bin/bash
 
 # Installing Composer dependencies
-# echo "Installing Composer dependencies..."
-# composer install
+echo "Installing Composer dependencies..."
+composer install
 
 # Running Laravel migrations
 echo "Running Laravel migrations..."
-# php artisan migrate:fresh
+php artisan migrate:fresh
 
 # Creating a personal access client for Laravel Passport
 echo "Creating a personal access client for Laravel Passport..."
-# php artisan passport:client --personal <<EOF
-# local
-# EOF
+php artisan passport:client --personal <<EOF
+local
+EOF
 
 # Seeding the database
 echo "Seeding the database..."
-# php artisan db:seed
+php artisan db:seed
 
-# Start the `php artisan sch:work` process in the background
-echo "Starting php artisan sch:work..."
-php artisan sch:work &
-work_pid=$!  # Capture the Process ID (PID) of the background process
+# Ask for custom count with 15 seconds timeout
+echo "you have 10 seconds to Enter the number of random orders to create (default is 250):"
+read -t 10 COUNT
 
-# Wait for 1 minute
-sleep 60
+# If no input, default to 200
+COUNT=${COUNT:-250}
 
-# Send the interrupt command
-echo "Stopping php artisan sch:work by sending php artisan schedule:interrupt..."
-php artisan schedule:interrupt
+# Start the `php artisan run:random-orders` process in the background
+echo "Starting php artisan run:random-orders with count: $COUNT"
+php artisan run:random-orders $COUNT
 
-# Ensure the process has stopped gracefully
-kill -SIGINT $work_pid
-wait $work_pid 2>/dev/null
+# Wait for 15 seconds (for timeout check)
+sleep 3
 
-echo "php artisan sch:work has been stopped after 1 minute."
+# After 15 seconds, stop the process
+echo "Stopping php artisan run:random-orders after 15 seconds."
 echo "Setup completed successfully!"
