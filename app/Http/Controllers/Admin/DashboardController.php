@@ -24,8 +24,8 @@ class DashboardController extends Controller
     {
         $orders = Order::query()
             ->with('customer', 'table')
-            // ->orderByDesc('id')
-            ->latest()->limit(10)->get();
+            ->orderByDesc('id')
+            ->limit(10)->get();
 
         $orders->each(function ($order) {
             if ($order) {
