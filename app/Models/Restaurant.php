@@ -32,6 +32,7 @@ class Restaurant extends Model
         'favicon',
         'copyright_text',
         'status',
+        'is_active',
         'image'
     ];
 

@@ -35,6 +35,7 @@ class RestaurantsTableSeeder extends Seeder
                 'favicon' => $restaurant['favicon'],
                 'logo' => $restaurant['logo'],
                 'status' => $restaurant['status'],
+                'is_active' => $restaurant['is_active'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
