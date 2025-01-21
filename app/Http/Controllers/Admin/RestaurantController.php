@@ -352,4 +352,21 @@ class RestaurantController extends Controller
             return ServiceResponse::error('No active restaurant found.');
         }
     }
+    public function updateActiveRestaurant($id)
+    {
+        // Check if the restaurant exists
+        $restaurant = Restaurant::find($id);
+
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        // Use the static function to handle activation and deactivation
+        Restaurant::setActiveRestaurant($id);
+
+        // Return success response
+        return ServiceResponse::success('Restaurant activated successfully', [
+            'restaurant' => $restaurant->refresh() // Reload the updated data
+        ]);
+    }
 }

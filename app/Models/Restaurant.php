@@ -47,10 +47,8 @@ class Restaurant extends Model
     ];
     public static function setActiveRestaurant($id)
     {
-        // Deactivate all restaurants
         self::query()->update(['is_active' => 0]);
 
-        // Activate the specific restaurant
         return self::where('id', $id)->update(['is_active' => 1]);
     }
     public function timings()

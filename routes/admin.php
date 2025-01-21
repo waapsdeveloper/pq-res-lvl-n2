@@ -37,6 +37,7 @@ Route::prefix('restaurant')->group(function () {
     Route::get('/bulk-delete', [RestaurantController::class, 'bulkDelete'])->name('restaurant-bulkDelete');
 
     Route::get('/active', [RestaurantController::class, 'showActiveRestaurant'])->name('activeRestaurant');
+    Route::post('/update-active', [RestaurantController::class, 'updateActiveRestaurant'])->name('updateactiveRestaurant');
 
     Route::resource('/', RestaurantController::class)
         ->parameters(['' => 'id'])
