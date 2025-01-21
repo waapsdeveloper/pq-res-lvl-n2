@@ -29,7 +29,7 @@ class RestaurantSettingResource extends JsonResource
 
             "id" => $obj->id,
             "meta_key" => $obj->meta_key,
-            "meta_value" => json_decode($obj->meta_value),
+            "meta_value" => $obj->meta_value,
             "restaurant_id" => $obj->restaurant->id,
             "name" => $obj->restaurant->name,
             "address" => $obj->restaurant->address,

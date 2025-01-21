@@ -44,7 +44,7 @@ class RestaurantListResourse extends JsonResource
                 [
                     'id' => $obj->settings->id,
                     'meta_key' => $obj->settings->meta_key,
-                    'meta_value' => json_decode($obj->settings->meta_value),
+                    'meta_value' => $obj->settings->meta_value,
                 ] : [],
             "schedule" => $obj->timings->map(function ($item) {
                 return [
