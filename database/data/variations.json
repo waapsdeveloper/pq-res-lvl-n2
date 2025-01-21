@@ -2,126 +2,51 @@
     {
         "name": "Pizza Size",
         "description": "Choose the size of your pizza.",
-        "meta_value": {
-            "options": [
-                { "option": "Small", "price_change": 0 },
-                { "option": "Medium", "price_change": 50 },
-                { "option": "Large", "price_change": 100 },
-                { "option": "Extra Large", "price_change": 150 }
-            ],
-            "default": "Medium"
-        }
+        "meta_value": "[{\"type\": \"size\", \"selected\": false, \"options\": [{\"name\": \"Small\", \"price\": 0}, {\"name\": \"Medium\", \"price\": 50}, {\"name\": \"Large\", \"price\": 100}, {\"name\": \"Extra Large\", \"price\": 150}]}]"
     },
     {
         "name": "Burger Patty",
         "description": "Select your preferred burger patty.",
-        "meta_value": {
-            "options": [
-                { "option": "Beef", "price_change": 0 },
-                { "option": "Chicken", "price_change": 20 },
-                { "option": "Veggie", "price_change": 30 }
-            ],
-            "default": "Beef"
-        }
+        "meta_value": "[{\"type\": \"patty\", \"selected\": false, \"options\": [{\"name\": \"Beef\", \"price\": 0}, {\"name\": \"Chicken\", \"price\": 20}, {\"name\": \"Veggie\", \"price\": 30}]}]"
     },
     {
         "name": "Spice Level",
         "description": "Choose the spice level for your dish.",
-        "meta_value": {
-            "options": [
-                { "option": "Mild", "price_change": 0 },
-                { "option": "Medium", "price_change": 10 },
-                { "option": "Spicy", "price_change": 20 },
-                { "option": "Extra Spicy", "price_change": 30 }
-            ],
-            "default": "Medium"
-        }
+        "meta_value": "[{\"type\": \"spice\", \"selected\": false, \"options\": [{\"name\": \"Mild\", \"price\": 0}, {\"name\": \"Medium\", \"price\": 10}, {\"name\": \"Spicy\", \"price\": 20}, {\"name\": \"Extra Spicy\", \"price\": 30}]}]"
     },
     {
         "name": "Drink Size",
         "description": "Select your drink size.",
-        "meta_value": {
-            "options": [
-                { "option": "Small", "price_change": 0 },
-                { "option": "Medium", "price_change": 20 },
-                { "option": "Large", "price_change": 40 }
-            ],
-            "default": "Medium"
-        }
+        "meta_value": "[{\"type\": \"drink\", \"selected\": false, \"options\": [{\"name\": \"Small\", \"price\": 0}, {\"name\": \"Medium\", \"price\": 20}, {\"name\": \"Large\", \"price\": 40}]}]"
     },
     {
         "name": "Fries Type",
         "description": "Pick your fries type.",
-        "meta_value": {
-            "options": [
-                { "option": "Regular", "price_change": 0 },
-                { "option": "Curly", "price_change": 30 },
-                { "option": "Waffle", "price_change": 40 }
-            ],
-            "default": "Regular"
-        }
+        "meta_value": "[{\"type\": \"fries\", \"selected\": false, \"options\": [{\"name\": \"Regular\", \"price\": 0}, {\"name\": \"Curly\", \"price\": 30}, {\"name\": \"Waffle\", \"price\": 40}]}]"
     },
     {
         "name": "Bread Type",
         "description": "Choose your preferred bread type.",
-        "meta_value": {
-            "options": [
-                { "option": "White", "price_change": 0 },
-                { "option": "Whole Wheat", "price_change": 20 },
-                { "option": "Gluten-Free", "price_change": 50 }
-            ],
-            "default": "White"
-        }
+        "meta_value": "[{\"type\": \"bread\", \"selected\": false, \"options\": [{\"name\": \"White\", \"price\": 0}, {\"name\": \"Whole Wheat\", \"price\": 20}, {\"name\": \"Gluten-Free\", \"price\": 50}]}]"
     },
     {
         "name": "Topping Options",
         "description": "Select additional toppings for your dish.",
-        "meta_value": {
-            "options": [
-                { "option": "Cheese", "price_change": 10 },
-                { "option": "Lettuce", "price_change": 5 },
-                { "option": "Tomato", "price_change": 5 },
-                { "option": "Onions", "price_change": 5 },
-                { "option": "Pickles", "price_change": 10 }
-            ],
-            "default": "Cheese"
-        }
+        "meta_value": "[{\"type\": \"topping\", \"selected\": false, \"options\": [{\"name\": \"Cheese\", \"price\": 10}, {\"name\": \"Lettuce\", \"price\": 5}, {\"name\": \"Tomato\", \"price\": 5}, {\"name\": \"Onions\", \"price\": 5}, {\"name\": \"Pickles\", \"price\": 10}]}]"
     },
     {
         "name": "Sauce Choice",
         "description": "Choose your preferred sauce.",
-        "meta_value": {
-            "options": [
-                { "option": "Ketchup", "price_change": 0 },
-                { "option": "Mayo", "price_change": 5 },
-                { "option": "BBQ", "price_change": 10 },
-                { "option": "Ranch", "price_change": 10 }
-            ],
-            "default": "Ketchup"
-        }
+        "meta_value": "[{\"type\": \"sauce\", \"selected\": false, \"options\": [{\"name\": \"Ketchup\", \"price\": 0}, {\"name\": \"Mayo\", \"price\": 5}, {\"name\": \"BBQ\", \"price\": 10}, {\"name\": \"Ranch\", \"price\": 10}]}]"
     },
     {
         "name": "Combo Options",
         "description": "Select your combo package.",
-        "meta_value": {
-            "options": [
-                { "option": "Fries & Drink", "price_change": 50 },
-                { "option": "Onion Rings & Drink", "price_change": 60 },
-                { "option": "Salad", "price_change": 40 }
-            ],
-            "default": "Fries & Drink"
-        }
+        "meta_value": "[{\"type\": \"combo\", \"selected\": false, \"options\": [{\"name\": \"Fries & Drink\", \"price\": 50}, {\"name\": \"Onion Rings & Drink\", \"price\": 60}, {\"name\": \"Salad\", \"price\": 40}]}]"
     },
     {
         "name": "Pizza Crust",
         "description": "Pick your pizza crust type.",
-        "meta_value": {
-            "options": [
-                { "option": "Thin Crust", "price_change": 0 },
-                { "option": "Thick Crust", "price_change": 50 },
-                { "option": "Stuffed Crust", "price_change": 100 }
-            ],
-            "default": "Thin Crust"
-        }
+        "meta_value": "[{\"type\": \"crust\", \"selected\": false, \"options\": [{\"name\": \"Thin Crust\", \"price\": 0}, {\"name\": \"Thick Crust\", \"price\": 50}, {\"name\": \"Stuffed Crust\", \"price\": 100}]}]"
     }
 ]
