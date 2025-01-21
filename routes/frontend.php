@@ -19,6 +19,7 @@ Route::get('/auth/me', [AuthController::class, 'me'])->middleware('auth:api');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 Route::get('/restaurant-detail/{id}', [HomeController::class, 'restautantDetail']);
+Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
 
 Route::resource('/rtables', RTablesController::class)
     ->parameters(['' => 'id'])

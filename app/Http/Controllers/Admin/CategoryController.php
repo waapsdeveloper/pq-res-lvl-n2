@@ -29,7 +29,6 @@ class CategoryController extends Controller
         $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
 
         $query = Category::query()->where('restaurant_id', $resID)->orderBy('id', 'desc');
-
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');

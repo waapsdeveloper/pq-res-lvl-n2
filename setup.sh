@@ -29,8 +29,8 @@ COUNT=${COUNT:-550}
 echo "Starting php artisan run:random-orders with count: $COUNT"
 php artisan run:random-orders $COUNT
 
-# Wait for 15 seconds (for timeout check)
+# Wait for 3 seconds (for timeout check)
 sleep 3
 
-# After 15 seconds, stop the process
-echo "Setup completed successfully!"
+# After 3 seconds, stop the process
+echo "$COUNT orders are created and Setup completed successfully!"

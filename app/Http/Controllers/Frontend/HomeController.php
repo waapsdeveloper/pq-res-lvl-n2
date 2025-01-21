@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
@@ -21,5 +22,14 @@ class HomeController extends Controller
     {
         $restuarant = Restaurant::with('timings', 'rTables')->findOrFail($id);
         return ServiceResponse::success('Restaurant are retrived successfully', ['data' => $restuarant]);
+    }
+    public function showActiveRestaurant()
+    {
+        $activeRestaurantId = Helper::getActiveRestaurantId();
+        if ($activeRestaurantId) {
+            return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurantId]);
+        } else {
+            return ServiceResponse::error('No active restaurant found.');
+        }
     }
 }
