@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class RestaurantsTableSeeder extends Seeder
+class RestaurantSeeder extends Seeder
 {
     public function run()
     {
@@ -28,9 +28,6 @@ class RestaurantsTableSeeder extends Seeder
                 'website' => $restaurant['website'],
                 'description' => $restaurant['description'],
                 'rating' => $restaurant['rating'],
-                // 'image' => Helper::getBase64ImageUrl($restaurant['image'], 'restaurant'),
-                // 'favicon' => Helper::getBase64ImageUrl($restaurant['favicon'], 'restaurant'),
-                // 'logo' => Helper::getBase64ImageUrl($restaurant['logo'], 'restaurant'),
                 'image' => $restaurant['image'],
                 'favicon' => $restaurant['favicon'],
                 'logo' => $restaurant['logo'],
