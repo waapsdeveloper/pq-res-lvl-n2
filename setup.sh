@@ -19,11 +19,11 @@ echo "Seeding the database..."
 php artisan db:seed
 
 # Ask for custom count with 15 seconds timeout
-echo "You have 15 seconds to Enter the number of random orders to create (default is 250):"
+echo "You have 15 seconds to Enter the number of random orders to create (default is 550):"
 read -t 15 COUNT
 
 # If no input, default to 200
-COUNT=${COUNT:-250}
+COUNT=${COUNT:-550}
 
 # Start the `php artisan run:random-orders` process in the background
 echo "Starting php artisan run:random-orders with count: $COUNT"
