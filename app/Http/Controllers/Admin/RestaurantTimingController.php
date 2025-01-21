@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RestaurantTiming\StoreRestaurantTiming;
@@ -25,7 +26,9 @@ class RestaurantTimingController extends Controller
         $perPage = $request->input('perpage', 10);
         $restaurantId = $request->input('restaurant_id', '');
         $filters = $request->input('filters', null);
-        $resID = $request->restaurant_id == -1 ? 1 : $request->restaurant_id;
+
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
 
         $query = RestaurantTiming::query()->where('restaurant_id', $resID);
 

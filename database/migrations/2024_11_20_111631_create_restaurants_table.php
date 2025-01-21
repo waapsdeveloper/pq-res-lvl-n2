@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('copyright_text')->nullable();
             $table->decimal('rating', 10, 2)->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->enum('is_active', [1, 0])->default(0);
+            $table->string('is_active')->default('0');
 
             $table->timestamps();
         });

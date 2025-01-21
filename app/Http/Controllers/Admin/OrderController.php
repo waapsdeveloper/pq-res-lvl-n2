@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\StoreOrder;
@@ -37,7 +38,8 @@ class OrderController extends Controller
         $filters = $request->input('filters', null);
 
         $category = $request->input('category_id', '');
-        $resID = $request->restaurant_id == -1 ? 1 : $request->restaurant_id;
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
 
         $query = Order::query()
             ->where('restaurant_id', $resID)

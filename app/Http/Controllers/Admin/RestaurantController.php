@@ -343,4 +343,13 @@ class RestaurantController extends Controller
         );
         return ServiceResponse::success('Store successful', ['restaurant_setting' => $setting]);
     }
+    public function showActiveRestaurant()
+    {
+        $activeRestaurantId = Helper::getActiveRestaurantId();
+        if ($activeRestaurantId) {
+            return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurantId]);
+        } else {
+            return ServiceResponse::error('No active restaurant found.');
+        }
+    }
 }

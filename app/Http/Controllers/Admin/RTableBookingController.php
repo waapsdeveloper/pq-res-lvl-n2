@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RTablebooking\StoreRTablesBooking;
@@ -26,8 +27,10 @@ class RTableBookingController extends Controller
         $perPage = $request->input('perpage', 10);
         $filters = $request->input('filters', '');
 
-
-        $query = RtablesBooking::query();
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
+        $query = RtablesBooking::query()
+            ->where('restaurant_id', $resID);
 
         // Apply search filter if a search term is provided
         if ($search) {

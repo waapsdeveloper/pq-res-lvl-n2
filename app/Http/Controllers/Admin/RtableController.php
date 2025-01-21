@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Helpers\Identifier;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Rtable\StoreRtable;
@@ -25,7 +26,11 @@ class RtableController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Rtable::query()->with('restaurantDetail', 'restaurantTimings')->withCount('orders');
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
+        $query = Rtable::query()->with('restaurantDetail', 'restaurantTimings')
+            ->withCount('orders')
+            ->where('restaurant_id', $resID);
 
         // Optionally apply search filter if needed
         if ($search) {

@@ -42,10 +42,17 @@ class Restaurant extends Model
         'updated_at',
     ];
 
-    // Cast attributes to a specific type
     protected $casts = [
         'rating' => 'float',
     ];
+    public static function setActiveRestaurant($id)
+    {
+        // Deactivate all restaurants
+        self::query()->update(['is_active' => 0]);
+
+        // Activate the specific restaurant
+        return self::where('id', $id)->update(['is_active' => 1]);
+    }
     public function timings()
     {
         return $this->hasMany(RestaurantTiming::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RestautrantSetting\StoreRestaurantSetting;
@@ -18,7 +19,8 @@ class RestaurantSettingController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
         // $filters = $request->input('filters', null);
-        // $resID = $request->restaurant_id == -1 ? 1 : $request->restaurant_id;
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
 
         $query = RestaurantSetting::query()
             // ->where('restaurant_id', $resID)

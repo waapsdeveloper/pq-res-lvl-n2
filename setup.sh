@@ -33,5 +33,4 @@ php artisan run:random-orders $COUNT
 sleep 3
 
 # After 15 seconds, stop the process
-echo "Stopping php artisan run:random-orders after 15 seconds."
 echo "Setup completed successfully!"

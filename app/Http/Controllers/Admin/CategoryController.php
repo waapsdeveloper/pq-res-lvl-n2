@@ -25,7 +25,8 @@ class CategoryController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
-        $resID = $request->restaurant_id == -1 ? 1 : $request->restaurant_id;
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
 
         $query = Category::query()->where('restaurant_id', $resID)->orderBy('id', 'desc');
 

@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\Storage;
+use App\Models\Restaurant;
 
 class Helper
 {
@@ -62,5 +63,12 @@ class Helper
         $fullImageUrl = rtrim($baseUrl, '/') . '/' . ltrim($imagePath, '/');
 
         return $fullImageUrl;
+    }
+
+
+    static public function getActiveRestaurantId()
+    {
+        $activeRestaurant = Restaurant::where('is_active', 1)->first();
+        return $activeRestaurant ? $activeRestaurant->id : null;
     }
 }
