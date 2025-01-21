@@ -21,63 +21,6 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index(Request $request)
-    // {
-    //     $search = $request->input('search', '');
-    //     $page = $request->input('page', 1);
-    //     $perpage = $request->input('perpage', 10);
-    //     $filters = $request->input('filters', null);
-
-
-    //     $query = Product::query()->with('category', 'restaurant', 'productProps')->orderBy('created_at', 'desc');
-
-    //     // Optionally apply search filter if needed
-    //     if ($search) {
-    //         $query->where('name', 'like', '%' . $search . '%');
-    //     }
-
-    //     if ($filters) {
-    //         $filters = json_decode($filters, true);
-    //         // dd($filters);
-    //         return response()->json($filters['category_id']);
-    //         if (isset($filters['name']) && !empty($filters['name'])) {
-    //             $query->where('name', 'like', '%' . $filters['name'] . '%');
-    //         }
-    //         if (isset($filters['category_id']) && !empty($filters['category_id'])) {
-    //             // $query->whereHas('category', function ($query) use ($filters) {
-    //             //     $query->where('name', 'like', '%' . $filters['category_id'] . '%');
-    //             // });
-    //             $query->where('category_id', $filters['category_id']);
-    //         }
-    //         if (isset($filters['price']) && !empty($filters['price'])) {
-    //             $query->where('price', '<=', $filters['price']);
-    //         }
-    //         if (isset($filters['discount']) && !empty($filters['discount'])) {
-    //             $query->where('discount', "<=", $filters['discount']);
-    //         }
-    //         // if (isset($filters['is_today_deal'])) {
-    //         //     $query->where('is_today_deal', 'like', '%' . $filters['is_today_deal'] . '%');
-    //         // }
-    //         // if (isset($filters['noOfOrders'])) {
-    //         //     $query->where('noOfOrders', 'like', '%' . $filters['noOfOrders'] . '%');
-    //         // }
-
-    //         if (isset($filters['status']) && !empty($filters['status'])) {
-    //             $query->where('status', $filters['status']);
-    //         }
-    //     }
-
-    //     // Paginate the results
-    //     $data = $query->paginate($perpage, ['*'], 'page', $page);
-
-    //     // Loop through the results and generate full URL for image
-    //     $data->getCollection()->transform(function ($item) {
-    //         return new ProductResource($item);
-    //     });
-
-    //     // Return the response with image URLs included
-    //     return ServiceResponse::success("Product list successfully", ['data' => $data]);
-    // }
     public function index(Request $request)
     {
         $search = $request->input('search', '');
