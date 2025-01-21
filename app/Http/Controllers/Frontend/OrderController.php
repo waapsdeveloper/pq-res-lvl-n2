@@ -100,7 +100,7 @@ class OrderController extends Controller
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
-                'variation' => $orderProduct['variation'],
+                'variation' => json_encode($orderProduct['variation']),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

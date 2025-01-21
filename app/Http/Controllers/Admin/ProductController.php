@@ -70,8 +70,6 @@ class ProductController extends Controller
             //     $query->where('noOfOrders', 'like', '%' . $filters['noOfOrders'] . '%');
             // }
         }
-
-
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
