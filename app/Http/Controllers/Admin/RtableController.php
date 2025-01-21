@@ -25,7 +25,7 @@ class RtableController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Rtable::query()->with('restaurantDetail', 'restaurantTimings');
+        $query = Rtable::query()->with('restaurantDetail', 'restaurantTimings')->withCount('orders');
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -104,7 +104,9 @@ class RtableController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = Rtable::with('restaurant', 'restaurantTimings')->find($id);
+        $restaurant = Rtable::with('restaurant', 'restaurantTimings')
+            ->withCount('orders')
+            ->find($id);
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
@@ -122,6 +124,7 @@ class RtableController extends Controller
         $restaurants = Rtable::with('restaurant:id,name')
             ->where('restaurant_id', $id)
             ->select('id', 'restaurant_id', 'floor', 'identifier', 'no_of_seats')
+            ->withCount('orders')
             ->get()
             ->groupBy('restaurant_id');
 

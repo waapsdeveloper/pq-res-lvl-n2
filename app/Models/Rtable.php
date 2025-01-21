@@ -40,4 +40,8 @@ class Rtable extends Model
     {
         return $this->hasMany(RestaurantTiming::class, 'restaurant_id', 'restaurant_id');
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'table_no', 'id');
+    }
 }

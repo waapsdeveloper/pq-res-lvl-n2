@@ -29,6 +29,7 @@ class RtableResource extends JsonResource
             "floor" => $obj->floor,
             "status" => ucfirst($obj->status),
             "restaurant_id" => $obj->restaurant_id,
+            "total_orders" => $obj->orders_count,
             "qr_code" => "https://pqresfront.spacess.online/tabs/products?table_identifier=$obj->identifier",
             // "qr_code" => Helper::baseUrlWithIDF($obj->qr_code, 'qr_codes'),
             'restaurant_detail' => $obj->restaurantDetail ? [
