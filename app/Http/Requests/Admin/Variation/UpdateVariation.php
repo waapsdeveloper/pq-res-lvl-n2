@@ -24,7 +24,7 @@ class UpdateVariation extends FormRequest
         return [
             'name' => 'required',
             'description' => 'nullable',
-            'meta_value' => 'nullable|array'
+            'meta_value' => 'nullable'
         ];
     }
 }

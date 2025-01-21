@@ -24,7 +24,7 @@ class StoreVariation extends FormRequest
         return [
             'name' => 'nullable',
             'description' => 'nullable',
-            'meta_value' => 'nullable|array'
+            'meta_value' => 'nullable'
         ];
     }
 }
