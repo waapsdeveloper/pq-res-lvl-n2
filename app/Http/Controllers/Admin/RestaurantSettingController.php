@@ -20,7 +20,7 @@ class RestaurantSettingController extends Controller
         $perpage = $request->input('perpage', 10);
         // $filters = $request->input('filters', null);
         $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $query = RestaurantSetting::query()
             // ->where('restaurant_id', $resID)

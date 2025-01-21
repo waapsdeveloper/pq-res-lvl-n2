@@ -2,7 +2,7 @@
 
 # Installing Composer dependencies
 echo "Installing Composer dependencies..."
-composer install
+# composer install
 
 # Running Laravel migrations
 echo "Running Laravel migrations..."
@@ -22,7 +22,7 @@ php artisan db:seed
 echo "You have 15 seconds to Enter the number of random orders to create (default is 550):"
 read -t 15 COUNT
 
-# If no input, default to 200
+# If no input, default to COUNT
 COUNT=${COUNT:-550}
 
 # Start the `php artisan run:random-orders` process in the background

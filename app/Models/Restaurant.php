@@ -63,6 +63,18 @@ class Restaurant extends Model
     {
         return $this->hasMany(Rtable::class);
     }
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
     // Relationships
 

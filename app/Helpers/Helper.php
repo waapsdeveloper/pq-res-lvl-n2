@@ -68,7 +68,10 @@ class Helper
 
     static public function getActiveRestaurantId()
     {
-        $activeRestaurant = Restaurant::where('is_active', 1)->first();
-        return $activeRestaurant ? $activeRestaurant->id : null;
+        $activeRestaurant = Restaurant::where('is_active', 1)
+        ->with('timings', 'settings', 'rTables')
+        // , 'categories', 'products', 'users'
+            ->first();
+        return $activeRestaurant;
     }
 }

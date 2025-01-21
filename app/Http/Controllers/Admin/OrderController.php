@@ -39,7 +39,7 @@ class OrderController extends Controller
 
         $category = $request->input('category_id', '');
         $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $query = Order::query()
             ->where('restaurant_id', $resID)

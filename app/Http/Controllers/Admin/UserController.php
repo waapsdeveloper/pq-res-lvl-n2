@@ -33,7 +33,7 @@ class UserController extends Controller
         $filters = $request->input('filters', null);
 
         $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         // Start the query and exclude Super Admin from the results
         $query = User::query()->where('restaurant_id', $resID)->with('role', 'userDetail')->orderBy('id', 'desc');

@@ -28,7 +28,7 @@ class RestaurantTimingController extends Controller
         $filters = $request->input('filters', null);
 
         $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $query = RestaurantTiming::query()->where('restaurant_id', $resID);
 

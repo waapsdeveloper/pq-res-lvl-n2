@@ -19,7 +19,7 @@ class ContactUsController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
         $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant : $request->restaurant_id;
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $query = ContactUs::query()->where('restaurant_id', $resID)->orderByDesc('id');
 

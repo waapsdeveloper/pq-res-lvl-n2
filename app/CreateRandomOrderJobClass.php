@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Resources\Admin\OrderResource;
 use App\Models\Invoice;
@@ -69,9 +70,10 @@ class CreateRandomOrderJobClass
         }
 
         // Fetch Random Products
-        $productIds = Product::whereBetween('id', [1, 25])
+        $productIds = Product::where('restaurant_id', $restaurant_id)
+            ->whereBetween('id', $restaurant_id == 1 ? [1, 15] : [16, 25])
             ->inRandomOrder()
-            ->take(rand(1, 4))
+            ->take(rand(1, 4))  
             ->pluck('id');
 
         if ($productIds->isEmpty()) {
@@ -107,7 +109,7 @@ class CreateRandomOrderJobClass
         $status = Arr::random(['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed']);
 
         $order = Order::create([
-            'identifier' => 'ORD-' . uniqid(),
+            'identifier' => 'ORD-',
             'order_number' => strtoupper(uniqid('ORD-')),
             'type' => $type,
             'status' => $status,
@@ -121,6 +123,10 @@ class CreateRandomOrderJobClass
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
         ]);
+        $order->update(
+            ['identifier' => Identifier::make('Order', $order->id, 3),
+            'invoice_no' => Identifier::make('Invoice', $order->id, 3)]
+        );
         logger()->info('Order created successfully', ['order_id' => $order->id]);
 
         foreach ($orderProducts as $orderProduct) {

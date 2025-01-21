@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 class RunRandomOrders extends Command
 {
     // Add an optional argument for the number of jobs to run
-    protected $signature = 'run:random-orders {count=200}';
+    protected $signature = 'run:random-orders {count=550}';
     protected $description = 'Run CreateRandomOrderJobClass for a specified number of times';
 
     public function handle()
