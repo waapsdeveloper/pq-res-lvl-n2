@@ -18,6 +18,7 @@ use App\Models\RestaurantTimings;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Admin\RestautrantSetting\StoreRestaurantSetting;
 use App\Models\RestaurantSetting;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
 
@@ -349,21 +350,48 @@ class RestaurantController extends Controller
         $activeRestaurantId = Helper::getActiveRestaurantId();
         return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurantId]);
     }
-    public function updateActiveRestaurant($id)
+    // public function updateActiveRestaurant($id)
+    // {
+    //     // $data = $request->validated();
+
+    //     $restaurant = Restaurant::find($id);
+
+    //     if (!$restaurant) {
+    //         return ServiceResponse::error('Restaurant not found');
+    //     }
+    //     Restaurant::query()->update(['is_active' => 0]);
+
+    //     $restaurant->update(['is_active' => 1]);
+
+    //     return ServiceResponse::success('Restaurant activated successfully', [
+    //         'restaurant' => $restaurant->refresh() // Reload the updated data
+    //     ]);
+    // }
+
+    public function updateActiveRestaurant(UpdateActiveRestaurant $request, $id)
     {
-        // $data = $request->validated();
+        $data = $request->validated();
 
+        // Ensure the restaurant with the given ID exists
         $restaurant = Restaurant::find($id);
-
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
         }
-        Restaurant::query()->update(['is_active' => 0]);
 
-        Restaurant::where('id', $id)->update(['is_active' => 1]);
+        // Use a transaction to ensure atomic updates
+        DB::transaction(function () use ($restaurant, $data) {
+            // Set all restaurants to inactive
+            Restaurant::query()->update(['is_active' => 0]);
+            usleep(1500000);
+            // Activate the specified restaurant
+            $restaurant->update(['is_active' => $data['is_active']]);
+        });
+
+        // Reload the updated restaurant
+        $restaurant->refresh();
 
         return ServiceResponse::success('Restaurant activated successfully', [
-            'restaurant' => $restaurant->refresh() // Reload the updated data
+            'restaurant' => $restaurant
         ]);
     }
 }
