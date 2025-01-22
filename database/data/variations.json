@@ -2,51 +2,51 @@
     {
         "name": "Pizza Size",
         "description": "Choose the size of your pizza.",
-        "meta_value": "[{\"type\": \"size\", \"selected\": false, \"options\": [{\"name\": \"Small\", \"price\": 0}, {\"name\": \"Medium\", \"price\": 50}, {\"name\": \"Large\", \"price\": 100}, {\"name\": \"Extra Large\", \"price\": 150}]}]"
+        "meta_value": "[{\"type\": \"size\", \"selected\": false, \"options\": [{\"name\": \"Small\", \"price\": 0, \"description\": \"A small pizza perfect for one person.\"}, {\"name\": \"Medium\", \"price\": 50, \"description\": \"A medium pizza suitable for sharing.\"}, {\"name\": \"Large\", \"price\": 100, \"description\": \"A large pizza great for families.\"}, {\"name\": \"Extra Large\", \"price\": 150, \"description\": \"An extra-large pizza for a feast.\"}]}]"
     },
     {
         "name": "Burger Patty",
         "description": "Select your preferred burger patty.",
-        "meta_value": "[{\"type\": \"patty\", \"selected\": false, \"options\": [{\"name\": \"Beef\", \"price\": 0}, {\"name\": \"Chicken\", \"price\": 20}, {\"name\": \"Veggie\", \"price\": 30}]}]"
+        "meta_value": "[{\"type\": \"patty\", \"selected\": false, \"options\": [{\"name\": \"Beef\", \"price\": 0, \"description\": \"A juicy beef patty.\"}, {\"name\": \"Chicken\", \"price\": 20, \"description\": \"A tender chicken patty.\"}, {\"name\": \"Veggie\", \"price\": 30, \"description\": \"A flavorful veggie patty.\"}]}]"
     },
     {
         "name": "Spice Level",
         "description": "Choose the spice level for your dish.",
-        "meta_value": "[{\"type\": \"spice\", \"selected\": false, \"options\": [{\"name\": \"Mild\", \"price\": 0}, {\"name\": \"Medium\", \"price\": 10}, {\"name\": \"Spicy\", \"price\": 20}, {\"name\": \"Extra Spicy\", \"price\": 30}]}]"
+        "meta_value": "[{\"type\": \"spice\", \"selected\": false, \"options\": [{\"name\": \"Mild\", \"price\": 0, \"description\": \"For those who prefer no spice.\"}, {\"name\": \"Medium\", \"price\": 10, \"description\": \"A balanced spice level.\"}, {\"name\": \"Spicy\", \"price\": 20, \"description\": \"For those who love some heat.\"}, {\"name\": \"Extra Spicy\", \"price\": 30, \"description\": \"For spice enthusiasts.\"}]}]"
     },
     {
         "name": "Drink Size",
         "description": "Select your drink size.",
-        "meta_value": "[{\"type\": \"drink\", \"selected\": false, \"options\": [{\"name\": \"Small\", \"price\": 0}, {\"name\": \"Medium\", \"price\": 20}, {\"name\": \"Large\", \"price\": 40}]}]"
+        "meta_value": "[{\"type\": \"drink\", \"selected\": false, \"options\": [{\"name\": \"Small\", \"price\": 0, \"description\": \"A small-sized drink.\"}, {\"name\": \"Medium\", \"price\": 20, \"description\": \"A medium-sized drink.\"}, {\"name\": \"Large\", \"price\": 40, \"description\": \"A large-sized drink.\"}]}]"
     },
     {
         "name": "Fries Type",
         "description": "Pick your fries type.",
-        "meta_value": "[{\"type\": \"fries\", \"selected\": false, \"options\": [{\"name\": \"Regular\", \"price\": 0}, {\"name\": \"Curly\", \"price\": 30}, {\"name\": \"Waffle\", \"price\": 40}]}]"
+        "meta_value": "[{\"type\": \"fries\", \"selected\": false, \"options\": [{\"name\": \"Regular\", \"price\": 0, \"description\": \"Classic fries.\"}, {\"name\": \"Curly\", \"price\": 30, \"description\": \"Curly fries with a twist.\"}, {\"name\": \"Waffle\", \"price\": 40, \"description\": \"Waffle-shaped fries.\"}]}]"
     },
     {
         "name": "Bread Type",
         "description": "Choose your preferred bread type.",
-        "meta_value": "[{\"type\": \"bread\", \"selected\": false, \"options\": [{\"name\": \"White\", \"price\": 0}, {\"name\": \"Whole Wheat\", \"price\": 20}, {\"name\": \"Gluten-Free\", \"price\": 50}]}]"
+        "meta_value": "[{\"type\": \"bread\", \"selected\": false, \"options\": [{\"name\": \"White\", \"price\": 0, \"description\": \"Soft white bread.\"}, {\"name\": \"Whole Wheat\", \"price\": 20, \"description\": \"Healthy whole wheat bread.\"}, {\"name\": \"Gluten-Free\", \"price\": 50, \"description\": \"Gluten-free bread for dietary preferences.\"}]}]"
     },
     {
         "name": "Topping Options",
         "description": "Select additional toppings for your dish.",
-        "meta_value": "[{\"type\": \"topping\", \"selected\": false, \"options\": [{\"name\": \"Cheese\", \"price\": 10}, {\"name\": \"Lettuce\", \"price\": 5}, {\"name\": \"Tomato\", \"price\": 5}, {\"name\": \"Onions\", \"price\": 5}, {\"name\": \"Pickles\", \"price\": 10}]}]"
+        "meta_value": "[{\"type\": \"topping\", \"selected\": false, \"options\": [{\"name\": \"Cheese\", \"price\": 10, \"description\": \"Extra cheese for your dish.\"}, {\"name\": \"Lettuce\", \"price\": 5, \"description\": \"Fresh lettuce.\"}, {\"name\": \"Tomato\", \"price\": 5, \"description\": \"Juicy tomato slices.\"}, {\"name\": \"Onions\", \"price\": 5, \"description\": \"Crisp onions.\"}, {\"name\": \"Pickles\", \"price\": 10, \"description\": \"Tangy pickles.\"}]}]"
     },
     {
         "name": "Sauce Choice",
         "description": "Choose your preferred sauce.",
-        "meta_value": "[{\"type\": \"sauce\", \"selected\": false, \"options\": [{\"name\": \"Ketchup\", \"price\": 0}, {\"name\": \"Mayo\", \"price\": 5}, {\"name\": \"BBQ\", \"price\": 10}, {\"name\": \"Ranch\", \"price\": 10}]}]"
+        "meta_value": "[{\"type\": \"sauce\", \"selected\": false, \"options\": [{\"name\": \"Ketchup\", \"price\": 0, \"description\": \"Classic ketchup.\"}, {\"name\": \"Mayo\", \"price\": 5, \"description\": \"Creamy mayonnaise.\"}, {\"name\": \"BBQ\", \"price\": 10, \"description\": \"Smoky BBQ sauce.\"}, {\"name\": \"Ranch\", \"price\": 10, \"description\": \"Cool ranch dressing.\"}]}]"
     },
     {
         "name": "Combo Options",
         "description": "Select your combo package.",
-        "meta_value": "[{\"type\": \"combo\", \"selected\": false, \"options\": [{\"name\": \"Fries & Drink\", \"price\": 50}, {\"name\": \"Onion Rings & Drink\", \"price\": 60}, {\"name\": \"Salad\", \"price\": 40}]}]"
+        "meta_value": "[{\"type\": \"combo\", \"selected\": false, \"options\": [{\"name\": \"Fries & Drink\", \"price\": 50, \"description\": \"A combo of fries and drink.\"}, {\"name\": \"Onion Rings & Drink\", \"price\": 60, \"description\": \"Onion rings and a drink.\"}, {\"name\": \"Salad\", \"price\": 40, \"description\": \"A fresh salad.\"}]}]"
     },
     {
         "name": "Pizza Crust",
         "description": "Pick your pizza crust type.",
-        "meta_value": "[{\"type\": \"crust\", \"selected\": false, \"options\": [{\"name\": \"Thin Crust\", \"price\": 0}, {\"name\": \"Thick Crust\", \"price\": 50}, {\"name\": \"Stuffed Crust\", \"price\": 100}]}]"
+        "meta_value": "[{\"type\": \"crust\", \"selected\": false, \"options\": [{\"name\": \"Thin Crust\", \"price\": 0, \"description\": \"Crispy thin crust.\"}, {\"name\": \"Thick Crust\", \"price\": 50, \"description\": \"Soft thick crust.\"}, {\"name\": \"Stuffed Crust\", \"price\": 100, \"description\": \"Cheese-stuffed crust.\"}]}]"
     }
 ]
