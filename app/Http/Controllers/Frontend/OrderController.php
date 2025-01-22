@@ -29,7 +29,7 @@ class OrderController extends Controller
         $customer = $this->getCustomerByPhone($phone);
 
         $rtableIdf = $request->input('table_identifier', null);
-        $restaurant = $this->tableIdentifier($rtableIdf);
+        // $restaurant = $this->tableIdentifier($rtableIdf);
 
         // $totalPrice = 0;
         $orderProducts = [];
@@ -77,6 +77,7 @@ class OrderController extends Controller
         $uniqid = uniqid();
         $orderNote = $request->notes;
         $orderStatus = $request->status;
+        $restaurant = $request->restaurant->id;
 
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
