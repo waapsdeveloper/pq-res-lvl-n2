@@ -21,6 +21,6 @@ trait TableBookingTrait
         if (!$restaurant) {
             return ServiceResponse::error("Restaurant not found for the given table identifier.", [], 404);
         }
-        return  $restaurant;
+        return  $restaurant->id;
     }
 }
