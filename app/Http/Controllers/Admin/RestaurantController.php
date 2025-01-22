@@ -18,7 +18,6 @@ use App\Models\RestaurantTimings;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Admin\RestautrantSetting\StoreRestaurantSetting;
 use App\Models\RestaurantSetting;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
 
@@ -352,28 +351,19 @@ class RestaurantController extends Controller
     }
     public function updateActiveRestaurant(UpdateActiveRestaurant $request, $id)
     {
+        $restaurant = Restaurant::find($id);
         $data = $request->validated();
 
 
-        $restaurantIds = Restaurant::pluck('id')->toArray();
-
-        if (in_array($id, $restaurantIds)) {
-            // remove id from array
-            $key = array_search($id, $restaurantIds);
-            unset($restaurantIds[$key]);
-            
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
         }
+        Restaurant::query()->update(['is_active' => 0]);
 
-        // Deactivate all restaurants
-        Restaurant::whereIn('id', $restaurantIds)->update(['is_active' => 0]);
-
-        // Activate the specified restaurant
-        Restaurant::where('id', $id)->update(['is_active' => $data['is_active']]);
-
-        $restaurant = Restaurant::find($id)->with('timings', 'settings')->first();
+        Restaurant::where('id', $id)->update(['is_active' => 1]);
 
         return ServiceResponse::success('Restaurant activated successfully', [
-            'restaurant' => $restaurant // Reload the updated data
+            'restaurant' => $restaurant->refresh() // Reload the updated data
         ]);
     }
 }
