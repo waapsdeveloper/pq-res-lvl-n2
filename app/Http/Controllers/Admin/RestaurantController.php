@@ -378,15 +378,12 @@ class RestaurantController extends Controller
             return ServiceResponse::error('Restaurant not found');
         }
 
-        // Use a transaction to ensure atomic updates
         DB::transaction(function () use ($id, $data) {
-            // Set the specified restaurant to active and all others to inactive in one query
             Restaurant::query()->update([
                 'is_active' => DB::raw("CASE WHEN id = $id THEN {$data['is_active']} ELSE 0 END")
             ]);
         });
 
-        // Reload the updated restaurant
         $restaurant->refresh();
 
         return ServiceResponse::success('Restaurant activated successfully', [
