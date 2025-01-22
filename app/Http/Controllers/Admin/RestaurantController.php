@@ -357,12 +357,9 @@ class RestaurantController extends Controller
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
         }
+        Restaurant::query()->update(['is_active' => 0]);
 
-        // all are inactive first
-        $restaurant->update(['is_active' => 0]);
-
-        // then active defined
-        $restaurant->update(['is_active' => $data['is_active']]);
+        Restaurant::where('id', $id)->update(['is_active' => $data['is_active']]);
 
         return ServiceResponse::success('Restaurant activated successfully', [
             'restaurant' => $restaurant->refresh() // Reload the updated data
