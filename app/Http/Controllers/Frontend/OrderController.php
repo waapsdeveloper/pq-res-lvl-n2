@@ -35,7 +35,7 @@ class OrderController extends Controller
         $orderProducts = [];
 
         foreach ($data['products'] as $item) {
-            $product = Product::find($item['id']);
+            $product = Product::find($item['product_id']);
             if (!$product) {
                 continue;
             }
