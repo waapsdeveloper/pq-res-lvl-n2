@@ -18,6 +18,7 @@ use App\Models\RestaurantTimings;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Admin\RestautrantSetting\StoreRestaurantSetting;
 use App\Models\RestaurantSetting;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
 
@@ -351,15 +352,20 @@ class RestaurantController extends Controller
     }
     public function updateActiveRestaurant(UpdateActiveRestaurant $request, $id)
     {
-        $restaurant = Restaurant::find($id);
         $data = $request->validated();
 
+        $restaurant = Restaurant::find($id);
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
         }
-        Restaurant::query()->update(['is_active' => 0]);
+        DB::transaction(function () use ($restaurant, $data) {
+            // Deactivate all restaurants
+            Restaurant::query()->update(['is_active' => 0]);
 
-        $restaurant->update(['is_active' => $data['is_active']]);
+            // Activate the specified restaurant
+            $restaurant->update(['is_active' => $data['is_active']]);
+        });
+
 
         return ServiceResponse::success('Restaurant activated successfully', [
             'restaurant' => $restaurant->refresh() // Reload the updated data
