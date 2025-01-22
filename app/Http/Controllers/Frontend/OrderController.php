@@ -90,7 +90,7 @@ class OrderController extends Controller
             'invoice_no' => 'INV-' . $uniqid,
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
-            'restaurant_id' => $restaurant->id,
+            'restaurant_id' => $restaurant,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
