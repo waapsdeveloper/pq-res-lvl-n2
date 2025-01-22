@@ -31,9 +31,9 @@ class OrderController extends Controller
         $rtableIdf = $request->input('table_identifier', null);
         $restaurant = '';
         if (!empty($rtableIdf)) {
-            $restaurant = $this->tableIdentifier($rtableIdf);
+            $restaurantId = $this->tableIdentifier($rtableIdf);
         } else {
-            $restaurant = $request->restaurant_id;
+            $restaurantId = $request->restaurant_id;
         }
 
 
@@ -95,7 +95,7 @@ class OrderController extends Controller
             'invoice_no' => 'INV-' . $uniqid,
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
-            'restaurant_id' => $restaurant->id,
+            'restaurant_id' => $restaurantId,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
