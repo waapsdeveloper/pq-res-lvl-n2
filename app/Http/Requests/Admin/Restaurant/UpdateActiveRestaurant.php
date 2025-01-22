@@ -22,7 +22,7 @@ class UpdateActiveRestaurant extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required',
+            'is_active' => 'required',
         ];
     }
 }
