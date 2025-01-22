@@ -32,12 +32,13 @@ Route::prefix('auth')->middleware([
 
 
 Route::prefix('restaurant')->group(function () {
+
     Route::post('/setting', [RestaurantController::class, 'setting'])->name('restaurantSettings');
 
     Route::get('/bulk-delete', [RestaurantController::class, 'bulkDelete'])->name('restaurant-bulkDelete');
 
     Route::get('/active', [RestaurantController::class, 'showActiveRestaurant'])->name('activeRestaurant');
-    Route::post('/update-active', [RestaurantController::class, 'updateActiveRestaurant'])->name('updateactiveRestaurant');
+    Route::put('/update-active', [RestaurantController::class, 'updateActiveRestaurant'])->name('updateactiveRestaurant');
 
     Route::resource('/', RestaurantController::class)
         ->parameters(['' => 'id'])

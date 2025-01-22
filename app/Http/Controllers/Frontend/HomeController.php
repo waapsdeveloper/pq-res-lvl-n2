@@ -26,10 +26,6 @@ class HomeController extends Controller
     public function showActiveRestaurant()
     {
         $activeRestaurant = Helper::getActiveRestaurantId();
-        if ($activeRestaurant) {
-            return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurant]);
-        } else {
-            return ServiceResponse::error('No active restaurant found.');
-        }
+        return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurant]);
     }
 }

@@ -8,6 +8,7 @@ use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Restaurant\UpdateRestaurant;
 use App\Http\Requests\Admin\Restaurant\StoreRestaurant;
+use App\Http\Requests\Admin\Restaurant\UpdateActiveRestaurant;
 use App\Http\Resources\Admin\RestaurantListResourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -346,23 +347,20 @@ class RestaurantController extends Controller
     public function showActiveRestaurant()
     {
         $activeRestaurantId = Helper::getActiveRestaurantId();
-        if ($activeRestaurantId) {
-            return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurantId]);
-        } else {
-            return ServiceResponse::error('No active restaurant found.');
-        }
+        return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurantId]);
     }
-    public function updateActiveRestaurant($id)
+    public function updateActiveRestaurant(UpdateActiveRestaurant $request)
     {
+        $data = $request->validated();
         // Check if the restaurant exists
-        $restaurant = Restaurant::find($id);
+
+        $restaurant = Restaurant::find($data['id']);
 
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
         }
-
         // Use the static function to handle activation and deactivation
-        Restaurant::setActiveRestaurant($id);
+        Restaurant::setActiveRestaurant($restaurant->id);
 
         // Return success response
         return ServiceResponse::success('Restaurant activated successfully', [

@@ -69,9 +69,23 @@ class Helper
     static public function getActiveRestaurantId()
     {
         $activeRestaurant = Restaurant::where('is_active', 1)
-        ->with('timings', 'settings', 'rTables')
-        // , 'categories', 'products', 'users'
+            ->with('timings', 'settings', 'rTables')
+            // , 'categories', 'products', 'users'
             ->first();
+
+        if (!$activeRestaurant) {
+            $activeRestaurant = Restaurant::where('id', 1)
+                ->with('timings', 'settings', 'rTables')
+                ->first();
+        }
+
+        // Add full image URLs for required fields
+        if ($activeRestaurant) {
+            $activeRestaurant['image'] = Helper::returnFullImageUrl($activeRestaurant->image);
+            $activeRestaurant['favicon'] = Helper::returnFullImageUrl($activeRestaurant->favicon);
+            $activeRestaurant['logo'] = Helper::returnFullImageUrl($activeRestaurant->logo);
+        }
+
         return $activeRestaurant;
     }
 }
