@@ -17,9 +17,9 @@ class Identifier
     {
         $prefix = strtoupper(Str::substr($modelName, 0, $length));
 
-        $numDigits = max(strlen($id), $length);
+        $numDigits = max(strlen($id), 3);
 
-        $paddedId = str_pad($id, 3, '0', STR_PAD_LEFT);
+        $paddedId = str_pad($id, $numDigits, '0', STR_PAD_LEFT);
 
         return "{$prefix}-{$paddedId}";
     }
