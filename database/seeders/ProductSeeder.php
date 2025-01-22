@@ -34,7 +34,7 @@ class ProductSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $identifier = Identifier::make('products',  $productid, 3);
+            $identifier = Identifier::make('products',  $productid, 4);
 
             // Update the category with the generated identifier
             DB::table('products')->where('id',  $productid)->update([
