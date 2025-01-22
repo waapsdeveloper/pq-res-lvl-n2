@@ -77,7 +77,7 @@ class OrderController extends Controller
         $uniqid = uniqid();
         $orderNote = $request->notes;
         $orderStatus = $request->status;
-        $restaurant = $request->restaurant->id;
+        $restaurant = $request->restaurant_id;
 
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
