@@ -21,21 +21,20 @@ class ProductSeeder extends Seeder
 
         // Insert products into the database
         foreach ($products as $product) {
-            $productid = DB::table('products')->insert([
+            $productid = DB::table('products')->insertGetId([
                 'category_id' => $product['category_id'],
                 'restaurant_id' => $product['restaurant_id'],
-                'identifier' => "PROD-",
+                'identifier' => "PROD-" . uniqid(),
                 'name' => $product['name'],
                 'description' => $product['description'],
                 'price' => $product['price'],
                 'discount' => $product['discount'],
-                // 'image' => Helper::getBase64ImageUrl($product['image'], 'product'),
                 'image' => $product['image'],
                 'status' => $product['status'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $identifier = Identifier::make('products',  $productid, 4);
+            $identifier = Identifier::make('products',  $productid, 3);
 
             // Update the category with the generated identifier
             DB::table('products')->where('id',  $productid)->update([

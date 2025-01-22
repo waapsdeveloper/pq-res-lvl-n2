@@ -26,14 +26,14 @@ class ProfileSeeder extends Seeder
         // Insert profiles into the database
         foreach ($profiles as $profile) {
             $profile = DB::table('profiles')->insertGetId([
-                'identifier' => $profile['identifier'],
+                'identifier' => "PROF-",
                 'email' => $profile['email'],
                 'phone' => $profile['phone'],
                 'user_id' => $profile['user_id'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $identifier = Identifier::make('profiles',  $profile,4);
+            $identifier = Identifier::make('profiles',  $profile, 4);
 
             // Update the category with the generated identifier
             DB::table('profiles')->where('id',  $profile)->update([

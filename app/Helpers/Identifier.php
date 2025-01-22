@@ -19,7 +19,7 @@ class Identifier
 
         $numDigits = max(strlen($id), $length);
 
-        $paddedId = str_pad($id, $numDigits, '0', STR_PAD_LEFT);
+        $paddedId = str_pad($id, 3, '0', STR_PAD_LEFT);
 
         return "{$prefix}{$paddedId}";
     }
