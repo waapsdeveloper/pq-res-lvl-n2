@@ -382,7 +382,7 @@ class RestaurantController extends Controller
         DB::transaction(function () use ($restaurant, $data) {
             // Set all restaurants to inactive
             Restaurant::query()->update(['is_active' => 0]);
-            usleep(1500000);
+            usleep(2500000);
             // Activate the specified restaurant
             $restaurant->update(['is_active' => $data['is_active']]);
         });
