@@ -349,11 +349,11 @@ class RestaurantController extends Controller
         $activeRestaurantId = Helper::getActiveRestaurantId();
         return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurantId]);
     }
-    public function updateActiveRestaurant(UpdateActiveRestaurant $request, $id)
+    public function updateActiveRestaurant($id)
     {
-        $restaurant = Restaurant::find($id);
-        $data = $request->validated();
+        // $data = $request->validated();
 
+        $restaurant = Restaurant::find($id);
 
         if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found');
