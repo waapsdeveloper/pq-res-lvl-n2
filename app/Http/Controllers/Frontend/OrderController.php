@@ -62,7 +62,7 @@ class OrderController extends Controller
             // $totalPrice += $itemTotal;
 
             $orderProducts[] = [
-                'product_id' => $item['id'],
+                'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
