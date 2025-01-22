@@ -8,10 +8,10 @@
         "description": "A fine dining experience with globally inspired cuisine.",
         "rating": 4.8,
         "status": "active",
-        "is_active":1,
-        "image": "images/restaurant/REST01.svg",
-        "favicon": "images/restaurant/REST02.svg",
-        "logo": "images/restaurant/REST03.svg"
+        "is_active": 1,
+        "image": "images/restaurant/REST01.png",
+        "favicon": "images/restaurant/REST02.png",
+        "logo": "images/restaurant/REST03.png"
     },
     {
         "name": "The New Local CraftFood 2",
@@ -22,7 +22,7 @@
         "description": "A fine dining experience with globally inspired cuisine.",
         "rating": 4.8,
         "status": "active",
-        "is_active":0,
+        "is_active": 0,
         "image": "images/restaurant/REST04.svg",
         "favicon": "images/restaurant/REST04.svg",
         "logo": "images/restaurant/REST06.svg"
