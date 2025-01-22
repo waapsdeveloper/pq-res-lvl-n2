@@ -32,7 +32,7 @@ class RTableSeeder extends Seeder
                 'updated_at' => now(),
             ]);
 
-            $identifier = Identifier::make('rtables',  $rtable,4);
+            $identifier = Identifier::make('tables',  $rtable,4);
 
             // Update the category with the generated identifier
             DB::table('rtables')->where('id',  $rtable)->update([

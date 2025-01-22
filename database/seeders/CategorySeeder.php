@@ -37,7 +37,7 @@ class CategorySeeder extends Seeder
                 'updated_at' => now(),
             ]);
 
-            $identifier = Identifier::make('categories', $categoryId);
+            $identifier = Identifier::make('categories', $categoryId,3);
 
             // Update the category with the generated identifier
             DB::table('categories')->where('id', $categoryId)->update([

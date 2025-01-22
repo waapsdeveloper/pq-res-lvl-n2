@@ -21,6 +21,6 @@ class Identifier
 
         $paddedId = str_pad($id, 3, '0', STR_PAD_LEFT);
 
-        return "{$prefix}{$paddedId}";
+        return "{$prefix}-{$paddedId}";
     }
 }
