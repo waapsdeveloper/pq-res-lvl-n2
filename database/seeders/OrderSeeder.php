@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\Identifier;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -20,7 +21,7 @@ class OrderSeeder extends Seeder
         // Insert orders into the database
         foreach ($orders as $order) {
             $orderId = DB::table('orders')->insertGetId([
-                'identifier' => $order['identifier'] ?? "OD-" . uniqid(),
+                'identifier' => "ORD-",
                 'order_number' => $order['order_number'],
                 'type' => $order['type'],
                 'status' => $order['status'],
@@ -33,6 +34,12 @@ class OrderSeeder extends Seeder
                 'discount' => $order['discount'],
                 'created_at' => now(),
                 'updated_at' => now(),
+            ]);
+            $identifier = Identifier::make('orders',  $orderId);
+
+            // Update the category with the generated identifier
+            DB::table('orders')->where('id',  $orderId)->update([
+                'identifier' => $identifier,
             ]);
 
             foreach ($order['products'] as $product) {

@@ -29,7 +29,13 @@ class OrderController extends Controller
         $customer = $this->getCustomerByPhone($phone);
 
         $rtableIdf = $request->input('table_identifier', null);
-        // $restaurant = $this->tableIdentifier($rtableIdf);
+        $restaurant = '';
+        if (!empty($rtableIdf)) {
+            $restaurant = $this->tableIdentifier($rtableIdf);
+        } else {
+            $restaurant = $request->restaurant_id;
+        }
+
 
         // $totalPrice = 0;
         $orderProducts = [];
@@ -77,7 +83,6 @@ class OrderController extends Controller
         $uniqid = uniqid();
         $orderNote = $request->notes;
         $orderStatus = $request->status;
-        $restaurant = $request->restaurant_id;
 
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
@@ -90,7 +95,7 @@ class OrderController extends Controller
             'invoice_no' => 'INV-' . $uniqid,
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
-            'restaurant_id' => $restaurant,
+            'restaurant_id' => $restaurant->id,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

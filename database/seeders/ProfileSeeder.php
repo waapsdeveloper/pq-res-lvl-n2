@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\Identifier;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -24,13 +25,19 @@ class ProfileSeeder extends Seeder
 
         // Insert profiles into the database
         foreach ($profiles as $profile) {
-            DB::table('profiles')->insert([
+            $profile = DB::table('profiles')->insertGetId([
                 'identifier' => $profile['identifier'],
                 'email' => $profile['email'],
                 'phone' => $profile['phone'],
                 'user_id' => $profile['user_id'],
                 'created_at' => now(),
                 'updated_at' => now(),
+            ]);
+            $identifier = Identifier::make('profiles',  $profile,4);
+
+            // Update the category with the generated identifier
+            DB::table('profiles')->where('id',  $profile)->update([
+                'identifier' => $identifier,
             ]);
         }
 

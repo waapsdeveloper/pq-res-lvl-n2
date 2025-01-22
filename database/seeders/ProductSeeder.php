@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Helpers\Helper;
+use App\Helpers\Identifier;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -20,10 +21,10 @@ class ProductSeeder extends Seeder
 
         // Insert products into the database
         foreach ($products as $product) {
-            DB::table('products')->insert([
+            $productid = DB::table('products')->insert([
                 'category_id' => $product['category_id'],
                 'restaurant_id' => $product['restaurant_id'],
-                'identifier' => $product['identifier'] ?? "PROD-" . uniqid(),
+                'identifier' => "PROD-",
                 'name' => $product['name'],
                 'description' => $product['description'],
                 'price' => $product['price'],
@@ -33,6 +34,12 @@ class ProductSeeder extends Seeder
                 'status' => $product['status'],
                 'created_at' => now(),
                 'updated_at' => now(),
+            ]);
+            $identifier = Identifier::make('products',  $productid, 4);
+
+            // Update the category with the generated identifier
+            DB::table('products')->where('id',  $productid)->update([
+                'identifier' => $identifier,
             ]);
         }
 
