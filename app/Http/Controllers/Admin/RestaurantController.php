@@ -379,12 +379,11 @@ class RestaurantController extends Controller
         }
 
         // Use a transaction to ensure atomic updates
-        DB::transaction(function () use ($restaurant, $data) {
-            // Set all restaurants to inactive
-            $restaurant->update(['is_active' => $data['is_active']]);
-            usleep(2500000);
-            Restaurant::query()->update(['is_active' => 0]);
-            // Activate the specified restaurant
+        DB::transaction(function () use ($id, $data) {
+            // Set the specified restaurant to active and all others to inactive in one query
+            Restaurant::query()->update([
+                'is_active' => DB::raw("CASE WHEN id = $id THEN {$data['is_active']} ELSE 0 END")
+            ]);
         });
 
         // Reload the updated restaurant
