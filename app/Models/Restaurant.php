@@ -45,12 +45,7 @@ class Restaurant extends Model
     protected $casts = [
         'rating' => 'float',
     ];
-    public static function setActiveRestaurant($id)
-    {
-        self::query()->update(['is_active' => 0]);
 
-        return self::where('id', $id)->update(['is_active' => 1]);
-    }
     public function timings()
     {
         return $this->hasMany(RestaurantTiming::class);

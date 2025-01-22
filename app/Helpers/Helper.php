@@ -78,8 +78,6 @@ class Helper
                 ->with('timings', 'settings', 'rTables')
                 ->first();
         }
-
-        // Add full image URLs for required fields
         if ($activeRestaurant) {
             $activeRestaurant['image'] = Helper::returnFullImageUrl($activeRestaurant->image);
             $activeRestaurant['favicon'] = Helper::returnFullImageUrl($activeRestaurant->favicon);
