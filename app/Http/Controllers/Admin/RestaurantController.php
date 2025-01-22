@@ -354,21 +354,26 @@ class RestaurantController extends Controller
     {
         $data = $request->validated();
 
-        $restaurant = Restaurant::find($id);
-        if (!$restaurant) {
-            return ServiceResponse::error('Restaurant not found');
+
+        $restaurantIds = Restaurant::pluck('id')->toArray();
+
+        if (in_array($id, $restaurantIds)) {
+            // remove id from array
+            $key = array_search($id, $restaurantIds);
+            unset($restaurantIds[$key]);
+            
         }
-        DB::transaction(function () use ($restaurant, $data) {
-            // Deactivate all restaurants
-            Restaurant::query()->update(['is_active' => 0]);
 
-            // Activate the specified restaurant
-            $restaurant->update(['is_active' => $data['is_active']]);
-        });
+        // Deactivate all restaurants
+        Restaurant::whereIn('id', $restaurantIds)->update(['is_active' => 0]);
 
+        // Activate the specified restaurant
+        Restaurant::where('id', $id)->update(['is_active' => $data['is_active']]);
+
+        $restaurant = Restaurant::find($id)->with('timings', 'settings')->first();
 
         return ServiceResponse::success('Restaurant activated successfully', [
-            'restaurant' => $restaurant->refresh() // Reload the updated data
+            'restaurant' => $restaurant // Reload the updated data
         ]);
     }
 }
