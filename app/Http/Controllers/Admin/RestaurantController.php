@@ -359,7 +359,7 @@ class RestaurantController extends Controller
         }
         Restaurant::query()->update(['is_active' => 0]);
 
-        Restaurant::where('id', $id)->update(['is_active' => $data['is_active']]);
+        $restaurant->update(['is_active' => $data['is_active']]);
 
         return ServiceResponse::success('Restaurant activated successfully', [
             'restaurant' => $restaurant->refresh() // Reload the updated data
