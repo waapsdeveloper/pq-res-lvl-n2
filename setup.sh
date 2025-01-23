@@ -25,8 +25,8 @@ read -t 15 COUNT
 # If no input, default to COUNT
 COUNT=${COUNT:-550}
 
-# Start the `php artisan run:random-orders` process in the background
-echo "Starting php artisan run:random-orders with count: $COUNT"
+# Start the random-orders process in the background
+echo "Starting random-orders with count: $COUNT"
 php artisan run:random-orders $COUNT
 
 # Wait for 3 seconds (for timeout check)
