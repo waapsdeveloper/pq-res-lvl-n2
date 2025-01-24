@@ -129,8 +129,8 @@ class ProductsController extends Controller
 
     public function todayDeals(Request $request)
     {
-        $page = $request->input('page', 1);
-        $perpage = $request->input('perpage', 8);
+        // $page = $request->input('page', 1);
+        // $perpage = $request->input('perpage', 8);
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         //     $perpage = $request->input('perpage', 8);
@@ -172,6 +172,6 @@ class ProductsController extends Controller
                 ];
             }
         }
-        return ServiceResponse::success("Today's deals fetched successfully", array_slice($deals, 0, 5));
+        return ServiceResponse::success("Today's deals fetched successfully", $deals);
     }
 }
