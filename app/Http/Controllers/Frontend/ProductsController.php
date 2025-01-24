@@ -141,7 +141,7 @@ class ProductsController extends Controller
             // Get 3 random categories
             $categories = Category::query()
                 ->where('restaurant_id', $resID)
-                ->where('status', 'active')->inRandomOrder()->limit(3)->get();
+                ->where('status', 'active')->inRandomOrder()->limit(2)->get();
 
             $products = [];
             $totalPrice = 0;
