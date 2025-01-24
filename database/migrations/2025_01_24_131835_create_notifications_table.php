@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary(); // Unique identifier for the notification
             $table->string('type'); // Notification class name
-            $table->morphs('notifiable'); // Polymorphic relation (type and ID)
+            $table->json('notifiable'); // Polymorphic relation (type and ID)
             $table->json('data'); // Notification data in JSON format
             $table->timestamp('read_at')->nullable(); // Read timestamp
             $table->timestamps(); // Created 

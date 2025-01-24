@@ -20,6 +20,7 @@ class Notification extends Model
     // Cast the 'data' field as an array (it will be stored as JSON in the database)
     protected $casts = [
         'data' => 'array',
+        'notifiable_id' => 'array',
         'read_at' => 'datetime',
     ];
 

@@ -116,7 +116,7 @@ class OrderController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        $admin = User::find(1);
+        $admin = User::where('role_id',[1, 2, 3, 4, 6])->get();
         $admin->notify(new NewOrderNotification($admin, $order));
         $order->load('orderProducts.product');
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
