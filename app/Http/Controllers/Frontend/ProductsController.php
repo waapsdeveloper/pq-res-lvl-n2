@@ -17,9 +17,12 @@ class ProductsController extends Controller
         // Set default pagination parameters
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 100);
-
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         // Query to fetch products
-        $query = Product::query()->with('category', 'productProps', 'variation');
+        $query = Product::query()
+            ->where('restaurant_id', $resID)
+            ->with('category', 'productProps', 'variation');
 
         // if category_id
         if ($request->has('category_id')) {
@@ -40,9 +43,12 @@ class ProductsController extends Controller
         // Set default pagination parameters
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 8);
-
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         // Query to fetch products
-        $query = Product::query()->limit(8);
+        $query = Product::query()
+            ->where('restaurant_id', $resID)
+            ->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
         // Transform the collection into the desired format
@@ -65,9 +71,13 @@ class ProductsController extends Controller
         // Set default pagination parameters
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 8);
-
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         // Query to fetch products
-        $query = Category::query()->limit(8);
+        $query = Category::query()
+            ->where('restaurant_id', $resID)
+
+            ->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
         // Transform the collection into the desired format
@@ -92,8 +102,11 @@ class ProductsController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 8);
 
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         // Query to fetch products by category_id
-        $query = Product::where('category_id', $id);
+        $query = Product::where('category_id', $id)
+            ->where('restaurant_id', $resID);
 
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
@@ -118,14 +131,17 @@ class ProductsController extends Controller
     {
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 8);
-
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         //     $perpage = $request->input('perpage', 8);
         $deals = [];
 
         // Loop until we have 5 deals
         while (count($deals) < 5) {
             // Get 3 random categories
-            $categories = Category::query()->where('status', 'active')->inRandomOrder()->limit(3)->get();
+            $categories = Category::query()
+                ->where('restaurant_id', $resID)
+                ->where('status', 'active')->inRandomOrder()->limit(3)->get();
 
             $products = [];
             $totalPrice = 0;

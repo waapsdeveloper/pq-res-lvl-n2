@@ -27,7 +27,7 @@ class ProductController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
-        $active_restaurant = Helper::getActiveRestaurantId();
+        $active_restaurant = Helper::getActiveRestaurantId(); 
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $query = Product::query()
