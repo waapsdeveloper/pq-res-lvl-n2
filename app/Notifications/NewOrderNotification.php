@@ -14,9 +14,9 @@ class NewOrderNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct($user, $order)
+    public function __construct( $order)
     {
-        $this->user = $user;  // Correct assignment
+        // $this->user = $user;  // Correct assignment
         $this->order = $order;
     }
 

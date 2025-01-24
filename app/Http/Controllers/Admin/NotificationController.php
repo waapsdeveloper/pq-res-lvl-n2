@@ -18,13 +18,12 @@ class NotificationController extends Controller
      * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
-    public function sendNotification($userId, $orderId)
+    public function sendNotification($orderId)
     {
-        // return response()->json($userId . 'sendNotification');
-        $user = User::findOrFail($userId);
+        $user = User::where('role_id', [1, 2, 3, 4, 6]);
         $order = Order::findOrFail($orderId);
-        
-        $notify = $user->notify(new NewOrderNotification($user, $order));
+
+        $notify = $user->notify(new NewOrderNotification($order));
         return ServiceResponse::success($notify, 'Notification sent successfully!');
     }
 
@@ -37,7 +36,7 @@ class NotificationController extends Controller
     public function getNotifications()
     {
 
-        $notifications = Notification::paginate(15);
+        $notifications = Notification::query()->paginate(15);
 
         return ServiceResponse::success('getNotifications', $notifications);
     }
@@ -48,11 +47,12 @@ class NotificationController extends Controller
      * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
-    public function getUnreadNotifications($userId)
+    public function getUnreadNotifications()
     {
 
-        $unreadNotifications = Notification::whereNull('read_at');
-
+        $unreadNotifications = Notification::query()
+            ->whereNull('read_at')
+            ->paginate(10);
         return ServiceResponse::success(
             'unread_notifications',
             $unreadNotifications,
