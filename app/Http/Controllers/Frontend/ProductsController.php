@@ -131,11 +131,11 @@ class ProductsController extends Controller
     {
         // $page = $request->input('page', 1);
         // $perpage = $request->input('perpage', 8);
+        // dd($request->all());
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         //     $perpage = $request->input('perpage', 8);
         $deals = [];
-
         // Loop until we have 5 deals
         while (count($deals) < 5) {
             // Get 3 random categories

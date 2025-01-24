@@ -11,6 +11,7 @@ use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Rtable;
 use App\Models\User;
+use App\Notifications\NewOrderNotification;
 use App\Traits\Traits\Frontend\CustomerTrait;
 use App\Traits\Traits\Frontend\TableBookingTrait;
 use Illuminate\Http\Request;
@@ -83,7 +84,8 @@ class OrderController extends Controller
         $uniqid = uniqid();
         $orderNote = $request->notes;
         $orderStatus = $request->status;
-
+        // $identifier = Identifier::make('Product', $product->id, 4);
+        // Identifier::make('Order',);
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
             'order_number' => 'ORD-' . $uniqid,
@@ -111,7 +113,8 @@ class OrderController extends Controller
                 'updated_at' => now(),
             ]);
         }
-
+        $admin = User::find(1);
+        $admin->notify(new NewOrderNotification($admin, $order));
         $order->load('orderProducts.product');
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
     }

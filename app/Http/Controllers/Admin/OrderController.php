@@ -167,6 +167,7 @@ class OrderController extends Controller
         $orderNumber = strtoupper(uniqid('ORD-'));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
+        // $identifier= Identifier::
         $order = Order::create([
             'identifier' => 'ORD-' . uniqid(),
             'order_number' => $orderNumber,
