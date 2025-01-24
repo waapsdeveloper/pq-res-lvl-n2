@@ -47,7 +47,8 @@ class NewOrderNotification extends Notification
             'order_id' => $this->order->order_number,  // Dynamic order ID
             'customer_name' => $this->order->customer->name, // Assuming order has a customer relation
             'total_price' => $this->order->total_price,
-            'url' => url("/admin/orders/{$this->order->id}")  // Redirect to order detail page
+            // 'url' => url("/admin/orders/{$this->order->id}")  // Redirect to order detail page
+            'url' => url(route('order.show')),  // Redirect to order detail page
         ];
     }
 }

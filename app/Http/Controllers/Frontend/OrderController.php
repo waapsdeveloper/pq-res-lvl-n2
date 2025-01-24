@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\OrderBooking\MakeOrderBooking;
@@ -101,6 +102,8 @@ class OrderController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $identifier = Identifier::make('Order', $order->id, 3);
+        $product->update(['identifier' => $identifier]);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
                 'order_id' => $order->id,

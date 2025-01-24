@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
+use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\StoreOrder;
@@ -15,6 +16,7 @@ use App\Models\OrderProduct;
 use App\Models\Payments;
 use App\Models\Product;
 use App\Models\User;
+use App\Notifications\NewOrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
@@ -169,7 +171,7 @@ class OrderController extends Controller
         $orderStatus = $request->status;
         // $identifier= Identifier::
         $order = Order::create([
-            'identifier' => 'ORD-' . uniqid(),
+            'identifier' => 'ORD-',
             'order_number' => $orderNumber,
             'type' => $type,
             'status' => $orderStatus,
@@ -182,7 +184,8 @@ class OrderController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        $identifier = Identifier::make('Order', $order->id, 3);
+        $product->update(['identifier' => $identifier]);
         // return  response()->json($orderProducts);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
@@ -197,7 +200,8 @@ class OrderController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        // return response()->json($data, $order, $orderProducts);
+        $admin = User::find(1);
+        $admin->notify(new NewOrderNotification($admin, $order));
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
