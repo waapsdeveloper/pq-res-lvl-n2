@@ -19,5 +19,7 @@ trait NotificationTrait
             ],
             'read_at' => null,
         ]);
+
+        return $notification;w
     }
 }
