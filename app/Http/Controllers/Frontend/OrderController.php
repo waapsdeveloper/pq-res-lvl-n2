@@ -121,7 +121,7 @@ class OrderController extends Controller
 
         $admin = User::find(1);
 
-        $admin->notify(new NewOrderNotification($admin, $order));
+        $admin->notify(new NewOrderNotification($order));
 
         $order->load('orderProducts.product');
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
