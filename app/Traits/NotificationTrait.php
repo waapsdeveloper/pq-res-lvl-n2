@@ -13,7 +13,7 @@ trait NotificationTrait
             'notifiable_type' => 'App\Models\User',
             'notifiable_id' => 1, //User::find(1)->id,
             'data' => [
-                'title' => 'New Order',
+                'title' => 'New Order ' . $order->order_number,
                 'message' => 'You have a new order',
                 'order_id' => $order->id,
             ],
