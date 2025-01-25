@@ -120,9 +120,9 @@ class OrderController extends Controller
             ]);
         }
 
-        $admin = User::find(1);
+        // $admin = User::find(1);
 
-        $admin->notify(new NewOrderNotification($order));
+        // $admin->notify(new NewOrderNotification($order));
 
         $order->load('orderProducts.product');
         Helper::sendPusherToUser($data, 'notification-channel', 'notification-update');

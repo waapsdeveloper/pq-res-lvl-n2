@@ -199,9 +199,9 @@ class OrderController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        $admin = User::find(1);
+        // $admin = User::find(1);
 
-        $admin->notify(new NewOrderNotification($order));
+        // $admin->notify(new NewOrderNotification($order));
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
