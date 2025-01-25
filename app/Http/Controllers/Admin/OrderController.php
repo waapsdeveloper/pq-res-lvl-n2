@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\StoreOrder;
 use App\Http\Requests\Admin\Order\UpdateOrder;
 use App\Http\Requests\Admin\Order\UpdateOrderStatus;
+use App\Http\Resources\Admin\NotifyResource;
 use App\Http\Resources\Admin\OrderResource;
 use App\Models\Invoice;
 use App\Models\Notification;
@@ -208,10 +209,11 @@ class OrderController extends Controller
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
+        $noti = new NotifyResource($order);
 
         Helper::sendPusherToUser($data, 'notification-channel', 'notification-update');
 
-        return ServiceResponse::success("Order list successfully", ['data' => $data]);
+        return ServiceResponse::success("Order list successfully", ['data' => $data, 'notification' => $noti]);
     }
     /**
      * Display the specified resource.
