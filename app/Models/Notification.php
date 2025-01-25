@@ -9,6 +9,8 @@ class Notification extends Model
     protected $table = 'notifications';
 
     // Fillable attributes (columns you want to allow for mass assignment)
+    protected $keyType = 'string'; // UUID
+    public $incrementing = false;
     protected $fillable = [
         'type',
         'notifiable_type',
@@ -17,10 +19,8 @@ class Notification extends Model
         'read_at',
     ];
 
-    // Cast the 'data' field as an array (it will be stored as JSON in the database)
     protected $casts = [
         'data' => 'array',
-        'notifiable_id' => 'array',
         'read_at' => 'datetime',
     ];
 

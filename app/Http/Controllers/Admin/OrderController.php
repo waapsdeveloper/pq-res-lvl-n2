@@ -47,8 +47,7 @@ class OrderController extends Controller
         $query = Order::query()
             ->where('restaurant_id', $resID)
             ->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
-        // dd($query);
-        // $query->with('orderProducts.product')->with('orderProducts.productProps');
+        
 
         // Optionally apply search filter if needed
         if ($search) {
