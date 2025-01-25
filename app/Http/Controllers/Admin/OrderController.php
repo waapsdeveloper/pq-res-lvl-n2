@@ -206,6 +206,8 @@ class OrderController extends Controller
 
         $data = new OrderResource($order);
 
+        Helper::sendPusherToUser($data, 'notification-channel', 'notification-update');
+        
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
     /**

@@ -4,6 +4,9 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\Storage;
 use App\Models\Restaurant;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Pusher\Pusher;
 
 class Helper
 {
@@ -85,5 +88,19 @@ class Helper
         }
 
         return $activeRestaurant;
+    }
+
+    public static function sendPusherToUser($data, $trigger, $event)
+    {
+
+        try {
+            $pusher = new Pusher(env('PUSHER_APP_KEY'), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'), [
+                'cluster' => env('PUSHER_APP_CLUSTER')
+            ]);
+
+            $pusher->trigger($trigger, $event, $data);
+        } catch (Exception $e) {
+            Log::debug("Pusher Error", ['error' => $e->getMessage()]);
+        }
     }
 }
