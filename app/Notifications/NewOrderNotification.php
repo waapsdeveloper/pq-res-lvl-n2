@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -14,9 +15,9 @@ class NewOrderNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct($user, $order)
+    public function __construct($order)
     {
-        $this->user = $user;  // Correct assignment
+        // $this->user = $admin;  // Correct assignment
         $this->order = $order;
     }
 
@@ -42,13 +43,14 @@ class NewOrderNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        // $order = Order::find($this->order->id);
         return [
-            'message' => 'New order received!',
-            'order_id' => $this->order->order_number,  // Dynamic order ID
-            'customer_name' => $this->order->customer->name, // Assuming order has a customer relation
+            'message' => 'New order received! ' . $this->order->order_number,
+            'order_id' => $this->order->id,
+            'order_number' => $this->order->order_number,
+            'customer_name' => $this->order->customer->name,
             'total_price' => $this->order->total_price,
-            // 'url' => url("/admin/orders/{$this->order->id}")  // Redirect to order detail page
-            'url' => url(route('order.show')),  // Redirect to order detail page
+            'url' => url("/admin/order/{$this->order->id}")
         ];
     }
 }

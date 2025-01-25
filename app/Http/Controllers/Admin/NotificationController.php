@@ -18,14 +18,10 @@ class NotificationController extends Controller
      * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
-    public function sendNotification($orderId)
-    {
-        $user = User::where('role_id', [1, 2, 3, 4, 6]);
-        $order = Order::findOrFail($orderId);
-
-        $notify = $user->notify(new NewOrderNotification($order));
-        return ServiceResponse::success($notify, 'Notification sent successfully!');
-    }
+    // public function sendNotification(User $user, Order $order)
+    // {
+    //     $user->notify(new NewOrderNotification($user, $order));
+    // }
 
     /**
      * Get all notifications for a user.
@@ -53,6 +49,7 @@ class NotificationController extends Controller
         $unreadNotifications = Notification::query()
             ->whereNull('read_at')
             ->paginate(10);
+            
         return ServiceResponse::success(
             'unread_notifications',
             $unreadNotifications,

@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\Order\UpdateOrder;
 use App\Http\Requests\Admin\Order\UpdateOrderStatus;
 use App\Http\Resources\Admin\OrderResource;
 use App\Models\Invoice;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Payments;
@@ -118,7 +119,6 @@ class OrderController extends Controller
     {
         // $data = $request->all();
         $data = $request->validated();
-        // dd($data);
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         $customerPhone = $data['customer_phone'] ?? 'XXXX';
@@ -165,11 +165,10 @@ class OrderController extends Controller
         $tableNo = $data['tableNo'] ?? null;
         // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $finalPrice = $totalPrice - $discount;
-        // return response()->json($finalPrice);
         $orderNumber = strtoupper(uniqid('ORD-'));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
-        // $identifier= Identifier::
+
         $order = Order::create([
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,
@@ -184,12 +183,12 @@ class OrderController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
         $identifier = Identifier::make('Order', $order->id, 3);
-        $product->update(['identifier' => $identifier]);
-        // return  response()->json($orderProducts);
+        $order->update(['identifier' => $identifier]);
+
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
-                // return,
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
@@ -200,8 +199,9 @@ class OrderController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        $users = User::find(1);
-        $users->notify(new NewOrderNotification($users, $order));
+        $admin = User::find(1);
+
+        $admin->notify(new NewOrderNotification( $order));
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
@@ -222,13 +222,8 @@ class OrderController extends Controller
         if (!$order) {
             return ServiceResponse::error('Order not found');
         }
-        // dd($order->toArray());
-        // Get product details for all products in the order
 
-
-        // Transform the order using OrderResource
         $data = new OrderResource($order);
-        // Add the products to the resource
 
         return ServiceResponse::success('Order details fetched successfully', [
             'order' => $data,

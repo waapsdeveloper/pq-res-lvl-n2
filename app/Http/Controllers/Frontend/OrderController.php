@@ -7,6 +7,7 @@ use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\OrderBooking\MakeOrderBooking;
 use App\Http\Resources\Frontend\AddOrderBookingResource;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -103,7 +104,7 @@ class OrderController extends Controller
             'updated_at' => now(),
         ]);
         $identifier = Identifier::make('Order', $order->id, 3);
-        $product->update(['identifier' => $identifier]);
+        $order->update(['identifier' => $identifier]);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
                 'order_id' => $order->id,
@@ -116,8 +117,11 @@ class OrderController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        $admin = User::where('role_id',[1, 2, 3, 4, 6])->get();
+
+        $admin = User::find(1);
+
         $admin->notify(new NewOrderNotification($admin, $order));
+
         $order->load('orderProducts.product');
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
     }
