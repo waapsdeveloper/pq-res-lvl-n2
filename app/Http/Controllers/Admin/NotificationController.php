@@ -93,7 +93,6 @@ class NotificationController extends Controller
     {
         $notification = Notification::findOrFail($notificationId);
 
-        dd($notification);
         return response()->json(ServiceResponse::success(
             'Notification marked as read!',
             $notification
