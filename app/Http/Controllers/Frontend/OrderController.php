@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\Helper;
 use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
@@ -124,6 +125,8 @@ class OrderController extends Controller
         $admin->notify(new NewOrderNotification($order));
 
         $order->load('orderProducts.product');
+        Helper::sendPusherToUser($data, 'notification-channel', 'notification-update');
+
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
     }
 

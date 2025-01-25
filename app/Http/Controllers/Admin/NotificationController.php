@@ -52,11 +52,11 @@ class NotificationController extends Controller
     public function getUnreadNotifications(Request $request)
     {
         $page = $request->input('page', 1); // Current page
-        $perpage = $request->input('perpage', 15); // Items per page
+        $perpage = $request->input('perpage', 10); // Items per page
 
         $notifications = Notification::query()
             ->whereNull('read_at')
-            ->orderBy('created_at', 'desc')->paginate($perpage, ['*'], 'page', $page);
+            ->orderBy('id', 'desc')->paginate($perpage, ['*'], 'page', $page);
 
         $data = $notifications->getCollection()->transform(function ($item) {
             return new NotifyResource($item);
