@@ -120,7 +120,7 @@ Route::prefix('order')->group(function () {
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('order');
-    Route::post('/update-status/{id}', [OrderController::class, 'updateStatus'])
+    Route::put('/update-status/{id}', [OrderController::class, 'updateStatus'])
         ->name('orderUpdateStatus');
 });
 
