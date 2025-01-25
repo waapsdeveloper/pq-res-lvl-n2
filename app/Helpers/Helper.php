@@ -92,14 +92,13 @@ class Helper
 
     public static function sendPusherToUser($data, $trigger, $event)
     {
-        // dd($data, $trigger, $event);
 
         try {
             $pusher = new Pusher(env('PUSHER_APP_KEY'), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'), [
                 'cluster' => env('PUSHER_APP_CLUSTER')
             ]);
 
-            $pusher->trigger($data, $trigger, $event);
+            $pusher->trigger($trigger, $event, $data);
         } catch (Exception $e) {
             Log::debug("Pusher Error", ['error' => $e->getMessage()]);
         }
