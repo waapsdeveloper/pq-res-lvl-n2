@@ -104,7 +104,8 @@ class OrderController extends Controller
             'updated_at' => now(),
         ]);
         $identifier = Identifier::make('Order', $order->id, 3);
-        $order->update(['identifier' => $identifier]);
+        $invoice_no = Identifier::make('Invoice', $order->id, 3);
+        $order->update(['identifier' => $identifier, 'invoice' => $invoice_no]);
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
                 'order_id' => $order->id,

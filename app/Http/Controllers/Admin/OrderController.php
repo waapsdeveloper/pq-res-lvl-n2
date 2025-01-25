@@ -47,7 +47,7 @@ class OrderController extends Controller
         $query = Order::query()
             ->where('restaurant_id', $resID)
             ->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
-        
+
 
         // Optionally apply search filter if needed
         if ($search) {
@@ -176,7 +176,7 @@ class OrderController extends Controller
             'notes' => $orderNote,
             'customer_id' => $user->id ?? null,
             'discount' => $discount,
-            'invoice' => 'INV-' . uniqid(),
+            'invoice' => 'INV-',
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
             'created_at' => now(),
@@ -184,7 +184,8 @@ class OrderController extends Controller
         ]);
 
         $identifier = Identifier::make('Order', $order->id, 3);
-        $order->update(['identifier' => $identifier]);
+        $invoice_no = Identifier::make('Invoice', $order->id, 3);
+        $order->update(['identifier' => $identifier, 'invoice' => $invoice_no]);
 
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
@@ -200,7 +201,7 @@ class OrderController extends Controller
         }
         $admin = User::find(1);
 
-        $admin->notify(new NewOrderNotification( $order));
+        $admin->notify(new NewOrderNotification($order));
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
