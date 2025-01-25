@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\Rtable;
 use App\Models\User;
 use App\Notifications\NewOrderNotification;
+use App\Traits\NotificationTrait;
 use App\Traits\Traits\Frontend\CustomerTrait;
 use App\Traits\Traits\Frontend\TableBookingTrait;
 use Illuminate\Http\Request;
@@ -22,8 +23,7 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
 
-    use CustomerTrait;
-    use TableBookingTrait;
+    use CustomerTrait, TableBookingTrait, NotificationTrait;
 
     public function makeOrderBookings(MakeOrderBooking $request)
     {
@@ -120,9 +120,7 @@ class OrderController extends Controller
             ]);
         }
 
-        // $admin = User::find(1);
-
-        // $admin->notify(new NewOrderNotification($order));
+        $this->createNotification($order);
 
         $order->load('orderProducts.product');
         Helper::sendPusherToUser($data, 'notification-channel', 'notification-update');

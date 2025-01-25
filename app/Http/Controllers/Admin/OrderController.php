@@ -18,6 +18,7 @@ use App\Models\Payments;
 use App\Models\Product;
 use App\Models\User;
 use App\Notifications\NewOrderNotification;
+use App\Traits\NotificationTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
@@ -26,6 +27,8 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
+    use  NotificationTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -117,6 +120,7 @@ class OrderController extends Controller
     public function store(StoreOrder $request)
     {
         // $data = $request->all();
+
         $data = $request->validated();
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
@@ -199,9 +203,8 @@ class OrderController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        // $admin = User::find(1);
 
-        // $admin->notify(new NewOrderNotification($order));
+        $this->createNotification($order);
         $order->load('orderProducts.product');
 
         $data = new OrderResource($order);
