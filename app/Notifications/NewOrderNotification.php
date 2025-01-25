@@ -44,7 +44,6 @@ class NewOrderNotification extends Notification
     public function toArray(object $notifiable): array
     {
         // $order = Order::find($this->order->id);
-        // dd($this->order);
         return [
             'message' => 'New order received! ' . $this->order->order_number,
             'order_id' => $this->order->id,

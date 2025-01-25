@@ -89,4 +89,14 @@ class NotificationController extends Controller
             $notification
         ));
     }
+    public function show($notificationId)
+    {
+        $notification = Notification::findOrFail($notificationId);
+        $notification->update(['read_at' => now()]);
+
+        return response()->json(ServiceResponse::success(
+            'Notification marked as read!',
+            $notification
+        ));
+    }
 }

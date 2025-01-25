@@ -190,4 +190,5 @@ Route::prefix('notifications')->group(function () {
     Route::get('/unread', [NotificationController::class, 'getUnreadNotifications']);
     // Route::post('/send-notification/{adminId}/{orderId}', [NotificationController::class, 'sendNotification']);
     Route::post('/mark-as-read/{notificationId}', [NotificationController::class, 'markAsRead']);
+    Route::post('/show/{notificationId}', [NotificationController::class, 'show']);
 });
