@@ -35,10 +35,6 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        // $orders = Order::with('orderProducts.product')->get();
-        // $order = OrderResource::collection($orders);
-        // return ServiceResponse::success('Order list retrieved successfully', $order);
-
         $search = $request->input('search', '');
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);

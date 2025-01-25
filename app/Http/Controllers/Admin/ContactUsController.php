@@ -54,39 +54,5 @@ class ContactUsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request, string $id)
-    // {
-    //     $contact = ContactUs::find($id);
-
-    //     if (!$contact) {
-    //         return ServiceResponse::error('Contact not found', 404);
-    //     }
-
-    //     $data = $request->validate([
-    //         'name' => 'nullable|string|max:255',
-    //         'email' => 'nullable|email|max:255',
-    //         'phone' => 'nullable|string|max:20',
-    //         'message' => 'nullable|string|max:1000',
-    //     ]);
-
-    //     $contact->update($data);
-
-    //     return ServiceResponse::success('Contact message updated successfully', ['contact' => $contact]);
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    // public function destroy(string $id)
-    // {
-    //     $contact = ContactUs::find($id);
-
-    //     if (!$contact) {
-    //         return ServiceResponse::error("Contact not found", 404);
-    //     }
-
-    //     $contact->delete();
-
-    //     return ServiceResponse::success("Contact message deleted successfully.");
-    // }
+   
 }
