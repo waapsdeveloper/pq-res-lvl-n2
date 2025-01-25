@@ -23,7 +23,6 @@ class NotifyResource extends JsonResource
         // dd($notification);
         return [
             'id' => (string) $notification->id,
-            'type' => $notification->type,
             'data' => $notification->data,
             'read_at' => $notification->read_at,
             'created_at' => $notification->created_at ? $notification->created_at->toDateTimeString() : null,

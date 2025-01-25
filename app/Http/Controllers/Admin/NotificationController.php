@@ -65,8 +65,6 @@ class NotificationController extends Controller
         return response()->json(ServiceResponse::success('Notifications fetched successfully', [
             'data' => $data,
             'pagination' => [
-                'current_page' => $notifications->currentPage(),
-                'total_pages' => $notifications->lastPage(),
                 'total_items' => $notifications->total(),
                 'per_page' => $notifications->perPage(),
             ],
@@ -82,13 +80,20 @@ class NotificationController extends Controller
     public function markAsRead($notificationId)
     {
         $notification = Notification::findOrFail($notificationId);
+        if ($notification->read_at !== null) {
+            return response()->json(ServiceResponse::success(
+                'Notification is already marked as read!',
+                $notification
+            ));
+        }
         $notification->update(['read_at' => now()]);
 
         return response()->json(ServiceResponse::success(
-            'All notification as read!',
+            'Notification marked as read successfully!',
             $notification
         ));
     }
+
     public function show($notificationId)
     {
         $notification = Notification::findOrFail($notificationId);
