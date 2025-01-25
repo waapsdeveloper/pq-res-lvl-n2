@@ -186,8 +186,8 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/total-revenue', [DashboardController::class, 'totalRevenue'])->name('dashboard.totalRevenue');
 });
 Route::prefix('notifications')->group(function () {
-    // Route::get('/all', [NotificationController::class, 'getNotifications']);
-    Route::get('/unread', [NotificationController::class, 'getUnreadNotifications']);
+    Route::get('/all', [NotificationController::class, 'getNotifications']);
+    // Route::get('/unread', [NotificationController::class, 'getUnreadNotifications']);
     // Route::post('/send-notification/{adminId}/{orderId}', [NotificationController::class, 'sendNotification']);
     Route::post('/mark-as-read/{notificationId}', [NotificationController::class, 'markAsRead']);
     Route::get('/show/{notificationId}', [NotificationController::class, 'show']);

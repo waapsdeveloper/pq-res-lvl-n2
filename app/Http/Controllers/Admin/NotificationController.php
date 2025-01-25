@@ -21,27 +21,27 @@ class NotificationController extends Controller
     //     $data = new NotifyResource($notifications);
     //     return response()->json(ServiceResponse::success('getNotifications', $data));
     // }
-    public function getNotifications(Request $request)
-    {
-        $page = $request->input('page', 1); // Current page
-        $perpage = $request->input('perpage', 15); // Items per page
+    // public function getNotifications(Request $request)
+    // {
+    //     $page = $request->input('page', 1); // Current page
+    //     $perpage = $request->input('perpage', 15); // Items per page
 
-        $notifications = Notification::query()->orderBy('created_at', 'desc')->paginate($perpage, ['*'], 'page', $page);
+    //     $notifications = Notification::query()->orderBy('created_at', 'desc')->paginate($perpage, ['*'], 'page', $page);
 
-        $data = $notifications->getCollection()->transform(function ($item) {
-            return new NotifyResource($item);
-        });
+    //     $data = $notifications->getCollection()->transform(function ($item) {
+    //         return new NotifyResource($item);
+    //     });
 
-        return response()->json(ServiceResponse::success('Notifications fetched successfully', [
-            'data' => $data,
-            'pagination' => [
-                'current_page' => $notifications->currentPage(),
-                'total_pages' => $notifications->lastPage(),
-                'total_items' => $notifications->total(),
-                'per_page' => $notifications->perPage(),
-            ],
-        ]));
-    }
+    //     return response()->json(ServiceResponse::success('Notifications fetched successfully', [
+    //         'data' => $data,
+    //         'pagination' => [
+    //             'current_page' => $notifications->currentPage(),
+    //             'total_pages' => $notifications->lastPage(),
+    //             'total_items' => $notifications->total(),
+    //             'per_page' => $notifications->perPage(),
+    //         ],
+    //     ]));
+    // }
 
     /**
      * Get unread notifications for a user.
@@ -49,14 +49,15 @@ class NotificationController extends Controller
      * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
-    public function getUnreadNotifications(Request $request)
+    public function getNotifications(Request $request)
     {
         $page = $request->input('page', 1); // Current page
         $perpage = $request->input('perpage', 10); // Items per page
 
         $notifications = Notification::query()
             ->whereNull('read_at')
-            ->orderBy('id', 'desc')->paginate($perpage, ['*'], 'page', $page);
+            ->orderBy('id', 'desc')
+            ->paginate($perpage, ['*'], 'page', $page);
 
         $data = $notifications->getCollection()->transform(function ($item) {
             return new NotifyResource($item);
