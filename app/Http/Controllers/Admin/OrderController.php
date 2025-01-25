@@ -213,7 +213,7 @@ class OrderController extends Controller
 
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
 
-        return ServiceResponse::success("Order list successfully", ['data' => $data, 'notification' => $noti]);
+        return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
     /**
      * Display the specified resource.
