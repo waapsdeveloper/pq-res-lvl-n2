@@ -207,7 +207,7 @@ class OrderController extends Controller
         $data = new OrderResource($order);
 
         Helper::sendPusherToUser($data, 'notification-channel', 'notification-update');
-        
+
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
     /**
@@ -215,7 +215,6 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        // Fetch the order with its related products and restaurant
         $order = Order::where('id', $id)
             ->with('orderProducts.product', 'restaurant')
             ->with('customer', 'table_no', 'table')->with(['orderProducts.productProp'])
@@ -319,88 +318,7 @@ class OrderController extends Controller
         return ServiceResponse::success("Order updated successfully", ['data' => $data]);
     }
 
-    // public function update(UpdateOrder $request, $id)
-    // {
-    //     $data = $request->validated();
 
-    //     $order = Order::find($id);
-    //     if (!$order) {
-    //         return ServiceResponse::error("Order with ID $id not found.");
-    //     }
-
-    //     $totalPrice = 0;
-    //     $orderProducts = [];
-    //     // Process products
-    //     foreach ($data['products'] as $item) {
-    //         $product = Product::find($item['product_id']);
-    //         if (!$product) {
-    //             continue; // Ignore invalid products
-    //             // return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
-
-    //         }
-
-    //         // $pricePerUnit = $product->price;
-    //         $pricePerUnit = $item['price'];
-    //         $quantity = $item['quantity'];
-    //         $itemTotal = $pricePerUnit * $quantity;
-
-    //         $totalPrice += $itemTotal;
-
-    //         $orderProducts[] = [
-    //             'product_id' => $item['product_id'],
-    //             'quantity' => $quantity,
-    //             'price' => $pricePerUnit,
-    //             'notes' => $item['notes'],
-
-    //         ];
-    //     }
-
-    //     // Calculate discount and final price
-    //     $discount = $data['discount'] ?? $order->discount;
-    //     // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
-    //     $finalPrice = $totalPrice - $discount;
-
-    //     // Update order details
-    //     $order->update([
-    //         'customer_id' => $order->customer_id,
-    //         // 'customer_phone' => $customerPhone,
-    //         'discount' => $discount,
-    //         'total_price' => $finalPrice,
-    //         'status' => $data['status'] ?? $order->status,
-    //         'notes' => $data['notes'] ?? $order->notes,
-    //         'type' => $data['type'] ?? $order->type,
-    //         'table_no' => $data['tableNo'] ?? $order->table_no,
-    //     ]);
-
-    //     // Update order products
-    //     // First, delete old products
-    //     $order->orderProducts()->delete();
-
-    //     // Then, insert new ones
-    //     foreach ($orderProducts as $orderProduct) {
-    //         OrderProduct::create([
-    //             'order_id' => $order->id,
-    //             'product_id' => $orderProduct['product_id'],
-    //             'quantity' => $orderProduct['quantity'],
-    //             'price' => $orderProduct['price'],
-    //             'notes' => $orderProduct['notes'],
-    //             'variation' => json_encode($orderProduct['variation']) ?? null,
-
-    //         ]);
-    //     }
-
-    //     // Reload the updated order with its products
-    //     $order->load('orderProducts.product');
-
-    //     $data = new OrderResource($order);
-
-    //     return ServiceResponse::success("Order updated successfully", ['data' => $data]);
-    // }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $order = Order::find($id);
