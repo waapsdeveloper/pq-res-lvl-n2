@@ -7,6 +7,7 @@ use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\OrderBooking\MakeOrderBooking;
+use App\Http\Resources\Admin\NotifyResource;
 use App\Http\Resources\Frontend\AddOrderBookingResource;
 use App\Models\Notification;
 use App\Models\Order;
@@ -120,10 +121,13 @@ class OrderController extends Controller
             ]);
         }
 
-        $this->createNotification($order);
-
         $order->load('orderProducts.product');
-        Helper::sendPusherToUser($data, 'notification-channel', 'notification-update');
+        
+        $notification = $this->createNotification($order);
+
+        $noti = new NotifyResource($notification);
+
+        Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
 
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
     }
