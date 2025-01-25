@@ -2,7 +2,7 @@
 
 # Installing Composer dependencies
 echo "Installing Composer dependencies..."
-composer install
+composer update
 
 # Running Laravel migrations
 echo "Running Laravel migrations..."
@@ -20,7 +20,9 @@ php artisan db:seed
 
 # Ask for custom count with 15 seconds timeout
 echo "You have 15 seconds to Enter the number of random orders to create (default is 550):"
-read -t 15 COUNT
+read -t 15 COUNT <<EOF
+50
+EOF
 
 # If no input, default to COUNT
 COUNT=${COUNT:-550}
