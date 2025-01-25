@@ -92,8 +92,8 @@ class NotificationController extends Controller
     public function show($notificationId)
     {
         $notification = Notification::findOrFail($notificationId);
-        $notification->update(['read_at' => now()]);
 
+        dd($notification);
         return response()->json(ServiceResponse::success(
             'Notification marked as read!',
             $notification
