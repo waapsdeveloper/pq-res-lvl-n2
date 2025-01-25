@@ -418,15 +418,14 @@ class OrderController extends Controller
 
 
         $order = Order::find($id);
-        // $orderProducts = OrderProduct::where('order_id', $order->id)->delete();
 
         if (!$order) {
             return ServiceResponse::error('Order not found');
         }
 
-
-        $order->status = $request->status;
-        $order->save();
+        $order->update([
+            'status' => $data['status'],
+        ]);
 
         return ServiceResponse::success('Order status updated successfully', $order);
     }
