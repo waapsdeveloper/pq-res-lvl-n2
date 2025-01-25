@@ -40,6 +40,7 @@ Route::prefix('restaurant')->group(function () {
 
     Route::get('/active', [RestaurantController::class, 'showActiveRestaurant'])->name('activeRestaurant');
     Route::put('/update-active/{id}', [RestaurantController::class, 'updateActiveRestaurant'])->name('updateactiveRestaurant');
+    Route::get('/active', [RestaurantController::class, 'showActiveRestaurant'])->name('activeRestaurant');
 
     Route::resource('/', RestaurantController::class)
         ->parameters(['' => 'id'])
