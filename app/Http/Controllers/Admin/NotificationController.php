@@ -82,7 +82,7 @@ class NotificationController extends Controller
     public function markAsRead($notificationId)
     {
         $notification = Notification::findOrFail($notificationId);
-        $notification->markAsRead();
+        $notification->update(['read_at' => now()]);
 
         return response()->json(ServiceResponse::success(
             'All notification as read!',
