@@ -9,8 +9,6 @@ class Notification extends Model
     protected $table = 'notifications';
 
     // Fillable attributes (columns you want to allow for mass assignment)
-    protected $keyType = 'string'; // UUID
-    public $incrementing = false;
     protected $fillable = [
         'type',
         'notifiable_type',
