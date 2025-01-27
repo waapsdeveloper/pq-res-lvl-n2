@@ -27,7 +27,6 @@ class AddOrderBookingResource extends JsonResource
      */
     public static function toObject($obj, $lang = 'en')
     {
-        dd($obj->notification);
 
         return [
             'id' => $obj->id,
