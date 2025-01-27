@@ -348,6 +348,10 @@ class OrderController extends Controller
             'status' => $data['status'],
         ]);
 
+        $notification = $this->createNotification($order);
+
+        $noti = new NotifyResource($notification);
+        Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update-' . $order->order_number);
         return ServiceResponse::success('Order status updated successfully', $order);
     }
     public function bulkDelete(Request $request)

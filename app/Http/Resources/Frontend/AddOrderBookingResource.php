@@ -64,6 +64,14 @@ class AddOrderBookingResource extends JsonResource
                     'email' => $obj->restaurant->email,
                     'status' => $obj->restaurant->status,
                 ] : null,
+                'notification' => $obj->getOrderIdFromNotification() ?
+                [
+                    'id' => $obj->notification->id,
+                    'title' => $obj->notification->title,
+                    'message' => $obj->notification->message,
+                    'status' => $obj->notification->status,
+                    
+                ] : null,
             // 'restaurant_timings' => $obj->restaurant->timings->map(function ($timing) {
             //     return [
             //         'day' => $timing->day,

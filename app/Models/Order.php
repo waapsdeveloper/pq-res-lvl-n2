@@ -66,4 +66,22 @@ class Order extends Model
     {
         return $this->belongsTo(Rtable::class, 'table_no', 'id');
     }
+    public function notification()
+    {
+        return $this->belongsTo(Notification::class);
+    }
+
+    public function getOrderIdFromNotification()
+    {
+        // Check if notification relation is loaded and data exists
+        if ($this->notification && $this->notification->data) {
+            // Decode JSON from 'data' column
+            $notificationData = json_decode($this->notification->data, true);
+
+            // Return 'order_id' if it exists
+            return $notificationData['order_id'] ?? null;
+        }
+
+        return null;
+    }
 }
