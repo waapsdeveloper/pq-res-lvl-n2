@@ -74,6 +74,7 @@ class Order extends Model
     public function getOrderIdFromNotification()
     {
         // Check if notification relation is loaded and data exists
+        // dd($this);
         if ($this->notification && $this->notification->data) {
             // Decode JSON from 'data' column
             $notificationData = json_decode($this->notification->data, true);

@@ -15,6 +15,7 @@ class Notification extends Model
         'notifiable_id',
         'data',
         'read_at',
+        'order_id',
     ];
 
     protected $casts = [

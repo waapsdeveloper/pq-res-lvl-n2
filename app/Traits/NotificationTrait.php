@@ -17,6 +17,7 @@ trait NotificationTrait
                 'message' => 'You have a new order',
                 'order_id' => $order->id,
             ],
+            'order_id' => $order->id,
             'read_at' => null,
         ]);
 
