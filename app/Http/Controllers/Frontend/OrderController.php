@@ -136,7 +136,7 @@ class OrderController extends Controller
     {
         $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table', 'notification')
             ->where('order_number', $orderNumber)->first();
-            
+
         $data = new AddOrderBookingResource($order);
         return ServiceResponse::success("Customer Order Tracked Successfully", ['order' => $data]);
     }

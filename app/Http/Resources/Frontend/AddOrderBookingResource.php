@@ -27,7 +27,6 @@ class AddOrderBookingResource extends JsonResource
      */
     public static function toObject($obj, $lang = 'en')
     {
-        // dd($obj->notification, $obj->getOrderIdFromNotification());
         return [
             'id' => $obj->id,
             'order_number' => $obj->order_number,
@@ -64,7 +63,16 @@ class AddOrderBookingResource extends JsonResource
                     'email' => $obj->restaurant->email,
                     'status' => $obj->restaurant->status,
                 ] : null,
-            'notification' => $obj->getOrderIdFromNotification(),
+            'notification' => $obj->notification ?
+                [
+                    'id' => $obj->notification->id,
+                    'notifiable_id' => $obj->notification->notifiable_id,
+                    'title' => $obj->notification->data['title'],
+                    'message' => $obj->notification->data['message'],
+                    'read_at' => $obj->notification->read_at,
+                    'created_at' => $obj->notification->created_at,
+
+                ] : null,
             // ?
             //     [
             //         'id' => $obj->notification->id,
