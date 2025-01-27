@@ -47,6 +47,8 @@ class ProductsController extends Controller
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         // Query to fetch products
         $query = Product::query()
+            ->with('category', 'restaurant', 'productProps', 'variation')
+
             ->where('restaurant_id', $resID)
             ->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
