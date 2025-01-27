@@ -20,9 +20,7 @@ php artisan db:seed
 
 # Ask for custom count with 15 seconds timeout
 echo "You have 15 seconds to Enter the number of random orders to create (default is 550):"
-read -t 15 COUNT <<EOF
-50
-EOF
+read -t 15 COUNT 
 
 # If no input, default to COUNT
 COUNT=${COUNT:-550}
