@@ -52,13 +52,14 @@ Route::prefix('add-to-cart')->group(function () {
 
 Route::get('/restaurant-detail/{id}', [HomeController::class, 'restautantDetail']);
 Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
-
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/restaurants', 'restaurants');
+    Route::get('/restautant-detail/{id}', 'restautantDetail');
+    Route::get('/show-active-restaurant', 'showActiveRestaurant');
+});
 Route::middleware([ExtractRestaurantId::class])->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/roles', 'roles');
-        Route::get('/restaurants', 'restaurants');
-        Route::get('/restautant-detail/{id}', 'restautantDetail');
-        Route::get('/show-active-restaurant', 'showActiveRestaurant');
         Route::get('/about-us', 'aboutUs');
         Route::get('/lowest-price', 'lowestPrice');
         Route::get('/popular-products', 'getPopularProducts');
