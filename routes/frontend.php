@@ -76,7 +76,6 @@ Route::controller(ProductsController::class)->group(function () {
 });
 
 Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
-Route::get('/roles', [HomeController::class, 'roles']);
 
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
 
