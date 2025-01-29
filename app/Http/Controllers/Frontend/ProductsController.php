@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Frontend\FrontendMenuResource;
 use App\Http\Resources\Frontend\PopularProductsResource;
 use App\Http\Resources\Frontend\ProductResource;
 use App\Models\Category;
@@ -56,7 +57,7 @@ class ProductsController extends Controller
         $data = $query->paginate($perpage, ['*'], 'page', $page);
         // Transform the collection into the desired format
         $data->getCollection()->transform(function ($product) {
-         return new PopularProductsResource($product);
+            return new PopularProductsResource($product);
         });
 
         return ServiceResponse::success('Popular dishes available', ['products' => $data]);
@@ -77,16 +78,7 @@ class ProductsController extends Controller
 
         // Transform the collection into the desired format
         $data->getCollection()->transform(function ($category) {
-            return [
-                "id" => $category->id,
-                "name" => $category->name,
-                'category_id' => $category->category_id,
-                'restaurant_id' => $category->restaurant_id,
-                'identifier' => $category->identifier,
-                'description' => $category->description,
-                "image" => Helper::returnFullImageUrl($category->image),
-                "status" => $category->status,
-            ];
+            return new FrontendMenuResource($category);
         });
 
         return ServiceResponse::success('Popular dishes available', ['products' => $data]);
@@ -108,14 +100,7 @@ class ProductsController extends Controller
 
         // Transform the collection into the desired format
         $data->getCollection()->transform(function ($product) {
-            return [
-                "id" => $product->id,
-                "category_id" => $product->category_id,
-                "name" => $product->name,
-                "price" => $product->price,
-                "image" => Helper::returnFullImageUrl($product->image),
-                "status" => $product->status,
-            ];
+            return new ProductResource($product);
         });
 
         // Return the transformed data with a success message
