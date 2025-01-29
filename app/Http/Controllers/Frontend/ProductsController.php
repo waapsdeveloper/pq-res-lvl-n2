@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Frontend\PopularProductsResource;
 use App\Http\Resources\Frontend\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
@@ -45,6 +46,7 @@ class ProductsController extends Controller
         $perpage = $request->input('perpage', 8);
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
+
         // Query to fetch products
         $query = Product::query()
             ->with('category', 'restaurant', 'productProps', 'variation')
@@ -52,18 +54,9 @@ class ProductsController extends Controller
             ->where('restaurant_id', $resID)
             ->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
-
         // Transform the collection into the desired format
         $data->getCollection()->transform(function ($product) {
-            return [
-                "id" => $product->id,
-                "description" => $product->description,
-                "category_id" => $product->category_id,
-                "name" => $product->name,
-                "price" => $product->price,
-                "image" => Helper::returnFullImageUrl($product->image),
-                "status" => $product->status,
-            ];
+         return new PopularProductsResource($product);
         });
 
         return ServiceResponse::success('Popular dishes available', ['products' => $data]);

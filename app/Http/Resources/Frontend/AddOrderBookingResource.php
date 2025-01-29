@@ -73,6 +73,7 @@ class AddOrderBookingResource extends JsonResource
                     'created_at' => $obj->notification->created_at,
 
                 ] : null,
+            'table' => $obj->table ?? null,
             // ?
             //     [
             //         'id' => $obj->notification->id,
@@ -89,7 +90,6 @@ class AddOrderBookingResource extends JsonResource
             //         'status' => $timing->status,
             //     ];
             // }),
-            'table' => $obj->table ?? null,
 
         ];
     }
