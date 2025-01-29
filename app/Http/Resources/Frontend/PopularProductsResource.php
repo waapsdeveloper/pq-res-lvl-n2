@@ -28,14 +28,9 @@ class PopularProductsResource extends JsonResource
             "price" => $obj->price,
             "image" => Helper::returnFullImageUrl($obj->image),
             "status" => $obj->status,
-            "productProps" => $obj->productProps ? $obj->productProps->map(function ($productProp) {
-                return [
-                    "id" => $productProp->id,
-                    "type" => $productProp->type,
-                    "meta_key" => $productProp->meta_key,
-                    "meta_value" => $productProp->meta_value,
-                ];
-            }) : [],
+            "type" => $obj->productProp->type,
+            "meta_key" => $obj->productProp->meta_key,
+            "meta_value" => $obj->productProp->meta_value,
             "category" => $obj->category ? [
                 "id" => $obj->category->id,
                 "name" => $obj->category->name,
@@ -43,16 +38,13 @@ class PopularProductsResource extends JsonResource
                 "image" => Helper::returnFullImageUrl($obj->category->image),
                 "status" => $obj->category->status,
             ] : [],
-
-            "variation" => $obj->variation ? $obj->variation->map(function ($variation) {
-                return [
-                    "id" => $variation->id,
-                    "type" => $variation->type,
-                    "meta_key" => $variation->meta_key,
-                    "meta_value" => $variation->meta_value,
-                ];
-            }) : [],
-
+            "restaurant" => $obj->restaurant ? [
+                "id" => $obj->restaurant->id,
+                "name" => $obj->restaurant->name,
+                "description" => $obj->restaurant->description,
+                "image" => Helper::returnFullImageUrl($obj->restaurant->image),
+                "status" => $obj->restaurant->status,
+            ] : [],
         ];
     }
 }
