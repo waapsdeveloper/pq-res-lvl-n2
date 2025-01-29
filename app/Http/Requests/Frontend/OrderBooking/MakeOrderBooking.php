@@ -38,6 +38,7 @@ class MakeOrderBooking extends FormRequest
             'status' => 'nullable|string',
             'table_no' => 'nullable|string',
             'total_price' => 'nullable|numeric',
+            'restaurant_id' => 'nullable|exists:restaurants,id',
         ];
     }
 

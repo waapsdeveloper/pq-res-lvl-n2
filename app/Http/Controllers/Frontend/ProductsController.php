@@ -18,13 +18,9 @@ class ProductsController extends Controller
         // Set default pagination parameters
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 100);
-        $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
-        // Query to fetch products
-
 
         $query = Product::query()
-            ->where('restaurant_id', $resID)
+            ->where('restaurant_id', (int) $request->restaurant_id)
             ->with('category', 'productProps', 'variation');
 
         // if category_id
@@ -41,17 +37,16 @@ class ProductsController extends Controller
         return ServiceResponse::success('Products retrieved successfully', ['products' => $data]);
     }
 
-    
+
     public function menu(Request $request)
     {
         // Set default pagination parameters
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 8);
-        $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
+
         // Query to fetch products
         $query = Category::query()
-            ->where('restaurant_id', $resID)
+            ->where('restaurant_id', (int) $request->restaurant_id)
 
             ->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
@@ -67,16 +62,14 @@ class ProductsController extends Controller
     {
         $query = Product::where('category_id', $id);
         $data = $query->paginate(9);
-        // Transform the collection into the desired format
         $data->getCollection()->transform(function ($product) {
             return new ProductResource($product);
         });
 
-        // Return the transformed data with a success message
         return ServiceResponse::success('Products retrieved by category', ['products' => $data]);
     }
 
-    
+
 
     public function getByCategory($id)
     {

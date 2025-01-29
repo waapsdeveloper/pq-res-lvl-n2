@@ -29,16 +29,15 @@ class OrderController extends Controller
     public function makeOrderBookings(MakeOrderBooking $request)
     {
         $data = $request->validated();
-        // $data = $request->all();
         $phone = $data['phone'];
         $customer = $this->getCustomerByPhone($phone);
 
         $rtableIdf = $request->input('table_identifier', null);
-        $restaurant = '';
+
         if (!empty($rtableIdf)) {
             $restaurantId = $this->tableIdentifier($rtableIdf);
         } else {
-            $restaurantId = $request->restaurant_id;
+            $restaurantId = (int) $request->restaurant_id;
         }
 
 
