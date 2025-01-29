@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function categories()
     {
         $categories = Category::get();
-        $categories['image'] = Helper::returnFullImageUrl($categories['image']);
+        $categories['image'] = Helper::returnFullImageUrl($categories->image);
         return ServiceResponse::success('categories are retrived successfully', ['data' => $categories]);
     }
 }
