@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ContactUs\StoreContactUs;
+use App\Http\Requests\Admin\ContactUs\UpdateContactUs;
 use App\Http\Resources\Admin\ContactUsResource;
 use App\Models\ContactUs;
 use Illuminate\Http\Request;
@@ -35,7 +37,21 @@ class ContactUsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function store(StoreContactUs $request)
+    {
+        $data = $request->validated();
+        $contact = ContactUs::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'message' => $data['message'],
+        ]);
 
+        return ServiceResponse::success(
+            'Contact message sent to the company. They will reply as soon as possible.',
+            ['contact' => $contact]
+        );
+    }
 
     /**
      * Display the specified resource.
@@ -43,16 +59,31 @@ class ContactUsController extends Controller
     public function show(string $id)
     {
         $contact = ContactUs::find($id);
-
         if (!$contact) {
             return ServiceResponse::error("Contact not found", 404);
         }
-
-        return ServiceResponse::success("Contact details retrieved successfully", ['contact' => $contact]);
+        $data =  new ContactUsResource($contact);
+        return ServiceResponse::success("Contact details retrieved successfully", ['contact' => $data]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-   
+    public function update(UpdateContactUs $request)
+    {
+        $data = $request->validated();
+        $contact = ContactUs::find($data['id']);
+        $contact->update([
+            'name' => $data['name'] ?? $contact->name,
+            'email' => $data['email'] ?? $contact->email,
+            'phone' => $data['phone'] ?? $contact->phone,
+            'message' => $data['message'] ?? $contact->message,
+        ]);
+
+
+        return ServiceResponse::success(
+            'Contact message sent to the company. They will reply as soon as possible.',
+            ['contact' => $contact]
+        );
+    }
 }
