@@ -73,20 +73,11 @@ Route::middleware([ExtractRestaurantId::class])->group(function () {
     });
 
     Route::controller(OrderController::class)->group(function () {
-        // Route::post('/make-order-bookings', 'makeOrderBookings');
+        Route::post('/make-order-bookings', 'makeOrderBookings');
         Route::get('/search-customer-order', 'searchCustomerOrder');
         Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
-        // Route::post('/update-order-status', 'updateOrderStatus');
     });
 });
-Route::controller(OrderController::class)->group(function () {
-    Route::post('/make-order-bookings', 'makeOrderBookings');
-    // Route::get('/search-customer-order', 'searchCustomerOrder');
-    // Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
-    Route::post('/update-order-status', 'updateOrderStatus');
-});
-
-
 
 
 Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
