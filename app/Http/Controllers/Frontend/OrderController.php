@@ -147,6 +147,10 @@ class OrderController extends Controller
     {
         $orderNumber = $request->input('order_number');
         $phone = $request->input('phone');
+
+
+
+
         // dd($orderNumber, $phone);
         $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table', 'notification')
             ->where('order_number', $orderNumber)
@@ -155,7 +159,7 @@ class OrderController extends Controller
             })
             ->first();
         if (!$order) {
-            return ServiceResponse::error("$orderNumber is not found", 404);
+            return ServiceResponse::error("$orderNumber is not found recheck your input details", 404);
         }
 
         $data = new AddOrderBookingResource($order);
