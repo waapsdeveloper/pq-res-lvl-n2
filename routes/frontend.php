@@ -19,8 +19,6 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/auth/me', [AuthController::class, 'me'])->middleware('auth:api');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
-Route::get('/restaurant-detail/{id}', [HomeController::class, 'restautantDetail']);
-Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
 
 Route::resource('/rtables', RTablesController::class)
     ->parameters(['' => 'id'])
@@ -54,21 +52,33 @@ Route::prefix('add-to-cart')->group(function () {
 
 
 
-Route::post('/make-order-bookings', [OrderController::class, 'makeOrderBookings']);
-Route::get('/search-customer-order', [OrderController::class, 'searchCustomerOrder']);
-Route::get('/track-customer-order/{order_number}', [OrderController::class, 'trackCustomerOrder']);
-Route::post('/update-order-status', [OrderController::class, 'updateOrderStatus']);
+
+Route::controller(OrderController::class)->group(function () {
+    Route::post('/make-order-bookings', 'makeOrderBookings');
+    Route::get('/search-customer-order', 'searchCustomerOrder');
+    Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
+    Route::post('/update-order-status', 'updateOrderStatus');
+});
+
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/roles', 'roles');
+    Route::get('/restautant-detail/{id}', 'restautantDetail');
+    Route::get('/show-active-restaurant', 'showActiveRestaurant');
+    Route::get('/about-us/{category_id}', 'aboutUs');
+    Route::get('/lowest-price', 'lowestPrice');
+});
+
+Route::controller(ProductsController::class)->group(function () {
+    Route::get('/products', 'getProducts');
+    Route::get('/popular-products', 'getPopularProducts');
+    Route::get('/menu', 'menu');
+    Route::get('/product-by-category/{category_id}', 'productByCategory');
+});
 
 Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
 Route::get('/roles', [HomeController::class, 'roles']);
 
-Route::get('/products', [ProductsController::class, 'getProducts']);
-Route::get('/popular-products', [ProductsController::class, 'getPopularProducts']);
-Route::get('/menu', [ProductsController::class, 'menu']);
-Route::get('/product-by-category/{category_id}', [ProductsController::class, 'productByCategory']);
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
-Route::get('/today-deals', [ProductsController::class, 'todayDeals']);
-Route::get('categories', [CategoryController::class, 'categories']);
 
-Route::get('/about-us/{category_id}', [HomeController::class, 'aboutUs']);
-Route::get('/lowest-price', [HomeController::class, 'lowestPrice']);
+
+Route::get('categories', [CategoryController::class, 'categories']);
