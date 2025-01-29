@@ -39,11 +39,7 @@ class Order extends Model
 
     public function customer()
     {
-        return $this->belongsTo(User::class, 'customer_id', 'id')
-            ->where(function ($query) {
-                $query->where('role_id', 0)
-                    ->orWhereNull('role_id');
-            });
+        return $this->belongsTo(User::class, 'customer_id', 'id');
     }
     public function restaurant()
     {

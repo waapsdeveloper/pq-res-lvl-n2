@@ -54,6 +54,7 @@ Route::prefix('add-to-cart')->group(function () {
 
 
 Route::post('/make-order-bookings', [OrderController::class, 'makeOrderBookings']);
+Route::get('/search-customer-order', [OrderController::class, 'searchCustomerOrder']);
 Route::get('/track-customer-order/{order_number}', [OrderController::class, 'trackCustomerOrder']);
 Route::post('/update-order-status', [OrderController::class, 'updateOrderStatus']);
 
