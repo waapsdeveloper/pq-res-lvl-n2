@@ -8,23 +8,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AddOrderBookingResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray($request)
     {
         return self::toObject($this);
     }
 
-    /**
-     * Transform the resource into an object format.
-     *
-     * @param mixed $obj
-     * @param string $lang
-     * @return array<string, mixed>
-     */
     public static function toObject($obj, $lang = 'en')
     {
         return [
@@ -45,7 +33,6 @@ class AddOrderBookingResource extends JsonResource
                     'image' => Helper::returnFullImageUrl($orderProduct->product->image),
                     'price' => $orderProduct->price,
                     'notes' => $orderProduct->notes,
-                    // 'variation' => json_decode($orderProduct->variation),
                     'variation' => $orderProduct->variation,
                 ];
             }),
