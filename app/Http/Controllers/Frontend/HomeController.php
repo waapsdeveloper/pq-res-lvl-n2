@@ -32,35 +32,23 @@ class HomeController extends Controller
         return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurant]);
     }
 
-    public function aboutUs($categoryId)
+    public function aboutUs()
     {
-        $category = Category::find($categoryId);
+        $categories = Category::withCount('products')->get();
 
-        if (!$category) {
-            return ServiceResponse::error('Category not found', 404);
-        }
-
-        $products = Product::where('category_id', $categoryId)->get();
-
-        return ServiceResponse::success('About Us', [
-            'category' => [
+        $categories = $categories->map(function ($category) {
+            return [
                 'id' => $category->id,
                 'name' => $category->name,
                 'description' => $category->description,
                 'image' => Helper::returnFullImageUrl($category->image),
-            ],
-            'products' => $products->map(function ($product) {
-                return [
-                    'id' => $product->id,
-                    'name' => $product->name,
-                    'price' => $product->price,
-                    'image' => Helper::returnFullImageUrl($product->image),
-                    'description' => $product->description,
-                ];
-            }),
+                'products_count' => $category->products_count,
+            ];
+        });
 
-        ]);
+        return ServiceResponse::success('Categories retrieved successfully', ['data' => $categories]);
     }
+
     public function lowestPrice()
     {
         $products = Product::orderBy('price', 'asc')->first();

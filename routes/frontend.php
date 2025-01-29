@@ -66,7 +66,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/restaurants', 'restaurants');
     Route::get('/restautant-detail/{id}', 'restautantDetail');
     Route::get('/show-active-restaurant', 'showActiveRestaurant');
-    Route::get('/about-us/{category_id}', 'aboutUs');
+    Route::get('/about-us', 'aboutUs');
     Route::get('/lowest-price', 'lowestPrice');
     Route::get('/popular-products', 'getPopularProducts');
 });
