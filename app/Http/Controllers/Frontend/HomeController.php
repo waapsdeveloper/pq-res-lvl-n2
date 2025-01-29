@@ -54,7 +54,7 @@ class HomeController extends Controller
     public function lowestPrice(Request $request)
     {
         $products = Product::orderBy('price', 'asc')
-            ->where('restaurant_id', $request->restaurant_id)
+            ->where('restaurant_id', (int)$request->restaurant_id)
             ->first();
         return ServiceResponse::success('Lowest Price', ['products' => $products]);
     }
@@ -72,7 +72,7 @@ class HomeController extends Controller
         $query = Product::query()
             ->with('category', 'restaurant', 'productProps', 'variation')
 
-            ->where('restaurant_id', $request->restaurant_id)
+            ->where('restaurant_id', (int)$request->restaurant_id)
             ->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
         // Transform the collection into the desired format
@@ -89,7 +89,7 @@ class HomeController extends Controller
         while (count($deals) < 5) {
             // Get 3 random categories
             $categories = Category::query()
-                ->where('restaurant_id', $request->restaurant_id)
+                ->where('restaurant_id', (int) $request->restaurant_id)
                 ->where('status', 'active')->inRandomOrder()->limit(2)->get();
 
             $products = [];
