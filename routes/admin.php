@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactUsController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\CartController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
 
 Route::prefix('auth')->middleware([
     AuthMiddleware::class . ':admin,user',
@@ -192,4 +195,24 @@ Route::prefix('notifications')->group(function () {
     // Route::post('/send-notification/{adminId}/{orderId}', [NotificationController::class, 'sendNotification']);
     Route::post('/mark-as-read/{notificationId}', [NotificationController::class, 'markAsRead']);
     Route::get('/show/{notificationId}', [NotificationController::class, 'show']);
+});
+
+Route::get('/mail', function () {
+    $data = [
+        'title' => 'Welcome to Our Service!',
+        'menu_url' => 'https://localcraftfood.com/menu',
+        'name' => 'John Doe',
+        'restaurant_name' => 'Local Craft Food',
+        'body' => 'This is the body of the email',
+        'phone' => '1234567890',
+        'email' => 'inquires@localcraftfood.com',
+        'address' => '1234 Main St, Chicago, IL 60601',
+    ];
+
+    Mail::send('mail.mail', $data, function ($message) {
+        $message->to('mr.ahsanahmed5@gmail.com')
+            ->subject('Reply from Local Craft Food ');
+    });
+
+    return 'Mail sent successfully!';
 });
