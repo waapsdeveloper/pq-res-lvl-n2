@@ -32,9 +32,14 @@ class HomeController extends Controller
         return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurant]);
     }
 
-    public function aboutUs()
+    public function aboutUs(Request $request)
     {
-        $categories = Category::withCount('products')->get();
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
+
+        $categories = Category::withCount('products')
+            ->where('restaurant_id', $resID)
+            ->get();
 
         $categories = $categories->map(function ($category) {
             return [
