@@ -159,7 +159,7 @@ class OrderController extends Controller
             })
             ->first();
         if (!$order) {
-            return ServiceResponse::error("$orderNumber is not found recheck your input details", 404);
+            return ServiceResponse::error("$orderNumber is not found .Recheck your input details", 404);
         }
 
         $data = new AddOrderBookingResource($order);
