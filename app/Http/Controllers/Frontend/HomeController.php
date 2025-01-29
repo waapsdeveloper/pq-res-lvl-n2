@@ -46,16 +46,18 @@ class HomeController extends Controller
                 'id' => $category->id,
                 'name' => $category->name,
                 'description' => $category->description,
+                'image' => Helper::returnFullImageUrl($category->image),
             ],
             'products' => $products->map(function ($product) {
                 return [
                     'id' => $product->id,
                     'name' => $product->name,
                     'price' => $product->price,
+                    'image' => Helper::returnFullImageUrl($product->image),
                     'description' => $product->description,
                 ];
             }),
-            'data' => 'This is about us page',
+
         ]);
     }
     public function lowestPrice()

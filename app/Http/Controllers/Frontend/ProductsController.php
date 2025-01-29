@@ -23,7 +23,7 @@ class ProductsController extends Controller
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         // Query to fetch products
 
-        
+
         $query = Product::query()
             ->where('restaurant_id', $resID)
             ->with('category', 'productProps', 'variation');
@@ -85,21 +85,13 @@ class ProductsController extends Controller
 
         return ServiceResponse::success('Popular dishes available', ['products' => $data]);
     }
-    public function productByCategory(Request $request, $id)
+    public function productByCategory($id)
     {
-        // Set default pagination parameters
-        $page = $request->input('page', 1);
-        $perpage = $request->input('perpage', 8);
-
-        $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         // Query to fetch products by category_id
-        $query = Product::where('category_id', $id)
-            ->where('restaurant_id', $resID);
+        $query = Product::where('category_id', $id);
 
         // Paginate the results
-        $data = $query->paginate($perpage, ['*'], 'page', $page);
-
+        $data = $query->paginate(9);
         // Transform the collection into the desired format
         $data->getCollection()->transform(function ($product) {
             return new ProductResource($product);
@@ -111,7 +103,7 @@ class ProductsController extends Controller
 
     public function todayDeals(Request $request)
     {
-       
+
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         //     $perpage = $request->input('perpage', 8);
@@ -153,5 +145,21 @@ class ProductsController extends Controller
             }
         }
         return ServiceResponse::success("Today's deals fetched successfully", $deals);
+    }
+
+    public function getByCategory($id)
+    {
+        // Query to fetch products by category_id
+        $query = Product::where('category_id', $id);
+
+        // Paginate the results
+        $data = $query->paginate(12);
+        // Transform the collection into the desired format
+        $data->getCollection()->transform(function ($product) {
+            return new ProductResource($product);
+        });
+
+        // Return the transformed data with a success message
+        return ServiceResponse::success('Products retrieved by category', ['products' => $data]);
     }
 }

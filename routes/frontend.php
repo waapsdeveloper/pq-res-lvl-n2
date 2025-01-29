@@ -69,6 +69,8 @@ Route::controller(HomeController::class)->group(function () {
 });
 
 Route::controller(ProductsController::class)->group(function () {
+    Route::get('/get-by-category/{category_id}', 'getByCategory');
+
     Route::get('/products', 'getProducts');
     Route::get('/popular-products', 'getPopularProducts');
     Route::get('/menu', 'menu');
