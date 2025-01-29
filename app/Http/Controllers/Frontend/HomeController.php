@@ -34,10 +34,8 @@ class HomeController extends Controller
 
     public function aboutUs(Request $request)
     {
-        return response()->json($request->restaurant_id);
-
         $categories = Category::withCount('products')
-            ->where('restaurant_id', $request->restaurant_id)
+            ->where('restaurant_id', (int) $request->restaurant_id)
             ->get();
 
         $categories = $categories->map(function ($category) {
