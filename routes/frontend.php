@@ -80,4 +80,4 @@ Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRes
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
 
 
-Route::get('categories', [CategoryController::class, 'categories']);
+Route::get('/all-categories', [CategoryController::class, 'categories']);
