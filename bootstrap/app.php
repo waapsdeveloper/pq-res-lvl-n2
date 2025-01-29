@@ -14,7 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
-        $middleware->append(ExtractRestaurantId::class);
         $middleware->validateCsrfTokens(except: [
             'admin/*', // Excludes all routes starting with 'admin/'
         ]);
