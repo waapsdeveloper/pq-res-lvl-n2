@@ -6,7 +6,6 @@ use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Frontend\FrontendMenuResource;
-use App\Http\Resources\Frontend\PopularProductsResource;
 use App\Http\Resources\Frontend\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
@@ -42,28 +41,7 @@ class ProductsController extends Controller
         return ServiceResponse::success('Products retrieved successfully', ['products' => $data]);
     }
 
-    public function getPopularProducts(Request $request)
-    {
-        // Set default pagination parameters
-        $page = $request->input('page', 1);
-        $perpage = $request->input('perpage', 8);
-        $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
-
-        // Query to fetch products
-        $query = Product::query()
-            ->with('category', 'restaurant', 'productProps', 'variation')
-
-            ->where('restaurant_id', $resID)
-            ->limit(8);
-        $data = $query->paginate($perpage, ['*'], 'page', $page);
-        // Transform the collection into the desired format
-        $data->getCollection()->transform(function ($product) {
-            return new PopularProductsResource($product);
-        });
-
-        return ServiceResponse::success('Popular dishes available', ['products' => $data]);
-    }
+    
     public function menu(Request $request)
     {
         // Set default pagination parameters
@@ -87,10 +65,7 @@ class ProductsController extends Controller
     }
     public function productByCategory($id)
     {
-        // Query to fetch products by category_id
         $query = Product::where('category_id', $id);
-
-        // Paginate the results
         $data = $query->paginate(9);
         // Transform the collection into the desired format
         $data->getCollection()->transform(function ($product) {
@@ -101,51 +76,7 @@ class ProductsController extends Controller
         return ServiceResponse::success('Products retrieved by category', ['products' => $data]);
     }
 
-    public function todayDeals(Request $request)
-    {
-
-        $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
-        //     $perpage = $request->input('perpage', 8);
-        $deals = [];
-        // Loop until we have 5 deals
-        while (count($deals) < 5) {
-            // Get 3 random categories
-            $categories = Category::query()
-                ->where('restaurant_id', $resID)
-                ->where('status', 'active')->inRandomOrder()->limit(2)->get();
-
-            $products = [];
-            $totalPrice = 0;
-
-            // For each category, get 1 random product
-            foreach ($categories as $category) {
-                // Get 1 random product for each category
-                $product = Product::where('category_id', $category->id)
-                    ->where('status', 'active')
-                    ->inRandomOrder()
-                    ->first();
-
-                if ($product) {
-                    $products[] = $product;
-                    $totalPrice += $product->price;
-                }
-            }
-
-            // If we successfully got 3 products, calculate the discounted price
-            if (count($products) == 3) {
-                $discountedPrice = $totalPrice * 0.90; // Apply 10% discount
-
-                // Add the deal to the list
-                $deals[] = [
-                    'products' => $products,
-                    'total_price' => $totalPrice,
-                    'discounted_price' => $discountedPrice
-                ];
-            }
-        }
-        return ServiceResponse::success("Today's deals fetched successfully", $deals);
-    }
+    
 
     public function getByCategory($id)
     {

@@ -50,7 +50,8 @@ Route::prefix('add-to-cart')->group(function () {
         ->names('cart'); // Restrict to specific CRUD actions.
 });
 
-
+Route::get('/restaurant-detail/{id}', [HomeController::class, 'restautantDetail']);
+Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
 
 
 Route::controller(OrderController::class)->group(function () {
@@ -67,14 +68,13 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/show-active-restaurant', 'showActiveRestaurant');
     Route::get('/about-us/{category_id}', 'aboutUs');
     Route::get('/lowest-price', 'lowestPrice');
+    Route::get('/popular-products', 'getPopularProducts');
 });
 
 Route::controller(ProductsController::class)->group(function () {
-    Route::get('/get-by-category/{category_id}', 'getByCategory');
-
     Route::get('/products', 'getProducts');
-    Route::get('/popular-products', 'getPopularProducts');
     Route::get('/menu', 'menu');
+    Route::get('/get-by-category/{category_id}', 'getByCategory');
     Route::get('/product-by-category/{category_id}', 'productByCategory');
 });
 
