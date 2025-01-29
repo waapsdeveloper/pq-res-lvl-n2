@@ -28,21 +28,22 @@ class PopularProductsResource extends JsonResource
             "price" => $obj->price,
             "image" => Helper::returnFullImageUrl($obj->image),
             "status" => $obj->status,
-            "type" => $obj->productProp->type ?? null,
-            "meta_key" => $obj->productProp->meta_key ?? null,
-            "meta_value" => $obj->productProp->meta_value ?? null,
+            "variation" => $obj->productProps->map(function ($prodProps) {
+                return [
+                    "meta_key" => $prodProps->meta_key,
+                    "meta_value" => $prodProps->meta_value,
+                    "meta_key_type" => $prodProps->meta_key_type,
+                ];
+            }) ?? [],
             "category" => $obj->category ? [
+                "id" => $obj->category->id,
                 "name" => $obj->category->name,
                 "description" => $obj->category->description,
                 "image" => Helper::returnFullImageUrl($obj->category->image),
                 "status" => $obj->category->status,
             ] : [],
-            "restaurant" => $obj->restaurant ? [
-                "name" => $obj->restaurant->name,
-                "description" => $obj->restaurant->description,
-                "image" => Helper::returnFullImageUrl($obj->restaurant->image),
-                "status" => $obj->restaurant->status,
-            ] : [],
+
+
         ];
     }
 }
