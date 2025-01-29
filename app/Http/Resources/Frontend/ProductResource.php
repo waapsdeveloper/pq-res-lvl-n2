@@ -38,7 +38,6 @@ class ProductResource extends JsonResource
             'discount' => $obj->discount,
             "category_id" => $obj->category_id,
             "category" => $category,
-            "restaurant_id" => $obj->restaurant_id,
             "restaurant" => $obj->restaurant ?
                 [
                     'id' => $obj->restaurant->id,
