@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\RTablesController;
 use App\Http\Controllers\Frontend\AuthController;
+use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\TableBookingController;
 use App\Http\Controllers\Frontend\OrderController;
 use Illuminate\Support\Facades\Route;
@@ -67,7 +68,7 @@ Route::get('/menu', [ProductsController::class, 'menu']);
 Route::get('/product-by-category/{category_id}', [ProductsController::class, 'productByCategory']);
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
 Route::get('/today-deals', [ProductsController::class, 'todayDeals']);
-
+Route::get('categories', [CategoryController::class, 'categories']);
 
 Route::get('/about-us/{category_id}', [HomeController::class, 'aboutUs']);
 Route::get('/lowest-price', [HomeController::class, 'lowestPrice']);
