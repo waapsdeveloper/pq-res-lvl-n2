@@ -65,4 +65,9 @@ class HomeController extends Controller
         $products = Product::orderBy('price', 'asc')->first();
         return ServiceResponse::success('Lowest Price', ['products' => $products]);
     }
+    public function restaurants()
+    {
+        $restaurants = Restaurant::get();
+        return ServiceResponse::success('Restaurants are retrived successfully', ['data' => $restaurants]);
+    }
 }

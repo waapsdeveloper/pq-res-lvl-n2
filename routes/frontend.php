@@ -62,6 +62,7 @@ Route::controller(OrderController::class)->group(function () {
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/roles', 'roles');
+    Route::get('/restaurants', 'restaurants');
     Route::get('/restautant-detail/{id}', 'restautantDetail');
     Route::get('/show-active-restaurant', 'showActiveRestaurant');
     Route::get('/about-us/{category_id}', 'aboutUs');
