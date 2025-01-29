@@ -67,3 +67,7 @@ Route::get('/menu', [ProductsController::class, 'menu']);
 Route::get('/product-by-category/{category_id}', [ProductsController::class, 'productByCategory']);
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
 Route::get('/today-deals', [ProductsController::class, 'todayDeals']);
+
+
+Route::get('/about-us/{category_id}', [HomeController::class, 'aboutUs']);
+Route::get('/lowest-price', [HomeController::class, 'lowestPrice']);

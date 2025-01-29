@@ -27,3 +27,5 @@ yarn-error.log
 /.zed
 /app/Mail
 /resources/views/mail
+.txt
+new.txt

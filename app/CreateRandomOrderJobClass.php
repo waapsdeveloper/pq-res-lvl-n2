@@ -46,7 +46,7 @@ class CreateRandomOrderJobClass
         logger()->info('Random date generated', ['random_date' => $randomDate]);
 
         // Random User Creation or Selection
-        $unique = uniqid(11);
+        $phone = substr(str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT), 0, 10);
         $randomStatus = Arr::random(['active', 'active', 'inactive']);
         $createNewUser = Arr::random([true, false, true]);
         $restaurant_id = Arr::random([1, 2]);
@@ -54,8 +54,8 @@ class CreateRandomOrderJobClass
         if ($createNewUser) {
             $customer = User::create([
                 'name' => 'walk-in-customer',
-                'phone' => $unique,
-                'email' => $unique . '@domain.com',
+                'phone' => "+" . $phone,
+                'email' => $phone . '@domain.com',
                 'role_id' => 0,
                 'restaurant_id' => $restaurant_id,
                 'password' => Hash::make('admin123$'),
@@ -73,7 +73,7 @@ class CreateRandomOrderJobClass
         $productIds = Product::where('restaurant_id', $restaurant_id)
             ->whereBetween('id', $restaurant_id == 1 ? [1, 15] : [16, 25])
             ->inRandomOrder()
-            ->take(rand(1, 4))  
+            ->take(rand(1, 4))
             ->pluck('id');
 
         if ($productIds->isEmpty()) {
@@ -124,8 +124,10 @@ class CreateRandomOrderJobClass
             'updated_at' => $randomDate,
         ]);
         $order->update(
-            ['identifier' => Identifier::make('Order', $order->id, 3),
-            'invoice_no' => Identifier::make('Invoice', $order->id, 3)]
+            [
+                'identifier' => Identifier::make('Order', $order->id, 3),
+                'invoice_no' => Identifier::make('Invoice', $order->id, 3)
+            ]
         );
         logger()->info('Order created successfully', ['order_id' => $order->id]);
 

@@ -22,6 +22,8 @@ class ProductsController extends Controller
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         // Query to fetch products
+
+        
         $query = Product::query()
             ->where('restaurant_id', $resID)
             ->with('category', 'productProps', 'variation');
@@ -109,9 +111,7 @@ class ProductsController extends Controller
 
     public function todayDeals(Request $request)
     {
-        // $page = $request->input('page', 1);
-        // $perpage = $request->input('perpage', 8);
-        // dd($request->all());
+       
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         //     $perpage = $request->input('perpage', 8);

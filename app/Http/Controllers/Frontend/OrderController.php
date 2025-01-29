@@ -148,10 +148,6 @@ class OrderController extends Controller
         $orderNumber = $request->input('order_number');
         $phone = $request->input('phone');
 
-
-
-
-        // dd($orderNumber, $phone);
         $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table', 'notification')
             ->where('order_number', $orderNumber)
             ->orWhereHas('customer', function ($query) use ($phone) {
