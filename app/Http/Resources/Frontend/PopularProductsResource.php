@@ -28,7 +28,7 @@ class PopularProductsResource extends JsonResource
             "price" => $obj->price,
             "image" => Helper::returnFullImageUrl($obj->image),
             "status" => $obj->status,
-            "type" => $obj->productProp->type,
+            "type" => $obj->productProp->type ?? null,
             "meta_key" => $obj->productProp->meta_key,
             "meta_value" => $obj->productProp->meta_value,
             "category" => $obj->category ? [
