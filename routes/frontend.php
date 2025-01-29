@@ -11,7 +11,7 @@ use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\TableBookingController;
 use App\Http\Controllers\Frontend\OrderController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Middleware\ExtractRestaurantId;
 
 
 Route::post('/auth/register', [AuthController::class, 'register']);
@@ -53,22 +53,16 @@ Route::prefix('add-to-cart')->group(function () {
 Route::get('/restaurant-detail/{id}', [HomeController::class, 'restautantDetail']);
 Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
 
-
-Route::controller(OrderController::class)->group(function () {
-    Route::post('/make-order-bookings', 'makeOrderBookings');
-    Route::get('/search-customer-order', 'searchCustomerOrder');
-    Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
-    Route::post('/update-order-status', 'updateOrderStatus');
-});
-
-Route::controller(HomeController::class)->group(function () {
-    Route::get('/roles', 'roles');
-    Route::get('/restaurants', 'restaurants');
-    Route::get('/restautant-detail/{id}', 'restautantDetail');
-    Route::get('/show-active-restaurant', 'showActiveRestaurant');
-    Route::get('/about-us', 'aboutUs');
-    Route::get('/lowest-price', 'lowestPrice');
-    Route::get('/popular-products', 'getPopularProducts');
+Route::middleware([ExtractRestaurantId::class])->group(function () {
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/roles', 'roles');
+        Route::get('/restaurants', 'restaurants');
+        Route::get('/restautant-detail/{id}', 'restautantDetail');
+        Route::get('/show-active-restaurant', 'showActiveRestaurant');
+        Route::get('/about-us', 'aboutUs');
+        Route::get('/lowest-price', 'lowestPrice');
+        Route::get('/popular-products', 'getPopularProducts');
+    });
 });
 
 Route::controller(ProductsController::class)->group(function () {
@@ -77,10 +71,15 @@ Route::controller(ProductsController::class)->group(function () {
     Route::get('/get-by-category/{category_id}', 'getByCategory');
     Route::get('/product-by-category/{category_id}', 'productByCategory');
 });
+Route::controller(OrderController::class)->group(function () {
+    Route::post('/make-order-bookings', 'makeOrderBookings');
+    Route::get('/search-customer-order', 'searchCustomerOrder');
+    Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
+    Route::post('/update-order-status', 'updateOrderStatus');
+});
+
+
 
 Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
-
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
-
-
 Route::get('/all-categories', [CategoryController::class, 'categories']);

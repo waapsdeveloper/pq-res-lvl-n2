@@ -34,11 +34,9 @@ class HomeController extends Controller
 
     public function aboutUs(Request $request)
     {
-        $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $categories = Category::withCount('products')
-            ->where('restaurant_id', $resID)
+            ->where('restaurant_id', $request->restaurant_id)
             ->get();
 
         $categories = $categories->map(function ($category) {
@@ -54,9 +52,11 @@ class HomeController extends Controller
         return ServiceResponse::success('Categories retrieved successfully', ['data' => $categories]);
     }
 
-    public function lowestPrice()
+    public function lowestPrice(Request $request)
     {
-        $products = Product::orderBy('price', 'asc')->first();
+        $products = Product::orderBy('price', 'asc')
+            ->where('restaurant_id', $request->restaurant_id)
+            ->first();
         return ServiceResponse::success('Lowest Price', ['products' => $products]);
     }
     public function restaurants()
@@ -69,14 +69,11 @@ class HomeController extends Controller
         // Set default pagination parameters
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 8);
-        $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
-
         // Query to fetch products
         $query = Product::query()
             ->with('category', 'restaurant', 'productProps', 'variation')
 
-            ->where('restaurant_id', $resID)
+            ->where('restaurant_id', $request->restaurant_id)
             ->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
         // Transform the collection into the desired format
@@ -88,16 +85,12 @@ class HomeController extends Controller
     }
     public function todayDeals(Request $request)
     {
-
-        $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
-        //     $perpage = $request->input('perpage', 8);
         $deals = [];
         // Loop until we have 5 deals
         while (count($deals) < 5) {
             // Get 3 random categories
             $categories = Category::query()
-                ->where('restaurant_id', $resID)
+                ->where('restaurant_id', $request->restaurant_id)
                 ->where('status', 'active')->inRandomOrder()->limit(2)->get();
 
             $products = [];
