@@ -86,8 +86,8 @@ class OrderController extends Controller
         $tableNo = $data['tableNo'] ?? null;
         $finalPrice = $data['total_price'] - $discount;
         $uniqid = uniqid();
-        $orderNote = $request->notes;
-        $orderStatus = $request->status;
+        $orderNote = $data['notes'] ?? null;
+        $orderStatus = $data['status'] ?? 'pending';
         // $identifier = Identifier::make('Product', $product->id, 4);
         // Identifier::make('Order',);
         $order = Order::create([

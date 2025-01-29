@@ -44,8 +44,21 @@ Route::resource('/rtables', RTablesController::class)
     ->only(['index', 'show', 'store', 'update', 'destroy'])
     ->names('rtables');
 
-Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
+Route::prefix('add-to-cart')->group(function () {
+    Route::resource('/', CartController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('cart'); // Restrict to specific CRUD actions.
+});
 
+
+
+Route::post('/make-order-bookings', [OrderController::class, 'makeOrderBookings']);
+Route::get('/track-customer-order/{order_number}', [OrderController::class, 'trackCustomerOrder']);
+Route::post('/update-order-status', [OrderController::class, 'updateOrderStatus']);
+
+Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
+Route::get('/roles', [HomeController::class, 'roles']);
 
 Route::get('/products', [ProductsController::class, 'getProducts']);
 Route::get('/popular-products', [ProductsController::class, 'getPopularProducts']);
@@ -53,15 +66,3 @@ Route::get('/menu', [ProductsController::class, 'menu']);
 Route::get('/product-by-category/{category_id}', [ProductsController::class, 'productByCategory']);
 Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
 Route::get('/today-deals', [ProductsController::class, 'todayDeals']);
-
-
-Route::prefix('add-to-cart')->group(function () {
-    Route::resource('/', CartController::class)
-        ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'update', 'store', 'destroy'])
-        ->names('cart'); // Restrict to specific CRUD actions.
-});
-Route::post('/make-order-bookings', [OrderController::class, 'makeOrderBookings']);
-Route::get('/track-customer-order/{order_number}', [OrderController::class, 'trackCustomerOrder']);
-Route::post('/update-order-status', [OrderController::class, 'updateOrderStatus']);
-Route::get('/roles', [HomeController::class, 'roles']);
