@@ -74,23 +74,8 @@ class AddOrderBookingResource extends JsonResource
 
                 ] : null,
             'table' => $obj->table ?? null,
-            // ?
-            //     [
-            //         'id' => $obj->notification->id,
-            //         'title' => $obj->notification->title,
-            //         'message' => $obj->notification->message,
-            //         'status' => $obj->notification->status,
-
-            //     ] : null,
-            // 'restaurant_timings' => $obj->restaurant->timings->map(function ($timing) {
-            //     return [
-            //         'day' => $timing->day,
-            //         'start_time' => $timing->start_time,
-            //         'end_time' => $timing->end_time,
-            //         'status' => $timing->status,
-            //     ];
-            // }),
-
+            'created_at' => $obj->created_at,
+            'updated_at' => $obj->updated_at,
         ];
     }
 }
