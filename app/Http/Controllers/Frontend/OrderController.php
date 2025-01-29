@@ -136,6 +136,9 @@ class OrderController extends Controller
     {
         $order = Order::with('orderProducts.product', 'customer', 'restaurant', 'table', 'notification')
             ->where('order_number', $orderNumber)->first();
+        if (!$order) {
+            return ServiceResponse::error("$orderNumber is not found", 404);
+        }
 
         $data = new AddOrderBookingResource($order);
         return ServiceResponse::success("Customer Order Tracked Successfully", ['order' => $data]);
