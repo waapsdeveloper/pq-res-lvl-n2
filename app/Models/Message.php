@@ -14,6 +14,7 @@ class Message extends Model
         'name',
         'email',
         'phone',
-        'message'
+        'message',
+        'restaurant_id'
     ];
 }

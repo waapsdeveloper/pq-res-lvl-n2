@@ -28,6 +28,7 @@ class StoreMessage extends FormRequest
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'message' => 'required|string|max:1000',
+            'restaurant_id' => 'required|integer|exists:restaurants,id',
         ];
     }
     protected function failedValidation(Validator $validator)

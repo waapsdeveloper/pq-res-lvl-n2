@@ -19,7 +19,6 @@ class MessageController extends Controller
      */
     public function index(Request $request)
     {
-
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
         $active_restaurant = Helper::getActiveRestaurantId();
@@ -49,6 +48,7 @@ class MessageController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'message' => $data['message'],
+            'restaurant_id' => $data['restaurant_id'],
         ]);
 
         return ServiceResponse::success(
@@ -79,6 +79,7 @@ class MessageController extends Controller
             'email' => $data['email'] ?? $contact->email,
             'phone' => $data['phone'] ?? $contact->phone,
             'message' => $data['message'] ?? $contact->message,
+            'restaurant_id' => $data['restaurant_id'] ?? $contact->restaurant_id,
         ]);
 
 

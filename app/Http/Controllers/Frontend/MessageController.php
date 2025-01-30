@@ -18,6 +18,7 @@ class MessageController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'message' => $data['message'],
+            'restaurant_id' => $data['restaurant_id'],
         ]);
 
         $responseData = [
@@ -26,6 +27,7 @@ class MessageController extends Controller
             'email' => $contact->email,
             'phone' => $contact->phone,
             'message' => $contact->message,
+            'restaurant_id' => $contact->restaurant_id,
             'created_at' => $contact->created_at,
             'updated_at' => $contact->updated_at,
         ];

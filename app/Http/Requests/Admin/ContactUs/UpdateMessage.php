@@ -28,6 +28,7 @@ class UpdateMessage extends FormRequest
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
             'message' => 'nullable|string|max:1000',
+            'restaurant_id' => 'nullable|integer|exists:restaurants,id',
         ];
     }
     protected function failedValidation(Validator $validator)
