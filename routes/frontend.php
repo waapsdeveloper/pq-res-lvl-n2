@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductsController;
-use App\Http\Controllers\Frontend\ContactUsController;
+use App\Http\Controllers\Frontend\MessageController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\RTablesController;
@@ -50,8 +50,14 @@ Route::prefix('add-to-cart')->group(function () {
         ->names('cart'); // Restrict to specific CRUD actions.
 });
 
+
+Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
+Route::post('/contact-us', [MessageController::class, 'store'])->name('fe.contactUs.store');
+Route::get('/all-categories', [CategoryController::class, 'categories']);
 Route::get('/restaurant-detail/{id}', [HomeController::class, 'restautantDetail']);
 Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
+
+
 Route::controller(HomeController::class)->group(function () {
     Route::get('/restaurants', 'restaurants');
     Route::get('/restautant-detail/{id}', 'restautantDetail');
@@ -78,8 +84,3 @@ Route::middleware([ExtractRestaurantId::class])->group(function () {
         Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
     });
 });
-
-
-Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
-Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
-Route::get('/all-categories', [CategoryController::class, 'categories']);

@@ -20,7 +20,6 @@ class MessageController extends Controller
             'message' => $data['message'],
         ]);
 
-
         $responseData = [
             'id' => $contact->id,
             'name' => $contact->name,

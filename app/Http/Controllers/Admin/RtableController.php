@@ -107,45 +107,19 @@ class RtableController extends Controller
      */
     public function show(string $id)
     {
-        //
-        // Attempt to find the restaurant by ID
-        $restaurant = Rtable::with('restaurant', 'restaurantTimings')
+        $rTables = Rtable::with('restaurant', 'restaurantTimings')
             ->withCount('orders')
             ->find($id);
 
-        // If the restaurant doesn't exist, return an error response
-        if (!$restaurant) {
+        if (!$rTables) {
             return ServiceResponse::error("Rtable not found", 404);
         }
-        $data = new RtableResource($restaurant);
+        $data = new RtableResource($rTables);
 
-        // Return a success response with the restaurant data
         return ServiceResponse::success("Rtable details retrieved successfully", ['Rtable' => $data]);
     }
 
-    public function getByRestaurantId(string $id)
-    {
-        // Fetch and group the data as before
-        $restaurants = Rtable::with('restaurant:id,name')
-            ->where('restaurant_id', $id)
-            ->select('id', 'restaurant_id', 'floor', 'identifier', 'no_of_seats')
-            ->withCount('orders')
-            ->get()
-            ->groupBy('restaurant_id');
 
-        // Get the first (and only) restaurant data
-        $restaurantData = $restaurants->first();
-
-        // Collect floor values into an array of strings
-        $floors = $restaurantData->pluck('floor')->unique()->values()->toArray();
-
-        // Return the tables and floors together
-
-        return ServiceResponse::success('success', [
-            'restaurant' => $restaurants->first(),
-            'floors' => $floors
-        ]);
-    }
 
 
     /**
@@ -217,5 +191,23 @@ class RtableController extends Controller
         Rtable::whereIn('id', $ids)->delete();
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
+    }
+    public function getByRestaurantId(string $id)
+    {
+        $restaurants = Rtable::with('restaurant:id,name')
+            ->where('restaurant_id', $id)
+            ->select('id', 'restaurant_id', 'floor', 'identifier', 'no_of_seats')
+            ->withCount('orders')
+            ->get()
+            ->groupBy('restaurant_id');
+
+        $restaurantData = $restaurants->first();
+
+        $floors = $restaurantData->pluck('floor')->unique()->values()->toArray();
+
+        return ServiceResponse::success('success', [
+            'restaurant' => $restaurants->first(),
+            'floors' => $floors
+        ]);
     }
 }
