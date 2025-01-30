@@ -173,7 +173,7 @@ Route::prefix('invoice')->group(function () {
         ->names('invoice'); // Restrict to specific CRUD actions.
 });
 Route::prefix('message')->group(function () {
-    Route::get('/reply/{email}', [MessageController::class, 'reply'])->name('message.reply');
+    Route::put('/reply/{email}', [MessageController::class, 'reply'])->name('message.reply');
     Route::get('/bulk-delete', [MessageController::class, 'bulkDelete'])->name('message.BulkDelete');
     Route::resource('/', MessageController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
