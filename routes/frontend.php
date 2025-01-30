@@ -59,7 +59,7 @@ Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant']
 
 
 Route::controller(HomeController::class)->group(function () {
-    Route::get('/restaurants', 'restaurants');
+    Route::get('/all-branches', 'allBranches');
     Route::get('/restautant-detail/{id}', 'restautantDetail');
     Route::get('/show-active-restaurant', 'showActiveRestaurant');
 });

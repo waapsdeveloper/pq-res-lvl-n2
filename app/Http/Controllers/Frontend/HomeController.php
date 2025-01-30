@@ -58,10 +58,10 @@ class HomeController extends Controller
             ->first();
         return ServiceResponse::success('Lowest Price', ['products' => $products]);
     }
-    public function restaurants()
+    public function allBranches()
     {
-        $restaurants = Restaurant::get();
-        return ServiceResponse::success('Restaurants are retrived successfully', ['data' => $restaurants]);
+        $allBranches = Restaurant::get();
+        return ServiceResponse::success('allBranches are retrived successfully', ['data' => $allBranches]);
     }
     public function getPopularProducts(Request $request)
     {
