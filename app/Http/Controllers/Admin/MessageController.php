@@ -26,7 +26,7 @@ class MessageController extends Controller
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $query = Message::query()
-            // ->where('restaurant_id', $resID)
+            ->where('restaurant_id', $resID)
             ->orderByDesc('id');
 
         // Paginate the results
@@ -35,7 +35,7 @@ class MessageController extends Controller
             return new MessageResource($item);
         });
 
-        return ServiceResponse::success("Contact list retrieved successfully", ['data' => $data]);
+        return ServiceResponse::success("Messages list retrieved successfully", ['data' => $data]);
     }
 
     /**

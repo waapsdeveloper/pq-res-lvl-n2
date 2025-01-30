@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductsController;
-use App\Http\Controllers\Frontend\MessageController;
+use App\Http\Controllers\Frontend\ContactUsController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\RTablesController;
@@ -77,9 +77,9 @@ Route::middleware([ExtractRestaurantId::class])->group(function () {
         Route::get('/search-customer-order', 'searchCustomerOrder');
         Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
     });
-    Route::get('/get-tables-by-restaurant/{no_of_guest?}', [RtableController::class, 'getTablesByRestaurantId']);
 });
 
 
-Route::post('/contact-us', [MessageController::class, 'store'])->name('fe.Message.store');
+Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
+Route::post('/contact-us', [ContactUsController::class, 'store'])->name('fe.contactUs.store');
 Route::get('/all-categories', [CategoryController::class, 'categories']);

@@ -123,31 +123,29 @@ class RtableController extends Controller
         return ServiceResponse::success("Rtable details retrieved successfully", ['Rtable' => $data]);
     }
 
-    public function getTablesByRestaurantId(Request $request, int $noOfGuests = 0)
+    public function getByRestaurantId(string $id)
     {
         // Fetch and group the data as before
         $restaurants = Rtable::with('restaurant:id,name')
-            ->where('restaurant_id', (int)$request->restaurant_id)
+            ->where('restaurant_id', $id)
             ->select('id', 'restaurant_id', 'floor', 'identifier', 'no_of_seats')
             ->withCount('orders')
             ->get()
             ->groupBy('restaurant_id');
 
+        // Get the first (and only) restaurant data
         $restaurantData = $restaurants->first();
 
+        // Collect floor values into an array of strings
         $floors = $restaurantData->pluck('floor')->unique()->values()->toArray();
 
-        $availableTables = $restaurantData->filter(function ($table) use ($noOfGuests) {
-            return $table->no_of_seats >= ($noOfGuests + 5);
-        });
+        // Return the tables and floors together
 
         return ServiceResponse::success('success', [
             'restaurant' => $restaurants->first(),
-            'floors' => $floors,
-            'available_tables' => $availableTables
+            'floors' => $floors
         ]);
     }
-
 
 
     /**
