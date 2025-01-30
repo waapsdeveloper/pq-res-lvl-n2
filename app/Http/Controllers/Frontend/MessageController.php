@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\ContactUs\StoreContactUs;
-use App\Models\ContactUs;
+use App\Http\Requests\Frontend\Message\StoreMessage;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
-class ContactUsController extends Controller
+class MessageController extends Controller
 {
-    public function store(StoreContactUs $request)
+    public function store(StoreMessage $request)
     {
         $data = $request->validated();
-        $contact = ContactUs::create([
+        $contact = Message::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],

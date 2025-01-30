@@ -123,29 +123,31 @@ class RtableController extends Controller
         return ServiceResponse::success("Rtable details retrieved successfully", ['Rtable' => $data]);
     }
 
-    public function getByRestaurantId(string $id)
-    {
-        // Fetch and group the data as before
-        $restaurants = Rtable::with('restaurant:id,name')
-            ->where('restaurant_id', $id)
-            ->select('id', 'restaurant_id', 'floor', 'identifier', 'no_of_seats')
-            ->withCount('orders')
-            ->get()
-            ->groupBy('restaurant_id');
+    // public function getTablesByRestaurantId(Request $request, int $noOfGuests = 0)
+    // {
+    //     // Fetch and group the data as before
+    //     $restaurants = Rtable::with('restaurant:id,name')
+    //         ->where('restaurant_id', (int)$request->restaurant_id)
+    //         ->select('id', 'restaurant_id', 'floor', 'identifier', 'no_of_seats')
+    //         ->withCount('orders')
+    //         ->get()
+    //         ->groupBy('restaurant_id');
 
-        // Get the first (and only) restaurant data
-        $restaurantData = $restaurants->first();
+    //     $restaurantData = $restaurants->first();
 
-        // Collect floor values into an array of strings
-        $floors = $restaurantData->pluck('floor')->unique()->values()->toArray();
+    //     $floors = $restaurantData->pluck('floor')->unique()->values()->toArray();
 
-        // Return the tables and floors together
+    //     $availableTables = $restaurantData->filter(function ($table) use ($noOfGuests) {
+    //         return $table->no_of_seats >= ($noOfGuests + 5);
+    //     });
 
-        return ServiceResponse::success('success', [
-            'restaurant' => $restaurants->first(),
-            'floors' => $floors
-        ]);
-    }
+    //     return ServiceResponse::success('success', [
+    //         'restaurant' => $restaurants->first(),
+    //         'floors' => $floors,
+    //         'available_tables' => $availableTables
+    //     ]);
+    // }
+
 
 
     /**

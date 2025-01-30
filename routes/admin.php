@@ -3,7 +3,7 @@
 use App\Helpers\Helper;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ContactUsController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvoiceController;
@@ -172,10 +172,13 @@ Route::prefix('invoice')->group(function () {
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('invoice'); // Restrict to specific CRUD actions.
 });
-Route::prefix('contact-us')->group(function () {
-
-    Route::get('/', [ContactUsController::class, 'index'])->name('contact.index');
-    Route::get('/bulk-delete', [ContactUsController::class, 'bulkDelete'])->name('contactBulkDelete');
+Route::prefix('message')->group(function () {
+    Route::put('/reply/{email}', [MessageController::class, 'reply'])->name('message.reply');
+    Route::get('/bulk-delete', [MessageController::class, 'bulkDelete'])->name('message.BulkDelete');
+    Route::resource('/', MessageController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('invoice');
 });
 
 
@@ -197,22 +200,6 @@ Route::prefix('notifications')->group(function () {
     Route::get('/show/{notificationId}', [NotificationController::class, 'show']);
 });
 
-Route::get('/mail', function () {
-    $data = [
-        'title' => 'Welcome to Our Service!',
-        'menu_url' => 'https://localcraftfood.com/menu',
-        'name' => 'John Doe',
-        'restaurant_name' => 'Local Craft Food',
-        'body' => 'This is the body of the email',
-        'phone' => '1234567890',
-        'email' => 'inquires@localcraftfood.com',
-        'address' => '1234 Main St, Chicago, IL 60601',
-    ];
-
-    Mail::send('mail.mail', $data, function ($message) {
-        $message->to('mr.ahsanahmed5@gmail.com')
-            ->subject('Reply from Local Craft Food ');
-    });
-
-    return 'Mail sent successfully!';
-});
+// Route::get('/mail', function () {
+   
+// });
