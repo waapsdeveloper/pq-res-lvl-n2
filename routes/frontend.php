@@ -77,7 +77,7 @@ Route::middleware([ExtractRestaurantId::class])->group(function () {
         Route::get('/search-customer-order', 'searchCustomerOrder');
         Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
     });
-    Route::get('/get-tables-by-restaurant/{no_of_guest}', [RtableController::class, 'getTablesByRestaurantId']);
+    Route::get('/get-tables-by-restaurant/{no_of_guest?}', [RtableController::class, 'getTablesByRestaurantId']);
 });
 
 
