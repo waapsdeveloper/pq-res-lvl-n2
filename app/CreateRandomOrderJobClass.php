@@ -47,7 +47,7 @@ class CreateRandomOrderJobClass
         logger()->info('Random date generated', ['random_date' => $randomDate]);
 
         // Random User Creation or Selection
-        $phone = substr(str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT), 0, 10);
+        $phone = substr(str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT), 7, 10);
         $randomStatus = Arr::random(['active', 'active', 'inactive']);
         $createNewUser = Arr::random([true, false, true]);
         $restaurant_id = Arr::random([1, 2]);
