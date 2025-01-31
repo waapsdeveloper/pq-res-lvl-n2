@@ -52,13 +52,13 @@ Route::prefix('add-to-cart')->group(function () {
 
 Route::post('/contact-us', [MessageController::class, 'store'])->name('fe.contactUs.store');
 Route::get('/all-categories', [CategoryController::class, 'categories']);
-Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
+// Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
 
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/all-branches', 'allBranches');
     Route::get('/restautant-detail/{id}', 'restautantDetail');
-    Route::get('/show-active-restaurant', 'showActiveRestaurant');
+    Route::get('/restaurant/active', 'showActiveRestaurant');
 });
 
 Route::middleware([ExtractRestaurantId::class])->group(function () {
