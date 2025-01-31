@@ -25,7 +25,7 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
-/app/Mail
-/resources/views/mail
 .txt
 new.txt
+app/Mail/ForgotUser.php
+resources/views/mail/forgot-user.blade.php
