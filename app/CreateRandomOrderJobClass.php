@@ -57,7 +57,7 @@ class CreateRandomOrderJobClass
         if ($createNewUser) {
             $customer = User::create([
                 'name' => 'walk-in-customer',
-                'phone' => "+968" . $cityCode . $phone,
+                'phone' => "+968-" . $cityCode . $phone,
                 'email' => $phone . '@domain.com',
                 'role_id' => 0,
                 'restaurant_id' => $restaurant_id,
