@@ -87,11 +87,11 @@ class OrderController extends Controller
         $uniqid = uniqid();
         $orderNote = $data['notes'] ?? null;
         $orderStatus = $data['status'] ?? 'pending';
-        // $identifier = Identifier::make('Product', $product->id, 4);
-        // Identifier::make('Order',);
+        $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
+
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
-            'order_number' => 'ORD-' . $uniqid,
+            'order_number' => $orderNumber,
             'type' => $type,
             'status' => $orderStatus,
             'notes' => $orderNote,

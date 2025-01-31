@@ -165,7 +165,7 @@ class OrderController extends Controller
         $tableNo = $data['tableNo'] ?? null;
         // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $finalPrice = $totalPrice - $discount;
-        $orderNumber = strtoupper(uniqid('ORD-'));
+        $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
 
