@@ -109,6 +109,7 @@ class CreateRandomOrderJobClass
         $type = Arr::random(['dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation']);
         $status = Arr::random(['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed']);
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
+        $invoiceNumber = 'INV-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $randomNote = Helper::getRandomOrderNote();
 
         $order = Order::create([
@@ -119,7 +120,7 @@ class CreateRandomOrderJobClass
             'notes' => $randomNote,
             'customer_id' => $customer->id,
             'discount' => $discount,
-            'invoice_no' => strtoupper(uniqid('INV-')),
+            'invoice_no' => $invoiceNumber,
             'table_no' => rand(1, 20),
             'total_price' => $finalPrice,
             'restaurant_id' => $restaurant_id,
