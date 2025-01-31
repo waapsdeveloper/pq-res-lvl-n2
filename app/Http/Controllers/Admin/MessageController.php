@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\Message\UpdateStatusMessageRequest;
 use App\Http\Resources\Admin\MessageResource;
 use App\Models\Message;
 use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -122,6 +123,7 @@ class MessageController extends Controller
         if (!$messenger) {
             return ServiceResponse::error('Messenger not found', 404);
         }
+        $user = User::with('role')->find($request->id);
 
         $data = $request->validated();
 
@@ -134,7 +136,7 @@ class MessageController extends Controller
             'restaurant_name' => $messenger->restaurant->name,
             'content' => $data['content'],
             'restaurant_email' => $messenger->restaurant->email,
-            'reply_by_user_id' => $request->user()->id,
+            'reply_by_user_id' => $user->role->name,
         ];
 
         if (!$messenger) {
