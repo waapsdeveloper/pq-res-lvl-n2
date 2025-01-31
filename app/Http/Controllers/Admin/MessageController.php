@@ -120,14 +120,15 @@ class MessageController extends Controller
     public function reply(ReplyRequest $request, $email)
     {
         $messenger = Message::with('restaurant')->where('email', $email)->first();
+        $data = $request->validated();
         if (!$messenger) {
             return ServiceResponse::error('Messenger not found', 404);
         }
+        
+        $restaurant = Restaurant::find((int) $request->restaurant_id);
         $user = User::with('role')->find($request->id);
 
-        $data = $request->validated();
 
-        $restaurant = Restaurant::find((int) $request->restaurant_id);
         $data = [
             'mail_title' => 'Welcome to Our Service!',
             'restaurant_phone' => $restaurant->phone,
