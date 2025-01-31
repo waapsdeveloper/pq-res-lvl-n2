@@ -103,4 +103,31 @@ class Helper
             Log::debug("Pusher Error", ['error' => $e->getMessage()]);
         }
     }
+    public static function getRandomOrderNote()
+    {
+        $phrases = [
+            "Customer prefers extra spicy food.",
+            "Add extra napkins and cutlery.",
+            "Customer has requested a window seat.",
+            "Please prepare the dish gluten-free.",
+            "Add a birthday candle to the dessert.",
+            "Customer allergic to nuts. Avoid any nut-based items.",
+            "Customer prefers less salt in food.",
+            "Include a thank you card with the order.",
+            "Serve with extra dipping sauces.",
+            "Customer will pick up the order at 6 PM.",
+            "Please ensure contactless delivery.",
+            "Customer requested a call before delivery.",
+            "Include extra ketchup and mustard packets.",
+            "Customer is celebrating an anniversary.",
+            "Add a complimentary drink if possible.",
+            "Customer prefers low-fat dressing.",
+            "Separate sauces from the main dish.",
+            "Add a note saying 'Happy Birthday!'",
+            "Customer will bring their own wine.",
+            "Provide a high chair for a toddler."
+        ];
+
+        return $phrases[array_rand($phrases)];
+    }
 }

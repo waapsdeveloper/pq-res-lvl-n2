@@ -168,7 +168,7 @@ class OrderController extends Controller
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
-
+        
         $order = Order::create([
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\Helper;
 use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Resources\Admin\OrderResource;
@@ -108,13 +109,13 @@ class CreateRandomOrderJobClass
         $type = Arr::random(['dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation']);
         $status = Arr::random(['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed']);
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
-
+        $randomNote = Helper::getRandomOrderNote();
         $order = Order::create([
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,
             'type' => $type,
             'status' => $status,
-            'notes' => 'This is a randomly generated order.',
+            'notes' => $randomNote,
             'customer_id' => $customer->id,
             'discount' => $discount,
             'invoice_no' => strtoupper(uniqid('INV-')),
@@ -151,7 +152,7 @@ class CreateRandomOrderJobClass
             'payment_method' => $paymentMethod,
             'total' => $order->total_price,
             'status' => $invoiceStatuses,
-            'notes' => "Random invoice generated.",
+            'notes' => "Random invoice generated with NO: $order->invoice_no",
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
         ]);
