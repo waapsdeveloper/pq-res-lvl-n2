@@ -45,7 +45,9 @@ class CreateRandomOrderJobClass
 
         $randomDate = Arr::random($randomDate);
         logger()->info('Random date generated', ['random_date' => $randomDate]);
-
+        $cityCodes = ['21', '22', '23', '24', '25', '26'];
+        $cityCode = $cityCodes[array_rand($cityCodes)];
+        $phone = str_pad(mt_rand(1000000, 9999999), 7, '0', STR_PAD_LEFT);
         // Random User Creation or Selection
         $phone = substr(str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT), 7, 10);
         $randomStatus = Arr::random(['active', 'active', 'inactive']);
@@ -55,7 +57,7 @@ class CreateRandomOrderJobClass
         if ($createNewUser) {
             $customer = User::create([
                 'name' => 'walk-in-customer',
-                'phone' => "+" . $phone,
+                'phone' => "+968" . $cityCode . $phone,
                 'email' => $phone . '@domain.com',
                 'role_id' => 0,
                 'restaurant_id' => $restaurant_id,
