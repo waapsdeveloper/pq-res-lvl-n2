@@ -124,7 +124,7 @@ class MessageController extends Controller
         if (!$messenger) {
             return ServiceResponse::error('Messenger not found', 404);
         }
-        
+
         $restaurant = Restaurant::find((int) $request->restaurant_id);
         $user = User::with('role')->find($request->id);
 
@@ -138,6 +138,7 @@ class MessageController extends Controller
             'content' => $data['content'],
             'restaurant_email' => $messenger->restaurant->email,
             'reply_by_user_id' => $user->name,
+            'role_of_user' => $user->role->name,
         ];
 
         if (!$messenger) {
