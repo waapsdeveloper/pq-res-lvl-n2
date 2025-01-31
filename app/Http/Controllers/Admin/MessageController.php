@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Message\StoreMessage;
 use App\Http\Requests\Admin\Message\UpdateMessage;
 use App\Http\Resources\Admin\MessageResource;
 use App\Models\Message;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -80,6 +81,7 @@ class MessageController extends Controller
             'email' => $data['email'] ?? $message->email,
             'phone' => $data['phone'] ?? $message->phone,
             'message' => $data['message'] ?? $message->message,
+            'status' => $data['status'] ?? $message->status,
             'restaurant_id' => $data['restaurant_id'] ?? $message->restaurant_id,
         ]);
 
@@ -99,6 +101,21 @@ class MessageController extends Controller
         return ServiceResponse::success("message deleted successfully");
     }
 
+    public function updateStatus(Request $request)
+    {
+        $data = Validator::make($request->all(), [
+            'id' => 'required',
+            'status' => 'required',
+        ])->validate();
+
+        $message = Message::find($data['id']);
+        if (!$message) {
+            return ServiceResponse::error("message not found", 404);
+        }
+
+        $message->update(['status' => $data['status']]);
+        return ServiceResponse::success("Message status updated successfully", ['message' => $message]);
+    }
     public function reply($email)
     {
         // Prepare the data for the email
