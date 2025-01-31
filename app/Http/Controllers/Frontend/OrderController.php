@@ -122,10 +122,9 @@ class OrderController extends Controller
 
         $order->load('orderProducts.product');
 
+
         $notification = $this->createNotification($order);
-
         $noti = new NotifyResource($notification);
-
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
 
         return ServiceResponse::success('Order created successfully', ['data' => $order]);

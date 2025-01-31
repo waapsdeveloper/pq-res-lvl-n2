@@ -168,7 +168,7 @@ class OrderController extends Controller
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $orderNote = $request->notes;
         $orderStatus = $request->status;
-        
+
         $order = Order::create([
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,
@@ -201,13 +201,13 @@ class OrderController extends Controller
             ]);
         }
 
-        $notification = $this->createNotification($order);
         $order->load('orderProducts.product');
 
-        $data = new OrderResource($order);
+        $notification = $this->createNotification($order);
         $noti = new NotifyResource($notification);
-
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
+
+        $data = new OrderResource($order);
 
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }

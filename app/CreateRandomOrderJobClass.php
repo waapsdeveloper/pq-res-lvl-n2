@@ -110,6 +110,7 @@ class CreateRandomOrderJobClass
         $status = Arr::random(['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed']);
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $randomNote = Helper::getRandomOrderNote();
+
         $order = Order::create([
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,
