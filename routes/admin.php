@@ -200,6 +200,3 @@ Route::prefix('notifications')->group(function () {
     Route::get('/show/{notificationId}', [NotificationController::class, 'show']);
 });
 
-// Route::get('/mail', function () {
-   
-// });
