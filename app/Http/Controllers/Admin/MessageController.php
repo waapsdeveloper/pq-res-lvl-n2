@@ -126,8 +126,7 @@ class MessageController extends Controller
         }
 
         $restaurant = Restaurant::find((int) $request->restaurant_id);
-        $user = User::with('role')->find($request->id);
-
+        $user = User::with('role')->find($request->reply_by_user_id);
 
         $data = [
             'mail_title' => 'Welcome to Our Service!',
