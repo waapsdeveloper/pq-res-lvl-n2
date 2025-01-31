@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Message\ReplyRequest;
 use App\Http\Requests\Admin\Message\StoreMessage;
 use App\Http\Requests\Admin\Message\UpdateMessage;
+use App\Http\Requests\Admin\Message\UpdateStatusMessageRequest;
 use App\Http\Resources\Admin\MessageResource;
 use App\Models\Message;
 use App\Models\Restaurant;
@@ -102,12 +104,9 @@ class MessageController extends Controller
         return ServiceResponse::success("message deleted successfully");
     }
 
-    public function updateStatus(Request $request)
+    public function updateStatus(UpdateStatusMessageRequest $request)
     {
-        $data = Validator::make($request->all(), [
-            'id' => 'required',
-            'status' => 'required',
-        ])->validate();
+        $data = $request->validated();
 
         $message = Message::find($data['id']);
         if (!$message) {
@@ -117,17 +116,14 @@ class MessageController extends Controller
         $message->update(['status' => $data['status']]);
         return ServiceResponse::success("Message status updated successfully", ['message' => $message]);
     }
-    public function reply(Request $request, $email)
+    public function reply(ReplyRequest $request, $email)
     {
         $messenger = Message::with('restaurant')->where('email', $email)->first();
         if (!$messenger) {
             return ServiceResponse::error('Messenger not found', 404);
         }
 
-        $data = Validator::make($request->all(), [
-            'content' => 'required',
-            'reply_by_user_id' => 'required'
-        ])->validate();
+        $data = $request->validated();
 
         $restaurant = Restaurant::find((int) $request->restaurant_id);
         $data = [
