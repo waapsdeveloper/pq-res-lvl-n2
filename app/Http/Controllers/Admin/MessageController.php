@@ -137,7 +137,7 @@ class MessageController extends Controller
             'content' => $data['content'],
             'restaurant_email' => $messenger->restaurant->email,
             'reply_by_user_id' => $user->name,
-            'role_of_user' => $user->role->name,
+            'role_of_user' => $user->role->slug,
         ];
 
         if (!$messenger) {

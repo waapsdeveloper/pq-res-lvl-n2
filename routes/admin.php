@@ -174,6 +174,8 @@ Route::prefix('invoice')->group(function () {
 });
 Route::prefix('message')->group(function () {
     Route::put('/reply/{email}', [MessageController::class, 'reply'])->name('message.reply');
+    Route::put('/update-status', [MessageController::class, 'updateStatus'])->name('message.updateStatus');
+    
     Route::get('/bulk-delete', [MessageController::class, 'bulkDelete'])->name('message.BulkDelete');
     Route::resource('/', MessageController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
