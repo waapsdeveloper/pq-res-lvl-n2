@@ -54,7 +54,6 @@ Route::prefix('add-to-cart')->group(function () {
 Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
 Route::post('/contact-us', [MessageController::class, 'store'])->name('fe.contactUs.store');
 Route::get('/all-categories', [CategoryController::class, 'categories']);
-Route::get('/restaurant-detail/{id}', [HomeController::class, 'restautantDetail']);
 Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
 
 
@@ -63,7 +62,9 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/restautant-detail/{id}', 'restautantDetail');
     Route::get('/show-active-restaurant', 'showActiveRestaurant');
 });
+
 Route::middleware([ExtractRestaurantId::class])->group(function () {
+
     Route::controller(HomeController::class)->group(function () {
         Route::get('/roles', 'roles');
         Route::get('/about-us', 'aboutUs');
