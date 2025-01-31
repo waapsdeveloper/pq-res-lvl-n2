@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Message\StoreMessage;
 use App\Http\Requests\Admin\Message\UpdateMessage;
 use App\Http\Resources\Admin\MessageResource;
 use App\Models\Message;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -116,18 +117,28 @@ class MessageController extends Controller
         $message->update(['status' => $data['status']]);
         return ServiceResponse::success("Message status updated successfully", ['message' => $message]);
     }
-    public function reply($email)
+    public function reply(Request $request, $email)
     {
-        // Prepare the data for the email
-        $messenger = Message::where('email', $email)->first();
+        $messenger = Message::with('restaurant')->where('email', $email)->first();
+        if (!$messenger) {
+            return ServiceResponse::error('Messenger not found', 404);
+        }
+
+        $data = Validator::make($request->all(), [
+            'content' => 'required',
+            'reply_by_user_id' => 'required'
+        ])->validate();
+
+        $restaurant = Restaurant::find((int) $request->restaurant_id);
         $data = [
             'mail_title' => 'Welcome to Our Service!',
-            'restaurant_phone' => '1234567890',
-            'menu_url' => 'https://localcraftfood.com/menu',
+            'restaurant_phone' => $restaurant->phone,
+            'menu_url' => $restaurant->website . '/menu',
             'messenger_name' => $messenger->name,
-            'restaurant_name' => 'Local Craft Food',
-            'body' => 'This is the body of the email',
-            'restaurant_email' => 'messages@localcraftfood.com',
+            'restaurant_name' => $messenger->restaurant->name,
+            'content' => $data['content'],
+            'restaurant_email' => $messenger->restaurant->email,
+            'reply_by_user_id' => $request->user()->id,
         ];
 
         if (!$messenger) {

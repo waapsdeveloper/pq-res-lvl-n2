@@ -15,10 +15,15 @@ class Message extends Model
         'email',
         'phone',
         'message',
-        'restaurant_id'
+        'restaurant_id',
+        'reply_by_user_id'
     ];
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'reply_by_user_id');
     }
 }
