@@ -11,8 +11,7 @@ use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Http\Resources\Frontend\PopularProductsResource;
-
-
+use App\Models\Rtable;
 
 class HomeController extends Controller
 {
@@ -122,5 +121,23 @@ class HomeController extends Controller
             }
         }
         return ServiceResponse::success("Today's deals fetched successfully", $deals);
+    }
+    public function getByRestaurantId(string $id)
+    {
+        $restaurants = Rtable::with('restaurant:id,name')
+            ->where('restaurant_id', $id)
+            ->select('id', 'restaurant_id', 'floor', 'identifier', 'no_of_seats')
+            ->withCount('orders')
+            ->get()
+            ->groupBy('restaurant_id');
+
+        $restaurantData = $restaurants->first();
+
+        $floors = $restaurantData->pluck('floor')->unique()->values()->toArray();
+
+        return ServiceResponse::success('success', [
+            'restaurant' => $restaurants->first(),
+            'floors' => $floors
+        ]);
     }
 }

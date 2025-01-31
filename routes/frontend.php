@@ -3,7 +3,6 @@
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductsController;
 use App\Http\Controllers\Frontend\MessageController;
-use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\RTablesController;
 use App\Http\Controllers\Frontend\AuthController;
@@ -51,7 +50,6 @@ Route::prefix('add-to-cart')->group(function () {
 });
 
 
-Route::get('/get-tables-by-restaurant/{id}', [RtableController::class, 'getByRestaurantId']);
 Route::post('/contact-us', [MessageController::class, 'store'])->name('fe.contactUs.store');
 Route::get('/all-categories', [CategoryController::class, 'categories']);
 Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
@@ -66,6 +64,7 @@ Route::controller(HomeController::class)->group(function () {
 Route::middleware([ExtractRestaurantId::class])->group(function () {
 
     Route::controller(HomeController::class)->group(function () {
+        Route::get('/get-tables-by-restaurant/{id}', 'getByRestaurantId');
         Route::get('/roles', 'roles');
         Route::get('/about-us', 'aboutUs');
         Route::get('/lowest-price', 'lowestPrice');
