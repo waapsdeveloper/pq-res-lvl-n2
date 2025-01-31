@@ -19,6 +19,7 @@ class MessageController extends Controller
             'phone' => $data['phone'],
             'message' => $data['message'],
             'restaurant_id' => $data['restaurant_id'],
+            'status' => 'pending',
         ]);
 
         $responseData = [

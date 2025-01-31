@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->text('message')->nullable();
+            $table->enum('status', ['pending', 'sent', 'delivered', 'read', 'failed', 'archived'])->default('pending');
             $table->unsignedBigInteger('restaurant_id')->nullable();
+            $table->unsignedBigInteger('reply_by_user_id')->nullable();
             $table->timestamps();
         });
     }
