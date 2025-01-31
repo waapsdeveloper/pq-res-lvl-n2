@@ -38,12 +38,12 @@ class Mail extends Mailable
     /**
      * Get the message content definition.
      */
-    // public function content(): Content
-    // {
-    //     return new Content(
-    //         view: 'mail.reply', 
-    //     );
-    // }
+    public function content(): Content
+    {
+        return new Content(
+            view: 'mail.reply',
+        );
+    }
 
     /**
      * Get the attachments for the message.
