@@ -23,7 +23,9 @@ class HomeController extends Controller
     public function restautantDetail($id)
     {
         $restuarant = Restaurant::with('timings', 'rTables')->findOrFail($id);
-        $restuarant['image'] = Helper::returnFullImageUrl($restuarant['image']);
+        $restuarant->image = Helper::returnFullImageUrl($restuarant->image);
+        $restuarant->logo = Helper::returnFullImageUrl($restuarant->logo);
+        $restuarant->favicon = Helper::returnFullImageUrl($restuarant->favicon);
 
         return ServiceResponse::success('Restaurant are retrived successfully', ['data' => $restuarant]);
     }
