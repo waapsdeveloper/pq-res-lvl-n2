@@ -27,6 +27,19 @@ class ProductResource extends JsonResource
         $category = $obj->category_id ? optional($obj->category)->name : null;
         $restaurant = $obj->restaurant_id ? optional($obj->restaurant) : null;
         // $productProps = $obj->productProps ? optional($obj->productProps) : null;
+
+        $variations = $obj->productProps->map(function ($prodProps) {
+            return [
+                "meta_key" => $prodProps->meta_key,
+                "meta_value" => is_string($prodProps->meta_value) ? json_decode($prodProps->meta_value, true) : $prodProps->meta_value,
+                "meta_key_type" => $prodProps->meta_key_type
+            ];
+        }) ?? [];
+        
+        // Extract only the meta_value into a separate array
+        $metaValues = $variations->pluck('meta_value')->toArray();
+
+
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -47,13 +60,7 @@ class ProductResource extends JsonResource
                     'email' => $obj->restaurant->email,
                     'rating' => $obj->restaurant->rating,
                 ] : [],
-            "variation" => $obj->productProps->map(function ($prodProps) {
-                return [
-                    "meta_key" => $prodProps->meta_key,
-                    "meta_value" => $prodProps->meta_value,
-                    "meta_key_type" => $prodProps->meta_key_type
-                ];
-            }) ?? [],
+            "variation" => $metaValues,
 
         ];
     }
