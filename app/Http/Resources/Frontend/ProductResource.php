@@ -60,7 +60,14 @@ class ProductResource extends JsonResource
                     'email' => $obj->restaurant->email,
                     'rating' => $obj->restaurant->rating,
                 ] : [],
-            "variation" => $metaValues,
+            "variation" => $obj->productProps->map(function ($prodProps) {
+                return [
+                    "meta_key" => $prodProps->meta_key,
+                    "meta_value" => $prodProps->meta_value,
+                    "meta_key_type" => $prodProps->meta_key_type
+                ];
+            }) ?? [],
+            "variations" => $metaValues,
 
         ];
     }
