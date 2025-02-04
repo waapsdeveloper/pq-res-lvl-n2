@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function categories()
+    public function categories(Request $request)
     {
-        $categories = Category::get();
+        $categories = Category::where('restaurant_id', (int) $request->restaurant_id)->get();
 
         $categories = $categories->map(function ($category) {
             $category->image = Helper::returnFullImageUrl($category->image);

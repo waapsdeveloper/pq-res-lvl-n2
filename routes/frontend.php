@@ -50,8 +50,8 @@ Route::prefix('add-to-cart')->group(function () {
 });
 
 
-Route::post('/contact-us', [MessageController::class, 'store'])->name('fe.contactUs.store');
-Route::get('/all-categories', [CategoryController::class, 'categories']);
+Route::post('/contact-us', [MessageController::class, 'store'])->name('fe.contactUs.store')->middleware([ExtractRestaurantId::class]);
+Route::get('/all-categories', [CategoryController::class, 'categories'])->middleware([ExtractRestaurantId::class]);
 // Route::get('/restaurant/active', [HomeController::class, 'showActiveRestaurant'])->name('activeRestaurant');
 
 
