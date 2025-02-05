@@ -44,6 +44,8 @@ class OrderController extends Controller
         // $totalPrice = 0;
         $orderProducts = [];
 
+        return $data;
+
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
