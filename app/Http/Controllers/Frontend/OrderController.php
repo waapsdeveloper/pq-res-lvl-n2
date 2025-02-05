@@ -83,8 +83,6 @@ class OrderController extends Controller
             ];
         }
 
-        return $orderProducts;
-
         $discount = $data['discount'] ?? 0;
         $type = $rtableIdf ? 'dine-in' : $data['type'];
         $tableNo = $data['tableNo'] ?? null;
@@ -112,6 +110,7 @@ class OrderController extends Controller
         $identifier = Identifier::make('Order', $order->id, 3);
         $invoice_no = Identifier::make('Invoice', $order->id, 3);
         $order->update(['identifier' => $identifier, 'invoice' => $invoice_no]);
+
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
                 'order_id' => $order->id,
@@ -119,7 +118,7 @@ class OrderController extends Controller
                 'quantity' => $orderProduct['quantity'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
-                'variation' => json_encode($orderProduct['variation']),
+                'variation' => $orderProduct['variation'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
