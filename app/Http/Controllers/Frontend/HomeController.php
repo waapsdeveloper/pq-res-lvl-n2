@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\Helper;
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Frontend\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Restaurant;
@@ -80,7 +81,8 @@ class HomeController extends Controller
         $data = $query->paginate($perpage, ['*'], 'page', $page);
         // Transform the collection into the desired format
         $data->getCollection()->transform(function ($product) {
-            return new PopularProductsResource($product);
+            // return new PopularProductsResource($product);
+            return new ProductResource($product);
         });
 
         return ServiceResponse::success('Popular dishes available', ['products' => $data]);
