@@ -16,7 +16,7 @@ class AddOrderBookingResource extends JsonResource
     public static function toObject($obj, $lang = 'en')
     {
 
-        return $obj;
+        //return $obj;
         return [
             'id' => $obj->id,
             'order_number' => $obj->order_number,
@@ -27,17 +27,19 @@ class AddOrderBookingResource extends JsonResource
             'invoice_no' => $obj->invoice_no,
             'table_no' => $obj->table_no,
             'total_price' => $obj->total_price,
-            'products' => $obj->orderProducts->map(function ($orderProduct) {
-                return [
-                    'product_id' => $orderProduct->product_id,
-                    'product_name' => $orderProduct->product->name ?? null,
-                    'quantity' => $orderProduct->quantity,
-                    'image' => Helper::returnFullImageUrl($orderProduct->product->image),
-                    'price' => $orderProduct->price,
-                    'notes' => $orderProduct->notes,
-                    'variation' => $orderProduct->variation,
-                ];
-            }),
+            'products' => $obj->orderProducts,
+            
+            // $obj->orderProducts->map(function ($orderProduct) {
+            //     return [
+            //         'product_id' => $orderProduct->product_id,
+            //         'product_name' => $orderProduct->product->name ?? null,
+            //         'quantity' => $orderProduct->quantity,
+            //         'image' => Helper::returnFullImageUrl($orderProduct->product->image),
+            //         'price' => $orderProduct->price,
+            //         'notes' => $orderProduct->notes,
+            //         'variation' => $orderProduct->variation,
+            //     ];
+            // }),
             'customer' => $obj->customer ? [
                 'id' => $obj->customer->id,
                 'name' => $obj->customer->name,
