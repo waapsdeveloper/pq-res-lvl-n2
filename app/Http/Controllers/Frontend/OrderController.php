@@ -44,7 +44,7 @@ class OrderController extends Controller
         // $totalPrice = 0;
         $orderProducts = [];
 
-        return $data;
+       
 
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
@@ -73,6 +73,7 @@ class OrderController extends Controller
             // $itemTotal = $pricePerUnit * $quantity;
             // $totalPrice += $itemTotal;
 
+
             $orderProducts[] = [
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
@@ -81,6 +82,8 @@ class OrderController extends Controller
                 'variation' => json_encode($item['variations']) ?? null,
             ];
         }
+
+        return $orderProducts;
 
         $discount = $data['discount'] ?? 0;
         $type = $rtableIdf ? 'dine-in' : $data['type'];
