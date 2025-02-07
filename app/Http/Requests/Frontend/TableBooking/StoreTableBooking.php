@@ -26,6 +26,8 @@ class StoreTableBooking extends FormRequest
         return [
             'restaurant_id' => 'required|exists:restaurants,id',
             'no_of_seats' => 'required|integer|min:2',
+            'name' => 'required|string',
+            'phone' => 'required|string',
             'tables' => 'required|array',
             'tables.*' => 'exists:rtables,id',
             'start_time' => [

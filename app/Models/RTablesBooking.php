@@ -8,6 +8,7 @@ class RTablesBooking extends Model
 {
     protected $table = 'rtable_bookings';
     protected $fillable = [
+        'restaurant_id',
         'customer_id',
         'order_id',
         'booking_start',
