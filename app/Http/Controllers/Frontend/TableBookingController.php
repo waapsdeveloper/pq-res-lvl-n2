@@ -140,6 +140,14 @@ class TableBookingController extends Controller
         $data = $request->validated();
 
         $restaurant_id = $data['restaurant_id'];
+
+        if( isset($data['restaurant_id_form']) ){
+            $restaurant_id = $data['restaurant_id_form'];
+        }
+
+
+
+
         $selected_tables = $data['tables'];
         $start_time = DateHelper::parseDate($data['start_time'])->format('Y-m-d H:i:s');
         $end_time = DateHelper::parseDate($data['end_time'])->format('Y-m-d H:i:s');
