@@ -67,13 +67,13 @@ Route::prefix('restaurant-timing')->group(function () {
         ->only(['index', 'show', 'store', 'update', 'destroy'])
         ->names('restaurant-timing');
 });
-Route::prefix('r-table-booking')->group(function () {
+Route::prefix('table-booking')->group(function () {
     Route::get('/bulk-delete', [RTableBookingController::class, 'bulkDelete'])->name('rTableBooking-bulkDelete');
 
     Route::resource('/', RTableBookingController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
-        ->names('r-table-booking');
+        ->names('table-booking');
 });
 
 
@@ -156,15 +156,16 @@ Route::prefix('variation')->group(function () {
         ->names('customer'); // Restrict to specific CRUD actions.
 });
 
-//
-Route::prefix('table-booking')->group(function () {
-    Route::get('/bulk-delete', [TableBookingController::class, 'bulkDelete'])->name('tableBooking-bulkDelete');
+// DUPLICATE API CALLS
 
-    Route::resource('/', TableBookingController::class)
-        ->parameters(['' => 'id']) // If needed, customize parameter names.
-        ->only(['index', 'show', 'update', 'store', 'destroy'])
-        ->names('table-booking'); // Restrict to specific CRUD actions.
-});
+// Route::prefix('table-booking')->group(function () {
+//     Route::get('/bulk-delete', [TableBookingController::class, 'bulkDelete'])->name('tableBooking-bulkDelete');
+
+//     Route::resource('/', TableBookingController::class)
+//         ->parameters(['' => 'id']) // If needed, customize parameter names.
+//         ->only(['index', 'show', 'update', 'store', 'destroy'])
+//         ->names('table-booking'); // Restrict to specific CRUD actions.
+// });
 
 Route::prefix('invoice')->group(function () {
     Route::resource('/', InvoiceController::class)
