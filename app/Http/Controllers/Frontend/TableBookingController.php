@@ -75,6 +75,7 @@ class TableBookingController extends Controller
     {
         $bookings = RTablesBooking::where('customer_id', 1)
             ->with('rTableBookings')
+            ->orderBy('id', 'desc')
             ->get();
 
         return ServiceResponse::success(
