@@ -30,6 +30,7 @@ class RTableBookingController extends Controller
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
         $query = RtablesBooking::query()
+            ->with(['rTableBookings', 'customer'])
             ->where('restaurant_id', $resID)->orderBy('id', 'desc');
 
         // Apply search filter if a search term is provided
