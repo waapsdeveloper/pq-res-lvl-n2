@@ -74,7 +74,7 @@ class TableBookingController extends Controller
     public function index()
     {
         $bookings = RTablesBooking::where('customer_id', 1)
-            ->with('rTableBookings')
+            ->with(['rTableBookings', 'customer'])
             ->orderBy('id', 'desc')
             ->get();
 
@@ -154,9 +154,15 @@ class TableBookingController extends Controller
         $end_time = DateHelper::parseDate($data['end_time'])->format('Y-m-d H:i:s');
         $no_of_seats = $data['no_of_seats'];
 
+        // create or update customer by name and phone number
+        $customer = \App\Models\Customer::firstOrCreate([
+            'name' => $data['name'],
+            'phone' => $data['phone'],
+        ]);
+
         // Create booking
         $booking = RTablesBooking::create([
-            'customer_id' => auth()->id() ?? 1, // Fallback for customer_id
+            'customer_id' => $customer->id,
             'restaurant_id' => $restaurant_id,
             'no_of_seats' => $no_of_seats,
             'booking_start' => $start_time,
