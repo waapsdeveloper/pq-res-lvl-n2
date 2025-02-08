@@ -154,8 +154,8 @@ class DashboardController extends Controller
 
                 // New customers count for each day
                 $newCustomers = DB::select("
-                SELECT customer_id 
-                FROM orders 
+                SELECT customer_id
+                FROM orders
                 WHERE DATE(created_at) = ?
                 GROUP BY customer_id
                 HAVING COUNT(*) = 1
@@ -164,8 +164,8 @@ class DashboardController extends Controller
 
                 // Returning customers count for each day
                 $returningCustomers = DB::select("
-                SELECT customer_id 
-                FROM orders 
+                SELECT customer_id
+                FROM orders
                 WHERE DATE(created_at) = ?
                 GROUP BY customer_id
                 HAVING COUNT(*) > 1
@@ -221,8 +221,8 @@ class DashboardController extends Controller
 
                 // New customers count for each week
                 $newCustomers = DB::select("
-                    SELECT customer_id 
-                    FROM orders 
+                    SELECT customer_id
+                    FROM orders
                     WHERE YEARWEEK(created_at, 1) = YEARWEEK(?, 1)
                     GROUP BY customer_id
                     HAVING COUNT(*) = 1
@@ -231,8 +231,8 @@ class DashboardController extends Controller
 
                 // Returning customers count for each week
                 $returningCustomers = DB::select("
-                    SELECT customer_id 
-                    FROM orders 
+                    SELECT customer_id
+                    FROM orders
                     WHERE YEARWEEK(created_at, 1) = YEARWEEK(?, 1)
                     GROUP BY customer_id
                     HAVING COUNT(*) > 1
@@ -280,6 +280,7 @@ class DashboardController extends Controller
         $selectedDate = Carbon::parse($Date);
         $param = $request->input('param', 'day');  // Default to 'day' if param is not provided
 
+        dd($selectedDate);
         // Prepare date ranges based on the requested param (day or week)
         if ($param == 'day') {
             // Get the start and end dates for the current day
@@ -334,10 +335,10 @@ class DashboardController extends Controller
         })
             ->join('products', 'order_products.product_id', '=', 'products.id') // Join with products table
             ->selectRaw('
-            order_products.order_id, 
-            order_products.product_id, 
-            GROUP_CONCAT(order_products.quantity) as total_quantity, 
-            SUM(order_products.quantity * order_products.price) as total_price, 
+            order_products.order_id,
+            order_products.product_id,
+            GROUP_CONCAT(order_products.quantity) as total_quantity,
+            SUM(order_products.quantity * order_products.price) as total_price,
             products.name as category
         ')
             ->groupBy('order_products.order_id', 'order_products.product_id', 'products.name') // Group by required fields
@@ -375,10 +376,10 @@ class DashboardController extends Controller
         })
             ->join('products', 'order_products.product_id', '=', 'products.id') // Join with products table
             ->selectRaw('
-            order_products.order_id, 
-            order_products.product_id, 
-            GROUP_CONCAT(order_products.quantity) as total_quantity, 
-            SUM(order_products.quantity * order_products.price) as total_price, 
+            order_products.order_id,
+            order_products.product_id,
+            GROUP_CONCAT(order_products.quantity) as total_quantity,
+            SUM(order_products.quantity * order_products.price) as total_price,
             products.name as category
             ')
             ->groupBy('order_products.order_id', 'order_products.product_id', 'products.name') // Group by required fields
@@ -509,7 +510,7 @@ class DashboardController extends Controller
 
     /**
      * Format the price into k, M, and B notation
-     * 
+     *
      * @param float $price
      * @return string
      */
