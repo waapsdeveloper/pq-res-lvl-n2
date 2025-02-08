@@ -117,39 +117,19 @@ class RTableBookingController extends Controller
      */
     public function show(string $id)
     {
-        $query = RtablesBooking::query()
-            ->with(['rTableBookings', 'customer'])
-            ->where('id', $id)->orderBy('id', 'desc');
+        $data = RtablesBooking::with(['rTableBookings', 'customer'])
+            ->where('id', $id)
+            ->first();
 
-        // Apply search filter if a search term is provided
-        if ($search) {
-            $query->where('booking_start', 'like', '%' . $search . '%');
+        if (!$data) {
+            return ServiceResponse::error("Rtables booking not found", 404);
         }
-        if ($filters) {
-            $filters = json_decode($filters, true); // Decode JSON string into an associative array
 
-            if (isset($filters['customer_id'])) {
-                $query->where('customer_id', 'like', '%' . $filters['customer_id'] . '%');
-            }
-            if (isset($filters['booking_start'])) {
-                $query->where('booking_start', 'like', '%' . $filters['booking_start'] . '%');
-            }
-
-            if (isset($filters['status'])) {
-                $query->where('status', $filters['status']);
-            }
-        }
-        // Paginate the results
-        $data = $query->paginate($perPage, ['*'], 'page', $page);
-
-        // Transform the paginated collection with the resource
-        $data->getCollection()->transform(function ($item) {
-            return new RTableBookingResource($item);
-        });
-
-        // Return a successful response with the transformed data
-        return ServiceResponse::success("Rtables booking list retrieved successfully", ['data' => $data]);
+        return ServiceResponse::success("Rtables booking retrieved successfully", [
+            'data' => new RTableBookingResource($data),
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
