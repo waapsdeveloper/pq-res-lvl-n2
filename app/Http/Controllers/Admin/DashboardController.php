@@ -280,7 +280,6 @@ class DashboardController extends Controller
         $selectedDate = Carbon::parse($Date);
         $param = $request->input('param', 'day');  // Default to 'day' if param is not provided
 
-        dd($selectedDate);
         // Prepare date ranges based on the requested param (day or week)
         if ($param == 'day') {
             // Get the start and end dates for the current day
