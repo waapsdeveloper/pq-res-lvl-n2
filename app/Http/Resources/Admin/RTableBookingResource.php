@@ -21,7 +21,7 @@ class RTableBookingResource extends JsonResource
     {
         return [
             "id" => $obj->id,
-            "customer_id" => $obj->customer,
+            "customer" => $obj->customer,
             "order_id" => $obj->order_id,
             "booking_start" => $obj->booking_start,
             "booking_end" => $obj->booking_end,
