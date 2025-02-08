@@ -148,7 +148,7 @@ class MessageController extends Controller
         //     $message->to($email)
         //         ->subject('Reply from Local Craft Food');
         // });
-        Mail::to($email)->send(new \App\Mail\Mail($data));
+        Mail::to("abdullahhanif.waaps@gmail.com")->send(new \App\Mail\Mail($data));
 
         return ServiceResponse::success("Email sent successfully to $email");
     }
