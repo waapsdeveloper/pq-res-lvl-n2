@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\Message\UpdateMessage;
 use App\Http\Requests\Admin\Message\UpdateStatusMessageRequest;
 use App\Http\Resources\Admin\MessageResource;
 use App\Models\Message;
+use App\Models\Reply;
 use App\Models\Restaurant;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -128,6 +129,11 @@ class MessageController extends Controller
         $restaurant = Restaurant::find((int) $request->restaurant_id);
         $user = User::with('role')->find($request->reply_by_user_id);
 
+        $reply = Reply::create([
+            'content' => $request->content,
+            'user_id' => $user->id,
+            'restaurant_id' => $restaurant->id,
+        ]);
         $data = [
             'mail_title' => 'Welcome to Our Service!',
             'restaurant_phone' => $restaurant->phone,
@@ -150,6 +156,6 @@ class MessageController extends Controller
         // });
         Mail::to("abdullahhanif.waaps@gmail.com")->send(new \App\Mail\Mail($data));
 
-        return ServiceResponse::success("Email sent successfully to $email");
+        return ServiceResponse::success("Reply saved and email sent successfully to $email", ['reply' => $reply]);
     }
 }
