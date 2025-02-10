@@ -48,7 +48,7 @@ Route::prefix('table-booking')->group(function () {
     Route::resource('/', TableBookingController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
-        ->names('table-booking');
+        ->names('table-booking')->middleware([ExtractRestaurantId::class]);
 })->middleware([ExtractRestaurantId::class]);
 
 Route::resource('/rtables', RTablesController::class)
