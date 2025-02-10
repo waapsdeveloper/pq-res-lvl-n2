@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\TableBookingController;
 use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\ExtractRestaurantId;
 
@@ -17,6 +18,19 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/auth/me', [AuthController::class, 'me'])->middleware('auth:api');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+
+
+Route::middleware('auth:api')->prefix('profile')->group(function () {
+// Route::prefix('profile')->group(function () {
+    Route::post('/add', [ProfileController::class, 'addProfile']);
+    Route::post('/update', [ProfileController::class, 'updateProfile']);
+
+    Route::post('/address', [ProfileController::class, 'addUserAddress']);
+    Route::get('/address/{id}', [ProfileController::class, 'getUserAddresses']);
+});
+
+
+
 
 
 Route::resource('/rtables', RTablesController::class)

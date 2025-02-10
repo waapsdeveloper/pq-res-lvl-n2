@@ -278,4 +278,6 @@ class UserController extends Controller
 
         return ServiceResponse::success("User fetch successfully.", ['user' => $user]);
     }
+
+
 }

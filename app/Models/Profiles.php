@@ -11,6 +11,12 @@ class Profiles extends Model
         'identifier',
         'email',
         'phone',
-        'user_id'
+        'user_id',
+        'user_address_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -20,7 +20,9 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required',
             'password' => 'required|string|min:8',
+
         ]);
 
         if ($validator->fails()) {
@@ -30,6 +32,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
 
@@ -45,7 +48,12 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $loginKey = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+        $credentials = [
+            $loginKey => $request->input($loginKey), // Fix: Use the correct input key
+            'password' => $request->input('password')
+        ];
 
         if (!Auth::attempt($credentials)) {
             return ServiceResponse::error("Invalid credentials");
@@ -56,6 +64,8 @@ class AuthController extends Controller
 
         return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
     }
+
+
 
     /**
      * Get the authenticated user.
