@@ -48,10 +48,10 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $loginKey = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
+        $loginKey = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
         $credentials = [
-            $loginKey => $request->input('email'),
+            $loginKey => $request->input($loginKey), // Fix: Use the correct input key
             'password' => $request->input('password')
         ];
 
@@ -64,6 +64,7 @@ class AuthController extends Controller
 
         return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
     }
+
 
 
     /**
