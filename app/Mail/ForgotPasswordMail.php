@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -17,10 +18,11 @@ class ForgotPasswordMail extends Mailable
         $this->otp = $otp;
     }
 
+
     public function build()
     {
+        // dd($this->otp);
         return $this->subject('Password Reset OTP')
-                    ->view('mail.forgot_password')
-                    ->with(['otp' => $this->otp]);
+            ->view('mail.forgot_password')->with('otp', $this->otp);
     }
 }

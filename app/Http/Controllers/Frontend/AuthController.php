@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\UserCode;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -107,9 +108,65 @@ class AuthController extends Controller
             ['user_id' => $user->id],
             ['code' => $otp, 'expires_at' => $expiresAt]
         );
+        // dd($userCode);
 
-        Mail::to($request->email)->send(new ForgotPasswordMail($otp));
+        try {
+            Mail::to($user->email)->send(new ForgotPasswordMail($otp));
+            Log::info('Email sent successfully.');
+            Log::info('Generated OTP: try' . $otp);
+        } catch (\Exception $e) {
+            Log::info('Generated OTP: catch ' . $otp);
+
+            Log::error('Mail error: ' . $e->getMessage());
+            return ServiceResponse::error('Failed to send OTP.', $user->email);
+        }
+
+        // Mail::to($request->email)->send(new ForgotPasswordMail($otp));
 
         return ServiceResponse::success('OTP sent successfully', ['data' => $userCode]);
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|integer',
+            'code' => 'required|integer'
+        ]);
+
+        $userCode = UserCode::where('user_id', $request->user_id)
+            ->where('code', $request->code)
+            ->first();
+
+        if (!$userCode) {
+            return ServiceResponse::success('Invalid OTP.');
+        }
+
+        if ($userCode->expires_at < now()) {
+            return ServiceResponse::success('OTP expired.');
+        }
+        $userCode->delete();
+
+        return ServiceResponse::success('OTP verified successfully.');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|integer',
+            'password' => 'required|string  '
+        ]);
+
+        $user = User::find($request->user_id);
+
+        if (!$user) {
+            return ServiceResponse::error('User not found.');
+        }
+
+        // Update the password
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return ServiceResponse::success('Password updated successfully.',['user' => $user]);
     }
 }
