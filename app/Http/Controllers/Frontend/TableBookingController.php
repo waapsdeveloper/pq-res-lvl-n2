@@ -137,10 +137,12 @@ class TableBookingController extends Controller
      */
     public function store(StoreTableBooking $request)
     {
+        $user = auth()->user();
+
         // Retrieve validated data from the request
         $data = $request->validated();
 
-        
+
 
         if( isset($data['restaurant_id_form']) ){
             $data['restaurant_id'] = $data['restaurant_id_form'];
@@ -156,8 +158,8 @@ class TableBookingController extends Controller
 
         // create or update customer by name and phone number
         $customer = \App\Models\Customer::firstOrCreate([
-            'name' => $data['name'],
-            'phone' => $data['phone'],
+            'name' => $user->name,
+            'phone' => $user->phone,
         ]);
 
         // Create booking

@@ -38,7 +38,7 @@ Route::resource('/rtables', RTablesController::class)
     ->only(['index', 'show', 'store', 'update', 'destroy'])
     ->names('rtables');
 
-Route::prefix('table-booking')->group(function () {
+Route::prefix('table-booking')->middleware('auth:api')->group(function () {
     // Route::get('/getRestaurantsTables', [TableBookingController::class, 'getRestaurantsTables'])->name('getRestaurantsTables');
     Route::put('on-payment', [TableBookingController::class, 'onPayment'])
         ->name('table-booking.on-payment');
