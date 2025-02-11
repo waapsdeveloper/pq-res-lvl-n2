@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
+use App\Mail\ForgotPasswordMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\UserCode;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -84,5 +88,28 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
 
         return response()->json(['message' => 'Logged out successfully'], 200);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|string']);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return ServiceResponse::success('User not found');
+        }
+
+        $otp = rand(100000, 999999);
+        $expiresAt = now()->addMinutes(10);
+
+        $userCode = UserCode::updateOrCreate(
+            ['user_id' => $user->id],
+            ['code' => $otp, 'expires_at' => $expiresAt]
+        );
+
+        Mail::to($request->email)->send(new ForgotPasswordMail($otp));
+
+        return ServiceResponse::success('OTP sent successfully', ['data' => $userCode]);
     }
 }
