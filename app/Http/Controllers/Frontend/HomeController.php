@@ -65,7 +65,15 @@ class HomeController extends Controller
     public function allBranches()
     {
         $allBranches = Restaurant::get();
-        return ServiceResponse::success('allBranches are retrived successfully', ['data' => $allBranches]);
+
+        $data = $allBranches->transform(function ($branch) {
+            $branch->image = Helper::returnFullImageUrl($branch->image);
+            $branch->logo = Helper::returnFullImageUrl($branch->logo);
+            $branch->favicon = Helper::returnFullImageUrl($branch->favicon);
+            return $branch;
+        });
+
+        return ServiceResponse::success('allBranches are retrived successfully', ['data' => $data]);
     }
     public function getPopularProducts(Request $request)
     {
