@@ -98,7 +98,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return ServiceResponse::success('User not found');
+            return ServiceResponse::error('Invalid Email');
         }
 
         $otp = rand(100000, 999999);
