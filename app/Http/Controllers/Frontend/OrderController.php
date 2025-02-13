@@ -30,7 +30,11 @@ class OrderController extends Controller
     {
         $data = $request->validated();
         $phone = $data['phone'];
-        $customer = $this->getCustomerByPhone($phone);
+
+        // create or update custoer by phone 
+        $customer = auth()->user();
+
+        // $customer = $this->getCustomerByPhone($phone);
 
         $rtableIdf = $request->input('table_identifier', null);
 
