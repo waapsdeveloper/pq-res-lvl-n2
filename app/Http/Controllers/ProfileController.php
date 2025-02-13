@@ -29,7 +29,7 @@ class ProfileController extends Controller
         }
 
         $user->update([
-            'email' => $request->email,
+            'name' => $request->name,
             'phone' => $request->phone,
         ]);
 
