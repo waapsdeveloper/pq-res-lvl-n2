@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserAddresses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use PHPUnit\Metadata\Uses;
 
@@ -15,6 +16,7 @@ class ProfileController extends Controller
     //
 
     public function updateUser(Request $request){
+        
         $user = auth()->user();
 
         $validator = Validator::make($request->all(), [
@@ -32,6 +34,7 @@ class ProfileController extends Controller
         ]);
 
         return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+
     }
 
     public function addProfile(Request $request)
