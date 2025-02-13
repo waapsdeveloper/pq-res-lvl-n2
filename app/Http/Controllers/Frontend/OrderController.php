@@ -8,7 +8,7 @@ use App\Helpers\ServiceResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\OrderBooking\MakeOrderBooking;
 use App\Http\Resources\Admin\NotifyResource;
-use App\Http\Resources\Admin\OrderResource;
+use App\Http\Resources\Frontend\OrderResource;
 use App\Http\Resources\Frontend\AddOrderBookingResource;
 use App\Models\Notification;
 use App\Models\Order;
