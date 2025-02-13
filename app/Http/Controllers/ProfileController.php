@@ -202,8 +202,9 @@ class ProfileController extends Controller
 
 
 
-    public function getUserAddresses($id)
-    {
+    public function getUserAddresses(Request $request)
+    {   
+        $id = auth()->user()->id;
         // Fetch all addresses for the user
         $addresses = UserAddresses::where('user_id', $id)->get();
         return ServiceResponse::success('User addresses added successfully', ['addresses' => $addresses]);
