@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ServiceResponse;
 use App\Models\Profiles;
 use App\Models\User;
 use App\Models\UserAddresses;
@@ -25,7 +26,7 @@ class ProfileController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            return ServiceResponse::error($validator->errors()->first());
         }
 
         $user->update([
@@ -33,7 +34,7 @@ class ProfileController extends Controller
             'phone' => $request->phone,
         ]);
 
-        return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+        return  ServiceResponse::success('register successful', ['user' => $user]);
 
     }
 
