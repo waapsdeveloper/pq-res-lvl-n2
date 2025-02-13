@@ -31,8 +31,9 @@ Route::middleware('auth:api')->prefix('profile')->group(function () {
     Route::post('/update-user', [ProfileController::class, 'updateUser']);
     Route::post('/update-password', [ProfileController::class, 'updatePassword']);
 
+    Route::get('/all-user-address', [ProfileController::class, 'getUserAddresses']);
     Route::post('/add-user-address', [ProfileController::class, 'addUserAddress']);
-    Route::post('/update-user-address', [ProfileController::class, 'updateUserAddress']);
+    Route::post('/update-user-address/{id}', [ProfileController::class, 'updateUserAddress']);
     Route::delete('/delete-user-address/{id}', [ProfileController::class, 'deleteUserAddress']);
 
 // Route::prefix('profile')->group(function () {
@@ -40,7 +41,7 @@ Route::middleware('auth:api')->prefix('profile')->group(function () {
     Route::post('/update', [ProfileController::class, 'updateProfile']);
 
     
-    Route::get('/address/{id}', [ProfileController::class, 'getUserAddresses']);
+    
 });
 
 
