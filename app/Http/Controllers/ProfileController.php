@@ -42,26 +42,22 @@ class ProfileController extends Controller
 
     public function updatePassword(Request $request){
         $user = auth()->user();
-
+    
         $validator = Validator::make($request->all(), [
-            'current_password' => 'required|string',
             'new_password' => 'required|string|min:8|confirmed',
         ]);
-
+    
         if ($validator->fails()) {
             return ServiceResponse::error($validator->errors()->first());
         }
-
-        if (!Hash::check($request->current_password, $user->password)) {
-            return ServiceResponse::error('Current password does not match.');
-        }
-
+    
         $user->update([
             'password' => Hash::make($request->new_password)
         ]);
-
+    
         return ServiceResponse::success('Password updated successfully');
     }
+    
 
     public function addProfile(Request $request)
     {
