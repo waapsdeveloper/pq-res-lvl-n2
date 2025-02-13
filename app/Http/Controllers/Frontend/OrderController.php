@@ -26,6 +26,75 @@ class OrderController extends Controller
 
     use CustomerTrait, TableBookingTrait, NotificationTrait;
 
+    public function index(Request $request)
+    {
+        $search = $request->input('search', '');
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
+
+        $category = $request->input('category_id', '');
+        $active_restaurant = Helper::getActiveRestaurantId();
+        $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
+
+        $query = Order::query()
+            ->where('restaurant_id', $resID)
+            ->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
+
+
+        // Optionally apply search filter if needed
+        if ($search) {
+            $query->where('order_number', 'like', '%' . $search . '%');
+        }
+        if ($filters) {
+            $filters = json_decode($filters, true); // Decode JSON string into an associative array
+            if (isset($filters['order_id']) && !empty($filters['order_id'])) {
+                $query->where('order_number', 'like', '%' . $filters['order_id'] . '%');
+            }
+
+            if (isset($filters['total_price']) && !empty($filters['total_price'])) {
+                $query->where('total_price', '<',  $filters['total_price'])
+                    ->orWhere('total_price', '=',  $filters['total_price'])->orderByDesc('total_price');
+
+                // dd($filters['total_price']);
+            }
+            if (isset($filters['type']) && !empty($filters['type'])) {
+                $query->where('type', 'like', '%' . $filters['type'] . '%');
+            }
+
+            if (isset($filters['status']) && !empty($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
+            if (isset($filters['Customer_name']) && !empty($filters['Customer_name'])) {
+                $query->whereHas('customer', function ($q) use ($filters) {
+                    $q->where('name', 'like', '%' . $filters['Customer_name'] . '%');
+                });
+            }
+            if (isset($filters['phone']) && !empty($filters['phone'])) {
+                $query->whereHas('customer', function ($q) use ($filters) {
+                    $q->where('phone', 'like', '%' . $filters['phone'] . '%');
+                });
+            }
+            // if (isset($filters['table']) && !empty($filters['table'])) {
+            //     $query->whereHas('table_no', function ($q) use ($filters) {
+            //         $q->where('name', 'like', '%' . $filters['table'] . '%');
+            //     });
+            // }
+        }
+
+        // Paginate the results
+        $query->orderBy('id', 'desc');
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        // Loop through the results and generate full URL for image
+        $data->getCollection()->transform(function ($item) {
+            return new OrderResource($item);
+        });
+
+        // Return the response with image URLs included
+        return ServiceResponse::success("Order list successfully", ['data' => $data]);
+    }
+
     public function makeOrderBookings(MakeOrderBooking $request)
     {
         $data = $request->validated();

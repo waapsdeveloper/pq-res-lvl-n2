@@ -108,6 +108,7 @@ Route::middleware([ExtractRestaurantId::class])->group(function () {
     });
 
     Route::controller(OrderController::class)->group(function () {
+        Route::get('/order-history', 'index');
         Route::post('/make-order-bookings', 'makeOrderBookings')->middleware('auth:api');
         Route::get('/search-customer-order', 'searchCustomerOrder');
         Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
