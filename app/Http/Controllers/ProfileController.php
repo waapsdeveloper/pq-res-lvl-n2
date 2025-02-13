@@ -20,8 +20,8 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|email|unique:users,email,'.$user->id,
-            'phone' => 'required|string|unique:users,phone,'.$user->id,
+            'name' => 'required|string',
+            'phone' => 'required|string',
         ]);
 
         if ($validator->fails()) {
