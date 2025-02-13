@@ -14,6 +14,26 @@ class ProfileController extends Controller
 {
     //
 
+    public function updateUser(Request $request){
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|email|unique:users,email,'.$user->id,
+            'phone' => 'required|string|unique:users,phone,'.$user->id,
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $user->update([
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+    }
+
     public function addProfile(Request $request)
     {
         // $user = User::find(1);
