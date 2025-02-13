@@ -17,11 +17,7 @@ class OrderResource extends JsonResource
     {
         // dd();
         return [
-            'id' => $obj->id,
-            'customer_id' => $obj->customer_id == 'walk-in-customer' ? 0 : $obj->customer_id,
-            'customer' => $obj->customer ? $obj->customer->name : 'walk-in-customer',
-            'customer_phone' => $obj->customer ? $obj->customer->phone : 'no contact number',
-            'customer_email' => $obj->customer ? $obj->customer->email : 'no email',
+            'id' => $obj->id,            
             'order_number' => $obj->order_number,
             'restaurant' => $obj->restaurant,
             'type' => ucwords(Str::replace(['_', '-'], ' ', $obj->type)),
@@ -29,7 +25,7 @@ class OrderResource extends JsonResource
             'total_price' => $obj->total_price,
             'discount' => $obj->discount,
             'created_at' => $obj->created_at,
-            'table' => $obj->table ? $obj->table->name : 'no booked',
+            'table' => $obj->table,
             'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [
