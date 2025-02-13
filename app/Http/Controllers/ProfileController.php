@@ -34,7 +34,7 @@ class ProfileController extends Controller
             'phone' => $request->phone,
         ]);
 
-        return  ServiceResponse::success('register successful', ['user' => $user]);
+        return  ServiceResponse::success('profile update successful', ['user' => $user]);
 
     }
 
