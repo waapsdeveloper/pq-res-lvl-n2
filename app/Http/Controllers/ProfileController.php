@@ -16,8 +16,9 @@ class ProfileController extends Controller
 {
     //
 
-    public function updateUser(Request $request){
-        
+    public function updateUser(Request $request)
+    {
+
         $user = auth()->user();
 
         $validator = Validator::make($request->all(), [
@@ -34,30 +35,33 @@ class ProfileController extends Controller
             'phone' => $request->phone,
         ]);
 
-        $user = User::where('id', '=', $user->id)->first();   
+        $user = User::where('id', '=', $user->id)->first();
 
-        return  ServiceResponse::success('profile update successful', ['user' => $user]);
+        return ServiceResponse::success('profile update successful', ['user' => $user]);
 
     }
 
-    public function updatePassword(Request $request){
+    public function updatePassword(Request $request)
+    {
         $user = auth()->user();
-    
+
         $validator = Validator::make($request->all(), [
             'new_password' => 'required|string|min:8|confirmed',
         ]);
-    
+
         if ($validator->fails()) {
             return ServiceResponse::error($validator->errors()->first());
         }
-    
+
         $user->update([
             'password' => Hash::make($request->new_password)
         ]);
-    
+
         return ServiceResponse::success('Password updated successfully');
     }
-    
+
+
+
 
     public function addProfile(Request $request)
     {
@@ -117,6 +121,45 @@ class ProfileController extends Controller
 
     public function addUserAddress(Request $request)
     {
+        // Use authenticated user ID instead of requiring user_id in request
+        $userId = auth()->user()->id;
+
+        $data = $request->validate([
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+            'country' => 'required|string|max:100',
+        ]);
+
+        // Check if the same address already exists for the user
+        $existingAddress = UserAddresses::where('user_id', $userId)
+            ->where('address', $data['address'])
+            ->where('city', $data['city'])
+            ->where('state', $data['state'])
+            ->where('country', $data['country'])
+            ->first();
+
+        if ($existingAddress) {
+            return ServiceResponse::error('This address already exists for the user.');
+        }
+
+        // Create new address
+        $data['user_id'] = $userId;  // Assign authenticated user ID
+        UserAddresses::create($data);
+
+        // Fetch all addresses for the user
+        $addresses = UserAddresses::where('user_id', $userId)->get();
+
+        return ServiceResponse::success('User address added successfully', ['addresses' => $addresses]);
+    }
+
+
+    // make a similar to update address
+    // and deleteUserAddress
+
+    public function updateUserAddress(Request $request, $id)
+    {
+        // Validate request (removed 'id' validation)
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
             'address' => 'required|string|max:255',
@@ -125,31 +168,44 @@ class ProfileController extends Controller
             'country' => 'required|string|max:100',
         ]);
 
-        // Check if the same address already exists for the user
-        $existingAddress = UserAddresses::where([
-            'user_id' => $data['user_id'],
-            'address' => $data['address'],
-            'city' => $data['city'],
-            'state' => $data['state'],
-            'country' => $data['country'],
-        ])->first();
+        // Find the address and ensure it belongs to the correct user
+        $existingAddress = UserAddresses::where('id', $id)->where('user_id', $data['user_id'])->first();
 
-        if ($existingAddress) {
-            return self::success("This address already exists for the user.", ['result' => $existingAddress]);
+        if (!$existingAddress) {
+            return ServiceResponse::error('Address not found or unauthorized');
         }
 
-        $address = UserAddresses::create($data);
-        return self::success("User addresses retrieved successfully", ['result' => $address]);
+        $existingAddress->update($data);
+
+        // Fetch all addresses for the user
+        $addresses = UserAddresses::where('user_id', $data['user_id'])->get();
+
+        return ServiceResponse::success('User address updated successfully', ['addresses' => $addresses]);
     }
+
+    
+    public function deleteUserAddress($id)
+    {
+        // Find the address and ensure it belongs to the correct user
+        $existingAddress = UserAddresses::where('id', $id)->first();    
+
+        if (!$existingAddress) {
+            return ServiceResponse::error('Address not found or unauthorized');
+        }
+        $existingAddress->delete();
+        // Fetch all addresses for the user
+        $addresses = UserAddresses::where('user_id', $existingAddress->user_id)->get();
+
+        return ServiceResponse::success('User address deleted successfully', ['addresses' => $addresses]);
+    }
+
+
+
 
     public function getUserAddresses($id)
     {
-        if (!User::where('id', $id)->exists()) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
         // Fetch all addresses for the user
         $addresses = UserAddresses::where('user_id', $id)->get();
-        return self::success("User addresses retrieved successfully", ['addresses' => $addresses]);
+        return ServiceResponse::success('User addresses added successfully', ['addresses' => $addresses]);
     }
 }

@@ -30,11 +30,16 @@ Route::middleware('auth:api')->prefix('profile')->group(function () {
 
     Route::post('/update-user', [ProfileController::class, 'updateUser']);
     Route::post('/update-password', [ProfileController::class, 'updatePassword']);
+
+    Route::post('/add-user-address', [ProfileController::class, 'addUserAddress']);
+    Route::post('/update-user-address', [ProfileController::class, 'updateUserAddress']);
+    Route::delete('/delete-user-address/{id}', [ProfileController::class, 'deleteUserAddress']);
+
 // Route::prefix('profile')->group(function () {
     Route::post('/add', [ProfileController::class, 'addProfile']);
     Route::post('/update', [ProfileController::class, 'updateProfile']);
 
-    Route::post('/address', [ProfileController::class, 'addUserAddress']);
+    
     Route::get('/address/{id}', [ProfileController::class, 'getUserAddresses']);
 });
 
