@@ -73,7 +73,9 @@ class TableBookingController extends Controller
 
     public function index()
     {
-        $bookings = RTablesBooking::where('customer_id', 1)
+
+        $user = auth()->user();
+        $bookings = RTablesBooking::where('customer_id', $user->id)
             ->with(['rTableBookings', 'customer'])
             ->orderBy('id', 'desc')
             ->get();
