@@ -157,7 +157,7 @@ class TableBookingController extends Controller
 
         // Create booking
         $booking = RTablesBooking::create([
-            'customer_id' => $customer->id,
+            'customer_id' => $user->id,
             'restaurant_id' => $restaurant_id,
             'no_of_seats' => $no_of_seats,
             'booking_start' => $start_time,
