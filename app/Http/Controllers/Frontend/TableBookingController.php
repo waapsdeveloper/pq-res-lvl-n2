@@ -184,6 +184,7 @@ class TableBookingController extends Controller
         }
 
         $result = [
+            'order_number' => $orderNumber,
             'booking_id' => $booking->id,
             'restaurant_id' => $restaurant_id,
             'no_of_seats' => $no_of_seats,
