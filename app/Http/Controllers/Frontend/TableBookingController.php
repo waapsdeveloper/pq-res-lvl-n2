@@ -325,7 +325,7 @@ class TableBookingController extends Controller
             'tables' => $booking->rTableBookings,
         ];
 
-        return ServiceResponse::success('Booking details', ['result' => $formattedBooking]);
+        return ServiceResponse::success('Booking details', ['order' => $formattedBooking]);
 
 
     }
