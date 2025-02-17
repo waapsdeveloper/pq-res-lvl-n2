@@ -21,6 +21,11 @@ class RTablesBooking extends Model
         'payment_status'
     ];
 
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
+    }
+
     public function rTableBookings()
     {
         return $this->hasMany(RTableBooking_RTable::class, 'rtable_booking_id');

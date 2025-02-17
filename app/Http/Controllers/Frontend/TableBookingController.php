@@ -321,6 +321,8 @@ class TableBookingController extends Controller
             'booking_start' => $booking->booking_start,
             'booking_end' => $booking->booking_end,
             'description' => $booking->description,
+            'no_of_seats' => $booking->no_of_seats,
+            'restaurant' => $booking->restaurant,
             'status' => $booking->status,
             'tables' => $booking->rTableBookings,
         ];
