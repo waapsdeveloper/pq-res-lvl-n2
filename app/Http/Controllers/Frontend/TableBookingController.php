@@ -76,7 +76,7 @@ class TableBookingController extends Controller
 
         $user = auth()->user();
         $bookings = RTablesBooking::where('customer_id', $user->id)
-            ->with(['rTableBookings', 'customer'])
+            ->with(['rTableBookings', 'customer', 'restaurant'])
             ->orderBy('id', 'desc')
             ->get();
 
