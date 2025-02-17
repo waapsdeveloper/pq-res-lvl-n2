@@ -304,4 +304,29 @@ class TableBookingController extends Controller
         $updatedBooking = RTablesBooking::findOrFail($validatedData['id']);
         return ServiceResponse::success('Payment details updated successfully', ['result' => $updatedBooking]);
     }
+
+    public function trackTableBooking(Request $request, $orderNumber)
+    {
+        $booking = RTablesBooking::where('order_number', $orderNumber)->first();
+        if (!$booking) {
+            return ServiceResponse::error('Booking not found');
+        }
+
+        $booking->load('rTableBookings');
+
+        $formattedBooking = [
+            'order_number' => $booking->order_number,
+            'customer_name' => $booking->customer->name,
+            'customer_phone' => $booking->customer->phone,
+            'booking_start' => $booking->booking_start,
+            'booking_end' => $booking->booking_end,
+            'description' => $booking->description,
+            'status' => $booking->status,
+            'tables' => $booking->rTableBookings,
+        ];
+
+        return ServiceResponse::success('Booking details', ['result' => $formattedBooking]);
+
+
+    }
 }

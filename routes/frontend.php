@@ -60,6 +60,8 @@ Route::prefix('table-booking')->middleware('auth:api')->group(function () {
     Route::get('check-table-availability/{id}', [TableBookingController::class, 'checkTableAvailability'])
         ->name('table-booking.check-availability');
 
+    Route::get('/track-table-booking/{order_number}', [TableBookingController::class, 'trackTableBooking']);
+
     Route::resource('/', TableBookingController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
