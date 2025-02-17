@@ -157,8 +157,10 @@ class TableBookingController extends Controller
             'phone' => $user->phone,
         ]);
 
+        $orderNumber = 'TBL-ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         // Create booking
         $booking = RTablesBooking::create([
+            'order_number' => $orderNumber,    
             'customer_id' => $user->id,
             'restaurant_id' => $restaurant_id,
             'no_of_seats' => $no_of_seats,
