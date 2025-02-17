@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('rtable_bookings', function (Blueprint $table) {
-            $table->string('order_number')->after('column_name')->nullable(); // Replace 'column_name' with an existing column
+            $table->string('order_number')->after('customer_id')->nullable(); // Replace 'column_name' with an existing column
         });
     }
 
