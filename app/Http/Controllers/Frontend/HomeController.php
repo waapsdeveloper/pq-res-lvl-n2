@@ -149,7 +149,7 @@ class HomeController extends Controller
 
         $floors = $restaurantData->pluck('floor')->unique()->values()->toArray();
 
-        return ServiceResponse::success('success', [
+        return ServiceResponse::success('Tables fetched for you', [
             'restaurant' => $restaurants->first(),
             'floors' => $floors
         ]);

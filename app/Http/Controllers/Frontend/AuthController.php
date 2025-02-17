@@ -52,23 +52,45 @@ class AuthController extends Controller
      * Handle user login.
      */
     public function login(Request $request)
-    {
-        $loginKey = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+{
+    $isGuestLogin = $request->input('isGuestLogin');
 
-        $credentials = [
-            $loginKey => $request->input($loginKey), // Fix: Use the correct input key
-            'password' => $request->input('password')
-        ];
+    if ($isGuestLogin) {
 
-        if (!Auth::attempt($credentials)) {
-            return ServiceResponse::error("Invalid credentials");
-        }
+        $phone = $request->input('phone');
+        $name = $request->input('name', 'Guest User');
 
-        $user = Auth::user();
+        // Find or create user by phone
+        $user = User::firstOrCreate(
+            ['phone' => $phone],
+            ['name' => $name] // Generate a random password
+        );
+
+        // Authenticate user and create token
+        Auth::login($user);
         $token = $user->createToken('auth_token')->accessToken;
 
-        return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
+        return ServiceResponse::success('Guest login successful', ['user' => $user, 'token' => $token]);
     }
+
+    // Regular login process
+    $loginKey = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+    $credentials = [
+        $loginKey  => $request->input($loginKey),
+        'password' => $request->input('password'),
+    ];
+
+    if (!Auth::attempt($credentials)) {
+        return ServiceResponse::error("Invalid credentials");
+    }
+
+    $user = Auth::user();
+    $token = $user->createToken('auth_token')->accessToken;
+
+    return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
+}
+
 
 
 
