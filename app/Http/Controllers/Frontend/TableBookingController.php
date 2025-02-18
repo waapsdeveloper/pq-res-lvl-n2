@@ -71,21 +71,49 @@ class TableBookingController extends Controller
     //     return ServiceResponse::success("Trial list successfully", ['data' => $data]);
     // }
 
-    public function index()
+    public function index(Request $request)
     {
 
-        $user = auth()->user();
-        $bookings = RTablesBooking::where('customer_id', $user->id)
-            ->with(['rTableBookings', 'customer', 'restaurant'])
-            ->orderBy('id', 'desc')
-            ->get();
+        // $user = auth()->user();
+        // $bookings = RTablesBooking::where('customer_id', $user->id)
+        //     ->with(['rTableBookings', 'customer', 'restaurant'])
+        //     ->orderBy('id', 'desc')
+        //     ->get();
 
-        return ServiceResponse::success(
-            'Bookings fetched successfully.',
-            [
-                $bookings
-            ]
-        );
+        // return ServiceResponse::success(
+        //     'Bookings fetched successfully.',
+        //     [
+        //         $bookings
+        //     ]
+        // );
+
+        $search = $request->input('search', '');
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
+        
+        $user = auth()->user();
+
+        $query = RTablesBooking::query()
+            ->where('customer_id', $user->id)
+            ->with(['rTableBookings', 'customer', 'restaurant'])->orderBy('id', 'desc');
+
+
+        // Optionally apply search filter if needed
+        if ($search) {
+            $query->where('order_number', 'like', '%' . $search . '%');
+        }        
+
+        // Paginate the results
+        $query->orderBy('id', 'desc');
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        // Loop through the results and generate full URL for image
+        // $data->getCollection()->transform(function ($item) {
+        //     return new OrderResource($item);
+        // });
+
+        // Return the response with image URLs included
+        return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
 
 
