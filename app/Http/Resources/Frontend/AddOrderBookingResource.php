@@ -27,6 +27,9 @@ class AddOrderBookingResource extends JsonResource
             'invoice_no' => $obj->invoice_no,
             'table_no' => $obj->table_no,
             'total_price' => $obj->total_price,
+            'payment_method' => $obj->payment_method ?? 'cash',
+            'order_type' => $obj->order_type ?? null,
+            'delivery_address' => $obj->delivery_address ?? null,
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
                     'name' => $orderProduct->product->name,
