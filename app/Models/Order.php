@@ -23,6 +23,9 @@ class Order extends Model
         'total_price',
         'variation',
         'created_at', // for fake entries when done remove this line
+        'payment_method',
+        'order_type',
+        'delivery_address',
     ];
 
     // Define relationship with OrderProduct

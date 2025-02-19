@@ -129,6 +129,10 @@ class OrderController extends Controller
         $orderStatus = $data['status'] ?? 'pending';
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
 
+        $paymentMethod = $data['payment_method'] ?? 'cash';
+        $orderType = $data['order_type'] ?? null;
+        $deliveryAddress = $data['delivery_address'] ?? null;
+
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
             'order_number' => $orderNumber,
@@ -143,6 +147,9 @@ class OrderController extends Controller
             'restaurant_id' => $restaurantId,
             'created_at' => now(),
             'updated_at' => now(),
+            'payment_method' => $paymentMethod,
+            'order_type' => $orderType,
+            'delivery_address' => $deliveryAddress,
         ]);
         $identifier = Identifier::make('Order', $order->id, 3);
         $invoice_no = Identifier::make('Invoice', $order->id, 3);
