@@ -31,6 +31,7 @@ class UserResource extends JsonResource
             "id" => $obj->id,
             "name" => $obj->name,
             "email" => $obj->email,
+            "dial_code" => $obj->dial_code,
             "phone" => $obj->phone,
             "role_id" => $obj->role_id,
             "role" => in_array($obj->role_id, [null, 0]) ? 'customer' : ($obj->role ? $obj->role->name : ""),
