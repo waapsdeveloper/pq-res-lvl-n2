@@ -24,16 +24,41 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'phone' => 'required|string|max:20', // Remove unique rule since guest users exist
             'password' => 'required|string|min:8',
-
         ]);
 
         if ($validator->fails()) {
             return ServiceResponse::error($validator->errors()->first());
         }
 
+        // Check if user (non-guest) already exists with this phone
+        $existingUser = User::where('phone', $request->phone)->whereNotNull('email')->first();
+        if ($existingUser) {
+            return ServiceResponse::error('Phone number or email already exists. Please log in.');
+        }
+
+        // Check if a guest user exists with the same phone
+        $guestUser = User::where('phone', $request->phone)->whereNull('email')->first();
+
+        if ($guestUser) {
+            // Upgrade the guest user
+            $guestUser->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            $token = $guestUser->createToken('auth_token')->accessToken;
+
+            return ServiceResponse::success('Account upgraded successfully!', [
+                'user' => $guestUser,
+                'token' => $token
+            ]);
+        }
+
+        // Create a new user if no guest exists
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -43,53 +68,55 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->accessToken;
 
-
-
-        return ServiceResponse::success('register successful', ['user' => $user, 'token' => $token]);
+        return ServiceResponse::success('Registration successful', [
+            'user' => $user,
+            'token' => $token
+        ]);
     }
+
 
     /**
      * Handle user login.
      */
     public function login(Request $request)
-{
-    $isGuestLogin = $request->input('isGuestLogin');
+    {
+        $isGuestLogin = $request->input('isGuestLogin');
 
-    if ($isGuestLogin) {
+        if ($isGuestLogin) {
 
-        $phone = $request->input('phone');
-        $name = $request->input('name', 'Guest User');
+            $phone = $request->input('phone');
+            $name = $request->input('name', 'Guest User');
 
-        // Find or create user by phone
-        $user = User::firstOrCreate(
-            ['phone' => $phone],
-            ['name' => $name] // Generate a random password
-        );
+            // Find or create user by phone
+            $user = User::firstOrCreate(
+                ['phone' => $phone],
+                ['name' => $name] // Generate a random password
+            );
 
-        // Authenticate user and create token
-        Auth::login($user);
+            // Authenticate user and create token
+            Auth::login($user);
+            $token = $user->createToken('auth_token')->accessToken;
+
+            return ServiceResponse::success('Guest login successful', ['user' => $user, 'token' => $token]);
+        }
+
+        // Regular login process
+        $loginKey = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+        $credentials = [
+            $loginKey => $request->input($loginKey),
+            'password' => $request->input('password'),
+        ];
+
+        if (!Auth::attempt($credentials)) {
+            return ServiceResponse::error("Invalid credentials");
+        }
+
+        $user = Auth::user();
         $token = $user->createToken('auth_token')->accessToken;
 
-        return ServiceResponse::success('Guest login successful', ['user' => $user, 'token' => $token]);
+        return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
     }
-
-    // Regular login process
-    $loginKey = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
-
-    $credentials = [
-        $loginKey  => $request->input($loginKey),
-        'password' => $request->input('password'),
-    ];
-
-    if (!Auth::attempt($credentials)) {
-        return ServiceResponse::error("Invalid credentials");
-    }
-
-    $user = Auth::user();
-    $token = $user->createToken('auth_token')->accessToken;
-
-    return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
-}
 
 
 
@@ -189,6 +216,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        return ServiceResponse::success('Password updated successfully.',['user' => $user]);
+        return ServiceResponse::success('Password updated successfully.', ['user' => $user]);
     }
 }
