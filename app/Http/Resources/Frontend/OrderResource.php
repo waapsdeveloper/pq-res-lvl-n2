@@ -18,6 +18,7 @@ class OrderResource extends JsonResource
         // dd();
         return [
             'id' => $obj->id,            
+            'customer' => $obj->customer,
             'order_number' => $obj->order_number,
             'restaurant' => $obj->restaurant,
             'type' => ucwords(Str::replace(['_', '-'], ' ', $obj->type)),
