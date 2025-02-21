@@ -48,6 +48,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'role_id' => 10
             ]);
 
             $token = $guestUser->createToken('auth_token')->accessToken;
@@ -64,6 +65,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
+            'role_id' => 10
         ]);
 
         $token = $user->createToken('auth_token')->accessToken;
@@ -90,7 +92,7 @@ class AuthController extends Controller
             // Find or create user by phone
             $user = User::firstOrCreate(
                 ['phone' => $phone],
-                ['name' => $name] // Generate a random password
+                ['name' => $name, 'role_id' => 11] // Generate a random password
             );
 
             // Authenticate user and create token
