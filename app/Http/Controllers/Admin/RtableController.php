@@ -213,7 +213,7 @@ class RtableController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        $data = $request->validated();
+        $data = $request->all();
 
 
         $rtable = Rtable::find($id);
