@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('Rtable', function (Blueprint $table) {
+        Schema::table('rtables', function (Blueprint $table) {
             // Change the column type from ENUM to STRING
             $table->string('status')->change();
         });
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('Rtable', function (Blueprint $table) {
+        Schema::table('rtables', function (Blueprint $table) {
             // If needed, revert the change (you may need to define ENUM values manually)
             DB::statement("ALTER TABLE `Rtable` MODIFY `status` ENUM('pending', 'approved', 'rejected') NOT NULL");
         });
