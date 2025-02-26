@@ -199,4 +199,27 @@ class RTableBookingController extends Controller
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $data = $request->all();
+
+
+        $rtable = RTablesBooking::find($id);
+
+        if (!$rtable) {
+            return ServiceResponse::error('Table not found');
+        }
+
+        $rtable->update([
+            'status' => $data['status'],
+        ]);
+
+        // later show notifications
+        // $notification = $this->createNotification($rtable);
+
+        // $noti = new NotifyResource($notification);
+        // Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update-' . $rtable->order_number);
+        return ServiceResponse::success('Booking status updated successfully', $rtable);
+    }
 }

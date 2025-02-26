@@ -74,6 +74,8 @@ Route::prefix('table-booking')->group(function () {
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
         ->names('table-booking');
+    Route::put('/update-status/{id}', [RTableBookingController::class, 'updateStatus'])
+        ->name('tablebookingUpdateStatus');
 });
 
 
