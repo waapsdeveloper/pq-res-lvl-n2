@@ -169,6 +169,10 @@ class OrderController extends Controller
         $orderNote = $request->notes;
         $orderStatus = $request->status;
 
+        $paymentMethod = $request->payment_method;
+        $orderType = $request->order_type;
+        $deliveryAddress = $request->delivery_address;
+
         $order = Order::create([
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,
@@ -180,6 +184,9 @@ class OrderController extends Controller
             'invoice' => 'INV-',
             'table_no' => $tableNo,
             'total_price' => $finalPrice,
+            'payment_method' => $paymentMethod,
+            'order_type' => $orderType,
+            'delivery_address' => $deliveryAddress,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
