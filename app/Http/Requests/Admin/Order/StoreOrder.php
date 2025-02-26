@@ -39,6 +39,9 @@ class StoreOrder extends FormRequest
             'status' => 'nullable|string',
             'table_no' => 'nullable|string',
             'total_price' => 'nullable|numeric',
+            'payment_method' => 'nullable|string',
+            'order_type' => 'nullable|string',
+            'delivery_address' => 'nullable|string',
         ];
     }
     protected function failedValidation(Validator $validator)
