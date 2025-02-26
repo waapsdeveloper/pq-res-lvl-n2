@@ -45,7 +45,7 @@ class OrderController extends Controller
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $query = Order::query()
-            ->where('restaurant_id', $resID)
+            // ->where('restaurant_id', $resID)
             ->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
 
 
