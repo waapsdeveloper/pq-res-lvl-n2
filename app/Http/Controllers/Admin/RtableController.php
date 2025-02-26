@@ -210,4 +210,27 @@ class RtableController extends Controller
             'floors' => $floors
         ]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $data = $request->validated();
+
+
+        $rtable = Rtable::find($id);
+
+        if (!$rtable) {
+            return ServiceResponse::error('Table not found');
+        }
+
+        $rtable->update([
+            'status' => $data['status'],
+        ]);
+
+        // later show notifications
+        // $notification = $this->createNotification($rtable);
+
+        // $noti = new NotifyResource($notification);
+        // Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update-' . $rtable->order_number);
+        return ServiceResponse::success('Order status updated successfully', $rtable);
+    }
 }
