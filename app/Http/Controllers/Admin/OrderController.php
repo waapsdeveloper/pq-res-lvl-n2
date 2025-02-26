@@ -172,9 +172,11 @@ class OrderController extends Controller
         $paymentMethod = $request->payment_method;
         $orderType = $request->order_type;
         $deliveryAddress = $request->delivery_address;
+        $resID = $request->restaurant_id; 
 
         $order = Order::create([
             'identifier' => 'ORD-',
+            'restaurant_id' => $resID,
             'order_number' => $orderNumber,
             'type' => $type,
             'status' => $orderStatus,
