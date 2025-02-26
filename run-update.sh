@@ -1,4 +1,3 @@
 #!/bin/bash
 
-php artisan migrate --path="database/migrations/2025_02_21_114136_add_dial_code_to_users_table.php"
-php artisan db:seed --class=GuestRoleSeeder
+php artisan migrate --path="database/migrations/2025_02_26_221023_alter_status_column_in_rtable.php"
