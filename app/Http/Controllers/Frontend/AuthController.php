@@ -27,6 +27,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email',
             'phone' => 'required|string|max:20', // Remove unique rule since guest users exist
             'password' => 'required|string|min:8',
+            'dial_code' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -48,6 +49,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'dial_code' => $request->dial_code,
                 'role_id' => 10
             ]);
 
@@ -65,6 +67,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
+            'dial_code' => $request->dial_code,
             'role_id' => 10
         ]);
 
@@ -88,11 +91,12 @@ class AuthController extends Controller
 
             $phone = $request->input('phone');
             $name = $request->input('name', 'Guest User');
+            $dialCode = $request->input('dial_code', '+1');
 
             // Find or create user by phone
             $user = User::firstOrCreate(
                 ['phone' => $phone],
-                ['name' => $name, 'role_id' => 11] // Generate a random password
+                ['name' => $name, 'dial_code' => $dialCode, 'role_id' => 11] // Generate a random password
             );
 
             // Authenticate user and create token
