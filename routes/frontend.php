@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductsController;
 use App\Http\Controllers\Frontend\MessageController;
@@ -118,3 +119,5 @@ Route::middleware([ExtractRestaurantId::class])->group(function () {
         Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
     });
 });
+
+Route::get('/countries', [CountryController::class, 'index']);
