@@ -24,6 +24,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'phone' => 'required|string',
+            'dial_code' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -33,6 +34,7 @@ class ProfileController extends Controller
         $user->update([
             'name' => $request->name,
             'phone' => $request->phone,
+            'dial_code' => $request->dial_code,            
         ]);
 
         $user = User::where('id', '=', $user->id)->first();
