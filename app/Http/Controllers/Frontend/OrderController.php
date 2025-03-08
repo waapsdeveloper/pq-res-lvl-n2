@@ -63,6 +63,7 @@ class OrderController extends Controller
     {
         $data = $request->validated();
         $phone = $data['phone'];
+        $dial_code = $data['dial_code'];
 
         // create or update custoer by phone 
         $customer = auth()->user();
@@ -150,6 +151,8 @@ class OrderController extends Controller
             'payment_method' => $paymentMethod,
             'order_type' => $orderType,
             'delivery_address' => $deliveryAddress,
+            'phone' => $phone,
+            'dial_code' => $dial_code,
         ]);
         $identifier = Identifier::make('Order', $order->id, 3);
         $invoice_no = Identifier::make('Invoice', $order->id, 3);
