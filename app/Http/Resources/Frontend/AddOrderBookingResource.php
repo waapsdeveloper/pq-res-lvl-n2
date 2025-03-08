@@ -30,6 +30,8 @@ class AddOrderBookingResource extends JsonResource
             'payment_method' => $obj->payment_method ?? 'cash',
             'order_type' => $obj->order_type ?? null,
             'delivery_address' => $obj->delivery_address ?? null,
+            'phone' => $obj->phone ? $obj->phone : '',
+            'dial_code' => $obj->dial_code ? $obj->dial_code : '',
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
                     'name' => $orderProduct->product->name,
