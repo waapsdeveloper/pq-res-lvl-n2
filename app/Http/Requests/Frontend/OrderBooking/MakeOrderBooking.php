@@ -25,6 +25,7 @@ class MakeOrderBooking extends FormRequest
     {
         return [
             'phone' => 'required',
+            'dial_code' => 'required',
             'table_identifier' => 'nullable',
             'products' => 'nullable|array',
             'products.*.product_id' => 'required|exists:products,id',
