@@ -26,6 +26,8 @@ class Order extends Model
         'payment_method',
         'order_type',
         'delivery_address',
+        'phone',
+        'dial_code',
     ];
 
     // Define relationship with OrderProduct
