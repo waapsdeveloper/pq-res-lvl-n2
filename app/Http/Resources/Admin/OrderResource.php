@@ -22,7 +22,7 @@ class OrderResource extends JsonResource
             'customer' => $obj->customer ? $obj->customer->name : 'walk-in-customer',
             'customer_phone' => $obj->customer ? $obj->customer->phone : 'no contact number',
             'customer_email' => $obj->customer ? $obj->customer->email : 'no email',
-            'role' => $obj->role ? $obj->role->name : '',
+            'role' => $obj->customer->role ? $obj->customer->role->name : '',
             'order_number' => $obj->order_number,
             'type' => ucwords(Str::replace(['_', '-'], ' ', $obj->type)),
             'status' => ucwords(Str::replace(['_', '-'], ' ', $obj->status)),
