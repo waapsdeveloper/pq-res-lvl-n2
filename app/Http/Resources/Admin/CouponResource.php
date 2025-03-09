@@ -21,8 +21,6 @@ class CouponResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
-
-        $image = Helper::returnFullImageUrl($obj->image);
         return [
             "id" => $obj->id,
             "code" => $obj->code,
@@ -32,9 +30,6 @@ class CouponResource extends JsonResource
             "usage_count" => $obj->usage_count,
             "expires_at" => $obj->expires_at,
             "is_active" => $obj->is_active,
-            // "restaurant_id" => $obj->restaurant_id,
-            // "category" => $obj->category,
-            // "status" => ucfirst($obj->status),
         ];
     }
 }

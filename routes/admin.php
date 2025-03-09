@@ -210,6 +210,7 @@ Route::prefix('notifications')->group(function () {
 });
 
 Route::prefix('coupon')->group(function () {
+    Route::get('/bulk-delete', [CouponController::class, 'bulkDelete'])->name('coupon.BulkDelete');
     Route::resource('/', CouponController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
