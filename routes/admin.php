@@ -3,6 +3,7 @@
 use App\Helpers\Helper;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -206,4 +207,11 @@ Route::prefix('notifications')->group(function () {
     // Route::post('/send-notification/{adminId}/{orderId}', [NotificationController::class, 'sendNotification']);
     Route::post('/mark-as-read/{notificationId}', [NotificationController::class, 'markAsRead']);
     Route::get('/show/{notificationId}', [NotificationController::class, 'show']);
+});
+
+Route::prefix('coupon')->group(function () {
+    Route::resource('/', CouponController::class)
+        ->parameters(['' => 'id']) // If needed, customize parameter names.
+        ->only(['index', 'show', 'update', 'store', 'destroy'])
+        ->names('coupon'); // Restrict to specific CRUD actions.
 });
