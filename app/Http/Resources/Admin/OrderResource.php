@@ -36,6 +36,9 @@ class OrderResource extends JsonResource
             'restaurant' => $obj->restaurant ? $obj->restaurant : 'no restaurant' ,
             'phone' => $obj->phone ? $obj->phone : '',
             'dial_code' => $obj->dial_code ? $obj->dial_code : '',
+            'coupon_code' => $obj->coupon_code,
+            'discount_value' => $obj->discount_value,
+            'final_total' => $obj->final_total,
             'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [
