@@ -173,6 +173,9 @@ class OrderController extends Controller
         $orderType = $request->order_type;
         $deliveryAddress = $request->delivery_address;
         $resID = $request->restaurant_id; 
+        $couponCode = $request->coupon_code;
+        $discountValue = $request->discount_value;
+        $finalTotal = $request->final_total;
 
         $order = Order::create([
             'identifier' => 'ORD-',
@@ -189,6 +192,9 @@ class OrderController extends Controller
             'payment_method' => $paymentMethod,
             'order_type' => $orderType,
             'delivery_address' => $deliveryAddress,
+            'coupon_code' => $couponCode,
+            'discount_value' => $discountValue,
+            'final_total' => $finalTotal,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
