@@ -26,6 +26,7 @@ class OrderResource extends JsonResource
             'order_number' => $obj->order_number,
             'type' => ucwords(Str::replace(['_', '-'], ' ', $obj->type)),
             'status' => ucwords(Str::replace(['_', '-'], ' ', $obj->status)),
+            'notes' => $obj->notes,
             'total_price' => $obj->total_price,
             'discount' => $obj->discount,
             'created_at' => $obj->created_at,
