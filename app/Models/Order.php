@@ -28,6 +28,10 @@ class Order extends Model
         'delivery_address',
         'phone',
         'dial_code',
+        'coupon_code',
+        'discount_value',
+        'final_total'
+
     ];
 
     // Define relationship with OrderProduct
