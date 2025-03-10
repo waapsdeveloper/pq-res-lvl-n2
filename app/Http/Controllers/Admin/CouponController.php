@@ -209,7 +209,7 @@ class CouponController extends Controller
         }
         
 
-        return ServiceResponse::success("Bulk delete successful", ['coupon' => $coupon]);
+        return ServiceResponse::success("Coupon is available", ['coupon' => $coupon]);
 
     }
 
