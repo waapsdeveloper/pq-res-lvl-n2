@@ -27,7 +27,7 @@ class CouponResource extends JsonResource
             "discount_value" => $obj->discount_value,
             "discount_type" => $obj->discount_type,
             "usage_limit" => $obj->usage_limit,
-            "usage_count" => $obj->usage_count,
+            "usage_count" => $obj->used_count,
             "expires_at" => $obj->expires_at,
             "is_active" => $obj->is_active,
         ];
