@@ -205,7 +205,7 @@ class CouponController extends Controller
 
         $coupon = Coupon::where('code', $request->code)->first();
         if(!$coupon->isValid()){
-            return ServiceResponse::error('Coupon is not available', ['coupon' => $coupon]);
+            return ServiceResponse::error('Coupon is not available', ['coupon' => null]);
         }
         
 
