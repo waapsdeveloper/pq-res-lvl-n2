@@ -37,6 +37,9 @@ class UpdateOrder extends FormRequest
             'status' => 'required|string',
             'table_no' => 'nullable|string',
             'total_price' => 'nullable|numeric',
+            'coupon_code' => 'nullable|string',
+            'discount_value' => 'nullable|numeric',
+            'final_total' => 'nullable|numeric',
         ];
     }
 

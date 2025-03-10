@@ -192,4 +192,43 @@ class CouponController extends Controller
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
+
+    public function availableValidCoupon(Request $request){
+        
+        $validator = Validator::make($request->all(), [
+            'code' => 'required|exists:coupons,code',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $coupon = Coupon::where('code', $request->code)->first();
+        if(!$coupon->isValid()){
+            return ServiceResponse::error('Coupon is not available', ['coupon' => $coupon]);
+        }
+        
+
+        return ServiceResponse::success("Bulk delete successful", ['coupon' => $coupon]);
+
+    }
+
+    public function updateCouponUsage(Request $request){ 
+        $validator = Validator::make($request->all(), [
+            'code' => 'required|exists:coupons,code',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $coupon = Coupon::where('code', $request->code)->first();
+        if(!$coupon->isValid()){
+            return ServiceResponse::error('Coupon is not available', ['coupon' => $coupon]);
+        }
+        $coupon->used_count += 1;
+        $coupon->save();
+
+        return ServiceResponse::success("Coupon usage updated successfully", ['coupon' => $coupon]);
+    }
 }

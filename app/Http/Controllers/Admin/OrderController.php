@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\Order\UpdateOrder;
 use App\Http\Requests\Admin\Order\UpdateOrderStatus;
 use App\Http\Resources\Admin\NotifyResource;
 use App\Http\Resources\Admin\OrderResource;
+use App\Models\Coupon;
 use App\Models\Invoice;
 use App\Models\Notification;
 use App\Models\Order;
@@ -176,6 +177,7 @@ class OrderController extends Controller
         $couponCode = $request->coupon_code;
         $discountValue = $request->discount_value;
         $finalTotal = $request->final_total;
+
 
         $order = Order::create([
             'identifier' => 'ORD-',
