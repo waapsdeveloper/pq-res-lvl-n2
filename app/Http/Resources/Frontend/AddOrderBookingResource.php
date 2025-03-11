@@ -32,6 +32,9 @@ class AddOrderBookingResource extends JsonResource
             'delivery_address' => $obj->delivery_address ?? null,
             'phone' => $obj->phone ? $obj->phone : '',
             'dial_code' => $obj->dial_code ? $obj->dial_code : '',
+            'coupon_code' => $obj->coupon_code,
+            'discount_value' => $obj->discount_value,
+            'final_total' => $obj->final_total,
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
                     'name' => $orderProduct->product->name,
