@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\RTablesController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CategoryController;
+use App\Http\Controllers\Frontend\CouponController;
 use App\Http\Controllers\Frontend\TableBookingController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\ProfileController;
@@ -121,3 +122,9 @@ Route::middleware([ExtractRestaurantId::class])->group(function () {
 });
 
 Route::get('/countries', [CountryController::class, 'index']);
+
+Route::prefix('coupon')->group(function () {
+
+    Route::get('/available-valid-coupon', [CouponController::class, 'availableValidCoupon'])->name('coupon.availableValidCoupon');
+    Route::post('/update-coupon-usage', [CouponController::class, 'updateCouponUsage'])->name('coupon.updateCouponUsage');    
+});
