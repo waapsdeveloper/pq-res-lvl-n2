@@ -43,6 +43,9 @@ class MakeOrderBooking extends FormRequest
             'payment_method' => 'nullable|string',
             'order_type' => 'nullable|string',
             'delivery_address' => 'nullable|string',
+            'coupon_code' => 'nullable|string',
+            'discount_value' => 'nullable|numeric',
+            'final_total' => 'nullable|numeric',
 
         ];
     }

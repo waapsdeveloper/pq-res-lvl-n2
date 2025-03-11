@@ -134,6 +134,10 @@ class OrderController extends Controller
         $orderType = $data['order_type'] ?? null;
         $deliveryAddress = $data['delivery_address'] ?? null;
 
+        $couponCode = $request->coupon_code;
+        $discountValue = $request->discount_value;
+        $finalTotal = $request->final_total;
+
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
             'order_number' => $orderNumber,
@@ -153,6 +157,9 @@ class OrderController extends Controller
             'delivery_address' => $deliveryAddress,
             'phone' => $phone,
             'dial_code' => $dial_code,
+            'coupon_code' => $couponCode,
+            'discount_value' => $discountValue,
+            'final_total' => $finalTotal,
         ]);
         $identifier = Identifier::make('Order', $order->id, 3);
         $invoice_no = Identifier::make('Invoice', $order->id, 3);
