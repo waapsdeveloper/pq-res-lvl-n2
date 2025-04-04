@@ -13,6 +13,7 @@ class HandleCors
 
         $allowedOrigins = [
             'https://pq-res-ang-18.vercel.app',
+            'https://pq-res-front-ang-n2.vercel.app'
             // add other allowed origins if needed
         ];
 
