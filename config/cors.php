@@ -21,6 +21,7 @@ return [
 
     'allowed_origins' => [
         'https://pq-res-ang-18.vercel.app',
+        'https://pq-res-front-ang-n2.vercel.app'
     ],
 
     'allowed_origins_patterns' => [],
