@@ -40,6 +40,7 @@ class RestaurantListResourse extends JsonResource
             "favicon" => $favicon,
             "logo" => $logo,
             "copyright_text" => $obj->copyright_text ?? null,
+            'is_active' => $obj->is_active,
             "settings" => $obj->settings ?
                 [
                     'id' => $obj->settings->id,
