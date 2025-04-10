@@ -15,11 +15,15 @@ return [
     |
     */
 
-    'paths' => ['api/*','api/admin/*' ],
+    'paths' => ['api/*','api/admin/*', 'api/frontend/*' ],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'https://pq-res-ang-18.vercel.app',
+        'https://pq-res-front-ang-n2.vercel.app',
+        'http://localhost:4200',
+    ],
 
     'allowed_origins_patterns' => [],
 

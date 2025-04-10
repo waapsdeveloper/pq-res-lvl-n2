@@ -96,12 +96,12 @@ class RestaurantController extends Controller
         ]);
 
         // Process image, favicon, and logo (Base64 conversion)
-        foreach (['image', 'favicon', 'logo'] as $field) {
-            if (isset($data[$field]) && $data[$field]) {
-                $url = Helper::getBase64ImageUrl($data[$field], 'restaurant');
-                $restaurant->update([$field => $url]);
-            }
-        }
+        // foreach (['image', 'favicon', 'logo'] as $field) {
+        //     if (isset($data[$field]) && $data[$field]) {
+        //         $url = Helper::getBase64ImageUrl($data[$field], 'restaurant');
+        //         $restaurant->update([$field => $url]);
+        //     }
+        // }
 
         foreach ($data['schedule'] as $day => $scheduleItem) {
             if (!empty($scheduleItem)) {
@@ -350,7 +350,7 @@ class RestaurantController extends Controller
         $activeRestaurantId = Helper::getActiveRestaurantId();
         return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurantId]);
     }
-  
+
 
     public function updateActiveRestaurant(UpdateActiveRestaurant $request, $id)
     {

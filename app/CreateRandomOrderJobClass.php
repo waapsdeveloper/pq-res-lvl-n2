@@ -118,6 +118,7 @@ class CreateRandomOrderJobClass
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,
             'type' => $type,
+            'order_type' => $type,
             'status' => $status,
             'notes' => $randomNote,
             'customer_id' => $customer->id,
