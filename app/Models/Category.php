@@ -36,4 +36,8 @@ class Category extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+
+    public function productsCount() {
+        return $this->products()->count();
+    }
 }
