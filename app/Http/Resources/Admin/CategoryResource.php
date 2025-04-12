@@ -31,7 +31,7 @@ class CategoryResource extends JsonResource
             "restaurant_id" => $obj->restaurant_id,
             "category" => $obj->category,
             "status" => ucfirst($obj->status),
-            'products_count' => $obj->productsCount(),
+            'product_count' => $obj->productsCount(),
         ];
     }
 }
