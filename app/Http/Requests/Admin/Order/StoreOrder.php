@@ -38,6 +38,7 @@ class StoreOrder extends FormRequest
             'type' => 'nullable|string',
             'status' => 'nullable|string',
             'table_no' => 'nullable|string',
+            'table_id' => 'nullable|integer|exists:rtables,id',
             'total_price' => 'nullable|numeric',
             'payment_method' => 'nullable|string',
             'order_type' => 'nullable|string',

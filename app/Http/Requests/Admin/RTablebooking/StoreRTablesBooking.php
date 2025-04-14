@@ -20,16 +20,32 @@ class StoreRTablesBooking extends FormRequest
     {
         if ($this->has('booking_start')) {
             $this->merge([
-                'booking_start' => Carbon::createFromFormat('d-m-y H:i', $this->booking_start)->format('Y-m-d H:i:s'),
+                'booking_start' => $this->formatDateTime($this->booking_start),
             ]);
         }
 
         if ($this->has('booking_end')) {
             $this->merge([
-                'booking_end' => Carbon::createFromFormat('d-m-y H:i', $this->booking_end)->format('Y-m-d H:i:s'),
+                'booking_end' => $this->formatDateTime($this->booking_end),
             ]);
         }
     }
+
+
+    private function formatDateTime($value)
+    {
+        if ($value instanceof Carbon) {
+            return $value->format('Y-m-d H:i:s');
+        }
+
+        if (is_string($value)) {
+            // Try to parse automatically if no strict format needed
+            return Carbon::parse($value)->format('Y-m-d H:i:s');
+        }
+
+        return $value;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

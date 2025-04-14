@@ -25,7 +25,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
-
+use App\Http\Controllers\Admin\RTableBookingController;
+use App\Http\Requests\Admin\RTablebooking\StoreRTablesBooking;
+use App\Models\Rtable;
+use App\Models\RTableBooking_RTable;
+use App\Models\RTablesBooking;
+use Illuminate\Support\Facades\App;
 
 class OrderController extends Controller
 {
@@ -164,7 +169,11 @@ class OrderController extends Controller
 
         $discount = $data['discount'] ?? 0;
         $type = $data['type'] ?? null;
-        $tableNo = $data['tableNo'] ?? null;
+
+
+        $table = $request->has('table_id') ? Rtable::where('id', $data['table_id'])->first() : null;
+        $tableNo = $table ? $table->id : null;
+
         // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $finalPrice = $totalPrice - $discount;
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
@@ -246,9 +255,32 @@ class OrderController extends Controller
             'notes' => ""
         ]);
 
-
         logger()->info('Invoice created successfully', ['invoice_id' => $invoice->id]);
 
+        // If table_id is not null, update the table status to occupied
+        if ($table) {
+
+            // Save the main booking
+            $booking = RTablesBooking::create([
+                'customer_id' => $user->id ?? null,
+                'restaurant_id' => $resID,
+                'order_id' => $order->id,
+                'booking_start' => now(),
+                'booking_end' => now()->addHour(),
+                'no_of_seats' => $data['no_of_seats'] ?? 2,
+                'description' => $data['description'] ?? null,
+                'status' => 'reserved',
+            ]);
+
+            RTableBooking_RTable::create([
+                'restaurant_id' => $resID,
+                'rtable_booking_id' => $booking->id,
+                'rtable_id' => $table->id,
+                'booking_start' => $booking->booking_start,
+                'booking_end' => $booking->booking_end,
+                'no_of_seats' => $data['no_of_seats'],
+            ]);
+        }
 
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }

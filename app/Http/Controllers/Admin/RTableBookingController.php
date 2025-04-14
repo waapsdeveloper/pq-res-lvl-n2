@@ -78,6 +78,8 @@ class RTableBookingController extends Controller
     {
         $data = $request->validated();
 
+        logger()->info('RTableBookingController store', $data);
+
         // Save the main booking
         $booking = RtablesBooking::create([
             'customer_id' => $data['customer_id'],
