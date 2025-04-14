@@ -27,25 +27,31 @@ class InvoiceController extends Controller
             ->orderBy('id', 'desc');
 
         // Optionally apply search filter if needed
-        if ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-        }
-
-        // if ($filters) {
-
-        //     $filters = json_decode($filters, true); // Decode JSON to array
-
-        //     if (isset($filters['name']) && !empty($filters['name'])) {
-        //         $query->where('name', 'like', '%' . $filters['name'] . '%');
-        //     }
-
-        //     if (isset($filters['status']) && !empty($filters['status'])) {
-        //         $query->where('status', $filters['status']);
-        //     }
-        //     if (isset($filters['restaurant_id']) && !empty($filters['restaurant_id'])) {
-        //         $query->where('restaurant_id', $filters['restaurant_id']);
-        //     }
+        // if ($search) {
+        //     $query->where('name', 'like', '%' . $search . '%');
         // }
+
+        if ($filters) {
+
+            $filters = json_decode($filters, true); // Decode JSON to array
+
+            if (isset($filters['invoice_no']) && !empty($filters['invoice_no'])) {
+                $query->where('invoice_no', 'like', '%' . $filters['invoice_no'] . '%');
+            }
+
+            if (isset($filters['order_number']) && !empty($filters['order_number'])) {
+                $query->whereHas('order', function ($q) use ($filters) {
+                    $q->where('order_number', 'like', '%' . $filters['order_number'] . '%');
+                });
+            }
+
+            // if (isset($filters['status']) && !empty($filters['status'])) {
+            //     $query->where('status', $filters['status']);
+            // }
+            // if (isset($filters['restaurant_id']) && !empty($filters['restaurant_id'])) {
+            //     $query->where('restaurant_id', $filters['restaurant_id']);
+            // }
+        }
 
         // Paginate the results
         $data = $query->paginate($perpage, ['*'], 'page', $page);
@@ -158,4 +164,29 @@ class InvoiceController extends Controller
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
+
+
+    public function updateStatus(Request $request, $id)
+    {
+        $data = $request->all();
+
+
+        $invoice = Invoice::find($id);
+
+        if (!$invoice) {
+            return ServiceResponse::error('Table not found');
+        }
+
+        $invoice->update([
+            'status' => $data['status'],
+        ]);
+
+        // later show notifications
+        // $notification = $this->createNotification($rtable);
+
+        // $noti = new NotifyResource($notification);
+        // Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update-' . $rtable->order_number);
+        return ServiceResponse::success('Order status updated successfully', $invoice);
+    }
+
 }

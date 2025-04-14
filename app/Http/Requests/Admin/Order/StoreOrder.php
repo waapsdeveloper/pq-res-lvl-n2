@@ -45,6 +45,7 @@ class StoreOrder extends FormRequest
             'coupon_code' => 'nullable|string',
             'discount_value' => 'nullable|numeric',
             'final_total' => 'nullable|numeric',
+            'restaurant_id' => 'nullable|integer|exists:restaurants,id', // If order are restaurant-specific
         ];
     }
     protected function failedValidation(Validator $validator)

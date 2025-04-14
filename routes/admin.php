@@ -177,6 +177,8 @@ Route::prefix('invoice')->group(function () {
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('invoice'); // Restrict to specific CRUD actions.
+    Route::put('/update-status/{id}', [InvoiceController::class, 'updateStatus'])
+        ->name('invoiceUpdateStatus');
 });
 Route::prefix('message')->group(function () {
     Route::put('/reply/{email}', [MessageController::class, 'reply'])->name('message.reply');

@@ -34,6 +34,7 @@ class StoreCoupon extends FormRequest
             'restaurant_id' => 'nullable|integer|exists:restaurants,id', // If coupons are restaurant-specific
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
         // Customize the error response if validation fails

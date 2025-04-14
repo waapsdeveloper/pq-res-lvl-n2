@@ -120,6 +120,7 @@ class OrderController extends Controller
         // $data = $request->all();
 
         $data = $request->validated();
+        $resID = $request->restaurant_id;
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
         $customerPhone = $data['customer_phone'] ?? 'XXXX';
@@ -173,7 +174,7 @@ class OrderController extends Controller
         $paymentMethod = $request->payment_method;
         $orderType = $request->order_type;
         $deliveryAddress = $request->delivery_address;
-        $resID = $request->restaurant_id; 
+        $resID = $request->restaurant_id;
         $couponCode = $request->coupon_code;
         $discountValue = $request->discount_value;
         $finalTotal = $request->final_total;
@@ -203,7 +204,14 @@ class OrderController extends Controller
 
         $identifier = Identifier::make('Order', $order->id, 3);
         $invoice_no = Identifier::make('Invoice', $order->id, 3);
-        $order->update(['identifier' => $identifier, 'invoice' => $invoice_no]);
+        // $order->update(['identifier' => $identifier, 'invoice_no' => $invoice_no]);
+        $order->update(
+            [
+                'identifier' => Identifier::make('Order', $order->id, 3),
+                'invoice_no' => Identifier::make('Invoice', $order->id, 3)
+            ]
+        );
+
 
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
@@ -225,6 +233,22 @@ class OrderController extends Controller
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
 
         $data = new OrderResource($order);
+
+
+        $invoice = Invoice::create([
+            'order_id' => $order->id,
+            'invoice_no' => $order->invoice_no,
+            'invoice_date' => now(),
+            'restaurant_id' => $resID,
+            'payment_method' => $paymentMethod,
+            'total' => $order->total_price,
+            'status' => 'pending',
+            'notes' => ""
+        ]);
+
+
+        logger()->info('Invoice created successfully', ['invoice_id' => $invoice->id]);
+
 
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
