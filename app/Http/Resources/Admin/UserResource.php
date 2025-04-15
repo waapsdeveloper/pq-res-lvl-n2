@@ -21,14 +21,12 @@ class UserResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
-        $image = Helper::returnFullImageUrl($obj->image);
+        // $image = Helper::returnFullImageUrl($obj->image);
         $address = $obj->userDetail ? $obj->userDetail->address : null;
         $city = $obj->userDetail ? $obj->userDetail->city : null;
         $state = $obj->userDetail ? $obj->userDetail->state : null;
         $country = $obj->userDetail ? $obj->userDetail->country : null;
 
-        // image from helper
-        $image = Helper::returnFullImageUrl($obj->image);
 
         // dd($obj->role->name);
         return [
@@ -43,7 +41,7 @@ class UserResource extends JsonResource
             "restaurant_id" => $obj->restaurant->id ?? null,
             "created_at" => $obj->created_at,
             "updated_at" => $obj->updated_at,
-            "image" => $image,
+            "image" => $obj->image,
             "address" => $address,
             "city" => $city,
             "state" => $state,
