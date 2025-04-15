@@ -82,6 +82,9 @@ class RestaurantController extends Controller
     public function store(StoreRestaurant $request)
     {
         $data = $request->validated();
+
+        // return response()->json($data);
+
         // Create the restaurant
         $restaurant = Restaurant::create([
             'name' => $data['name'],
