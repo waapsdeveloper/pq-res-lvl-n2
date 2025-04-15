@@ -11,35 +11,44 @@ use Pusher\Pusher;
 class Helper
 {
 
-    static public function getBase64ImageUrl($image, $folder)
+    public static function getBase64ImageUrl($image, $folder)
     {
         if ($image) {
+            // Remove the base64 prefix from the image string
             $base64Image = preg_replace('/^data:image\/\w+;base64,/', '', $image);
 
+            // Generate a unique filename for the image
             $filename = uniqid() . '.png';
 
-            $path = base_path(env(key: 'IMAGE_BASE_FOLDER') . $filename);
-            $file = Storage::disk('lvl')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
-            // $file = Storage::disk('local')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
+            // Decode the base64 image
+            $decodedImage = base64_decode($base64Image);
 
-            if ($file) {
-                $imagePath = 'images/' . $folder . '/' . $filename;
-                return $imagePath;
+            if ($decodedImage === false) {
+                throw new Exception("Invalid base64 image data.");
+            }
+
+            // Upload the image to the S3 bucket
+            $filePath = 'images/' . $folder . '/' . $filename;
+            $uploaded = Storage::disk(env('STORAGE_DISK'))->put($filePath, $decodedImage, 'public');
+
+            if ($uploaded) {
+                // Return the public URL of the uploaded image
+                return Storage::disk(env('STORAGE_DISK'))->url($filePath);
             } else {
-                return null;
+                // throw new Exception("Failed to upload image to S3.");
+                return null; // Handle the error as needed
             }
         } else {
             return null;
         }
     }
 
-
     public static function deleteImage(string $url)
     {
         $path = parse_url($url, PHP_URL_PATH);
         $filePath = ltrim($path, '/'); // Remove any leading slash
 
-        $storage = Storage::disk('public'); // Assuming the disk is 'local'
+        $storage = Storage::disk(env('STORAGE_DISK')); // Assuming the disk is 'local'
         // $storage = Storage::disk('local'); // Assuming the disk is 'local'
         if ($storage->exists($filePath)) {
             $storage->delete($filePath); // Delete the file from storage
@@ -50,24 +59,34 @@ class Helper
         return true; // File deleted successfully
     }
 
-    static public function returnFullImageUrl($imagePath)
+    public static function returnFullImageUrl($path)
     {
-        if (!$imagePath || $imagePath == "") {
-            return null;
+        // Ensure the path is not empty
+        if (empty($path) || $path === '/') {
+            return null; // or return a default image URL
         }
 
-        // Get the URL from Laravel's filesystem config (the URL from 'public' disk)
-        // $baseUrl = url('/');
-        $baseUrl = Storage::disk('lvl')->url('/');
-        // $baseUrl =  Storage::disk('local')->url('/');
+        // Get the S3 disk instance
+        $disk = Storage::disk('s3');
 
-        // Generate the full image URL by appending the image path
-        // Ensure that the image path is properly concatenated to the base URL
-        $fullImageUrl = rtrim($baseUrl, '/') . '/' . ltrim($imagePath, '/');
+        // Check if the file exists in the S3 bucket
+        if (!$disk->exists($path)) {
+            return null; // or return a default image URL
+        }
 
-        return $fullImageUrl;
+        // Generate a pre-signed URL valid for 10 minutes
+        $client = Storage::disk('s3')->getClient(); // Get the AWS S3 client
+        $bucket = env('AWS_BUCKET');
+        $command = $client->getCommand('GetObject', [
+            'Bucket' => $bucket,
+            'Key' => $path,
+        ]);
+
+        $request = $client->createPresignedRequest($command, '+10 minutes');
+
+        // Return the pre-signed URL
+        return (string) $request->getUri();
     }
-
 
     static public function getActiveRestaurantId()
     {
