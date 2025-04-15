@@ -36,7 +36,14 @@ return [
             'serve' => true,
             'throw' => false,
         ],
-
+        'lvl' => [
+            'driver' => 'local',
+            'root' => base_path('../public_html/storage'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'serve' => true,
+            'throw' => false,
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
