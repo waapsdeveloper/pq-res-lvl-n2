@@ -19,7 +19,7 @@ class Helper
             $filename = uniqid() . '.png';
 
             $path = base_path(env(key: 'IMAGE_BASE_FOLDER') . $filename);
-            $file = Storage::disk('public')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
+            $file = Storage::disk('lvl')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
             // $file = Storage::disk('local')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
 
             if ($file) {
