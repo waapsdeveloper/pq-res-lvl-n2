@@ -26,6 +26,10 @@ class UserResource extends JsonResource
         $city = $obj->userDetail ? $obj->userDetail->city : null;
         $state = $obj->userDetail ? $obj->userDetail->state : null;
         $country = $obj->userDetail ? $obj->userDetail->country : null;
+
+        // image from helper
+        $image = Helper::returnFullImageUrl($obj->image);
+
         // dd($obj->role->name);
         return [
             "id" => $obj->id,

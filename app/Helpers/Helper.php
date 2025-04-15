@@ -84,8 +84,13 @@ class Helper
 
         $request = $client->createPresignedRequest($command, '+10 minutes');
 
-        // Return the pre-signed URL
-        return (string) $request->getUri();
+        try {
+            // Return the pre-signed URL
+            return (string) $request->getUri();
+        } catch (Exception $e) {
+            \Log::error("Error generating pre-signed URL: " . $e->getMessage());
+            return null; // Return null or handle the error as needed
+        }
     }
 
     static public function getActiveRestaurantId()
