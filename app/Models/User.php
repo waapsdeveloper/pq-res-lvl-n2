@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Helpers\Helper;
 
 class User extends Authenticatable
 {
@@ -55,6 +56,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Accessor for the `image` attribute.
+     * Transforms the image path into an S3 pre-signed URL.
+     */
+    public function getImageAttribute($value)
+    {
+        // Use the Helper to generate a pre-signed URL
+        return $value ? Helper::returnFullImageUrl($value) : null;
     }
 
     // role
