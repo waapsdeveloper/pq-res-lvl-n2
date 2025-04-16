@@ -282,6 +282,9 @@ class OrderController extends Controller
             ]);
         }
 
+        // Send email to the customer
+        Helper::sendEmail($user->email, 'Your Order Details', 'emails.order_details', ['order' => $order]);
+
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
     /**
