@@ -7,6 +7,8 @@ use App\Models\Restaurant;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Pusher\Pusher;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderDetailsMail;
 
 class Helper
 {
@@ -137,6 +139,19 @@ class Helper
             Log::debug("Pusher Error", ['error' => $e->getMessage()]);
         }
     }
+
+    public static function sendEmail($to, $subject, $view, $data = [])
+    {
+        if ($view === 'emails.order_details') {
+            Mail::to($to)->send(new OrderDetailsMail($data['order']));
+        } else {
+            Mail::send($view, $data, function ($message) use ($to, $subject) {
+                $message->to($to)
+                        ->subject($subject);
+            });
+        }
+    }
+
     public static function getRandomOrderNote()
     {
         $phrases = [

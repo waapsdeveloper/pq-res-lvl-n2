@@ -33,7 +33,7 @@ class OrderController extends Controller
         $search = $request->input('search', '');
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
-        
+
         $user = auth()->user();
 
         $query = Order::query()
@@ -44,7 +44,7 @@ class OrderController extends Controller
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('order_number', 'like', '%' . $search . '%');
-        }        
+        }
 
         // Paginate the results
         $query->orderBy('id', 'desc');
@@ -65,7 +65,7 @@ class OrderController extends Controller
         $phone = $data['phone'];
         $dial_code = $data['dial_code'];
 
-        // create or update custoer by phone 
+        // create or update custoer by phone
         $customer = auth()->user();
 
         // $customer = $this->getCustomerByPhone($phone);
@@ -82,7 +82,7 @@ class OrderController extends Controller
         // $totalPrice = 0;
         $orderProducts = [];
 
-       
+
 
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
@@ -184,6 +184,9 @@ class OrderController extends Controller
         $notification = $this->createNotification($order);
         $noti = new NotifyResource($notification);
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
+
+        // send email
+        Helper::sendEmail($customer->email, 'Order Details', 'emails.order_details', ['order' => $order]);
 
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
     }
