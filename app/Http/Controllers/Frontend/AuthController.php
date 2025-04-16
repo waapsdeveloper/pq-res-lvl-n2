@@ -148,7 +148,7 @@ class AuthController extends Controller
 
     public function forgotPassword(Request $request)
     {
-        $request->validate(['email' => 'required|string']);
+        // $request->validate(['email' => 'required|string|email']);
 
         $user = User::where('email', $request->email)->first();
 
@@ -156,28 +156,19 @@ class AuthController extends Controller
             return ServiceResponse::error('Invalid Email');
         }
 
-        $otp = rand(100000, 999999);
-        $expiresAt = now()->addMinutes(10);
-
-        $userCode = UserCode::updateOrCreate(
-            ['user_id' => $user->id],
-            ['code' => $otp, 'expires_at' => $expiresAt]
-        );
-        // dd($userCode);
-
         try {
-            Mail::to($user->email)->send(new ForgotPasswordMail($otp));
-            Log::info('Email sent successfully.');
-            Log::info('Generated OTP: try' . $otp);
+            // Send password reset link
+            $status = \Illuminate\Support\Facades\Password::sendResetLink(['email' => $request->email]);
+
+            if ($status === \Illuminate\Support\Facades\Password::RESET_LINK_SENT) {
+                return ServiceResponse::success('Password reset link sent successfully.');
+            } else {
+                return ServiceResponse::error('Failed to send password reset link.');
+            }
         } catch (\Exception $e) {
-            Log::info('Generated OTP: catch ' . $otp);
-            Log::error('Mail error: ' . $e->getMessage());
-            return ServiceResponse::error('Failed to send OTP.', $user->email);
+            Log::error('Password reset link error: ' . $e->getMessage());
+            return ServiceResponse::error('An error occurred while sending the password reset link.');
         }
-
-        // Mail::to($request->email)->send(new ForgotPasswordMail($otp));
-
-        return ServiceResponse::success('OTP sent successfully', ['data' => $userCode]);
     }
 
     public function verifyOtp(Request $request)
