@@ -24,18 +24,25 @@ class Helper
             $decodedImage = base64_decode($base64Image);
 
             if ($decodedImage === false) {
-                throw new Exception("Invalid base64 image data.");
+                Log::error("Base64 decode failed for image: ");
+                return null; // Handle the error as needed
             }
 
             // Upload the image to the S3 bucket
-            $filePath = 'images/' . $folder . '/' . $filename;
-            $uploaded = Storage::disk(env('STORAGE_DISK'))->put($filePath, $decodedImage, 'public');
+            try {
+                $filePath = 'images/' . $folder . '/' . $filename;
+                Log::info("Base64 Image path: " . $filePath);
+                $uploaded = Storage::disk('s3')->put($filePath, $decodedImage, 'public');
 
-            if ($uploaded) {
-                // Return the public URL of the uploaded image
-                return Storage::disk(env('STORAGE_DISK'))->url($filePath);
-            } else {
-                // throw new Exception("Failed to upload image to S3.");
+                if ($uploaded) {
+                    // Return the public URL of the uploaded image
+                    return Storage::disk('s3')->url($filePath);
+                } else {
+                    Log::error("Failed to upload image to S3.");
+                    return null; // Handle the error as needed
+                }
+            } catch (Exception $e) {
+                Log::error("Error uploading image to S3: " . $e->getMessage());
                 return null; // Handle the error as needed
             }
         } else {
@@ -48,7 +55,7 @@ class Helper
         $path = parse_url($url, PHP_URL_PATH);
         $filePath = ltrim($path, '/'); // Remove any leading slash
 
-        $storage = Storage::disk(env('STORAGE_DISK')); // Assuming the disk is 'local'
+        $storage = Storage::disk('s3'); // Assuming the disk is 'local'
         // $storage = Storage::disk('local'); // Assuming the disk is 'local'
         if ($storage->exists($filePath)) {
             $storage->delete($filePath); // Delete the file from storage

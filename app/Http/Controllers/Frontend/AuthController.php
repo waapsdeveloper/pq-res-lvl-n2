@@ -171,7 +171,6 @@ class AuthController extends Controller
             Log::info('Generated OTP: try' . $otp);
         } catch (\Exception $e) {
             Log::info('Generated OTP: catch ' . $otp);
-
             Log::error('Mail error: ' . $e->getMessage());
             return ServiceResponse::error('Failed to send OTP.', $user->email);
         }
