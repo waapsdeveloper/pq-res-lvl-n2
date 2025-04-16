@@ -30,7 +30,8 @@ class Helper
 
             // Upload the image to the S3 bucket
             try {
-                $filePath = 'images/' . $folder . '/' . $filename;
+                //$filePath = 'images/' . $folder . '/' . $filename;
+                $filePath = $filename;
                 Log::info("Base64 Image path: " . $filePath);
                 $uploaded = Storage::disk('s3')->put($filePath, $decodedImage, 'public');
 
@@ -41,6 +42,7 @@ class Helper
                     Log::error("Failed to upload image to S3.");
                     return null; // Handle the error as needed
                 }
+
             } catch (Exception $e) {
                 Log::error("Error uploading image to S3: " . $e->getMessage());
                 return null; // Handle the error as needed

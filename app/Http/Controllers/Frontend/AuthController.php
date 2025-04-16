@@ -55,6 +55,9 @@ class AuthController extends Controller
 
             $token = $guestUser->createToken('auth_token')->accessToken;
 
+            // Send welcome email
+            Mail::to($guestUser->email)->send(new \App\Mail\WelcomeMail($guestUser));
+
             return ServiceResponse::success('Account upgraded successfully!', [
                 'user' => $guestUser,
                 'token' => $token
@@ -72,6 +75,9 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('auth_token')->accessToken;
+
+        // Send welcome email
+        Mail::to($user->email)->send(new \App\Mail\WelcomeMail($user));
 
         return ServiceResponse::success('Registration successful', [
             'user' => $user,
