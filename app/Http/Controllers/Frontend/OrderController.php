@@ -186,7 +186,13 @@ class OrderController extends Controller
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
 
         // send email
-        Helper::sendEmail($customer->email, 'Order Details', 'emails.order_details', ['order' => $order]);
+        
+        try {
+            Helper::sendEmail($customer->email, 'Order Details', 'emails.order_details', ['order' => $order]);
+        } catch (\Exception $e) {
+            // Log the exception or handle it as needed
+            \Log::error('Failed to send order email: ' . $e->getMessage());
+        }
 
         return ServiceResponse::success('Order created successfully', ['data' => $order]);
     }
