@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Mail\Mail;
 use App\Mail\OrderDetailsMail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Restaurant;
