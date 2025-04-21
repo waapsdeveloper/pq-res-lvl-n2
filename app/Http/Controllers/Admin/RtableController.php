@@ -39,12 +39,23 @@ class RtableController extends Controller
         if ($filters) {
             $filters = json_decode($filters, true); // Decode JSON string into an associative array
             // return response()->json($filters);
-            if (isset($filters['Table No']) && !empty($filters['Table No'])) {
-                $query->where('identifier', 'like', '%' . ($filters['Table No'] ?? $filters['tableNo']) . '%');
-            }
+            // if (isset($filters['Table No']) && !empty($filters['Table No'])) {
+            //     $query->where('identifier', 'like', '%' . ($filters['Table No'] ?? $filters['tableNo']) . '%');
+            // }
             if (isset($filters['tableNo']) && !empty($filters['tableNo'])) {
                 $query->where('identifier', 'like', '%' . ($filters['Table No'] ?? $filters['tableNo']) . '%');
             }
+
+            if (isset($filters['floor']) && !empty($filters['floor'])) {
+                $query->where('floor', 'like', '%' . $filters['floor'] . '%');
+            }
+
+            // no of seats
+            if (isset($filters['no_of_seats']) && !empty($filters['no_of_seats'])) {
+                $query->where('no_of_seats', '>=', $filters['no_of_seats']);
+            }
+
+
             if (isset($filters['address']) && !empty($filters['address'])) {
                 $query->whereHas('restaurantDetail', function ($query) use ($filters) {
                     $query->where('address', 'like', '%' . $filters['address'] . '%');
