@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Mail\OrderDetailsMail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Restaurant;
 use Exception;
@@ -102,6 +103,20 @@ class Helper
             $pusher->trigger($trigger, $event, $data);
         } catch (Exception $e) {
             Log::debug("Pusher Error", ['error' => $e->getMessage()]);
+        }
+    }
+
+    
+
+    public static function sendEmail($to, $subject, $view, $data = [])
+    {
+        if ($view === 'emails.order_details') {
+            Mail::to($to)->send(new OrderDetailsMail($data['order']));
+        } else {
+            Mail::send($view, $data, function ($message) use ($to, $subject) {
+                $message->to($to)
+                        ->subject($subject);
+            });
         }
     }
     public static function getRandomOrderNote()
