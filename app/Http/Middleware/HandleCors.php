@@ -11,12 +11,7 @@ class HandleCors
     {
         $response = $next($request);
 
-        $allowedOrigins = [
-            'https://pq-res-ang-18.vercel.app',
-            'https://pq-res-front-ang-n2.vercel.app',
-            'http://localhost:4200',
-            // add other allowed origins if needed
-        ];
+        $allowedOrigins = explode(',', env('ALLOWED_ORIGINS', 'http://localhost:4200'));
 
         $origin = $request->headers->get('Origin');
 
