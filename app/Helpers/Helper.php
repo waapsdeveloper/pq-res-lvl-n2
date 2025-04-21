@@ -7,59 +7,39 @@ use App\Models\Restaurant;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Pusher\Pusher;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\OrderDetailsMail;
 
 class Helper
 {
 
-    public static function getBase64ImageUrl($image, $folder)
+    static public function getBase64ImageUrl($image, $folder)
     {
         if ($image) {
-            // Remove the base64 prefix from the image string
             $base64Image = preg_replace('/^data:image\/\w+;base64,/', '', $image);
 
-            // Generate a unique filename for the image
             $filename = uniqid() . '.png';
 
-            // Decode the base64 image
-            $decodedImage = base64_decode($base64Image);
+            $path = base_path(env(key: 'IMAGE_BASE_FOLDER') . $filename);
+            $file = Storage::disk('public')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
+            // $file = Storage::disk('local')->put('images/' . $folder . '/' . $filename, base64_decode($base64Image));
 
-            if ($decodedImage === false) {
-                Log::error("Base64 decode failed for image: ");
-                return null; // Handle the error as needed
-            }
-
-            // Upload the image to the S3 bucket
-            try {
-                //$filePath = 'images/' . $folder . '/' . $filename;
-                $filePath = $filename;
-                Log::info("Base64 Image path: " . $filePath);
-                $uploaded = Storage::disk('s3')->put($filePath, $decodedImage, 'public');
-
-                if ($uploaded) {
-                    // Return the public URL of the uploaded image
-                    return Storage::disk('s3')->url($filePath);
-                } else {
-                    Log::error("Failed to upload image to S3.");
-                    return null; // Handle the error as needed
-                }
-
-            } catch (Exception $e) {
-                Log::error("Error uploading image to S3: " . $e->getMessage());
-                return null; // Handle the error as needed
+            if ($file) {
+                $imagePath = 'images/' . $folder . '/' . $filename;
+                return $imagePath;
+            } else {
+                return null;
             }
         } else {
             return null;
         }
     }
 
+
     public static function deleteImage(string $url)
     {
         $path = parse_url($url, PHP_URL_PATH);
         $filePath = ltrim($path, '/'); // Remove any leading slash
 
-        $storage = Storage::disk('s3'); // Assuming the disk is 'local'
+        $storage = Storage::disk('public'); // Assuming the disk is 'local'
         // $storage = Storage::disk('local'); // Assuming the disk is 'local'
         if ($storage->exists($filePath)) {
             $storage->delete($filePath); // Delete the file from storage
@@ -70,39 +50,24 @@ class Helper
         return true; // File deleted successfully
     }
 
-    public static function returnFullImageUrl($path)
+    static public function returnFullImageUrl($imagePath)
     {
-        // Ensure the path is not empty
-        if (empty($path) || $path === '/') {
-            return null; // or return a default image URL
+        if (!$imagePath || $imagePath == "") {
+            return null;
         }
 
-        // Get the S3 disk instance
-        $disk = Storage::disk('s3');
+        // Get the URL from Laravel's filesystem config (the URL from 'public' disk)
+        // $baseUrl = url('/');
+        $baseUrl =  url('/'); //Storage::disk('public')->url('/');
+        // $baseUrl =  Storage::disk('local')->url('/');
 
-        // Check if the file exists in the S3 bucket
-        if (!$disk->exists($path)) {
-            return null; // or return a default image URL
-        }
+        // Generate the full image URL by appending the image path
+        // Ensure that the image path is properly concatenated to the base URL
+        $fullImageUrl = rtrim($baseUrl, '/') . '/' . ltrim($imagePath, '/');
 
-        // Generate a pre-signed URL valid for 10 minutes
-        $client = Storage::disk('s3')->getClient(); // Get the AWS S3 client
-        $bucket = env('AWS_BUCKET');
-        $command = $client->getCommand('GetObject', [
-            'Bucket' => $bucket,
-            'Key' => $path,
-        ]);
-
-        $request = $client->createPresignedRequest($command, '+10 minutes');
-
-        try {
-            // Return the pre-signed URL
-            return (string) $request->getUri();
-        } catch (Exception $e) {
-            \Log::error("Error generating pre-signed URL: " . $e->getMessage());
-            return null; // Return null or handle the error as needed
-        }
+        return $fullImageUrl;
     }
+
 
     static public function getActiveRestaurantId()
     {
@@ -139,19 +104,6 @@ class Helper
             Log::debug("Pusher Error", ['error' => $e->getMessage()]);
         }
     }
-
-    public static function sendEmail($to, $subject, $view, $data = [])
-    {
-        if ($view === 'emails.order_details') {
-            Mail::to($to)->send(new OrderDetailsMail($data['order']));
-        } else {
-            Mail::send($view, $data, function ($message) use ($to, $subject) {
-                $message->to($to)
-                        ->subject($subject);
-            });
-        }
-    }
-
     public static function getRandomOrderNote()
     {
         $phrases = [
