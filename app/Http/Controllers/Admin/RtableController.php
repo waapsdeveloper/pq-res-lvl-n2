@@ -61,6 +61,7 @@ class RtableController extends Controller
                     $query->where('address', 'like', '%' . $filters['address'] . '%');
                 });
             }
+
             if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
@@ -106,9 +107,9 @@ class RtableController extends Controller
 
         $identifier = Identifier::make('Table', $table->id, 5);
         $table->update(['identifier' =>  $identifier]);
-        if ($table->name == null) {
-            $table->update(['name' => $identifier]);
-        }
+        // if ($table->name == null) {
+        //     $table->update(['name' => $identifier]);
+        // }
 
         return ServiceResponse::success('Rtable store successful', ['item' => $table]);
     }
