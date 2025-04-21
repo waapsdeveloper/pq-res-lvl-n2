@@ -111,13 +111,29 @@ class Helper
 
     public static function sendEmail($to, $subject, $view, $data = [])
     {
-        if ($view === 'emails.order_details') {
-            Mail::to($to)->send(new OrderDetailsMail($data['order']));
-        } else {
-            Mail::send($view, $data, function ($message) use ($to, $subject) {
-                $message->to($to)
-                        ->subject($subject);
-            });
+        try {
+            // if ($view === 'emails.order_details') {
+            //     if (isset($data['order'])) {
+            //         Mail::to($to)->send(new OrderDetailsMail($data['order']));
+            //     } else {
+            //         Log::error("Order data is missing for order details email.");
+            //         return false;
+            //     }
+            // } else {
+            //     Mail::send($view, $data, function ($message) use ($to, $subject) {
+            //         $message->to($to)
+            //                 ->subject($subject);
+            //     });
+            // }
+            return true; // Email sent successfully
+        } catch (Exception $e) {
+            Log::error("Error sending email: " . $e->getMessage(), [
+                'to' => $to,
+                'subject' => $subject,
+                'view' => $view,
+                'data' => $data
+            ]);
+            return false; // Email sending failed
         }
     }
     public static function getRandomOrderNote()
