@@ -289,6 +289,7 @@ class OrderController extends Controller
 
             // Save the main booking
             $booking = RTablesBooking::create([
+                'rtable_id' => $table->id,
                 'customer_id' => $user->id ?? null,
                 'restaurant_id' => $resID,
                 'order_id' => $order->id,

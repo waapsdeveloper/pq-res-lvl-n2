@@ -12,9 +12,10 @@ return new class extends Migration {
     {
         Schema::create('rtable_bookings', function (Blueprint $table) {
             $table->id();
+            $table->biginteger('rtable_id')->nullable();
             $table->biginteger('customer_id')->nullable();
             $table->string('order_number')->nullable();
-            $table->biginteger('restaurant_id')->nullable();            
+            $table->biginteger('restaurant_id')->nullable();
             $table->bigInteger('order_id')->nullable();
             $table->dateTime('booking_start')->nullable();
             $table->dateTime('booking_end')->nullable();
