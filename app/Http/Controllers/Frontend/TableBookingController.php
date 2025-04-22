@@ -168,24 +168,46 @@ class TableBookingController extends Controller
     public function store(StoreTableBooking $request)
     {
         $user = auth()->user();
-
-        // Retrieve validated data from the request
         $data = $request->validated();
+        
+        // Check availability for each selected table
+        foreach ($data['tables'] as $table_id) {
+            $existingBooking = RTablesBooking::whereHas('rTableBookings', function ($query) use ($table_id, $data) {
+                $query->where('rtable_id', $table_id)
+                    ->where(function ($q) use ($data) {
+                        $bookingStart = DateHelper::parseDate($data['start_time']);
+                        $bookingEnd = DateHelper::parseDate($data['end_time']);
+                        
+                        $q->whereBetween('booking_start', [$bookingStart, $bookingEnd])
+                            ->orWhereBetween('booking_end', [$bookingStart, $bookingEnd])
+                            ->orWhere(function ($innerQ) use ($bookingStart, $bookingEnd) {
+                                $innerQ->where('booking_start', '<=', $bookingStart)
+                                      ->where('booking_end', '>=', $bookingEnd);
+                            });
+                    });
+            })->first();
 
+            if ($existingBooking) {
+                return ServiceResponse::error(
+                    "Table #$table_id is already booked for the selected time period."
+                );
+            }
+        }
+
+        // Continue with booking creation if all tables are available
         $restaurant_id = $data['restaurant_id'];
-
-        $selected_tables = $data['tables'];
         $start_time = DateHelper::parseDate($data['start_time'])->format('Y-m-d H:i:s');
         $end_time = DateHelper::parseDate($data['end_time'])->format('Y-m-d H:i:s');
         $no_of_seats = $data['no_of_seats'];
 
-        // create or update customer by name and phone number
+        // Create or update customer
         $customer = \App\Models\Customer::firstOrCreate([
             'name' => $user->name,
             'phone' => $user->phone,
         ]);
 
         $orderNumber = 'TBL-ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
+        
         // Create booking
         $booking = RTablesBooking::create([
             'order_number' => $orderNumber,    
@@ -200,7 +222,7 @@ class TableBookingController extends Controller
 
         // Link tables to the booking
         $booked_tables = [];
-        foreach ($selected_tables as $table_id) {
+        foreach ($data['tables'] as $table_id) {
             RTableBooking_RTable::create([
                 'restaurant_id' => $restaurant_id,
                 'rtable_id' => $table_id,
@@ -221,7 +243,6 @@ class TableBookingController extends Controller
             'booking_end' => $end_time,
             'status' => $booking->status,
         ];
-
 
         return ServiceResponse::success('Tables successfully booked for the restaurant', ['booking' => $result]);
     }
