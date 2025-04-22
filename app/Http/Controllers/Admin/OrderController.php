@@ -189,7 +189,11 @@ class OrderController extends Controller
                 ->first();
 
             if ($existingBooking) {
-                return ServiceResponse::error("The table is already booked for the given time period.");
+                return response()->json(
+                    ServiceResponse::error("The table is already booked for the given time period."),
+                    400 // optional: explicitly send HTTP status code
+                );
+                
             }
         }
 
