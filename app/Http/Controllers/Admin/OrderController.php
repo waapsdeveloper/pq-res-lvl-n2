@@ -265,6 +265,8 @@ class OrderController extends Controller
                 'customer_id' => $user->id ?? null,
                 'restaurant_id' => $resID,
                 'order_id' => $order->id,
+                'order_number' => $order->order_number,
+                'payment_method' => $order->payment_method,
                 'booking_start' => now(),
                 'booking_end' => now()->addHour(),
                 'no_of_seats' => $data['no_of_seats'] ?? 2,
