@@ -141,6 +141,8 @@ class OrderController extends Controller
         }
 
 
+
+
         $totalPrice = 0;
         $orderProducts = [];
         foreach ($data['products'] as $item) {
@@ -173,6 +175,31 @@ class OrderController extends Controller
 
         $table = $request->has('table_id') ? Rtable::where('id', $data['table_id'])->first() : null;
         $tableNo = $table ? $table->id : null;
+
+        if ($table) {
+            $existingBooking = RTablesBooking::where('rtable_id', $table->id)
+                ->where(function ($query) use ($data) {
+                    $query->whereBetween('booking_start', [now(), now()->addHour()])
+                        ->orWhereBetween('booking_end', [now(), now()->addHour()])
+                        ->orWhere(function ($q) {
+                            $q->where('booking_start', '<=', now())
+                                ->where('booking_end', '>=', now()->addHour());
+                        });
+                })
+                ->first();
+
+            if ($existingBooking) {
+                return ServiceResponse::error("The table is already booked for the given time period.");
+            }
+        }
+
+
+
+
+
+
+
+
 
         // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $finalPrice = $totalPrice - $discount;
