@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use App\Helpers\Helper;
+use App\Models\RTablesBooking;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,6 +22,23 @@ class RtableResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
+        // Check table booking status
+        $status = $obj->status;
+        $existingBooking = RTablesBooking::where('rtable_id', $obj->id)
+            ->where(function ($query) {
+                $query->whereBetween('booking_start', [now(), now()->addHour()])
+                    ->orWhereBetween('booking_end', [now(), now()->addHour()])
+                    ->orWhere(function ($q) {
+                        $q->where('booking_start', '<=', now())
+                            ->where('booking_end', '>=', now()->addHour());
+                    });
+            })
+            ->first();
+
+        if ($existingBooking) {
+            $status = 'reserved';
+        }
+
         return [
             "id" => $obj->id,
             "name" => $obj->name,
@@ -28,19 +46,16 @@ class RtableResource extends JsonResource
             "no_of_seats" => $obj->no_of_seats,
             "description" => $obj->description,
             "floor" => $obj->floor,
-            "status" => ucfirst($obj->status),
+            "status" => ucfirst($status),
             "restaurant_id" => $obj->restaurant_id,
             "total_orders" => $obj->orders_count,
             "qr_code" => "https://pqresfront.spacess.online/tabs/products?table_identifier=$obj->identifier",
-            // "qr_code" => "https://restaurant.axetechsolutions.com/tabs/products?table_identifier=$obj->identifier",
-            // "qr_code" => Helper::baseUrlWithIDF($obj->qr_code, 'qr_codes'),
             'restaurant_detail' => $obj->restaurantDetail ? [
                 "name" => $obj->restaurantDetail->name,
                 "address" => $obj->restaurantDetail->address,
                 "phone" => $obj->restaurantDetail->phone,
                 "email" => $obj->restaurantDetail->email,
                 "website" => $obj->restaurantDetail->website,
-                // "description" => $obj->restaurantDetail->description,
                 "rating" => 4.8,
                 "status" => $obj->restaurantDetail->status,
             ] : null,
