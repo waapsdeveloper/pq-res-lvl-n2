@@ -25,7 +25,7 @@ return new class extends Migration
     {
         Schema::table('rtables', function (Blueprint $table) {
             // If needed, revert the change (you may need to define ENUM values manually)
-            DB::statement("ALTER TABLE `Rtable` MODIFY `status` ENUM('pending', 'approved', 'rejected') NOT NULL");
+            DB::statement("ALTER TABLE `rtables` MODIFY `status` ENUM('pending', 'approved', 'rejected') NOT NULL");
         });
     }
 };
