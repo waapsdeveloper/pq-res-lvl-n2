@@ -11,6 +11,7 @@ class HandleCors
     {
         $response = $next($request);
 
+        // Read allowed origins from the .env file
         $allowedOrigins = explode(',', env('ALLOWED_ORIGINS', 'http://localhost:4200'));
 
         $origin = $request->headers->get('Origin');
