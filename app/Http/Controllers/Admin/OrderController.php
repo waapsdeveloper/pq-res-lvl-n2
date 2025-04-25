@@ -103,6 +103,11 @@ class OrderController extends Controller
             if (isset($filters['is_paid']) && $filters['is_paid'] !== '') {
                 $query->where('is_paid', $filters['is_paid']);
             }
+            if (isset($filters['table']) && !empty($filters['table'])) {
+                $query->whereHas('table', function ($q) use ($filters) {
+                    $q->where('name', 'like', '%' . $filters['table'] . '%');
+                });
+            }
         }
 
         $query->orderBy('id', 'desc');
