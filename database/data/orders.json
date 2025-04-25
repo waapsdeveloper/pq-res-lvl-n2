@@ -2,7 +2,7 @@
     {
         "identifier": "ORD-001",
         "order_number": "ORDER-001",
-        "type": "reservation",
+        "type": "dine-in",
         "status": "pending",
         "notes": "First order",
         "customer_id": 1,
@@ -11,6 +11,7 @@
         "restaurant_id": 1,
         "total_price": 500.0,
         "discount": 50.0,
+        "is_paid": false,
         "products": [
             {
                 "product_id": 1,
@@ -29,8 +30,8 @@
     {
         "identifier": "ORD-002",
         "order_number": "ORDER-002",
-        "type": "reservation",
-        "status": "pending",
+        "type": "take-away",
+        "status": "confirmed",
         "notes": "Second order",
         "customer_id": 2,
         "invoice_no": "INV-002",
@@ -38,6 +39,7 @@
         "restaurant_id": 1,
         "total_price": 300.0,
         "discount": 30.0,
+        "is_paid": true,
         "products": [
             {
                 "product_id": 3,
@@ -50,8 +52,8 @@
     {
         "identifier": "ORD-003",
         "order_number": "ORDER-003",
-        "type": "reservation",
-        "status": "pending",
+        "type": "delivery",
+        "status": "preparing",
         "notes": "Third order",
         "customer_id": 3,
         "invoice_no": "INV-003",
@@ -59,6 +61,7 @@
         "restaurant_id": 1,
         "total_price": 450.0,
         "discount": 50.0,
+        "is_paid": false,
         "products": [
             {
                 "product_id": 4,
@@ -77,8 +80,8 @@
     {
         "identifier": "ORD-004",
         "order_number": "ORDER-004",
-        "type": "reservation",
-        "status": "pending",
+        "type": "drive-thru",
+        "status": "ready_for_pickup",
         "notes": "Fourth order",
         "customer_id": 4,
         "invoice_no": "INV-004",
@@ -86,6 +89,7 @@
         "restaurant_id": 1,
         "total_price": 700.0,
         "discount": 100.0,
+        "is_paid": true,
         "products": [
             {
                 "product_id": 6,
@@ -98,8 +102,8 @@
     {
         "identifier": "ORD-005",
         "order_number": "ORDER-005",
-        "type": "reservation",
-        "status": "pending",
+        "type": "curbside-pickup",
+        "status": "out_for_delivery",
         "notes": "Fifth order",
         "customer_id": 5,
         "invoice_no": "INV-005",
@@ -107,12 +111,135 @@
         "restaurant_id": 1,
         "total_price": 200.0,
         "discount": 20.0,
+        "is_paid": false,
         "products": [
             {
                 "product_id": 7,
                 "quantity": 2,
                 "price": 100.0,
                 "product_name": "Sandwich"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-006",
+        "order_number": "ORD-20250425-RANDOM",
+        "type": "delivery",
+        "status": "completed",
+        "notes": "Sixth order with delivery",
+        "customer_id": 40,
+        "invoice_no": "INV-006",
+        "table_no": null,
+        "restaurant_id": 1,
+        "total_price": 26.96,
+        "discount": 0.0,
+        "is_paid": true,
+        "products": [
+            {
+                "product_id": 14,
+                "quantity": 4,
+                "price": 7.99,
+                "product_name": "Veggie Supreme Pizza"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-007",
+        "order_number": "ORDER-007",
+        "type": "dine-in",
+        "status": "confirmed",
+        "notes": "Seventh order",
+        "customer_id": 6,
+        "invoice_no": "INV-007",
+        "table_no": 3,
+        "restaurant_id": 1,
+        "total_price": 600.0,
+        "discount": 75.0,
+        "is_paid": true,
+        "products": [
+            {
+                "product_id": 8,
+                "quantity": 2,
+                "price": 250.0,
+                "product_name": "Sushi"
+            },
+            {
+                "product_id": 9,
+                "quantity": 1,
+                "price": 100.0,
+                "product_name": "Salad"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-008",
+        "order_number": "ORDER-008",
+        "type": "take-away",
+        "status": "preparing",
+        "notes": "Eighth order",
+        "customer_id": 7,
+        "invoice_no": "INV-008",
+        "table_no": null,
+        "restaurant_id": 1,
+        "total_price": 350.0,
+        "discount": 40.0,
+        "is_paid": false,
+        "products": [
+            {
+                "product_id": 10,
+                "quantity": 3,
+                "price": 110.0,
+                "product_name": "Tacos"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-009",
+        "order_number": "ORDER-009",
+        "type": "delivery",
+        "status": "out_for_delivery",
+        "notes": "Ninth order",
+        "customer_id": 8,
+        "invoice_no": "INV-009",
+        "table_no": null,
+        "restaurant_id": 1,
+        "total_price": 550.0,
+        "discount": 60.0,
+        "is_paid": true,
+        "products": [
+            {
+                "product_id": 11,
+                "quantity": 2,
+                "price": 180.0,
+                "product_name": "Ramen"
+            },
+            {
+                "product_id": 12,
+                "quantity": 1,
+                "price": 200.0,
+                "product_name": "Soup"
+            }
+        ]
+    },
+    {
+        "identifier": "ORD-010",
+        "order_number": "ORDER-010",
+        "type": "drive-thru",
+        "status": "delivered",
+        "notes": "Tenth order",
+        "customer_id": 9,
+        "invoice_no": "INV-010",
+        "table_no": null,
+        "restaurant_id": 1,
+        "total_price": 800.0,
+        "discount": 120.0,
+        "is_paid": false,
+        "products": [
+            {
+                "product_id": 13,
+                "quantity": 4,
+                "price": 170.0,
+                "product_name": "Burger Deluxe"
             }
         ]
     }

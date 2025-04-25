@@ -113,6 +113,7 @@ class CreateRandomOrderJobClass
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $invoiceNumber = 'INV-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $randomNote = Helper::getRandomOrderNote();
+        $isPaid = Arr::random([true, false]); // Random is_paid value
 
         $order = Order::create([
             'identifier' => 'ORD-',
@@ -129,6 +130,7 @@ class CreateRandomOrderJobClass
             'restaurant_id' => $restaurant_id,
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
+            'is_paid' => $isPaid, // Add is_paid to the order
         ]);
         $order->update(
             [

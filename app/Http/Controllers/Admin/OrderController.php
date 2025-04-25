@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\App;
 
 class OrderController extends Controller
 {
-    use  NotificationTrait;
+    use NotificationTrait;
 
     /**
      * Display a listing of the resource.
@@ -46,21 +46,19 @@ class OrderController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        // $category = $request->input('category_id', '');
-        // $active_restaurant = Helper::getActiveRestaurantId();
-        $resID = $request->restaurant_id; // == -1 ? $active_restaurant->id : $request->restaurant_id;
+        $resID = $request->restaurant_id;
 
         $query = Order::query()
             ->where('restaurant_id', $resID)
             ->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
 
-
-        // Optionally apply search filter if needed
         if ($search) {
             $query->where('order_number', 'like', '%' . $search . '%');
         }
+
         if ($filters) {
-            $filters = json_decode($filters, true); // Decode JSON string into an associative array
+            $filters = json_decode($filters, true);
+
             if (isset($filters['order_id']) && !empty($filters['order_id'])) {
                 $query->where('order_number', 'like', '%' . $filters['order_id'] . '%');
             }
@@ -68,9 +66,8 @@ class OrderController extends Controller
             if (isset($filters['total_price']) && !empty($filters['total_price'])) {
                 $query->where('total_price', '<',  $filters['total_price'])
                     ->orWhere('total_price', '=',  $filters['total_price'])->orderByDesc('total_price');
-
-                // dd($filters['total_price']);
             }
+
             if (isset($filters['type']) && !empty($filters['type'])) {
                 $query->where('type', 'like', '%' . $filters['type'] . '%');
             }
@@ -78,36 +75,45 @@ class OrderController extends Controller
             if (isset($filters['status']) && !empty($filters['status'])) {
                 $query->where('status', $filters['status']);
             }
-            if (isset($filters['Customer_name']) && !empty($filters['Customer_name'])) {
+
+            if (isset($filters['customer_name']) && !empty($filters['customer_name'])) {
                 $query->whereHas('customer', function ($q) use ($filters) {
-                    $q->where('name', 'like', '%' . $filters['Customer_name'] . '%');
+                    $q->where('name', 'like', '%' . $filters['customer_name'] . '%');
                 });
             }
+
             if (isset($filters['phone']) && !empty($filters['phone'])) {
                 $query->whereHas('customer', function ($q) use ($filters) {
                     $q->where('phone', 'like', '%' . $filters['phone'] . '%');
                 });
             }
-            // if (isset($filters['table']) && !empty($filters['table'])) {
-            //     $query->whereHas('table_no', function ($q) use ($filters) {
-            //         $q->where('name', 'like', '%' . $filters['table'] . '%');
-            //     });
-            // }
+
+            if (isset($filters['created_at']) && !empty($filters['created_at'])) {
+                $query->whereDate('created_at', $filters['created_at']);
+            }
+
+            if (isset($filters['started_from']) && !empty($filters['started_from'])) {
+                $query->whereDate('created_at', '>=', $filters['started_from']);
+            }
+
+            if (isset($filters['ended_at']) && !empty($filters['ended_at'])) {
+                $query->whereDate('created_at', '<=', $filters['ended_at']);
+            }
+
+            if (isset($filters['is_paid']) && $filters['is_paid'] !== '') {
+                $query->where('is_paid', $filters['is_paid']);
+            }
         }
 
-        // Paginate the results
         $query->orderBy('id', 'desc');
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
-        // Loop through the results and generate full URL for image
         $data->getCollection()->transform(function ($item) {
             return new OrderResource($item);
         });
 
-        // Return the response with image URLs included
         return ServiceResponse::success("Order list successfully", ['data' => $data]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -140,9 +146,6 @@ class OrderController extends Controller
             ]);
         }
 
-
-
-
         $totalPrice = 0;
         $orderProducts = [];
         foreach ($data['products'] as $item) {
@@ -172,7 +175,6 @@ class OrderController extends Controller
         $discount = $data['discount'] ?? 0;
         $type = $data['type'] ?? null;
 
-
         $table = $request->has('table_id') ? Rtable::where('id', $data['table_id'])->first() : null;
         $tableNo = $table ? $table->id : null;
 
@@ -193,17 +195,8 @@ class OrderController extends Controller
                     ServiceResponse::error("The table is already booked for the given time period."),
                     400 // optional: explicitly send HTTP status code
                 );
-                
             }
         }
-
-
-
-
-
-
-
-
 
         // $finalPrice = $totalPrice - ($totalPrice * ($discount / 100));
         $finalPrice = $totalPrice - $discount;
@@ -218,7 +211,6 @@ class OrderController extends Controller
         $couponCode = $request->coupon_code;
         $discountValue = $request->discount_value;
         $finalTotal = $request->final_total;
-
 
         $order = Order::create([
             'identifier' => 'ORD-',
@@ -252,7 +244,6 @@ class OrderController extends Controller
             ]
         );
 
-
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([
                 'order_id' => $order->id,
@@ -273,7 +264,6 @@ class OrderController extends Controller
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
 
         $data = new OrderResource($order);
-
 
         $invoice = Invoice::create([
             'order_id' => $order->id,
@@ -341,7 +331,6 @@ class OrderController extends Controller
             'order' => $data,
         ]);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -429,7 +418,6 @@ class OrderController extends Controller
         return ServiceResponse::success("Order updated successfully", ['data' => $data]);
     }
 
-
     public function destroy(string $id)
     {
         $order = Order::find($id);
@@ -446,7 +434,6 @@ class OrderController extends Controller
     public function updateStatus(UpdateOrderStatus $request, $id)
     {
         $data = $request->validated();
-
 
         $order = Order::find($id);
 

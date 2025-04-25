@@ -24,8 +24,19 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('rtables', function (Blueprint $table) {
-            // If needed, revert the change (you may need to define ENUM values manually)
-            DB::statement("ALTER TABLE `rtables` MODIFY `status` ENUM('pending', 'approved', 'rejected') NOT NULL");
+            // Get existing status values
+            $existingStatuses = DB::table('rtables')->distinct()->pluck('status')->toArray();
+
+            // Filter out null values and escape single quotes for use in SQL
+            $enumValues = array_map(function ($value) {
+                return "'" . str_replace("'", "''", $value) . "'";
+            }, array_filter($existingStatuses, 'strlen'));
+
+            // Implode the values to create the ENUM definition
+            $enumDefinition = implode(',', $enumValues);
+
+            // Modify the status column to be an ENUM with all existing values
+            DB::statement("ALTER TABLE `rtables` MODIFY `status` ENUM(" . $enumDefinition . ") NOT NULL");
         });
     }
 };

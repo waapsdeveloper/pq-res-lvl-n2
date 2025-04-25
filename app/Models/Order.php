@@ -30,7 +30,8 @@ class Order extends Model
         'dial_code',
         'coupon_code',
         'discount_value',
-        'final_total'
+        'final_total',
+        'is_paid' // add this line
 
     ];
 
