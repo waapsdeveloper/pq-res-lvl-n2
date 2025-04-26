@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $table = 'orders';
-    public $timestamps = false; // for fake entries when done remove this line
+    public $timestamps = true; // for fake entries when done remove this line
     protected $fillable = [
         'identifier',
         'order_number',

@@ -576,6 +576,28 @@ class OrderController extends Controller
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update-' . $order->order_number);
         return ServiceResponse::success('Order status updated successfully', $order);
     }
+
+    public function updatePaymentStatus(Request $request, $id)
+    {
+        $request->validate([
+            'is_paid' => 'required|boolean',
+        ]);
+
+        $order = Order::find($id);
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+
+        $order->update([
+            'is_paid' => $request->is_paid,
+        ]);
+
+        // Optionally, send notification or perform other actions here
+
+        return ServiceResponse::success('Order payment status updated successfully', $order);
+    }
+
     public function bulkDelete(Request $request)
     {
         $validator = Validator::make($request->all(), [

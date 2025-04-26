@@ -129,6 +129,8 @@ Route::prefix('order')->group(function () {
         ->names('order');
     Route::put('/update-status/{id}', [OrderController::class, 'updateStatus'])
         ->name('orderUpdateStatus');
+        Route::put('/update-payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])
+        ->name('orderUpdatePaymentStatus');
 });
 
 
