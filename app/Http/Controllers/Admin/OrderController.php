@@ -356,67 +356,188 @@ class OrderController extends Controller
         if (!$order) {
             return ServiceResponse::error("Order with ID $id not found.");
         }
+         \Log::info('Order update request data', ['data' => $data]);
+
+        $customerName = array_key_exists('customer_name', $data) ? $data['customer_name'] : ($order->customer->name ?? 'Walk-in Customer');
+        $customerPhone = array_key_exists('customer_phone', $data) ? $data['customer_phone'] : ($order->customer->phone ?? 'XXXX');
+
+        // Check if name or phone changed
+        $nameChanged = $customerName !== ($order->customer->name ?? '');
+        $phoneChanged = $customerPhone !== ($order->customer->phone ?? '');
+
+        // If either changed, always create a new user
+        if ($nameChanged || $phoneChanged) {
+            $user = User::create([
+                'name' => $customerName,
+                'phone' => $customerPhone,
+                'email' => $customerPhone . "@phone.test",
+            ]);
+        } else {
+            // No change, update current user info if needed
+            $user = $order->customer;
+            $user->update([
+                'name' => $customerName,
+                'phone' => $customerPhone,
+            ]);
+        }
 
         $totalPrice = 0;
         $orderProducts = [];
-
-        // Process products
         foreach ($data['products'] as $item) {
             $product = Product::find($item['product_id']);
             if (!$product) {
                 return ServiceResponse::error("Product with ID {$item['product_id']} not found.");
             }
-
             $pricePerUnit = $item['price'];
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
-
             $totalPrice += $itemTotal;
 
             $orderProducts[] = [
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
-                'notes' => $item['notes'] ?? null,
-                'variation' => $item['variation'] ?? null,
+                'notes' => array_key_exists('notes', $item) ? $item['notes'] : null,
+                'variation' => array_key_exists('variation', $item) ? json_encode($item['variation']) : null,
             ];
         }
 
-        // Calculate discount and final price
-        $discount = $data['discount'] ?? $order->discount;
-        $finalPrice = $totalPrice - $discount;
+        $discount = array_key_exists('discount', $data) ? $data['discount'] : ($order->discount ?? 0);
+        $type = array_key_exists('type', $data) ? $data['type'] : $order->type;
+        $table = array_key_exists('table_id', $data) ? Rtable::where('id', $data['table_id'])->first() : null;
+        $tableNo = $table ? $table->id : $order->table_no;
+             
+        // Table booking logic
+        if ($table) {
+            $existingBooking = RTablesBooking::where('rtable_id', $table->id)
+                ->where('order_id', '!=', $order->id)
+                ->where(function ($query) {
+                    $query->whereBetween('booking_start', [now(), now()->addHour()])
+                        ->orWhereBetween('booking_end', [now(), now()->addHour()])
+                        ->orWhere(function ($q) {
+                            $q->where('booking_start', '<=', now())
+                                ->where('booking_end', '>=', now()->addHour());
+                        });
+                })
+                ->first();
 
-        // Update order details
-        $order->update([
-            'discount' => $discount,
-            'total_price' => $finalPrice,
-            'status' => $data['status'] ?? $order->status,
-            'notes' => $data['notes'] ?? $order->notes,
-            'type' => $data['type'] ?? $order->type,
-            'table_no' => $data['tableNo'] ?? $order->table_no,
-            'updated_at' => now(),
-        ]);
-
-        // Synchronize order products
-        $existingProducts = $order->orderProducts->keyBy('product_id');
-        foreach ($orderProducts as $orderProduct) {
-            if ($existingProducts->has($orderProduct['product_id'])) {
-                // Update existing product
-                $existingProducts[$orderProduct['product_id']]->update($orderProduct);
-            } else {
-                // Add new product
-                $order->orderProducts()->create($orderProduct);
+            if ($existingBooking) {
+                return response()->json(
+                    ServiceResponse::error("The table is already booked for the given time period."),
+                    400
+                );
             }
         }
 
-        // Remove products that are not in the updated list
-        $newProductIds = collect($orderProducts)->pluck('product_id');
-        $order->orderProducts()
-            ->whereNotIn('product_id', $newProductIds)
-            ->delete();
+        $finalPrice = $totalPrice - ($discount ?? 0);
+        $orderNote = array_key_exists('notes', $data) ? $data['notes'] : $order->notes;
+        $orderStatus = array_key_exists('status', $data) ? $data['status'] : $order->status;
+        $paymentMethod = array_key_exists('payment_method', $data) ? $data['payment_method'] : $order->payment_method;
+        $orderType = array_key_exists('order_type', $data) ? $data['order_type'] : $order->order_type;
+        $deliveryAddress = array_key_exists('delivery_address', $data) ? $data['delivery_address'] : $order->delivery_address;
+        $resID = array_key_exists('restaurant_id', $data) ? $data['restaurant_id'] : $order->restaurant_id;
+        $couponCode = array_key_exists('coupon_code', $data) ? $data['coupon_code'] : $order->coupon_code;
+        $discountValue = array_key_exists('discount_value', $data) ? $data['discount_value'] : $order->discount_value;
+        $finalTotal = array_key_exists('final_total', $data) ? $data['final_total'] : $order->final_total;
+
+        $order->update([
+            'restaurant_id' => $resID,
+            'type' => $type,
+            'status' => $orderStatus,
+            'notes' => $orderNote,
+            'customer_id' => $user->id ?? null,
+            'discount' => $discount,
+            'table_no' => $tableNo,
+            'total_price' => $finalPrice,
+            'payment_method' => $paymentMethod,
+            'order_type' => $orderType,
+            'delivery_address' => $deliveryAddress,
+            'coupon_code' => $couponCode,
+            'discount_value' => $discountValue,
+            'final_total' => $finalTotal,
+            // Do NOT set 'updated_at' here, let Eloquent handle it
+        ]);
+
+        // Sync order products
+        $existingProducts = $order->orderProducts->keyBy('product_id');
+        $newProductIds = [];
+        foreach ($orderProducts as $orderProduct) {
+            $newProductIds[] = $orderProduct['product_id'];
+            if ($existingProducts->has($orderProduct['product_id'])) {
+                $existingProducts[$orderProduct['product_id']]->update($orderProduct);
+            } else {
+                $order->orderProducts()->create($orderProduct);
+            }
+        }
+        // Remove products not in the new list
+        $order->orderProducts()->whereNotIn('product_id', $newProductIds)->delete();
+
+        // Update invoice if exists
+        $invoice = Invoice::where('order_id', $order->id)->first();
+        if ($invoice) {
+            $invoice->update([
+                'payment_method' => $paymentMethod,
+                'total' => $order->total_price,
+                'status' => $invoice->status ?? 'pending',
+                'notes' => $invoice->notes ?? "",
+            ]);
+        }
+
+        // Table booking update (optional)
+        if ($table) {
+            $booking = RTablesBooking::where('order_id', $order->id)->first();
+            if ($booking) {
+                $booking->update([
+                    'rtable_id' => $table->id,
+                    'customer_id' => $user->id ?? null,
+                    'restaurant_id' => $resID,
+                    'order_number' => $order->order_number,
+                    'payment_method' => $order->payment_method,
+                    'booking_start' => now(),
+                    'booking_end' => now()->addHour(),
+                    'no_of_seats' => array_key_exists('no_of_seats', $data) ? $data['no_of_seats'] : 2,
+                    'description' => array_key_exists('description', $data) ? $data['description'] : null,
+                    'status' => 'reserved',
+                ]);
+            } else {
+                $booking = RTablesBooking::create([
+                    'rtable_id' => $table->id,
+                    'customer_id' => $user->id ?? null,
+                    'restaurant_id' => $resID,
+                    'order_id' => $order->id,
+                    'order_number' => $order->order_number,
+                    'payment_method' => $order->payment_method,
+                    'booking_start' => now(),
+                    'booking_end' => now()->addHour(),
+                    'no_of_seats' => array_key_exists('no_of_seats', $data) ? $data['no_of_seats'] : 2,
+                    'description' => array_key_exists('description', $data) ? $data['description'] : null,
+                    'status' => 'reserved',
+                ]);
+            }
+            RTableBooking_RTable::updateOrCreate(
+                [
+                    'rtable_booking_id' => $booking->id,
+                    'rtable_id' => $table->id,
+                ],
+                [
+                    'restaurant_id' => $resID,
+                    'booking_start' => $booking->booking_start,
+                    'booking_end' => $booking->booking_end,
+                    'no_of_seats' => array_key_exists('no_of_seats', $data) ? $data['no_of_seats'] : null,
+                ]
+            );
+        }
 
         // Reload the updated order with its products
         $order->load('orderProducts.product');
+
+        // Notification
+        $notification = $this->createNotification($order);
+        $noti = new NotifyResource($notification);
+        Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
+
+        // Send email to the customer
+        Helper::sendEmail($user->email, 'Your Order Details', 'emails.order_details', ['order' => $order]);
 
         $data = new OrderResource($order);
 
