@@ -356,7 +356,6 @@ class OrderController extends Controller
         if (!$order) {
             return ServiceResponse::error("Order with ID $id not found.");
         }
-         \Log::info('Order update request data', ['data' => $data]);
 
         $customerName = array_key_exists('customer_name', $data) ? $data['customer_name'] : ($order->customer->name ?? 'Walk-in Customer');
         $customerPhone = array_key_exists('customer_phone', $data) ? $data['customer_phone'] : ($order->customer->phone ?? 'XXXX');
