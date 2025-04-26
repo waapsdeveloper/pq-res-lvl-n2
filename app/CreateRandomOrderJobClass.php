@@ -114,6 +114,7 @@ class CreateRandomOrderJobClass
         $invoiceNumber = 'INV-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $randomNote = Helper::getRandomOrderNote();
         $isPaid = Arr::random([true, false]); // Random is_paid value
+        $deliveryAddress = ($type === 'delivery') ? Helper::getRandomAddress() : null; // Get random address for delivery
 
         $order = Order::create([
             'identifier' => 'ORD-',
@@ -131,6 +132,7 @@ class CreateRandomOrderJobClass
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
             'is_paid' => $isPaid, // Add is_paid to the order
+            'delivery_address' => $deliveryAddress, // Set delivery address
         ]);
         $order->update(
             [

@@ -9,6 +9,7 @@ use App\Models\Restaurant;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Pusher\Pusher;
+use Illuminate\Support\Arr;
 
 class Helper
 {
@@ -51,6 +52,8 @@ class Helper
 
         return true; // File deleted successfully
     }
+
+    
 
     static public function returnFullImageUrl($imagePath)
     {
@@ -138,29 +141,25 @@ class Helper
     }
     public static function getRandomOrderNote()
     {
-        $phrases = [
-            "Customer prefers extra spicy food.",
-            "Add extra napkins and cutlery.",
-            "Customer has requested a window seat.",
-            "Please prepare the dish gluten-free.",
-            "Add a birthday candle to the dessert.",
-            "Customer allergic to nuts. Avoid any nut-based items.",
-            "Customer prefers less salt in food.",
-            "Include a thank you card with the order.",
-            "Serve with extra dipping sauces.",
-            "Customer will pick up the order at 6 PM.",
-            "Please ensure contactless delivery.",
-            "Customer requested a call before delivery.",
-            "Include extra ketchup and mustard packets.",
-            "Customer is celebrating an anniversary.",
-            "Add a complimentary drink if possible.",
-            "Customer prefers low-fat dressing.",
-            "Separate sauces from the main dish.",
-            "Add a note saying 'Happy Birthday!'",
-            "Customer will bring their own wine.",
-            "Provide a high chair for a toddler."
+        $notes = [
+            'Please deliver quickly.',
+            'Handle with care.',
+            'Extra napkins, please.',
+            'No contact delivery.',
+            'Leave at the front door.',
         ];
+        return Arr::random($notes);
+    }
 
-        return $phrases[array_rand($phrases)];
+    public static function getRandomAddress()
+    {
+        $addresses = [
+            '123 Main St, Anytown, USA',
+            '456 Oak Ave, Anytown, USA',
+            '789 Pine Ln, Anytown, USA',
+            '101 Elm Rd, Anytown, USA',
+            '1122 Willow Dr, Anytown, USA',
+        ];
+        return Arr::random($addresses);
     }
 }
