@@ -46,6 +46,8 @@ class UserResource extends JsonResource
             "city" => $city,
             "state" => $state,
             "country" => $country,
+            "total_orders" => $obj->orders()->count(),
+
         ];
     }
 }

@@ -59,10 +59,26 @@ class DashboardController extends Controller
 
         return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $data]);
     }
-    public function topSellingProducts()
+
+    public function topSellingProducts(Request $request)
     {
+        // Get the filter parameter from the request, default to 'month'
+        $filter = $request->input('filter', 'month');
+
+        // Apply date filtering based on the filter parameter
+        $query = OrderProduct::query();
+
+        if ($filter === 'today') {
+            $query->whereDate('created_at', today());
+        } elseif ($filter === 'weekly') {
+            $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+        } elseif ($filter === 'monthly') {
+            $query->whereMonth('created_at', now()->month)
+                  ->whereYear('created_at', now()->year);
+        }
+
         // Fetch top 5 selling products with their quantities
-        $topSellingProducts = OrderProduct::select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+        $topSellingProducts = $query->select('product_id', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('product_id')
             ->orderByDesc('total_quantity')
             ->limit(5)

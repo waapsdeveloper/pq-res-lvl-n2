@@ -22,9 +22,6 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $search = $request->input('search', '');
@@ -79,13 +76,13 @@ class UserController extends Controller
 
         // Loop through the results and transform them using UserResource
         $data->getCollection()->transform(function ($item) {
+            $item->total_orders = $item->orders()->count(); // Count total orders for the user
             return new UserResource($item);
         });
 
         // Return the response with the data
         return ServiceResponse::success("Users retrieved successfully", ['data' => $data]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -140,8 +137,6 @@ class UserController extends Controller
         return ServiceResponse::success('User store successful', ['user' => $user]);
     }
 
-
-
     /**
      * Display the specified resource.
      */
@@ -162,7 +157,6 @@ class UserController extends Controller
         // Return a success response with the user data
         return ServiceResponse::success("User details retrieved successfully", ['user' => $data]);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -242,8 +236,6 @@ class UserController extends Controller
         return ServiceResponse::success('User updated successfully', ['user' => $user]);
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -251,7 +243,6 @@ class UserController extends Controller
     {
         // Attempt to find the restaurant by ID
         $user = User::find($id);
-
 
         // If the restaurant doesn't exist, return an error response
         if (!$user) {
@@ -278,6 +269,4 @@ class UserController extends Controller
 
         return ServiceResponse::success("User fetch successfully.", ['user' => $user]);
     }
-
-
 }
