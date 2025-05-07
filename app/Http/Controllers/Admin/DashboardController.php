@@ -638,4 +638,47 @@ class DashboardController extends Controller
             ],
         ]);
     }
+    public function dashboardTopCards()
+    {
+        // Calculate total number of orders
+        $totalOrders = Order::count();
+    
+        // Calculate total amount generated
+        $totalAmount = Order::sum('total_price');
+    
+        // Prepare data for the graph (e.g., last 10 days' revenue and orders)
+        $graphData = Order::selectRaw('DATE(created_at) as date, SUM(total_price) as total_amount, COUNT(*) as total_orders')
+            ->groupBy('date')
+            ->orderBy('date', 'desc')
+            ->limit(10)
+            ->get()
+            ->reverse(); // Reverse to show oldest first
+    
+        // Format graph data for the response
+        $categories = $graphData->pluck('date')->map(function ($date) {
+            return date('d M', strtotime($date)); // Format date as "01 Jan"
+        });
+        $amountSeries = $graphData->pluck('total_amount');
+        $ordersSeries = $graphData->pluck('total_orders');
+    
+        return ServiceResponse::success('Dashboard top cards data fetched successfully', [
+            'total_orders' => $totalOrders,
+            'total_amount' => $totalAmount,
+            'graphs' => [
+                'categories' => $categories,
+                'series' => [
+                    [
+                        'name' => 'Total Amount',
+                        'data' => $amountSeries,
+                    ],
+                    [
+                        'name' => 'Total Orders',
+                        'data' => $ordersSeries,
+                    ],
+                ],
+            ],
+        ]);
+    }
 }
+
+

@@ -212,7 +212,7 @@ Route::prefix('notifications')->group(function () {
     Route::post('/mark-as-read/{notificationId}', [NotificationController::class, 'markAsRead']);
     Route::get('/show/{notificationId}', [NotificationController::class, 'show']);
 });
-
+Route::get('/dashboard-top-cards', [DashboardController::class, 'dashboardTopCards'])->name('dashboard.topCards');
 Route::prefix('coupon')->group(function () {
 
     Route::get('/available-valid-coupon', [CouponController::class, 'availableValidCoupon'])->name('coupon.availableValidCoupon');
