@@ -141,14 +141,35 @@ class DashboardController extends Controller
             'total_revenue' => $totalRevenue,
         ]);
     }
-
-
+  
     public function latestTables()
     {
-        $tables = Rtable::with('restaurantDetail')->limit(8)->latest()->get();
+        // Fetch tables with their total orders and total amount
+        $tables = Rtable::with('restaurantDetail')
+            ->get()
+            ->map(function ($table) {
+                // Calculate total orders and total amount for each table
+                $table->total_orders = Order::where('table_no', $table->id)->count();
+                $table->total_amount = Order::where('table_no', $table->id)->sum('total_price');
+                return $table;
+            })
+            ->sortByDesc('total_amount') // Sort tables by total amount in descending order
+            ->take(8); // Limit to the top 8 tables
+    
+        // Transform the data to include only the required keys
+        $tables = $tables->map(function ($table) {
+            return [
+                'name' => $table->identifier, // Assuming 'identifier' is the table name
+                'floor' => $table->floor ?? 'Unknown', // Assuming 'floor' is a property of the table
+                'total_orders' => $table->total_orders,
+                'total_amount' => $table->total_amount,
+            ];
+        });
+    
         return ServiceResponse::success('Tables fetched successfully', ['tables' => $tables]);
     }
 
+    
 
     public function customerChartData(Request $request)
     {
