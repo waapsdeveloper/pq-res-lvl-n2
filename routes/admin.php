@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VariationController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Admin\BranchConfigController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -222,4 +223,13 @@ Route::prefix('coupon')->group(function () {
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
         ->names('coupon'); // Restrict to specific CRUD actions.
+});
+
+Route::prefix('branch-config')->group(function () {
+    Route::get('/', [BranchConfigController::class, 'index'])->name('branchConfig.index');
+    Route::get('/create', [BranchConfigController::class, 'create'])->name('branchConfig.create');
+    Route::post('/', [BranchConfigController::class, 'store'])->name('branchConfig.store');
+    Route::get('/{id}', [BranchConfigController::class, 'show'])->name('branchConfig.show');
+    Route::put('/{id}', [BranchConfigController::class, 'update'])->name('branchConfig.update');
+    Route::delete('/{id}', [BranchConfigController::class, 'destroy'])->name('branchConfig.destroy');
 });
