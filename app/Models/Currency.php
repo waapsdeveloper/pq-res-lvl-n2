@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Currency extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['code', 'name'];
+    protected $fillable = ['country', 'currency_code', 'currency_name', 'dial_code', 'flag'];
 }

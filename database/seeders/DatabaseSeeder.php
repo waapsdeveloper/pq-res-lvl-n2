@@ -24,10 +24,12 @@ class DatabaseSeeder extends Seeder
         $this->call(RTableSeeder::class);
         $this->call(VariationSeeder::class);
         $this->call(CountrySeeder::class);
+        $this->call(CurrencySeeder::class);
+
         // $this->call(OrderSeeder::class); //5
         // $this->call(OrderBillingSeeder::class); //6
         // $this->call(OrderProductSeeder::class); //7
-        // $this->call(PaymentSeeder::class); //8
+        // $this->call(PaymentSeeder::class); //8   
         // $this->call(ProfileSeeder::class); //11
         // $this->call(SessionSeeder::class); //13
         // $this->call(RTableReservingSeeder::class);

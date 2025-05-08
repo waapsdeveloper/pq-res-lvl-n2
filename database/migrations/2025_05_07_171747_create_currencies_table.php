@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique(); // Currency code (e.g., USD, EUR)
-            $table->string('name'); // Currency name (e.g., US Dollar, Euro)
+            $table->string('country');
+            $table->string('currency_code', 3);
+            $table->string('currency_name');
+            $table->string('dial_code');
+            $table->string('flag')->nullable();
             $table->timestamps();
         });
     }

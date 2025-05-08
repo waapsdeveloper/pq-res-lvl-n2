@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\VariationController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\BranchConfigController;
+use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -227,9 +228,13 @@ Route::prefix('coupon')->group(function () {
 
 Route::prefix('branch-config')->group(function () {
     Route::get('/', [BranchConfigController::class, 'index'])->name('branchConfig.index');
+    Route::resource('/', BranchConfigController::class)
+        ->parameters(['' => 'id'])
+        ->only(['show', 'update', 'store', 'destroy'])
+        ->names('branchConfig');
     Route::get('/create', [BranchConfigController::class, 'create'])->name('branchConfig.create');
-    Route::post('/', [BranchConfigController::class, 'store'])->name('branchConfig.store');
-    Route::get('/{id}', [BranchConfigController::class, 'show'])->name('branchConfig.show');
-    Route::put('/{id}', [BranchConfigController::class, 'update'])->name('branchConfig.update');
-    Route::delete('/{id}', [BranchConfigController::class, 'destroy'])->name('branchConfig.destroy');
+});
+
+Route::prefix('currency')->group(function () {
+    Route::get('/', [CurrencyController::class, 'index'])->name('currency.index');
 });

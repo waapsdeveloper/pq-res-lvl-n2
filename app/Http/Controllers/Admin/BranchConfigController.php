@@ -6,19 +6,89 @@ use App\Http\Controllers\Controller;
 use App\Models\BranchConfig;
 use App\Models\Currency;
 use Illuminate\Http\Request;
+use App\Helpers\ServiceResponse;
 
 class BranchConfigController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $configs = BranchConfig::with('branch')->get();
-        return response()->json(['configs' => $configs]);
+        $search = $request->input('search', '');
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
+
+        $query = BranchConfig::with(['branch', 'branch.timings', 'branch.orders']);
+
+        // Search by restaurant name
+        if ($search) {
+            $query->whereHas('branch', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Apply filters
+        if ($filters) {
+            $filters = is_array($filters) ? $filters : json_decode($filters, true);
+
+            if (!empty($filters['restaurant_name'])) {
+                $query->whereHas('branch', function ($q) use ($filters) {
+                    $q->where('name', 'like', '%' . $filters['restaurant_name'] . '%');
+                });
+            }
+            if (!empty($filters['currency'])) {
+                $query->where('currency', $filters['currency']);
+            }
+            if (!empty($filters['dial_code'])) {
+                $query->whereHas('branch', function ($q) use ($filters) {
+                    $q->where('dial_code', $filters['dial_code']);
+                });
+            }
+            if (!empty($filters['tax'])) {
+                $query->where('tax', $filters['tax']);
+            }
+        }
+
+        // Paginate the results
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        // Transform each item to your required structure
+        $data->getCollection()->transform(function ($config) {
+            $branch = $config->branch;
+            $currency = Currency::where('currency_code', $config->currency)->first();
+
+            return [
+                'id' => $config->id,
+                'name' => $branch->name,
+                'identifier' => $branch->identifier,
+                'no_of_seats' => $branch->no_of_seats,
+                'description' => $branch->description,
+                'floor' => $branch->floor,
+                'status' => $branch->status,
+                'restaurant_id' => $branch->restaurant_id,
+                'total_orders' => $branch->orders ? $branch->orders->count() : 0,
+                'qr_code' => url('/tabs/products?table_identifier=' . $branch->identifier),
+                'restaurant_detail' => [
+                    'name' => $branch->name ?? '',
+                    'address' => $branch->address ?? '',
+                    'phone' => $branch->phone ?? '',
+                    'email' => $branch->email ?? '',
+                    'website' => $branch->website ?? '',
+                    'rating' => $branch->rating ?? '',
+                    'status' => $branch->status ?? '',
+                ],
+                'currency' => $config->currency,
+                'tax' => $config->tax,
+                'dial_code' => $currency ? $currency->dial_code : null,
+            ];
+        });
+
+        return ServiceResponse::success('Branch config list successfully retrieved', ['data' => $data]);
     }
 
     public function create()
     {
-        $currencies = Currency::all(); // Optional if using a separate currencies table
-        return response()->json(['currencies' => $currencies]);
+        $currencies = Currency::all();
+        return ServiceResponse::success('Currency list successfully retrieved', ['data' => $currencies]);
     }
 
     public function store(Request $request)
@@ -29,14 +99,29 @@ class BranchConfigController extends Controller
             'currency' => 'required|string|max:3',
         ]);
 
+        // Check if config already exists for this branch
+        if (BranchConfig::where('branch_id', $data['branch_id'])->exists()) {
+            return ServiceResponse::error('Branch configuration already exists. Please update the existing configuration.', ['data' => null], 409);
+        }
+
         $config = BranchConfig::create($data);
-        return response()->json(['message' => 'Branch configuration created successfully', 'config' => $config]);
+        return ServiceResponse::success('Branch configuration created successfully', ['data' => $config]);
     }
 
     public function show($id)
     {
         $config = BranchConfig::with('branch')->findOrFail($id);
-        return response()->json(['config' => $config]);
+
+        // Access the restaurant (branch) details through the relationship
+        $restaurant = $config->branch;
+
+        // You can now include the restaurant details in your response
+        $data = [
+            'branch_config' => $config,
+            'restaurant' => $restaurant,
+        ];
+
+        return ServiceResponse::success('Branch configuration retrieved successfully', ['data' => $data]);
     }
 
     public function update(Request $request, $id)
@@ -46,10 +131,10 @@ class BranchConfigController extends Controller
             'currency' => 'nullable|string|max:3',
         ]);
 
-        $config = BranchConfig::findOrFail($id);
+        $config =BranchConfig::findOrFail($id);
         $config->update($data);
 
-        return response()->json(['message' => 'Branch configuration updated successfully', 'config' => $config]);
+        return ServiceResponse::success('Branch configuration updated successfully', ['data' => $config]);
     }
 
     public function destroy($id)
@@ -57,6 +142,6 @@ class BranchConfigController extends Controller
         $config = BranchConfig::findOrFail($id);
         $config->delete();
 
-        return response()->json(['message' => 'Branch configuration deleted successfully']);
+        return ServiceResponse::success('Branch configuration deleted successfully', ['data' => null]);
     }
 }

@@ -70,6 +70,12 @@ class Restaurant extends Model
     {
         return $this->hasMany(User::class);
     }
+    
+public function orders()
+{
+    // Adjust the related model and foreign key as per your schema
+    return $this->hasMany(\App\Models\Order::class, 'restaurant_id', 'id');
+}
 
     // Relationships
 
