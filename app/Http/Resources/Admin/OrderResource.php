@@ -42,6 +42,8 @@ class OrderResource extends JsonResource
             'is_paid' => (bool) $obj->is_paid,
             'discount_value' => $obj->discount_value,
             'final_total' => $obj->final_total,
+            'tax_percentage' => $this->tax_percentage, // Add this line
+        'tax_amount' => $this->tax_amount,   
             'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [

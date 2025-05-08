@@ -23,32 +23,32 @@ class StoreOrder extends FormRequest
      */
     public function rules(): array
     {
-        // return dd([$this]);
         return [
-            'customer_name' => 'nullable|string',
-            'customer_phone' => 'nullable',
-            'products' => 'nullable|array',
+            'customer_name' => 'nullable|string|max:255',
+            'customer_phone' => 'nullable|string|max:20',
+            'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
-            'products.*.price' => 'required',
+            'products.*.price' => 'required|numeric|min:0',
             'products.*.notes' => 'nullable|string',
-            'products.*.variation' => 'nullable',
-            'discount' => 'nullable|numeric|min:0|max:100',
+            'products.*.variation' => 'nullable|array',
+            'discount' => 'nullable|numeric|min:0',
+            'type' => 'nullable|string|in:dine-in,take-away,delivery,drive-thru,curbside-pickup,catering,reservation',
+            'table_id' => 'nullable|exists:rtables,id',
             'notes' => 'nullable|string',
-            'type' => 'nullable|string',
-            'status' => 'nullable|string',
-            'table_no' => 'nullable|string',
-            'table_id' => 'nullable|integer|exists:rtables,id',
-            'total_price' => 'nullable|numeric',
+            'status' => 'nullable|string|in:pending,confirmed,preparing,ready_for_pickup,out_for_delivery,delivered,completed,cancelled',
             'payment_method' => 'nullable|string',
             'order_type' => 'nullable|string',
             'delivery_address' => 'nullable|string',
+            'restaurant_id' => 'required|exists:restaurants,id',
             'coupon_code' => 'nullable|string',
             'discount_value' => 'nullable|numeric',
             'final_total' => 'nullable|numeric',
-            'restaurant_id' => 'nullable|integer|exists:restaurants,id', // If order are restaurant-specific
+            'tax_percentage' => 'nullable|numeric|min:0', // Add this line
+            'tax_amount' => 'nullable|numeric|min:0',       // Add this line
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
         // Customize the error response if validation fails

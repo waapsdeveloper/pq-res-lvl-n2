@@ -26,6 +26,8 @@ return new class extends Migration {
             $table->decimal('total_price', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->nullable();
             $table->unsignedBigInteger('restaurant_id')->nullable();
+            $table->decimal('tax_percentage', 5, 2)->nullable(); // Add this line
+            $table->decimal('tax_amount', 10, 2)->nullable();    // Add this line
             $table->timestamps();
         });
         

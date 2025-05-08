@@ -31,6 +31,8 @@ class Order extends Model
         'coupon_code',
         'discount_value',
         'final_total',
+        'tax_percentage',
+        'tax_amount',  
         'is_paid' // add this line
 
     ];

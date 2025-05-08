@@ -216,7 +216,8 @@ class OrderController extends Controller
         $couponCode = $request->coupon_code;
         $discountValue = $request->discount_value;
         $finalTotal = $request->final_total;
-
+        $taxPercentage = $request->tax_percentage ?? 0;
+        $taxAmount = $request->tax_amount ?? 0;
         $order = Order::create([
             'identifier' => 'ORD-',
             'restaurant_id' => $resID,
@@ -235,6 +236,8 @@ class OrderController extends Controller
             'coupon_code' => $couponCode,
             'discount_value' => $discountValue,
             'final_total' => $finalTotal,
+            'tax_percentage' => $taxPercentage, // Store tax percentage
+        'tax_amount' => $taxAmount, 
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -438,7 +441,9 @@ class OrderController extends Controller
         $couponCode = array_key_exists('coupon_code', $data) ? $data['coupon_code'] : $order->coupon_code;
         $discountValue = array_key_exists('discount_value', $data) ? $data['discount_value'] : $order->discount_value;
         $finalTotal = array_key_exists('final_total', $data) ? $data['final_total'] : $order->final_total;
-
+        $taxPercentage = array_key_exists('tax_percentage', $data) ? $data['tax_percentage'] : $order->tax_percentage;
+        $taxAmount = array_key_exists('tax_amount', $data) ? $data['tax_amount'] : $order->tax_amount;
+    
         $order->update([
             'restaurant_id' => $resID,
             'type' => $type,
@@ -454,6 +459,8 @@ class OrderController extends Controller
             'coupon_code' => $couponCode,
             'discount_value' => $discountValue,
             'final_total' => $finalTotal,
+            'tax_percentage' => $taxPercentage, // Update tax percentage
+        'tax_amount' => $taxAmount,  
             // Do NOT set 'updated_at' here, let Eloquent handle it
         ]);
 
