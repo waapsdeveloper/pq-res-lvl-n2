@@ -26,6 +26,8 @@ return new class extends Migration
             $table->decimal('rating', 10, 2)->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('is_active')->default('0');
+            $table->string('dial_code')->nullable();
+            $table->string('tax')->nullable();
 
             $table->timestamps();
         });

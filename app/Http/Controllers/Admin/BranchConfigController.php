@@ -75,6 +75,8 @@ class BranchConfigController extends Controller
                     'website' => $branch->website ?? '',
                     'rating' => $branch->rating ?? '',
                     'status' => $branch->status ?? '',
+                    'dial_code' => $branch->dial_code ?? '',
+                    'tax' => $branch->tax ?? '',
                 ],
                 'currency' => $config->currency,
                 'tax' => $config->tax,
@@ -95,8 +97,9 @@ class BranchConfigController extends Controller
     {
         $data = $request->validate([
             'branch_id' => 'required|exists:restaurants,id',
-            'tax' => 'required|numeric|min:0|max:100',
+            'tax' => 'nullable|numeric|min:0|max:50',
             'currency' => 'required|string|max:3',
+            'dial_code' => 'required|string|max:10',
         ]);
 
         // Check if config already exists for this branch
@@ -105,6 +108,15 @@ class BranchConfigController extends Controller
         }
 
         $config = BranchConfig::create($data);
+
+        // Update the restaurant with the tax
+        $restaurant = \App\Models\Restaurant::find($data['branch_id']);
+        if ($restaurant) {
+            $restaurant->tax = $data['tax'];
+            $restaurant->dial_code = $data['dial_code'];
+            $restaurant->save();
+        }
+
         return ServiceResponse::success('Branch configuration created successfully', ['data' => $config]);
     }
 
