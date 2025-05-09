@@ -33,7 +33,8 @@ class Restaurant extends Model
         'copyright_text',
         'status',
         'is_active',
-        'image'
+        'image',
+        'currency',
     ];
 
     // Attributes that should be hidden from arrays (e.g., sensitive data)

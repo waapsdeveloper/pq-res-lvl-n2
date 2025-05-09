@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('currency_name');
             $table->string('dial_code');
             $table->string('flag')->nullable();
+            $table->string('currency_symbol')->nullable();
             $table->timestamps();
         });
     }

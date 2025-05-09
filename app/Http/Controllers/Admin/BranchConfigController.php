@@ -76,6 +76,7 @@ class BranchConfigController extends Controller
                     'rating' => $branch->rating ?? '',
                     'status' => $branch->status ?? '',
                     'dial_code' => $branch->dial_code ?? '',
+                    'currency_symbol' => $branch->currency_symbol ?? '',
                     'tax' => $branch->tax ?? '',
                 ],
                 'currency' => $config->currency,
@@ -113,6 +114,7 @@ class BranchConfigController extends Controller
         $restaurant = \App\Models\Restaurant::find($data['branch_id']);
         if ($restaurant) {
             $restaurant->tax = $data['tax'];
+            $restaurant->currency = $data['currency'];
             $restaurant->dial_code = $data['dial_code'];
             $restaurant->save();
         }
