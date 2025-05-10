@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('is_active')->default('0');
             $table->string('dial_code')->nullable();
             $table->string('tax')->nullable();
-            $table->string('currency')->nullable();
+            $table->string('currency')->default('USD');
 
             $table->timestamps();
         });

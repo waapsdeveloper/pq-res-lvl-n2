@@ -104,16 +104,18 @@ class BranchConfigController extends Controller
         ]);
 
         // Check if config already exists for this branch
-        if (BranchConfig::where('branch_id', $data['branch_id'])->exists()) {
+        $existingConfig = BranchConfig::where('branch_id', $data['branch_id'])->first();
+        if ($existingConfig) {
             return ServiceResponse::error('Branch configuration already exists. Please update the existing configuration.', ['data' => null], 409);
         }
 
+        // Create a new branch configuration
         $config = BranchConfig::create($data);
 
-        // Update the restaurant with the tax
+        // Update the restaurant with the tax, currency, and dial code
         $restaurant = \App\Models\Restaurant::find($data['branch_id']);
         if ($restaurant) {
-            $restaurant->tax = $data['tax'];
+            $restaurant->tax = $data['tax'] ?? 0; // Default tax to 0 if not provided
             $restaurant->currency = $data['currency'];
             $restaurant->dial_code = $data['dial_code'];
             $restaurant->save();
@@ -141,14 +143,36 @@ class BranchConfigController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
+            'branch_id' => 'required|exists:restaurants,id',
             'tax' => 'nullable|numeric|min:0|max:100',
             'currency' => 'nullable|string|max:3',
+            'dial_code' => 'nullable|string|max:10',
         ]);
 
-        $config =BranchConfig::findOrFail($id);
-        $config->update($data);
+        // Find the configuration by ID
+        $config = BranchConfig::find($id);
 
-        return ServiceResponse::success('Branch configuration updated successfully', ['data' => $config]);
+        if ($config) {
+            // Update the existing configuration
+            $config->update($data);
+            $message = 'Branch configuration updated successfully';
+        } else {
+            // Create a new configuration if not found
+            $config = BranchConfig::create($data);
+
+            // Update the restaurant with the tax, currency, and dial code
+            $restaurant = \App\Models\Restaurant::find($data['branch_id']);
+            if ($restaurant) {
+                $restaurant->tax = $data['tax'] ?? 0; // Default tax to 0 if not provided
+                $restaurant->currency = $data['currency'];
+                $restaurant->dial_code = $data['dial_code'];
+                $restaurant->save();
+            }
+
+            $message = 'Branch configuration created successfully';
+        }
+
+        return ServiceResponse::success($message, ['data' => $config]);
     }
 
     public function destroy($id)
