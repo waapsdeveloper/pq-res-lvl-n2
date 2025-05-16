@@ -33,6 +33,10 @@ class ExpenseCategoryController extends Controller
             if (isset($filters['restaurant_id'])) {
                 $query->where('restaurant_id', $filters['restaurant_id']);
             }
+            // Apply filter for expense category name using 'expense_name' key inside filters
+            if (isset($filters['expense_name']) && !empty($filters['expense_name'])) {
+                $query->where('category_name', 'like', '%' . $filters['expense_name'] . '%');
+            }
         }
 
         $data = $query->paginate($perpage, ['*'], 'page', $page);
