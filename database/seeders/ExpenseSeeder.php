@@ -198,7 +198,7 @@ class ExpenseSeeder extends Seeder
 
         foreach ($expenses as $expense) {
             Expense::create(array_merge($expense, [
-                'image' => null,
+               'image' => 'images/expense/image.png',
                 'created_at' => now(),
                 'updated_at' => now()
             ]));

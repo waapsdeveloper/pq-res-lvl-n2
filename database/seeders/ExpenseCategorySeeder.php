@@ -89,7 +89,7 @@ class ExpenseCategorySeeder extends Seeder
                 'weekly_estimate' => $category['weekly_estimate'],
                 'monthly_estimate' => $category['monthly_estimate'],
                 'description' => $category['description'],
-                'image' => null,
+                'image' => 'images/expense-category/expense.png',
                 'status' => 'active',
             ]);
         }

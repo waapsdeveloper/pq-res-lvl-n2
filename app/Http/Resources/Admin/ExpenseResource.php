@@ -14,12 +14,13 @@ class ExpenseResource extends JsonResource
             'category' => [
                 'id' => $this->category->id,
                 'name' => $this->category->category_name,
+                'restaurant' => $this->category->restaurant, // Return full restaurant object
             ],
             'amount' => $this->amount,
             'type' => $this->type,
             'status' => $this->status,
             'date' => $this->date,
-            'image' => $this->image,
+            'image' => \App\Helpers\Helper::returnFullImageUrl($this->image),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -19,8 +19,8 @@ class ExpenseCategoryResource extends JsonResource
             'weekly_estimate' => $this->weekly_estimate,
             'monthly_estimate' => $this->monthly_estimate,
             'description' => $this->description,
-            'image' => $this->image,
-            'status' => $this->status,
+           'image' => \App\Helpers\Helper::returnFullImageUrl($this->image),
+        'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
