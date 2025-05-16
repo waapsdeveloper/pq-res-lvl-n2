@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(VariationSeeder::class);
         $this->call(CountrySeeder::class);
         $this->call(CurrencySeeder::class);
-
+        $this->call(ExpenseCategorySeeder::class);
+        
         // $this->call(OrderSeeder::class); //5
         // $this->call(OrderBillingSeeder::class); //6
         // $this->call(OrderProductSeeder::class); //7

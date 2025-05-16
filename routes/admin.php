@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\RestaurantTimingController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TableBookingController;
 use App\Http\Controllers\Admin\RTableBookingController;
+use App\Http\Controllers\Admin\ExpenseCategoryController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VariationController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+
 
 
 Route::prefix('auth')->middleware([
@@ -237,4 +239,12 @@ Route::prefix('branch-config')->group(function () {
 
 Route::prefix('currency')->group(function () {
     Route::get('/', [CurrencyController::class, 'index'])->name('currency.index');
+});
+
+
+Route::prefix('expense-category')->group(function () {
+    Route::resource('/', ExpenseCategoryController::class)
+        ->parameters(['' => 'id'])
+        ->only(['index', 'show', 'store', 'update', 'destroy'])
+        ->names('expense-category');
 });
