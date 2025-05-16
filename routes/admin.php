@@ -248,3 +248,14 @@ Route::prefix('expense-category')->group(function () {
         ->only(['index', 'show', 'store', 'update', 'destroy'])
         ->names('expense-category');
 });
+
+Route::prefix('expense')->group(function () {
+    Route::resource('/', \App\Http\Controllers\Admin\ExpenseController::class)
+        ->parameters(['' => 'id'])
+        ->only(['index', 'show', 'store', 'update', 'destroy'])
+        ->names('expense');
+    Route::put('/update-status/{id}', [\App\Http\Controllers\Admin\ExpenseController::class, 'updateStatus'])
+        ->name('expense.updateStatus');
+    Route::put('/update-type/{id}', [\App\Http\Controllers\Admin\ExpenseController::class, 'updateType'])
+        ->name('expense.updateType');
+});

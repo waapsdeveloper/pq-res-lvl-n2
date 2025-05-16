@@ -11,129 +11,89 @@ class ExpenseCategorySeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $restaurantId = 1; // Assuming a default restaurant ID
+        $restaurantId = 1;
 
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Utilities',
-            'daily_estimate' => 100,
-            'weekly_estimate' => 700,
-            'monthly_estimate' => 3000,
-            'description' => 'Electricity, water, gas, etc.',
-            'image' => null,
-            'status' => 'active',
-        ]);
+        // Core categories matching expense seeder references
+        $categories = [
+            [
+                'category_name' => 'Rent',
+                'daily_estimate' => 166.67,  // 5000/month
+                'weekly_estimate' => 1166.69,
+                'monthly_estimate' => 5000,
+                'description' => 'Property rental costs'
+            ],
+            [
+                'category_name' => 'Utilities',
+                'daily_estimate' => 33.33,   // 1000/month
+                'weekly_estimate' => 233.31,
+                'monthly_estimate' => 1000,
+                'description' => 'Electricity, water, and gas services'
+            ],
+            [
+                'category_name' => 'Salaries',
+                'daily_estimate' => 400,      // 12000/month
+                'weekly_estimate' => 2800,
+                'monthly_estimate' => 12000,
+                'description' => 'Staff wages and benefits'
+            ],
+            [
+                'category_name' => 'Food Supplies',
+                'daily_estimate' => 266.67,  // 8000/month
+                'weekly_estimate' => 1866.69,
+                'monthly_estimate' => 8000,
+                'description' => 'Raw ingredients and food items'
+            ],
+            [
+                'category_name' => 'Marketing',
+                'daily_estimate' => 16.67,   // 500/month
+                'weekly_estimate' => 116.69,
+                'monthly_estimate' => 500,
+                'description' => 'Advertising and promotions'
+            ],
+            [
+                'category_name' => 'Maintenance',
+                'daily_estimate' => 33.33,   // 1000/month
+                'weekly_estimate' => 233.31,
+                'monthly_estimate' => 1000,
+                'description' => 'Equipment and facility repairs'
+            ],
+            [
+                'category_name' => 'Insurance',
+                'daily_estimate' => 8.33,    // 250/month
+                'weekly_estimate' => 58.31,
+                'monthly_estimate' => 250,
+                'description' => 'Business insurance policies'
+            ],
+            [
+                'category_name' => 'Taxes',
+                'daily_estimate' => 66.67,   // 2000/month
+                'weekly_estimate' => 466.69,
+                'monthly_estimate' => 2000,
+                'description' => 'Government taxes and fees'
+            ],
+            [
+                'category_name' => 'Office Supplies',
+                'daily_estimate' => 6.67,   // 200/month
+                'weekly_estimate' => 46.69,
+                'monthly_estimate' => 200,
+                'description' => 'Stationery and office materials'
+            ]
+        ];
 
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Rent',
-            'daily_estimate' => 500,
-            'weekly_estimate' => 3500,
-            'monthly_estimate' => 15000,
-            'description' => 'Monthly rent for the premises.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Salaries',
-            'daily_estimate' => 1200,
-            'weekly_estimate' => 8400,
-            'monthly_estimate' => 36000,
-            'description' => 'Salaries for all employees.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Food Supplies',
-            'daily_estimate' => 800,
-            'weekly_estimate' => 5600,
-            'monthly_estimate' => 24000,
-            'description' => 'Cost of raw ingredients and food items.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Marketing',
-            'daily_estimate' => 50,
-            'weekly_estimate' => 350,
-            'monthly_estimate' => 1500,
-            'description' => 'Advertising and promotional expenses.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Maintenance',
-            'daily_estimate' => 30,
-            'weekly_estimate' => 210,
-            'monthly_estimate' => 900,
-            'description' => 'Repairs and upkeep of the restaurant.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Cleaning Supplies',
-            'daily_estimate' => 20,
-            'weekly_estimate' => 140,
-            'monthly_estimate' => 600,
-            'description' => 'Cost of cleaning materials.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Insurance',
-            'daily_estimate' => 15,
-            'weekly_estimate' => 105,
-            'monthly_estimate' => 450,
-            'description' => 'Insurance premiums.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Licenses & Permits',
-            'daily_estimate' => 10,
-            'weekly_estimate' => 70,
-            'monthly_estimate' => 300,
-            'description' => 'Fees for required licenses and permits.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        ExpenseCategory::create([
-            'restaurant_id' => $restaurantId,
-            'category_name' => 'Technology',
-            'daily_estimate' => 40,
-            'weekly_estimate' => 280,
-            'monthly_estimate' => 1200,
-            'description' => 'Software subscriptions and IT support.',
-            'image' => null,
-            'status' => 'active',
-        ]);
-
-        for ($i = 11; $i <= 30; $i++) {
+        // Create core categories
+        foreach ($categories as $category) {
             ExpenseCategory::create([
                 'restaurant_id' => $restaurantId,
-                'category_name' => $faker->word(),
-                'daily_estimate' => $faker->numberBetween(10, 500),
-                'weekly_estimate' => $faker->numberBetween(70, 3500),
-                'monthly_estimate' => $faker->numberBetween(300, 15000),
-                'description' => $faker->sentence(),
+                'category_name' => $category['category_name'],
+                'daily_estimate' => $category['daily_estimate'],
+                'weekly_estimate' => $category['weekly_estimate'],
+                'monthly_estimate' => $category['monthly_estimate'],
+                'description' => $category['description'],
                 'image' => null,
-                'status' => $faker->randomElement(['active', 'inactive']),
+                'status' => 'active',
             ]);
         }
-    }
-}
+
+   
+       
+}}
