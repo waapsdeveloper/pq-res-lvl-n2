@@ -25,11 +25,16 @@ class ExpenseController extends Controller
             if (!empty($filters['expense'])) {
                 $query->where('name', 'like', '%' . $filters['expense'] . '%');
             }
-            if (!empty($filters['started_from'])) {
-                $query->whereDate('date', '>=', $filters['started_from']);
-            }
-            if (!empty($filters['ended_at'])) {
-                $query->whereDate('date', '<=', $filters['ended_at']);
+            // Date range filter
+            if (!empty($filters['started_from']) && !empty($filters['ended_at'])) {
+                $query->whereBetween('date', [$filters['started_from'], $filters['ended_at']]);
+            } else {
+                if (!empty($filters['started_from'])) {
+                    $query->whereDate('date', '>=', $filters['started_from']);
+                }
+                if (!empty($filters['ended_at'])) {
+                    $query->whereDate('date', '<=', $filters['ended_at']);
+                }
             }
             if (!empty($filters['type'])) {
                 $query->where('type', $filters['type']);
@@ -44,13 +49,19 @@ class ExpenseController extends Controller
             }
         }
 
+        // Calculate total amount before pagination
+        $totalAmount = (clone $query)->sum('amount');
+
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
         $data->getCollection()->transform(function ($item) {
             return new ExpenseResource($item);
         });
 
-        return ServiceResponse::success("Expense list successfully", ['data' => $data]);
+        return ServiceResponse::success("Expense list successfully", [
+            'total_amount' => $totalAmount,
+            'data' => $data
+        ]);
     }
 
     public function store(Request $request)
