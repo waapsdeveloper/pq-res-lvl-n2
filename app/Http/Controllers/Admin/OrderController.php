@@ -110,6 +110,22 @@ class OrderController extends Controller
             }
         }
 
+        // Before pagination
+        $ordersForTotals = (clone $query)->get();
+
+        $totalTax = $ordersForTotals->sum('tax_amount');
+        $totalDiscount = $ordersForTotals->sum('discount_value');
+
+        // Calculate total_final_total with your condition
+        $totalFinalTotal = $ordersForTotals->sum(function ($order) {
+            // If final_total is 0 or null, use total_price instead
+            return ($order->final_total == 0 || $order->final_total === null)
+                ? $order->total_price
+                : $order->final_total;
+        });
+
+        $totalPrice = $ordersForTotals->sum('total_price');
+
         $query->orderBy('id', 'desc');
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
@@ -117,8 +133,120 @@ class OrderController extends Controller
             return new OrderResource($item);
         });
 
-        return ServiceResponse::success("Order list successfully", ['data' => $data]);
+       
+return ServiceResponse::success("Order list successfully", [
+    'total_tax' => $totalTax,
+    'total_discount' => $totalDiscount,
+    'total_final_total' => $totalFinalTotal,
+    'total_price' => $totalPrice,
+    'data' => $data
+]);
     }
+    
+public function totals(Request $request)
+{
+   
+        $search = $request->input('search', '');
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
+
+        $resID = $request->restaurant_id;
+
+        $query = Order::query()
+            ->where('restaurant_id', $resID)
+            ->with('customer', 'table_no', 'orderProducts', 'table')->with(['orderProducts.productProp'])->orderBy('id', 'desc');
+
+        if ($search) {
+            $query->where('order_number', 'like', '%' . $search . '%');
+        }
+
+        if ($filters) {
+            $filters = json_decode($filters, true);
+
+            if (isset($filters['order_id']) && !empty($filters['order_id'])) {
+                $query->where('order_number', 'like', '%' . $filters['order_id'] . '%');
+            }
+
+            if (isset($filters['total_price']) && !empty($filters['total_price'])) {
+                $query->where('total_price', '<',  $filters['total_price'])
+                    ->orWhere('total_price', '=',  $filters['total_price'])->orderByDesc('total_price');
+            }
+
+            if (isset($filters['type']) && !empty($filters['type'])) {
+                $query->where('type', 'like', '%' . $filters['type'] . '%');
+            }
+
+            if (isset($filters['status']) && !empty($filters['status'])) {
+                $query->where('status', $filters['status']);
+            }
+
+            if (isset($filters['customer_name']) && !empty($filters['customer_name'])) {
+                $query->whereHas('customer', function ($q) use ($filters) {
+                    $q->where('name', 'like', '%' . $filters['customer_name'] . '%');
+                });
+            }
+
+            if (isset($filters['phone']) && !empty($filters['phone'])) {
+                $query->whereHas('customer', function ($q) use ($filters) {
+                    $q->where('phone', 'like', '%' . $filters['phone'] . '%');
+                });
+            }
+
+            if (isset($filters['created_at']) && !empty($filters['created_at'])) {
+                $query->whereDate('created_at', $filters['created_at']);
+            }
+
+            if (isset($filters['started_from']) && !empty($filters['started_from'])) {
+                $query->whereDate('created_at', '>=', $filters['started_from']);
+            }
+
+            if (isset($filters['ended_at']) && !empty($filters['ended_at'])) {
+                $query->whereDate('created_at', '<=', $filters['ended_at']);
+            }
+
+            if (isset($filters['is_paid']) && $filters['is_paid'] !== '') {
+                $query->where('is_paid', $filters['is_paid']);
+            }
+            if (isset($filters['table']) && !empty($filters['table'])) {
+                $query->whereHas('table', function ($q) use ($filters) {
+                    $q->where('name', 'like', '%' . $filters['table'] . '%');
+                });
+            }
+        }
+
+        // Before pagination
+        $ordersForTotals = (clone $query)->get();
+
+        $totalTax = $ordersForTotals->sum('tax_amount');
+        $totalDiscount = $ordersForTotals->sum('discount_value');
+
+        // Calculate total_final_total with your condition
+        $totalFinalTotal = $ordersForTotals->sum(function ($order) {
+            // If final_total is 0 or null, use total_price instead
+            return ($order->final_total == 0 || $order->final_total === null)
+                ? $order->total_price
+                : $order->final_total;
+        });
+
+        $totalPrice = $ordersForTotals->sum('total_price');
+
+        $query->orderBy('id', 'desc');
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        $data->getCollection()->transform(function ($item) {
+            return new OrderResource($item);
+            
+        });
+        return ServiceResponse::success("Order list successfully", [
+    'total_tax' => $totalTax,
+    'total_discount' => $totalDiscount,
+    'total_final_total' => $totalFinalTotal,
+    'total_price' => $totalPrice,
+]);
+
+     
+}
 
     /**
      * Show the form for creating a new resource.

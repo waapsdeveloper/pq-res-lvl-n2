@@ -125,6 +125,7 @@ Route::prefix('product')->group(function () {
 });
 
 Route::prefix('order')->group(function () {
+    Route::get('/totals', [OrderController::class, 'totals'])->name('order.totals');
     Route::get('/bulk-delete', [OrderController::class, 'bulkDelete'])->name('order-bulkDelete');
 
     Route::resource('/', OrderController::class)
@@ -133,10 +134,9 @@ Route::prefix('order')->group(function () {
         ->names('order');
     Route::put('/update-status/{id}', [OrderController::class, 'updateStatus'])
         ->name('orderUpdateStatus');
-        Route::put('/update-payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])
+    Route::put('/update-payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])
         ->name('orderUpdatePaymentStatus');
 });
-
 
 Route::prefix('rtable')->group(function () {
     Route::get('/bulk-delete', [RtableController::class, 'bulkDelete'])->name('rTable-bulkDelete');
