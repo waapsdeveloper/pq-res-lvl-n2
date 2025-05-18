@@ -172,7 +172,16 @@ class BranchConfigController extends Controller
             $message = 'Branch configuration created successfully';
         }
 
-        return ServiceResponse::success($message, ['data' => $config]);
+        // Fetch the related restaurant (branch) details
+        $config->load('branch');
+        $restaurant = $config->branch;
+
+        $responseData = [
+            'branch_config' => $config,
+            'restaurant' => $restaurant,
+        ];
+
+        return ServiceResponse::success($message, ['data' => $responseData]);
     }
 
     public function destroy($id)
