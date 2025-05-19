@@ -1,0 +1,47 @@
+[
+    {
+        "code": "WELCOME10",
+        "discount_value": 10,
+        "discount_type": "percentage",
+        "usage_limit": 100,
+        "used_count": 0,
+        "expires_at": "2025-12-31 23:59:59",
+        "is_active": true
+    },
+    {
+        "code": "SUMMER20",
+        "discount_value": 20,
+        "discount_type": "percentage",
+        "usage_limit": 50,
+        "used_count": 0,
+        "expires_at": "2025-08-31 23:59:59",
+        "is_active": true
+    },
+    {
+        "code": "FALL30",
+        "discount_value": 30,
+        "discount_type": "percentage",
+        "usage_limit": 30,
+        "used_count": 0,
+        "expires_at": "2025-10-31 23:59:59",
+        "is_active": true
+    },
+    {
+        "code": "FLASH14",
+        "discount_value": 14,
+        "discount_type": "fixed",
+        "usage_limit": 20,
+        "used_count": 0,
+        "expires_at": "2025-06-30 23:59:59",
+        "is_active": true
+    },
+    {
+        "code": "LUCKY17",
+        "discount_value": 17,
+        "discount_type": "fixed",
+        "usage_limit": 10,
+        "used_count": 0,
+        "expires_at": "2025-07-31 23:59:59",
+        "is_active": true
+    }
+]
