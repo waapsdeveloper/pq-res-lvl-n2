@@ -71,7 +71,7 @@ class User extends Authenticatable
     // role
     public function role()
     {
-        return $this->hasOne(Role::class, 'id', 'role_id');
+        return $this->belongsTo(Role::class, 'role_id');
     }
     public function userDetail()
     {
