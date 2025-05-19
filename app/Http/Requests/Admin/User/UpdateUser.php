@@ -26,7 +26,9 @@ class UpdateUser extends FormRequest
         return [
             'name' => 'nullable|string|min:3|max:255',
             'email' => 'nullable|email|max:255|unique:users,email,' . $this->route('id'),
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'required|array',
+            'phone.number' => 'required|string|max:20',
+            'phone.countryCode' => 'nullable|string|max:10',
             'password' => 'nullable|string|min:6',
             'role_id' => 'nullable|integer',
             'status' => 'nullable|string|in:active,inactive',

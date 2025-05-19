@@ -45,6 +45,7 @@ class CreateRandomOrderJobClass
 
         $randomDate = Arr::random($randomDate);
         logger()->info('Random date generated', ['random_date' => $randomDate]);
+        
         $cityCodes = ['21', '22', '23', '24', '25', '26'];
         $cityCode = $cityCodes[array_rand($cityCodes)];
         $phone = str_pad(mt_rand(1000000, 9999999), 7, '0', STR_PAD_LEFT);
@@ -105,47 +106,54 @@ class CreateRandomOrderJobClass
         }
         logger()->info('Order products prepared', ['order_products' => $orderProducts]);
 
-        // Order Creation
-        $discount = rand(0, 10);
-        $finalPrice = max(0, $totalPrice - $discount);
+        // Order Calculations
+        $discount = mt_rand(0, 1000) / 100; // Decimal between 0.00-10.00
+        $subtotal = max(0, $totalPrice - $discount);
+        
+        $taxPercentage = mt_rand(500, 1500) / 100; // Decimal between 5.00-15.00
+        $taxAmount = $subtotal * ($taxPercentage / 100);
+        $finalPrice = $subtotal + $taxAmount;
+
         $type = Arr::random(['dine-in', 'take-away', 'delivery', 'drive-thru', 'curbside-pickup', 'catering', 'reservation']);
-        $status = Arr::random(['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed']);
+        $status = Arr::random(['pending', 'confirmed', 'preparing', 'ready_for_pickup', 'out_for_delivery', 'delivered', 'completed', 'cancelled']);
         $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $invoiceNumber = 'INV-' . date('Ymd') . '-' . strtoupper(str()->random(6));
         $randomNote = Helper::getRandomOrderNote();
-        $isPaid = Arr::random([true, false]); // Random is_paid value
-        $deliveryAddress = ($type === 'delivery') ? Helper::getRandomAddress() : null; // Get random address for delivery
+        $isPaid = Arr::random([true, false]);
+        $deliveryAddress = ($type === 'delivery') ? Helper::getRandomAddress() : null;
 
+        // Order Creation
         $order = Order::create([
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,
             'type' => $type,
-            'order_type' => $type,
             'status' => $status,
             'notes' => $randomNote,
+            'order_type' => $type,
             'customer_id' => $customer->id,
             'discount' => $discount,
             'invoice_no' => $invoiceNumber,
             'table_no' => rand(1, 20),
             'total_price' => $finalPrice,
             'restaurant_id' => $restaurant_id,
+            'tax_percentage' => $taxPercentage,
+            'tax_amount' => $taxAmount,
+            'is_paid' => $isPaid,
+            'delivery_address' => $deliveryAddress,
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
-            'is_paid' => $isPaid, // Add is_paid to the order
-            'delivery_address' => $deliveryAddress, // Set delivery address
         ]);
-        $order->update(
-            [
-                'identifier' => Identifier::make('Order', $order->id, 3),
-                'invoice_no' => Identifier::make('Invoice', $order->id, 3)
-            ]
-        );
+        
+        $order->update([
+            'identifier' => Identifier::make('Order', $order->id, 3),
+            'invoice_no' => Identifier::make('Invoice', $order->id, 3)
+        ]);
         logger()->info('Order created successfully', ['order_id' => $order->id]);
 
+        // Create Order Products
         foreach ($orderProducts as $orderProduct) {
             $orderProduct['created_at'] = $randomDate;
             $orderProduct['updated_at'] = $randomDate;
-
             $order->orderProducts()->create($orderProduct);
         }
         logger()->info('Order products saved.');
@@ -161,7 +169,7 @@ class CreateRandomOrderJobClass
             'payment_method' => $paymentMethod,
             'total' => $order->total_price,
             'status' => $invoiceStatuses,
-            'notes' => "Random invoice generated with NO: $order->invoice_no",
+            'notes' => "Random invoice generated with NO: {$order->invoice_no}",
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
         ]);

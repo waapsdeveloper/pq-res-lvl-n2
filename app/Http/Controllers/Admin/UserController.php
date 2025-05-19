@@ -100,13 +100,20 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        // Wrap the operations in a database transaction
+        // Extract phone number and country code if phone is an array/object
+        $phone = is_array($data['phone']) || is_object($data['phone'])
+            ? (is_array($data['phone']) ? ($data['phone']['number'] ?? null) : ($data['phone']->number ?? null))
+            : $data['phone'];
+        $dial_code = is_array($data['phone']) || is_object($data['phone'])
+            ? (is_array($data['phone']) ? ($data['phone']['countryCode'] ?? null) : ($data['phone']->countryCode ?? null))
+            : null;
 
         // Create a new user
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
+            'phone' => $phone,
+            'dial_code' => $dial_code,
             'password' => Hash::make($data['password']),
             'role_id' => $data['role_id'] ?? 0,
             'status' => $data['status'],
@@ -114,7 +121,6 @@ class UserController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
 
         $userDetail = $user->userDetail()->create([
             'user_id' => $user->id,
@@ -173,12 +179,19 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        // Wrap the operations in a database transaction
-        // Find the user
         $user = User::find($id);
         if (!$user) {
             return ServiceResponse::error("User with ID $id not found.");
         }
+
+        // Extract phone number and country code if phone is an array/object
+        $phone = is_array($data['phone']) || is_object($data['phone'])
+            ? (is_array($data['phone']) ? ($data['phone']['number'] ?? null) : ($data['phone']->number ?? null))
+            : $data['phone'];
+        $dial_code = is_array($data['phone']) || is_object($data['phone'])
+            ? (is_array($data['phone']) ? ($data['phone']['countryCode'] ?? null) : ($data['phone']->countryCode ?? null))
+            : null;
+
         if (isset($data['image'])) {
             if ($user->image) {
                 Helper::deleteImage($user->image);
@@ -186,12 +199,12 @@ class UserController extends Controller
             $url = Helper::getBase64ImageUrl($data['image'], 'user');
             $data['image'] = $url;
         }
-        // Update user details
-        // return response()->json($data);
+
         $user->update([
             'name' => $data['name'] ?? $user->name,
             'email' => $data['email'] ?? $user->email,
-            'phone' => $data['phone'] ?? $user->phone,
+            'phone' => $phone ?? $user->phone,
+            'dial_code' => $dial_code ?? $user->dial_code,
             'role_id' => $data['role_id'] ?? $user->role_id,
             'status' => $data['status'] ?? $user->status,
             "restaurant_id" => $data['restaurant_id'] ?? $user->restaurant_id,
@@ -199,14 +212,12 @@ class UserController extends Controller
             'updated_at' => now(),
         ]);
 
-        // Optionally update the password if provided
         if (isset($data['password']) && !empty($data['password'])) {
             $user->update([
                 'password' => Hash::make($data['password']),
             ]);
         }
 
-        // Update user detail record
         $userDetail = $user->userDetail;
         if ($userDetail) {
             $userDetail->update([
@@ -216,7 +227,6 @@ class UserController extends Controller
                 'country' => $data['country'] ?? $userDetail->country,
             ]);
         } else {
-            // If user detail doesn't exist, create it
             $userDetail = $user->userDetail()->create([
                 'user_id' => $user->id,
                 'address' => $data['address'] ?? null,
@@ -230,7 +240,6 @@ class UserController extends Controller
             throw new \Exception('Failed to update or create user details.');
         }
 
-        // Commit the transaction
         DB::commit();
 
         return ServiceResponse::success('User updated successfully', ['user' => $user]);

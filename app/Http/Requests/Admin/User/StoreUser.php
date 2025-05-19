@@ -26,7 +26,9 @@ class StoreUser extends FormRequest
         return [
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string',
+            'phone' => 'required|array',
+            'phone.number' => 'required|string|max:20',
+            'phone.countryCode' => 'nullable|string|max:10',
             'password' => 'required|string|min:6',
             'role_id' => 'required|integer',
             'status' => 'required|string|in:active,inactive',
