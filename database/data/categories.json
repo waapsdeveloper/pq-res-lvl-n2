@@ -38,5 +38,13 @@
         "description": "Sweet treats including ice creams, cakes, and pastries.",
         "image": "images/category/67826c0795588.png",
         "status": "active"
+    },
+    {
+        "name": "Traditional",
+        "category_id": null,
+        "restaurant_id": 1,
+        "description": "Authentic local dishes made with traditional recipes.",
+        "image": "images/category/traditional.png",
+        "status": "active"
     }
 ]

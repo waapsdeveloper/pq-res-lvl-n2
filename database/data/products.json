@@ -273,5 +273,49 @@
         "image": "images/product/6782742719d43.png",
         "variation_id": 5,
         "status": "active"
+    },
+    {
+        "category_id": 6,
+        "restaurant_id": 1,
+        "name": "Chicken Biryani",
+        "description": "Aromatic basmati rice with tender chicken pieces and spices.",
+        "price": 420.98,
+        "discount": 0.2,
+        "image": "images/product/briyani.png",
+        "variation_id": 6,
+        "status": "active"
+    },
+    {
+        "category_id": 6,
+        "restaurant_id": 1,
+        "name": "Paneer Tikka Masala",
+        "description": "Grilled paneer cubes in a rich and creamy tomato gravy.",
+        "price": 100,
+        "discount": 0.15,
+        "image": "images/product/paneer.png",
+        "variation_id": 6,
+        "status": "active"
+    },
+    {
+        "category_id": 6,
+        "restaurant_id": 1,
+        "name": "Butter Chicken",
+        "description": "Tender chicken pieces in a buttery tomato sauce.",
+        "price": 50,
+        "discount": 0.1,
+        "image": "images/product/butterchicken.png",
+        "variation_id": 6,
+        "status": "active"
+    },
+    {
+        "category_id": 6,
+        "restaurant_id": 1,
+        "name": "Qorma",
+        "description": "Aromatic meat curry with spices and yogurt.",
+        "price": 500,
+        "discount": 0.18,
+        "image": "images/product/qorma.png",
+        "variation_id": null,
+        "status": "active"
     }
 ]
