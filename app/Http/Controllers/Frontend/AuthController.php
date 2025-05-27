@@ -36,8 +36,9 @@ class AuthController extends Controller
 
         // Check if user (non-guest) already exists with this phone
         $existingUser = User::where('phone', $request->phone)->whereNotNull('email')->first();
+
         if ($existingUser) {
-            return ServiceResponse::error('Phone number or email already exists. Please log in.');
+            return ServiceResponse::error('Phone number or email already exists. Please log in.', ['existing_user' => $existingUser]);
         }
 
         // Check if a guest user exists with the same phone
