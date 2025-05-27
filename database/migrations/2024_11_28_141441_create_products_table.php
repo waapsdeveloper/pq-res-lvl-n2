@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('name'); // Product name
             $table->text('description')->nullable(); // Product description
             $table->decimal('price', 10, 2); // Product price (10 digits total, 2 decimal places)
+            $table->string('currency')->default('USD'); // Currency for the product price, defaulting to USD
             $table->decimal('discount', 10, 2)->default(0); // Product price (10 digits total, 2 decimal places)
             // $table->integer('variation_id')->nullable();
             $table->text('image')->nullable(); // Product image (nullable in case there's no image)

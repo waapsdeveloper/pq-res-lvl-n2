@@ -40,6 +40,9 @@ class ProductResource extends JsonResource
         $metaValues = $variations->pluck('meta_value')->toArray();
 
 
+        // need price, currency, and currency symbol udpate
+
+
         return [
             "id" => $obj->id,
             "name" => $obj->name,

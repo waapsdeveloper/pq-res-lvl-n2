@@ -7,6 +7,7 @@ use App\Models\BranchConfig;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Helpers\ServiceResponse;
+use App\Models\Restaurant;
 use Illuminate\Validation\Rule;
 
 class BranchConfigController extends Controller
@@ -219,31 +220,28 @@ class BranchConfigController extends Controller
         return ServiceResponse::success('Branch configuration deleted successfully', ['data' => null]);
     }
 
-    public function getConfigByBranchId(Request $request, $branchId)
+    public function getRestaurantConfigById(Request $request, $id)
     {
-        $config = BranchConfig::where('branch_id', $branchId)->first();
+        $restaurant = Restaurant::where('id', $id)->first();
+        if(!$restaurant) {
+            return ServiceResponse::error('Restaurant not found', [], 404);
+        }
 
+        $config = BranchConfig::where('branch_id', $id)->first();
         if (!$config) {
-
-            // if not found create a config
+            // If no config exists, create a default one
             $config = BranchConfig::create([
-                'branch_id' => $branchId,
-                'tax' => 0, // Default tax to 0 if not provided
-                'currency' => 'USD', // Default currency
-                'dial_code' => '+1', // Default dial code
+                'branch_id' => $id,
+                'currency' => 'USD', // Default currency, can be changed later
+                'tax' => 0, // Default tax, can be changed later
+                'dial_code' => '+1', // Default dial code, can be changed later
+                'currency_symbol' => '$', // Default currency symbol, can be changed later
             ]);
         }
 
-        // Fetch the related restaurant (branch) details
-        $config->load('branch');
-        $restaurant = $config->branch;
 
-        $responseData = [
-            'branch_config' => $config,
-            'restaurant' => $restaurant,
-        ];
 
-        return ServiceResponse::success('Branch configuration retrieved successfully', ['data' => $responseData]);
+        return ServiceResponse::success('Restaurant config retrieved successfully', ['data' => $config]);
 
     }
 }
