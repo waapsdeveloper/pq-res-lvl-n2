@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('branch_configs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('branch_id'); // Foreign key to the branch/restaurant table
+            $table->unsignedBigInteger('branch_id')->unique(); // Foreign key to the branch/restaurant table
             $table->decimal('tax', 5, 2)->default(0); // Tax percentage
             $table->string('currency')->nullable(); // Currency code (e.g., USD, EUR)
             $table->string('dial_code', 10)->nullable(); // Dial code for phone numbers

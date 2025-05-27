@@ -44,12 +44,19 @@ class HomeController extends Controller
             return ServiceResponse::error('Restaurant not found', [], 404);
         }
 
-        $config = BranchConfig::where('branch_id', $id)->firstOrCreate([
-            'branch_id' => $id,
-            'currency' => 'USD', // Default currency, can be changed later
-            'tax' => 0, // Default tax, can be changed later
-            'dial_code' => '+1', // Default dial code, can be changed later
-        ]);
+        $config = BranchConfig::where('branch_id', $id)->first();
+        if (!$config) {
+            // If no config exists, create a default one
+            $config = BranchConfig::create([
+                'branch_id' => $id,
+                'currency' => 'USD', // Default currency, can be changed later
+                'tax' => 0, // Default tax, can be changed later
+                'dial_code' => '+1', // Default dial code, can be changed later
+                'currency_symbol' => '$', // Default currency symbol, can be changed later
+            ]);
+        }
+
+
 
         return ServiceResponse::success('Restaurant config retrieved successfully', ['data' => $config]);
 

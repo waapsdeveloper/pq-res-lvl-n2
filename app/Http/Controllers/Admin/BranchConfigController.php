@@ -179,7 +179,7 @@ class BranchConfigController extends Controller
         // update currency symbol according to currency code
         $currency = Currency::where('currency_code', $config->currency)->first();
         if ($currency) {
-            $config->currency_symbol = $currency->symbol;
+            $config->currency_symbol = $currency->currency_symbol;
             $config->save();
         }
 

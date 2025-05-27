@@ -14,7 +14,13 @@ class CurrencySeeder extends Seeder
         foreach ($currencies as $currency) {
             Currency::updateOrCreate(
                 ['country' => $currency['country']],
-                $currency
+                [
+                    'currency_code' => $currency['currency_code'],
+                    'currency_name' => $currency['currency_name'],
+                    'dial_code' => $currency['dial_code'] ?? null,
+                    'flag' => $currency['flag'] ?? null,
+                    'currency_symbol' => $currency['currency_symbol'] ?? null,
+                ]
             );
         }
     }
