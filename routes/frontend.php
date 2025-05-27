@@ -42,8 +42,8 @@ Route::middleware('auth:api')->prefix('profile')->group(function () {
     Route::post('/add', [ProfileController::class, 'addProfile']);
     Route::post('/update', [ProfileController::class, 'updateProfile']);
 
-    
-    
+
+
 });
 
 
@@ -62,7 +62,7 @@ Route::prefix('table-booking')->middleware('auth:api')->group(function () {
     Route::get('check-table-availability/{id}', [TableBookingController::class, 'checkTableAvailability'])
         ->name('table-booking.check-availability');
 
-    
+
 
     Route::resource('/', TableBookingController::class)
         ->parameters(['' => 'id'])
@@ -94,6 +94,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/all-branches', 'allBranches');
     Route::get('/restautant-detail/{id}', 'restautantDetail');
     Route::get('/restaurant/active', 'showActiveRestaurant');
+    Route::get('/restaurant/get-restaurant-config-by-id/{id}', 'getRestaurantConfigById');
 });
 
 Route::middleware([ExtractRestaurantId::class])->group(function () {
@@ -126,5 +127,5 @@ Route::get('/countries', [CountryController::class, 'index']);
 Route::prefix('coupon')->group(function () {
 
     Route::get('/available-valid-coupon', [CouponController::class, 'availableValidCoupon'])->name('coupon.availableValidCoupon');
-    Route::post('/update-coupon-usage', [CouponController::class, 'updateCouponUsage'])->name('coupon.updateCouponUsage');    
+    Route::post('/update-coupon-usage', [CouponController::class, 'updateCouponUsage'])->name('coupon.updateCouponUsage');
 });

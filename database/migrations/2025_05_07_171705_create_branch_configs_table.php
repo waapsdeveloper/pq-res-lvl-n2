@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('branch_id'); // Foreign key to the branch/restaurant table
             $table->decimal('tax', 5, 2)->default(0); // Tax percentage
             $table->string('currency')->nullable(); // Currency code (e.g., USD, EUR)
+            $table->string('dial_code', 10)->nullable(); // Dial code for phone numbers
             $table->timestamps();
 
             // Foreign key constraint
