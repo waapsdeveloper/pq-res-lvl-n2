@@ -235,6 +235,7 @@ Route::prefix('branch-config')->group(function () {
         ->only(['show', 'update', 'store', 'destroy'])
         ->names('branchConfig');
     Route::get('/create', [BranchConfigController::class, 'create'])->name('branchConfig.create');
+    Route::get('/get-config-by-branch-id/{branchId}', [BranchConfigController::class, 'getConfigByBranchId'])->name('branchConfig.get-config-by-branch-id');
 });
 
 Route::prefix('currency')->group(function () {

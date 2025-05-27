@@ -191,4 +191,32 @@ class BranchConfigController extends Controller
 
         return ServiceResponse::success('Branch configuration deleted successfully', ['data' => null]);
     }
+
+    public function getConfigByBranchId(Request $request, $branchId)
+    {
+        $config = BranchConfig::where('branch_id', $branchId)->first();
+
+        if (!$config) {
+
+            // if not found create a config
+            $config = BranchConfig::create([
+                'branch_id' => $branchId,
+                'tax' => 0, // Default tax to 0 if not provided
+                'currency' => 'USD', // Default currency
+                'dial_code' => '+1', // Default dial code
+            ]);
+        }
+
+        // Fetch the related restaurant (branch) details
+        $config->load('branch');
+        $restaurant = $config->branch;
+
+        $responseData = [
+            'branch_config' => $config,
+            'restaurant' => $restaurant,
+        ];
+
+        return ServiceResponse::success('Branch configuration retrieved successfully', ['data' => $responseData]);
+
+    }
 }

@@ -17,6 +17,7 @@ use App\Models\Restaurant;
 use App\Models\RestaurantTimings;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Admin\RestautrantSetting\StoreRestaurantSetting;
+use App\Models\BranchConfig;
 use App\Models\RestaurantSetting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -117,6 +118,14 @@ class RestaurantController extends Controller
                 ]);
             }
         }
+
+        // create branch config as well
+        $branchConfig = BranchConfig::create([
+            'branch_id' => $restaurant->id,
+            'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
+            'currency' => $data['currency'] ?? 'USD', // Default currency to USD if not provided
+            'dial_code' => $data['dial_code'] ?? '+1', // Default dial code to +1 if not provided
+        ]);
 
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
     }
