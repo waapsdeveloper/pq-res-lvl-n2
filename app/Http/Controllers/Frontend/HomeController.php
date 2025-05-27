@@ -12,6 +12,7 @@ use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Http\Resources\Frontend\PopularProductsResource;
+use App\Models\BranchConfig;
 use App\Models\Rtable;
 
 class HomeController extends Controller
@@ -34,6 +35,24 @@ class HomeController extends Controller
     {
         $activeRestaurant = Helper::getActiveRestaurantId();
         return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurant]);
+    }
+
+    public function getRestaurantConfigById(Request $request, $id)
+    {
+        $restaurant = Restaurant::where('id', $id)->first();
+        if(!$restaurant) {
+            return ServiceResponse::error('Restaurant not found', [], 404);
+        }
+
+        $config = BranchConfig::where('restaurant_id', $id)->firstOrCreate([
+            'restaurant_id' => $id,
+            'currency' => 'USD', // Default currency, can be changed later
+            'tax' => 0, // Default tax, can be changed later
+            'dial_code' => '+1', // Default dial code, can be changed later
+        ]);
+
+        return ServiceResponse::success('Restaurant config retrieved successfully', ['data' => $config]);
+
     }
 
     public function aboutUs(Request $request)
