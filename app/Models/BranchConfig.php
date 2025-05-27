@@ -9,7 +9,7 @@ class BranchConfig extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['branch_id', 'tax', 'currency'];
+    protected $fillable = ['branch_id', 'tax', 'currency', 'dial_code'];
 
     public function branch()
     {

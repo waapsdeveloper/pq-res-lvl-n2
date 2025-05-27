@@ -94,7 +94,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/all-branches', 'allBranches');
     Route::get('/restautant-detail/{id}', 'restautantDetail');
     Route::get('/restaurant/active', 'showActiveRestaurant');
-    Route::get('/get-restaurant-config-by-id/{id}', 'getRestaurantConfigById');
+    Route::get('/restaurant/get-restaurant-config-by-id/{id}', 'getRestaurantConfigById');
 });
 
 Route::middleware([ExtractRestaurantId::class])->group(function () {
