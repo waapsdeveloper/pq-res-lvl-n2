@@ -19,30 +19,37 @@ class RestaurantSeeder extends Seeder
 
         // Insert restaurants into the database
         foreach ($restaurants as $data) {
-            $restaurant = Restaurant::create([
-                'name' => $data['name'],
-                'address' => $data['address'],
-                'phone' => $data['phone'],
-                'email' => $data['email'],
-                'website' => $data['website'],
-                'description' => $data['description'],
-                'rating' => $data['rating'],
-                'image' => $data['image'],
-                'favicon' => $data['favicon'],
-                'logo' => $data['logo'],
-                'status' => $data['status'],
-                'is_active' => $data['is_active'],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            $restaurant = Restaurant::updateOrCreate(
+                ['name' => $data['name']],
+                [
+                    'address' => $data['address'] ?? null,
+                    'phone' => $data['phone'] ?? null,
+                    'email' => $data['email'] ?? null,
+                    'website' => $data['website'] ?? null,
+                    'description' => $data['description'] ?? null,
+                    'rating' => $data['rating'] ?? null,
+                    'image' => $data['image'] ?? null,
+                    'favicon' => $data['favicon'] ?? null,
+                    'logo' => $data['logo'] ?? null,
+                    'status' => $data['status'] ?? 1,
+                    'is_active' => $data['is_active'] ?? 1,
+                    'updated_at' => now(),
+                ]
+            );
 
             // Create branch config for the restaurant
-            BranchConfig::create([
-                'branch_id' => $restaurant->id,
-                'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
-                'currency' => $data['currency'] ?? 'USD', // Default currency to USD if not provided
-                'dial_code' => $data['dial_code'] ?? '+1', // Default dial code to +1 if not provided
-            ]);
+            BranchConfig::updateOrCreate(
+                [
+                    'branch_id' => $restaurant->id,
+                ],
+                [
+
+                    'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
+                    'currency' => $data['currency'] ?? 'USD', // Default currency to USD if not provided
+                    'dial_code' => $data['dial_code'] ?? '+1', // Default dial code to +1 if not provided
+                    'currency_symbol' => $data['currency_symbol'] ?? '$', // Default currency symbol to $ if not provided
+                ]
+            );
         }
 
         $this->command->info('Restaurants imported successfully from JSON file.');

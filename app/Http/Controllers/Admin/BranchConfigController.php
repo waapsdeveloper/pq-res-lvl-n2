@@ -176,6 +176,17 @@ class BranchConfigController extends Controller
         $config->load('branch');
         $restaurant = $config->branch;
 
+        // update currency symbol according to currency code
+        $currency = Currency::where('currency_code', $config->currency)->first();
+        if ($currency) {
+            $config->currency_symbol = $currency->symbol;
+            $config->save();
+        }
+
+
+
+
+
         $responseData = [
             'branch_config' => $config,
             'restaurant' => $restaurant,
