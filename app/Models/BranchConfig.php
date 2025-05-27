@@ -9,10 +9,13 @@ class BranchConfig extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['branch_id', 'tax', 'currency', 'dial_code'];
+    protected $fillable = ['branch_id', 'tax', 'currency', 'dial_code', 'currency_symbol'];
+
 
     public function branch()
     {
         return $this->belongsTo(Restaurant::class, 'branch_id');
     }
+
+
 }

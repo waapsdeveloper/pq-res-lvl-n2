@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('tax', 5, 2)->default(0); // Tax percentage
             $table->string('currency')->nullable(); // Currency code (e.g., USD, EUR)
             $table->string('dial_code', 10)->nullable(); // Dial code for phone numbers
+            $table->string('currency_symbol', 10)->nullable(); // Currency symbol (e.g., $, €, £)
             $table->timestamps();
 
             // Foreign key constraint
