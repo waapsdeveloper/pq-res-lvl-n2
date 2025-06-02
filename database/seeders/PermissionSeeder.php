@@ -29,23 +29,23 @@ class PermissionSeeder extends Seeder
         ];
 
         // Usage:
-        foreach ($roles as $role) {
-            foreach ($permissions as $perm) {
-                foreach ($perm['operations'] as $operation) {
+        // foreach ($roles as $role) {
+        //     foreach ($permissions as $perm) {
+        //         foreach ($perm['operations'] as $operation) {
                     
-                    Permission::firstOrCreate([
-                        'role_id' => $role->id,
-                        'slug'    => "{$perm['entity']}.{$operation}",
-                    ], [
-                        'level'   => 2,
-                    ]);
+        //             Permission::firstOrCreate([
+        //                 'role_id' => $role->id,
+        //                 'slug'    => "{$perm['entity']}.{$operation}",
+        //             ], [
+        //                 'level'   => 2,
+        //             ]);
 
 
 
 
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
 }
