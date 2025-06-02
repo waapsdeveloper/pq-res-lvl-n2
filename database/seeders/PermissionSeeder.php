@@ -24,8 +24,14 @@ class PermissionSeeder extends Seeder
             ['entity' => 'table', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'table_booking', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'expense_category', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'expense', 'operations' => ['add', 'update', 'delete', 'list', 'filter', 'status', 'payment_status_update']],
             ['entity' => 'coupon', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'message', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
+
+            // New permissions
+            ['entity' => 'order', 'operations' => ['add', 'update', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu']],
+            ['entity' => 'branch', 'operations' => ['add', 'update', 'delete', 'list', 'filter', 'set_default', 'config_button']],
+            
         ];
 
         // Usage:
