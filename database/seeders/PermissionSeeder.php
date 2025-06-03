@@ -17,18 +17,18 @@ class PermissionSeeder extends Seeder
         $roles = \App\Models\Role::pluck('id', 'slug')->toArray();
 
         $permissions = [
-            ['entity' => 'user', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'product', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'category', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'variation', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'table', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'table_booking', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'expense_category', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'expense', 'operations' => ['add', 'update', 'delete', 'list', 'filter', 'status', 'payment_status_update']],
-            ['entity' => 'coupon', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'message', 'operations' => ['add', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'order', 'operations' => ['add', 'update', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu']],
-            ['entity' => 'branch', 'operations' => ['add', 'update', 'delete', 'list', 'filter', 'set_default', 'config_button']],
+            ['entity' => 'user', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'product', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'category', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'variation', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'table', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'table_booking', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'expense_category', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'expense', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter', 'status', 'payment_status_update']],
+            ['entity' => 'coupon', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'message', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
+            ['entity' => 'order', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu']],
+            ['entity' => 'branch', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter', 'set_default', 'config_button']],
         ];
 
         // Map which roles get which entities' permissions
