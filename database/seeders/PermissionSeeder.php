@@ -17,6 +17,7 @@ class PermissionSeeder extends Seeder
         $roles = \App\Models\Role::pluck('id', 'slug')->toArray();
 
         $permissions = [
+            ['entity' => 'role', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'user', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'product', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'category', 'operations' => ['add', 'edit', 'update', 'delete', 'list', 'filter']],
