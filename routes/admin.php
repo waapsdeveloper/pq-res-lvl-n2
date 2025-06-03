@@ -104,6 +104,7 @@ Route::prefix('user')->group(function () {
 });
 
 Route::get('/auth-user', [UserController::class, 'getAuthUser'])->middleware('auth:api');
+Route::get('/auth-user/permissions', [UserController::class, 'getAuthUserPermissions'])->middleware('auth:api');
 
 Route::prefix('category')->group(function () {
     Route::get('/bulk-delete', [CategoryController::class, 'bulkDelete'])->name('category-bulkDelete');

@@ -268,7 +268,6 @@ class UserController extends Controller
 
     public function getAuthUser(Request $request)
     {
-
         $auth = Auth::user();
         $user = User::where('email', $auth->email)->first();
 
@@ -277,5 +276,26 @@ class UserController extends Controller
         }
 
         return ServiceResponse::success("User fetch successfully.", ['user' => $user]);
+    }
+
+    public function getAuthUserPermissions(){
+        $auth = Auth::user();
+        $user = User::where('email', $auth->email)->first();
+
+        if (!$user) {
+            return ServiceResponse::error("User not found", 404);
+        }
+
+        // Get the role of the user
+        $role = Role::find($user->role_id);
+
+        if (!$role) {
+            return ServiceResponse::error("Role not found for the user", 404);
+        }
+
+        // Get permissions associated with the role
+        $permissions = $role->permissions;
+
+        return ServiceResponse::success("User permissions fetched successfully.", ['permissions' => $permissions]);
     }
 }

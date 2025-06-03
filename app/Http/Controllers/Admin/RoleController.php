@@ -60,8 +60,22 @@ class RoleController extends Controller
         $role = Role::create([
             'name' => $data['name'],
             'slug' => $data['slug'],
-
         ]);
+
+        // fill permissions 
+        $permissions = $request->input('permissions', []);
+        foreach ($permissions as $entity => $ops) {
+            foreach ($ops as $operation => $allowed) {
+                if ($allowed) {
+                    \App\Models\Permission::firstOrCreate([
+                        'role_id' => $role->id,
+                        'slug'    => "{$entity}.{$operation}",
+                    ], [
+                        'level'   => 2,
+                    ]);
+                }
+            }
+        }
 
         return ServiceResponse::success('Roles store successful', ['role' => $role]);
     }
@@ -79,6 +93,9 @@ class RoleController extends Controller
         if (!$role) {
             return ServiceResponse::error("Role $id not found", 404);
         }
+
+        $permissions = \App\Models\Permission::where('role_id', $role->id)->get();
+        $role->permissions = $permissions;
 
         // Return a success response with the restaurant data
         return ServiceResponse::success("Role details retrieved successfully", ['role' => $role]);
@@ -99,7 +116,7 @@ class RoleController extends Controller
     {
         $data = $request->validated();
 
-        // Find the category by ID
+        // Find the role by ID
         $role = Role::find($id);
 
         // If role does not exist
@@ -112,6 +129,23 @@ class RoleController extends Controller
             'name' => $data['name'],
             'slug' => $data['slug'],
         ]);
+
+        // Remove old permissions
+        \App\Models\Permission::where('role_id', $role->id)->delete();
+
+        // Save new permissions
+        $permissions = $request->input('permissions', []);
+        foreach ($permissions as $entity => $ops) {
+            foreach ($ops as $operation) {
+                \App\Models\Permission::firstOrCreate([
+                    'role_id' => $role->id,
+                    'slug'    => "{$entity}.{$operation}",
+                ], [
+                    'level'   => 2,
+                ]);
+                
+            }
+        }
 
         return ServiceResponse::success('role update successful', ['role' => $role]);
     }

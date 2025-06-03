@@ -27,6 +27,10 @@ class Role extends Model
     // ];
 
     // Cast attributes to a specific type
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class, 'role_id', 'id');
+    }
 
 
 
