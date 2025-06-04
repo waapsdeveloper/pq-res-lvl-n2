@@ -66,6 +66,7 @@ class CreateRandomOrderJobClass
                 'status' => $randomStatus,
                 'created_at' => $randomDate,
                 'updated_at' => $randomDate,
+                'dial_code' => '+92',
             ]);
             logger()->info('New user created', ['user_id' => $customer->id]);
         } else {

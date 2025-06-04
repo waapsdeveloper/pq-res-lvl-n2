@@ -35,6 +35,7 @@ class UsersTableSeeder extends Seeder
                 'status' => $user['status'],
                 // 'image' => Helper::getBase64ImageUrl($user['image'], 'users'),
                 'image' => $user['image'],
+                'dial_code' => $user['dial_code'] ,
                 'remember_token' => str()->random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
