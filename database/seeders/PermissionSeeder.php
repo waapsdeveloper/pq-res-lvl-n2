@@ -37,8 +37,8 @@ class PermissionSeeder extends Seeder
             'super-admin' => ['*'], // All permissions
             'admin'       => ['user', 'product', 'category', 'variation', 'table', 'table_booking', 'expense_category', 'expense', 'coupon', 'message', 'order', 'branch'],
             'manager'     => ['product', 'category', 'variation', 'table', 'table_booking', 'expense_category', 'expense', 'coupon', 'order', 'branch'],
-            'chef'        => ['product', 'order'],
-            'waiter'      => ['order', 'table_booking'],
+            'chef'        => ['product', 'order','category', 'variation'],
+            'waiter'      => ['order', 'table_booking','table'],
             'cashier'     => ['order', 'expense', 'coupon'],
             'delivery-boy'=> ['order'],
             'receptionist'=> ['table_booking', 'order'],
