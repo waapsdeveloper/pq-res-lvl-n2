@@ -23,11 +23,7 @@ class AuthController extends Controller
 
     public function loginViaEmail(LoginAuthRequest $request)
     {
-
-        // $data = $request->all();
-
         $data = $request->validated();
-
 
         // Retrieve the user by email
         $user = User::where('email', $data['email'])->first();
@@ -37,14 +33,20 @@ class AuthController extends Controller
             return ServiceResponse::error('Invalid Email');
         }
 
+        // Get the user's role (assuming you have a roles table and a Role model)
+        $role = $user->role ?? \App\Models\Role::find($user->role_id);
+
+        // Block login for 'cleaner' or 'customer'
+        if ($role && in_array($role->slug, ['cleaner', 'customer'])) {
+            return ServiceResponse::error('You are not allowed to login here.');
+        }
+
         // Check if the password matches
-        if (!Hash::check($data['password'], $user->password)) {
+        if (!\Illuminate\Support\Facades\Hash::check($data['password'], $user->password)) {
             return ServiceResponse::error('Invalid credentials');
         }
 
-
         $token = $user->createToken('AuthToken')->accessToken;
-
 
         return ServiceResponse::success('Login successful', ['user' => $user, 'token' => $token]);
     }
