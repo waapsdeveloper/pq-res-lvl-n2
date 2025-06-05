@@ -36,7 +36,7 @@ class PermissionSeeder extends Seeder
         $rolePermissions = [
             'super-admin' => ['*'], // All permissions
             'admin'       => ['user', 'product', 'category', 'variation', 'table', 'table_booking', 'expense_category', 'expense', 'coupon', 'message', 'order', 'branch'],
-            'manager'     => ['product', 'category', 'variation', 'table', 'table_booking', 'expense_category', 'expense', 'coupon', 'order', 'branch'],
+            'manager'     => ['user','product', 'category', 'variation', 'table', 'table_booking', 'expense_category', 'expense', 'coupon', 'order', 'branch'],
             'chef'        => ['product', 'order','category', 'variation'],
             'waiter'      => ['order', 'table_booking','table'],
             'cashier'     => ['order', 'expense', 'coupon'],
