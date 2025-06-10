@@ -57,16 +57,17 @@ class CreateRandomOrderJobClass
 
         if ($createNewUser) {
             $customer = User::create([
-                'name' => 'walk-in-customer',
-                'phone' => "+968-" . $cityCode . $phone,
-                'email' => $phone . '@domain.com',
-                'role_id' => 0,
-                'restaurant_id' => $restaurant_id,
-                'password' => Hash::make('admin123$'),
-                'status' => $randomStatus,
-                'created_at' => $randomDate,
-                'updated_at' => $randomDate,
-                'dial_code' => '+92',
+                "name" => "walk-in-customer",
+                "email" => $phone . '@domain.com',
+                "phone" => "+968-" . $cityCode . $phone,
+                "password" => Hash::make('admin123$'),
+                "role_id" => 10, // Use the appropriate role_id for customer
+                "status" => $randomStatus,
+                "restaurant_id" => $restaurant_id,
+               "image" => "images/user/user-1.png",
+                "dial_code" => "+1",
+                "created_at" => $randomDate,
+                "updated_at" => $randomDate
             ]);
             logger()->info('New user created', ['user_id' => $customer->id]);
         } else {

@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
         // Read and decode JSON
         $users = json_decode(File::get($jsonFilePath), true);
 
-        // Insert users into the database
+        // Insert users into the databaseor
         foreach ($users as $user) {
             DB::table('users')->insert([
                 'name' => $user['name'],
