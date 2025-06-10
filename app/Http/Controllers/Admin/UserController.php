@@ -32,9 +32,20 @@ class UserController extends Controller
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
-        // Start the query and exclude Super Admin from the results
-        $query = User::query()->where('restaurant_id', $resID)->with('role', 'userDetail')->orderBy('id', 'desc');
-        $query->where('role_id', '!=', 1);  // Exclude Super Admin
+        // Get the customer role id
+        $customerRole = Role::where('slug', 'customer')->first();
+        $customerRoleId = $customerRole ? $customerRole->id : null;
+
+        // Start the query and exclude Super Admin and Customer from the results
+        $query = User::query()
+            ->where('restaurant_id', $resID)
+            ->with('role', 'userDetail')
+            ->orderBy('id', 'desc')
+            ->where('role_id', '!=', 1); // Exclude Super Admin
+
+        if ($customerRoleId) {
+            $query->where('role_id', '!=', $customerRoleId); // Exclude Customer
+        }
 
         // Apply search if provided
         if ($search) {

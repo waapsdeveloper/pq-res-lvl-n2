@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\DB;
+
 use App\Helpers\Identifier;
 use App\Helpers\ServiceResponse;
 use App\Http\Resources\Admin\OrderResource;
@@ -14,7 +16,6 @@ use App\Models\User;
 use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-
 class CreateRandomOrderJobClass
 {
     public function __construct() {}
@@ -61,15 +62,25 @@ class CreateRandomOrderJobClass
                 "email" => $phone . '@domain.com',
                 "phone" => "+968-" . $cityCode . $phone,
                 "password" => Hash::make('admin123$'),
-                "role_id" => 10, // Use the appropriate role_id for customer
+                "role_id" => 10, // Use the correct role_id for customer
                 "status" => $randomStatus,
                 "restaurant_id" => $restaurant_id,
-               "image" => "images/user/user-1.png",
+                "image" => "images/user/user-1.png",
                 "dial_code" => "+1",
                 "created_at" => $randomDate,
                 "updated_at" => $randomDate
             ]);
-            logger()->info('New user created', ['user_id' => $customer->id]);
+            // Insert address into user_addresses table
+            DB::table('user_addresses')->insert([
+                'user_id' => $customer->id,
+                'address' => "123 Main St",
+                'city' => "Canada",
+                'state' => "brisbane",
+                'country' => "Australia",
+                'created_at' => $randomDate,
+                'updated_at' => $randomDate,
+            ]);
+            logger()->info('New user created and address inserted', ['user_id' => $customer->id]);
         } else {
             $customer = User::inRandomOrder()->first();
             logger()->info('Random user selected', ['user_id' => $customer->id ?? 'N/A']);
