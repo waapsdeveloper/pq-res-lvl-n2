@@ -62,18 +62,18 @@ class RoleController extends Controller
             'slug' => $data['slug'],
         ]);
 
-        // fill permissions 
+        // fill permissions
+        // Save new permissions
         $permissions = $request->input('permissions', []);
         foreach ($permissions as $entity => $ops) {
-            foreach ($ops as $operation => $allowed) {
-                if ($allowed) {
-                    \App\Models\Permission::firstOrCreate([
-                        'role_id' => $role->id,
-                        'slug'    => "{$entity}.{$operation}",
-                    ], [
-                        'level'   => 2,
-                    ]);
-                }
+            foreach ($ops as $operation) {
+                \App\Models\Permission::firstOrCreate([
+                    'role_id' => $role->id,
+                    'slug'    => "{$entity}.{$operation}",
+                ], [
+                    'level'   => 2,
+                ]);
+
             }
         }
 
@@ -143,7 +143,7 @@ class RoleController extends Controller
                 ], [
                     'level'   => 2,
                 ]);
-                
+
             }
         }
 
