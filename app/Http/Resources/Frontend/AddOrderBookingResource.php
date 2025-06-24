@@ -35,6 +35,8 @@ class AddOrderBookingResource extends JsonResource
             'coupon_code' => $obj->coupon_code,
             'discount_value' => $obj->discount_value,
             'final_total' => $obj->final_total,
+            'tax_percentage' => $obj->tax_percentage,
+            'tax_amount' => $obj->tax_amount,
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
                     'name' => $orderProduct->product->name,
