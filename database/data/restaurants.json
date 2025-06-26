@@ -12,7 +12,6 @@
         "image": "images/restaurant/REST01.png",
         "favicon": "images/restaurant/REST02.png",
         "logo": "images/restaurant/REST03.png"
-        
     },
     {
         "name": "The New Local CraftFood 2",
@@ -27,5 +26,47 @@
         "image": "images/restaurant/REST04.png",
         "favicon": "images/restaurant/REST05.png",
         "logo": "images/restaurant/REST06.png"
+    },
+    {
+        "name": "Urban Spice House",
+        "address": "789 Gourmet Ave, Los Angeles, CA",
+        "phone": "555-123-4567",
+        "email": "info@urbanspicehouse.com",
+        "website": "https://www.urbanspicehouse.com",
+        "description": "Modern fusion cuisine with a spicy twist.",
+        "rating": 4.7,
+        "status": "active",
+        "is_active": 0,
+        "image": "images/restaurant/REST01.png",
+        "favicon": "images/restaurant/REST01.png",
+        "logo": "images/restaurant/REST01.png"
+    },
+    {
+        "name": "Green Garden Bistro",
+        "address": "321 Vegan Blvd, Austin, TX",
+        "phone": "888-222-3333",
+        "email": "hello@greengardenbistro.com",
+        "website": "https://www.greengardenbistro.com",
+        "description": "Plant-based delights and organic meals.",
+        "rating": 4.9,
+        "status": "active",
+        "is_active": 0,
+        "image": "images/restaurant/REST01.png",
+        "favicon": "images/restaurant/REST01.png",
+        "logo": "images/restaurant/REST01.png"
+    },
+    {
+        "name": "Seaside Grill & Bar",
+        "address": "654 Ocean Drive, Miami, FL",
+        "phone": "777-888-9999",
+        "email": "contact@seasidegrillbar.com",
+        "website": "https://www.seasidegrillbar.com",
+        "description": "Fresh seafood and tropical cocktails by the beach.",
+        "rating": 4.6,
+        "status": "active",
+        "is_active": 0,
+        "image": "images/restaurant/REST01.png",
+        "favicon": "images/restaurant/REST01.png",
+        "logo": "images/restaurant/REST01.png"
     }
 ]

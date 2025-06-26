@@ -317,5 +317,93 @@
         "image": "images/product/qorma.png",
         "variation_id": null,
         "status": "active"
+    },
+    {
+        "category_id": 7,
+        "restaurant_id": 3,
+        "name": "Spicy Edamame",
+        "description": "Steamed edamame tossed in spicy seasoning.",
+        "price": 4.99,
+        "discount": 0.1,
+        "image": "images/product/spicy_edamame.jpg",
+        "variation_id": 5,
+        "status": "active"
+    },
+    {
+        "category_id": 7,
+        "restaurant_id": 3,
+        "name": "Fusion Spring Rolls",
+        "description": "Crispy rolls with a blend of Asian and Mediterranean fillings.",
+        "price": 5.99,
+        "discount": 0.15,
+        "image": "images/product/fusion_spring_rolls.jpg",
+        "variation_id": 5,
+        "status": "active"
+    },
+    {
+        "category_id": 8,
+        "restaurant_id": 4,
+        "name": "Vegan Buddha Bowl",
+        "description": "A nourishing bowl of grains, greens, and plant proteins.",
+        "price": 8.99,
+        "discount": 0.2,
+        "image": "images/product/vegan_buddha_bowl.jpg",
+        "variation_id": 6,
+        "status": "active"
+    },
+    {
+        "category_id": 8,
+        "restaurant_id": 4,
+        "name": "Quinoa Avocado Salad",
+        "description": "Fresh salad with quinoa, avocado, and citrus dressing.",
+        "price": 7.49,
+        "discount": 0.1,
+        "image": "images/product/quinoa_avocado_salad.jpg",
+        "variation_id": 6,
+        "status": "active"
+    },
+    {
+        "category_id": 9,
+        "restaurant_id": 5,
+        "name": "Grilled Salmon Skewers",
+        "description": "Tender salmon skewers with lemon and herbs.",
+        "price": 12.99,
+        "discount": 0.15,
+        "image": "images/product/grilled_salmon_skewers.jpg",
+        "variation_id": 7,
+        "status": "active"
+    },
+    {
+        "category_id": 9,
+        "restaurant_id": 5,
+        "name": "Shrimp Tacos",
+        "description": "Soft tacos filled with spicy shrimp and slaw.",
+        "price": 10.99,
+        "discount": 0.12,
+        "image": "images/product/shrimp_tacos.jpg",
+        "variation_id": 7,
+        "status": "active"
+    },
+    {
+        "category_id": 10,
+        "restaurant_id": 5,
+        "name": "Pineapple Mojito",
+        "description": "Refreshing mojito with pineapple and mint.",
+        "price": 5.99,
+        "discount": 0.1,
+        "image": "images/product/pineapple_mojito.jpg",
+        "variation_id": 8,
+        "status": "active"
+    },
+    {
+        "category_id": 10,
+        "restaurant_id": 5,
+        "name": "Coconut Cooler",
+        "description": "Chilled coconut drink with a tropical twist.",
+        "price": 4.49,
+        "discount": 0.08,
+        "image": "images/product/coconut_cooler.jpg",
+        "variation_id": 8,
+        "status": "active"
     }
 ]

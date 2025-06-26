@@ -46,5 +46,37 @@
         "description": "Authentic local dishes made with traditional recipes.",
         "image": "images/category/traditional.png",
         "status": "active"
+    },
+    {
+        "name": "Fusion Starters",
+        "category_id": null,
+        "restaurant_id": 3,
+        "description": "Appetizers with a fusion of global flavors.",
+        "image": "images/category/fusion_starters.png",
+        "status": "active"
+    },
+    {
+        "name": "Vegan Specials",
+        "category_id": null,
+        "restaurant_id": 4,
+        "description": "Exclusive vegan dishes and salads.",
+        "image": "images/category/vegan_specials.jpg",
+        "status": "active"
+    },
+    {
+        "name": "Seafood Delights",
+        "category_id": null,
+        "restaurant_id": 5,
+        "description": "Fresh seafood and ocean-inspired dishes.",
+        "image": "images/category/seafood_delights.jpg",
+        "status": "active"
+    },
+    {
+        "name": "Tropical Drinks",
+        "category_id": null,
+        "restaurant_id": 5,
+        "description": "Exotic cocktails and refreshing beverages.",
+        "image": "images/category/tropical_drinks.jpg",
+        "status": "active"
     }
 ]
