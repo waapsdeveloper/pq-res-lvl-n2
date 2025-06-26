@@ -66,6 +66,15 @@ class ExpenseController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'amount' => 'required|numeric',
@@ -103,6 +112,15 @@ class ExpenseController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $expense = Expense::find($id);
         if (!$expense) {
             return ServiceResponse::error('Expense not found', 404);

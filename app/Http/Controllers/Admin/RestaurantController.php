@@ -83,6 +83,15 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurant $request)
     {
+        if ($request->has('logo')) {
+            $image = $request->input('logo');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $data = $request->validated();
 
         // return response()->json($data);
@@ -121,7 +130,7 @@ class RestaurantController extends Controller
         }
 
         // create branch config as well
-        $branchConfig = BranchConfig::create([
+        $branchConfig = BranchConfig::firstOrCreate([
             'branch_id' => $restaurant->id,
             'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
             'currency' => $data['currency'] ?? 'USD', // Default currency to USD if not provided
@@ -163,6 +172,15 @@ class RestaurantController extends Controller
      */
     public function update(UpdateRestaurant $request, string $id)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $data = $request->validated();
 
         $restaurant = Restaurant::find($id);

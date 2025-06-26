@@ -27,7 +27,7 @@ class ProductController extends Controller
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
-        $active_restaurant = Helper::getActiveRestaurantId(); 
+        $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
 
         $query = Product::query()
@@ -97,6 +97,15 @@ class ProductController extends Controller
      */
     public function store(StoreProduct $request)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         // Validate and get the data
         $data = $request->validated();
 
@@ -170,6 +179,15 @@ class ProductController extends Controller
      */
     public function update(UpdateProduct $request, string $id)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $data = $request->validated();
 
         $product = Product::find($id);

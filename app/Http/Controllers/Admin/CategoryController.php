@@ -75,6 +75,15 @@ class CategoryController extends Controller
      */
     public function store(StoreCategory $request)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         //
         // $data = $request->all();
         $data = $request->validated();
@@ -133,6 +142,15 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategory $request, string $id)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         // dd($request->validated());
         $data = $request->validated();
 
