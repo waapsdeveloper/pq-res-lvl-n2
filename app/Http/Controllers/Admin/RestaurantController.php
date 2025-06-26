@@ -36,7 +36,8 @@ class RestaurantController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Restaurant::query()->with('timings', 'settings')->orderBy('id', 'desc');
+        // Order by is_active DESC first, then by id DESC
+        $query = Restaurant::query()->with('timings', 'settings')->orderByDesc('is_active')->orderByDesc('id');
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
