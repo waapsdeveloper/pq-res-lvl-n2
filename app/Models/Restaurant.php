@@ -55,6 +55,10 @@ class Restaurant extends Model
     {
         return $this->hasOne(RestaurantSetting::class);
     }
+    public function meta()
+    {
+        return $this->hasMany(RestaurantMeta::class);
+    }
     public function rTables()
     {
         return $this->hasMany(Rtable::class);

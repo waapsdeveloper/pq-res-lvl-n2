@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Admin\RestautrantSetting\StoreRestaurantSetting;
 use App\Models\BranchConfig;
 use App\Models\RestaurantSetting;
+use App\Models\RestaurantMeta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
@@ -37,7 +38,7 @@ class RestaurantController extends Controller
         $filters = $request->input('filters', null);
 
         // Order by is_active DESC first, then by id DESC
-        $query = Restaurant::query()->with('timings', 'settings')->orderByDesc('is_active')->orderByDesc('id');
+        $query = Restaurant::query()->with('timings', 'settings', 'meta')->orderByDesc('is_active')->orderByDesc('id');
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
@@ -137,6 +138,17 @@ class RestaurantController extends Controller
             'dial_code' => $data['dial_code'] ?? '+1', // Default dial code to +1 if not provided
         ]);
 
+        // Store meta data if provided
+        if (isset($data['meta']) && is_array($data['meta'])) {
+            foreach ($data['meta'] as $key => $value) {
+                RestaurantMeta::create([
+                    'restaurant_id' => $restaurant->id,
+                    'meta_key' => $key,
+                    'meta_value' => $value,
+                ]);
+            }
+        }
+
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
     }
 
@@ -148,7 +160,7 @@ class RestaurantController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = Restaurant::with('timings', 'settings')->find($id);
+        $restaurant = Restaurant::with('timings', 'settings', 'meta')->find($id);
         // $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
@@ -236,6 +248,21 @@ class RestaurantController extends Controller
             }
         }
 
+        // Update meta data if provided
+        if (isset($data['meta']) && is_array($data['meta'])) {
+            foreach ($data['meta'] as $key => $value) {
+                RestaurantMeta::updateOrCreate(
+                    [
+                        'restaurant_id' => $restaurant->id,
+                        'meta_key' => $key,
+                    ],
+                    [
+                        'meta_value' => $value,
+                    ]
+                );
+            }
+        }
+
         return ServiceResponse::success('Update successful', ['restaurant' => $restaurant]);
     }
 
@@ -248,6 +275,9 @@ class RestaurantController extends Controller
         // Attempt to find the restaurant by ID
         $restaurant = Restaurant::find($id);
         RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
+
+        // Delete meta data
+        RestaurantMeta::where('restaurant_id', $restaurant->id)->delete();
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
@@ -358,6 +388,9 @@ class RestaurantController extends Controller
 
         RestaurantTiming::whereIn('restaurant_id', $ids)->delete();
 
+        // Delete meta data
+        RestaurantMeta::whereIn('restaurant_id', $ids)->delete();
+
         Restaurant::whereIn('id', $ids)->delete();
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
@@ -404,5 +437,91 @@ class RestaurantController extends Controller
         return ServiceResponse::success('Restaurant activated successfully', [
             'restaurant' => $restaurant
         ]);
+    }
+
+    /**
+     * Store or update restaurant meta data
+     */
+    public function storeMeta(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'meta_key' => 'required|string|max:255',
+            'meta_value' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $meta = RestaurantMeta::updateOrCreate(
+            [
+                'restaurant_id' => $restaurant->id,
+                'meta_key' => $request->meta_key,
+            ],
+            [
+                'meta_value' => $request->meta_value,
+            ]
+        );
+
+        return ServiceResponse::success('Meta data stored successfully', ['meta' => $meta]);
+    }
+
+    /**
+     * Get restaurant meta data by key
+     */
+    public function getMeta(Request $request, $id)
+    {
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $metaKey = $request->input('meta_key');
+        
+        if ($metaKey) {
+            $meta = RestaurantMeta::where('restaurant_id', $restaurant->id)
+                                 ->where('meta_key', $metaKey)
+                                 ->first();
+            
+            return ServiceResponse::success('Meta data retrieved successfully', ['meta' => $meta]);
+        }
+
+        $meta = RestaurantMeta::where('restaurant_id', $restaurant->id)->get();
+        
+        return ServiceResponse::success('All meta data retrieved successfully', ['meta' => $meta]);
+    }
+
+    /**
+     * Delete restaurant meta data
+     */
+    public function deleteMeta(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'meta_key' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $deleted = RestaurantMeta::where('restaurant_id', $restaurant->id)
+                                ->where('meta_key', $request->meta_key)
+                                ->delete();
+
+        if ($deleted) {
+            return ServiceResponse::success('Meta data deleted successfully');
+        }
+
+        return ServiceResponse::error('Meta data not found');
     }
 }
