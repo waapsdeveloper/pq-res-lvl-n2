@@ -58,6 +58,9 @@ class UpdateRestaurant extends FormRequest
             'copyright_text' => 'nullable|string',
             'rating' => 'nullable|numeric',
             'schedule' => 'nullable|array',
+            'meta' => 'nullable|array',
+            'meta.*.key' => 'required|string',
+            'meta.*.value' => 'nullable|string',
 
         ];
     }

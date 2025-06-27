@@ -58,6 +58,8 @@ class StoreRestaurant extends FormRequest
             'copyright_text' => 'nullable|string|max:255',
             'rating' => 'nullable|numeric|min:0|max:5',
             'schedule' => 'required|array',
+            'meta' => 'nullable|array',
+            'meta.*' => 'nullable|string',
 
         ];
     }

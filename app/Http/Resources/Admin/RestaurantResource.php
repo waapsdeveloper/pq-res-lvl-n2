@@ -20,11 +20,20 @@ class RestaurantResource extends JsonResource
 
     public static function toObject($obj, $lang = 'en')
     {
+        // Get meta data from restaurant_meta table
+        $meta = [];
+        if ($obj->meta && $obj->meta->count() > 0) {
+            foreach ($obj->meta as $metaItem) {
+                $meta[$metaItem->meta_key] = $metaItem->meta_value;
+            }
+        }
+        
         return [
             "id" => $obj->id,
             "name" => $obj->name,
             "address" => $obj->address,
             "status" => ucfirst($obj->status),
+            "meta" => $meta, // Add meta data to response
         ];
     }
 }

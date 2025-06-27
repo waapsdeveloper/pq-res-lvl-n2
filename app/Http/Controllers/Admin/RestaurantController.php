@@ -95,8 +95,6 @@ class RestaurantController extends Controller
         }
         $data = $request->validated();
 
-        // return response()->json($data);
-
         // Create the restaurant
         $restaurant = Restaurant::create([
             'name' => $data['name'],
@@ -122,10 +120,10 @@ class RestaurantController extends Controller
             if (!empty($scheduleItem)) {
                 RestaurantTiming::create([
                     'restaurant_id' => $restaurant->id,
-                    'day' => ucfirst($scheduleItem['day']), // Din ka naam proper capitalization ke saath
-                    'start_time' => $scheduleItem['start_time'], // Start time
-                    'end_time' => $scheduleItem['end_time'], // End time
-                    'status' => $scheduleItem['status'] ?? 'inactive', // Status, default inactive
+                    'day' => ucfirst($scheduleItem['day']),
+                    'start_time' => $scheduleItem['start_time'],
+                    'end_time' => $scheduleItem['end_time'],
+                    'status' => $scheduleItem['status'] ?? 'inactive',
                 ]);
             }
         }
@@ -133,20 +131,33 @@ class RestaurantController extends Controller
         // create branch config as well
         $branchConfig = BranchConfig::firstOrCreate([
             'branch_id' => $restaurant->id,
-            'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
-            'currency' => $data['currency'] ?? 'USD', // Default currency to USD if not provided
-            'dial_code' => $data['dial_code'] ?? '+1', // Default dial code to +1 if not provided
+            'tax' => $data['tax'] ?? 0,
+            'currency' => $data['currency'] ?? 'USD',
+            'dial_code' => $data['dial_code'] ?? '+1',
         ]);
 
         // Store meta data if provided
         if (isset($data['meta']) && is_array($data['meta'])) {
-            foreach ($data['meta'] as $key => $value) {
-                RestaurantMeta::create([
-                    'restaurant_id' => $restaurant->id,
-                    'meta_key' => $key,
-                    'meta_value' => $value,
-                ]);
+            Log::info('Meta data received for restaurant store:', ['meta' => $data['meta']]);
+            foreach ($data['meta'] as $metaItem) {
+                Log::info('Processing meta item:', ['meta_item' => $metaItem]);
+                if (isset($metaItem['key'])) {
+                    RestaurantMeta::create([
+                        'restaurant_id' => $restaurant->id,
+                        'meta_key' => $metaItem['key'],
+                        'meta_value' => $metaItem['value'] ?? null,
+                    ]);
+                    Log::info('Meta item stored:', [
+                        'restaurant_id' => $restaurant->id,
+                        'meta_key' => $metaItem['key'],
+                        'meta_value' => $metaItem['value'] ?? null,
+                    ]);
+                } else {
+                    Log::warning('Meta item missing key:', ['meta_item' => $metaItem]);
+                }
             }
+        } else {
+            Log::info('No meta data provided for restaurant store.');
         }
 
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
@@ -249,7 +260,9 @@ class RestaurantController extends Controller
         }
 
         // Update meta data if provided
+
         if (isset($data['meta']) && is_array($data['meta'])) {
+
             foreach ($data['meta'] as $key => $value) {
                 RestaurantMeta::updateOrCreate(
                     [
@@ -482,17 +495,17 @@ class RestaurantController extends Controller
         }
 
         $metaKey = $request->input('meta_key');
-        
+
         if ($metaKey) {
             $meta = RestaurantMeta::where('restaurant_id', $restaurant->id)
-                                 ->where('meta_key', $metaKey)
-                                 ->first();
-            
+                ->where('meta_key', $metaKey)
+                ->first();
+
             return ServiceResponse::success('Meta data retrieved successfully', ['meta' => $meta]);
         }
 
         $meta = RestaurantMeta::where('restaurant_id', $restaurant->id)->get();
-        
+
         return ServiceResponse::success('All meta data retrieved successfully', ['meta' => $meta]);
     }
 
@@ -515,8 +528,8 @@ class RestaurantController extends Controller
         }
 
         $deleted = RestaurantMeta::where('restaurant_id', $restaurant->id)
-                                ->where('meta_key', $request->meta_key)
-                                ->delete();
+            ->where('meta_key', $request->meta_key)
+            ->delete();
 
         if ($deleted) {
             return ServiceResponse::success('Meta data deleted successfully');
