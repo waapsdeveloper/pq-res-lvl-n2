@@ -9,8 +9,8 @@
         "rating": 4.8,
         "status": "active",
         "is_active": 1,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST02.png",
+        "image": "images/restaurant/REST03.png",
+        "favicon": "images/restaurant/REST03.png",
         "logo": "images/restaurant/REST03.png"
     },
     {
@@ -23,9 +23,9 @@
         "rating": 4.8,
         "status": "active",
         "is_active": 0,
-        "image": "images/restaurant/REST04.png",
-        "favicon": "images/restaurant/REST05.png",
-        "logo": "images/restaurant/REST06.png"
+        "image": "images/restaurant/REST03.png",
+        "favicon": "images/restaurant/REST03.png",
+        "logo": "images/restaurant/REST03.png"
     },
     {
         "name": "Urban Spice House",
@@ -37,9 +37,9 @@
         "rating": 4.7,
         "status": "active",
         "is_active": 0,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST01.png",
-        "logo": "images/restaurant/REST01.png"
+        "image": "images/restaurant/REST03.png",
+        "favicon": "images/restaurant/REST03.png",
+        "logo": "images/restaurant/REST03.png"
     },
     {
         "name": "Green Garden Bistro",
@@ -51,9 +51,9 @@
         "rating": 4.9,
         "status": "active",
         "is_active": 0,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST01.png",
-        "logo": "images/restaurant/REST01.png"
+        "image": "images/restaurant/REST03.png",
+        "favicon": "images/restaurant/REST03.png",
+        "logo": "images/restaurant/REST03.png"
     },
     {
         "name": "Seaside Grill & Bar",
@@ -65,8 +65,8 @@
         "rating": 4.6,
         "status": "active",
         "is_active": 0,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST01.png",
-        "logo": "images/restaurant/REST01.png"
+        "image": "images/restaurant/REST03.png",
+        "favicon": "images/restaurant/REST03.png",
+        "logo": "images/restaurant/REST03.png"
     }
 ]
