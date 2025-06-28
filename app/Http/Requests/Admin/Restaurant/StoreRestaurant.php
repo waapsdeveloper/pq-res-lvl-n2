@@ -57,10 +57,11 @@ class StoreRestaurant extends FormRequest
             ], // Base64 string validation
             'copyright_text' => 'nullable|string|max:255',
             'rating' => 'nullable|numeric|min:0|max:5',
-            'schedule' => 'required|array',
+            'timings' => 'nullable|array',
+            'timings.*.key' => 'required|string',
+            'timings.*.value' => 'nullable',
             'meta' => 'nullable|array',
             'meta.*' => 'nullable|string',
-
         ];
     }
 

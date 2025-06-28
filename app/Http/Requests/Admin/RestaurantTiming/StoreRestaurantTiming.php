@@ -24,13 +24,51 @@ class StoreRestaurantTiming extends FormRequest
     public function rules(): array
     {
         return [
-            'restaurant_id' => 'required|integer|exists:restaurants,id', // Ensure it exists in restaurants table
-            'day' => 'required|string',
-            'start_time' => 'nullable|date_format:H:i', // Ensure time is in valid format (e.g., 14:30)
-            'end_time' => 'nullable|after:start_time', // Must be after start_time
-            'status' => 'required|string|in:active,inactive',
+            'restaurant_id' => 'required|integer|exists:restaurants,id',
+            'timings' => 'required|array',
+            'timings.*.key' => 'required|string',
+            'timings.*.value' => 'nullable',
         ];
     }
+
+    /**
+     * Configure the validator instance.
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $data = $this->all();
+            $timings = $data['timings'] ?? [];
+            
+            foreach ($timings as $timing) {
+                $key = $timing['key'] ?? '';
+                $value = $timing['value'] ?? null;
+                
+                // Validate time format for time-related keys
+                if (str_contains($key, '_start_time') || str_contains($key, '_end_time') || 
+                    str_contains($key, '_break_start') || str_contains($key, '_break_end')) {
+                    if ($value && !preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/', $value)) {
+                        $validator->errors()->add('timings', "Invalid time format for {$key}. Use HH:MM format.");
+                    }
+                }
+                
+                // Validate boolean values
+                if (str_contains($key, '_is_24_hours') || str_contains($key, '_is_off')) {
+                    if ($value !== null && !in_array($value, [true, false, 'true', 'false', 1, 0, '1', '0'])) {
+                        $validator->errors()->add('timings', "Invalid boolean value for {$key}.");
+                    }
+                }
+                
+                // Validate array values for off_days
+                if ($key === 'off_days' && $value !== null) {
+                    if (!is_array($value) && !is_string($value)) {
+                        $validator->errors()->add('timings', "off_days must be an array or JSON string.");
+                    }
+                }
+            }
+        });
+    }
+
     protected function failedValidation(Validator $validator)
     {
         // Customize the error response if validation fails

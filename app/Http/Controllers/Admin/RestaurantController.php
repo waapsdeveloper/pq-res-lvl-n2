@@ -116,15 +116,18 @@ class RestaurantController extends Controller
             }
         }
 
-        foreach ($data['schedule'] as $day => $scheduleItem) {
-            if (!empty($scheduleItem)) {
-                RestaurantTiming::create([
-                    'restaurant_id' => $restaurant->id,
-                    'day' => ucfirst($scheduleItem['day']),
-                    'start_time' => $scheduleItem['start_time'],
-                    'end_time' => $scheduleItem['end_time'],
-                    'status' => $scheduleItem['status'] ?? 'inactive',
-                ]);
+        // Handle timing configuration
+        if (isset($data['timings']) && is_array($data['timings'])) {
+            $timingConfig = [];
+            
+            foreach ($data['timings'] as $timing) {
+                if (isset($timing['key']) && isset($timing['value'])) {
+                    $timingConfig[$timing['key']] = $timing['value'];
+                }
+            }
+            
+            if (!empty($timingConfig)) {
+                RestaurantTiming::setTimingConfig($restaurant->id, $timingConfig);
             }
         }
 
@@ -243,26 +246,23 @@ class RestaurantController extends Controller
             }
         }
 
-        // Delete existing timings for this restaurant before adding new ones
-        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
-
-        foreach ($data['schedule'] as $day => $scheduleItem) {
-            if (!empty($scheduleItem)) {
-                Log::info("schedule", $scheduleItem);
-                RestaurantTiming::create([
-                    'restaurant_id' => $restaurant->id,
-                    'day' => ucfirst($scheduleItem['day']), // Din ka naam proper capitalization ke saath
-                    'start_time' => $scheduleItem['start_time'], // Start time
-                    'end_time' => $scheduleItem['end_time'], // End time
-                    'status' => $scheduleItem['status'] ?? 'inactive', // Status, default inactive
-                ]);
+        // Handle timing configuration
+        if (isset($data['timings']) && is_array($data['timings'])) {
+            $timingConfig = [];
+            
+            foreach ($data['timings'] as $timing) {
+                if (isset($timing['key']) && isset($timing['value'])) {
+                    $timingConfig[$timing['key']] = $timing['value'];
+                }
+            }
+            
+            if (!empty($timingConfig)) {
+                RestaurantTiming::setTimingConfig($restaurant->id, $timingConfig);
             }
         }
 
         // Update meta data if provided
-
         if (isset($data['meta']) && is_array($data['meta'])) {
-
             foreach ($data['meta'] as $key => $value) {
                 RestaurantMeta::updateOrCreate(
                     [
@@ -287,15 +287,17 @@ class RestaurantController extends Controller
     {
         // Attempt to find the restaurant by ID
         $restaurant = Restaurant::find($id);
-        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
-
-        // Delete meta data
-        RestaurantMeta::where('restaurant_id', $restaurant->id)->delete();
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
             return ServiceResponse::error("Restaurant not found", 404);
         }
+
+        // Delete timing data
+        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
+
+        // Delete meta data
+        RestaurantMeta::where('restaurant_id', $restaurant->id)->delete();
 
         // Delete the restaurant
         $restaurant->delete();

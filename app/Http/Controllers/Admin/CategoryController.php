@@ -210,7 +210,7 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ids' => 'required|array',
-            'ids.*' => 'required|exists:restaurant_timings,id',
+            'ids.*' => 'required|exists:restaurant_timings_meta,id',
         ]);
 
         if ($validator->fails()) {

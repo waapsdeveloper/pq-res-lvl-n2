@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
+use App\Models\RestaurantTiming;
 
 class RestaurantTimingSeeder extends Seeder
 {
@@ -17,19 +18,29 @@ class RestaurantTimingSeeder extends Seeder
         $jsonFilePath = database_path('data/restaurant_timings.json');
 
         // Read and decode JSON
-        $rtables = json_decode(File::get($jsonFilePath), true);
+        $restaurantTimings = json_decode(File::get($jsonFilePath), true);
 
-        // Insert rtables into the database
-        foreach ($rtables as $rtable) {
-            DB::table('restaurant_timings')->insert([
-                'restaurant_id' => $rtable['restaurant_id'],
-                'day' => $rtable['day'],
-                'start_time' => $rtable['start_time'],
-                'end_time' => $rtable['end_time'],
-                'created_at' => now(),
-                'updated_at' => now(),
+        // Insert restaurant timings into the database
+        foreach ($restaurantTimings as $restaurantTiming) {
+            $restaurantId = $restaurantTiming['restaurant_id'];
+            $timings = $restaurantTiming['timings'];
 
-            ]);
+            // Convert timings array to config array
+            $config = [];
+            foreach ($timings as $timing) {
+                $key = $timing['key'];
+                $value = $timing['value'];
+                
+                // Convert boolean strings to actual booleans
+                if (in_array($value, ['true', 'false'])) {
+                    $value = $value === 'true';
+                }
+                
+                $config[$key] = $value;
+            }
+
+            // Use the model method to set timing configuration
+            RestaurantTiming::setTimingConfig($restaurantId, $config);
         }
     }
 }
