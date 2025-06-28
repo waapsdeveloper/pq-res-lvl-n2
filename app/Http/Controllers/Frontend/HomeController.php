@@ -14,6 +14,7 @@ use App\Models\Role;
 use App\Http\Resources\Frontend\PopularProductsResource;
 use App\Models\BranchConfig;
 use App\Models\Rtable;
+use App\Models\RestaurantMeta;
 
 class HomeController extends Controller
 {
@@ -60,6 +61,75 @@ class HomeController extends Controller
 
         return ServiceResponse::success('Restaurant config retrieved successfully', ['data' => $config]);
 
+    }
+
+    public function getRestaurantMeta($id)
+    {
+        $restaurant = Restaurant::find($id);
+        if(!$restaurant) {
+            return ServiceResponse::error('Restaurant not found', [], 404);
+        }
+
+        // Get all meta data for the restaurant
+        $metaData = RestaurantMeta::where('restaurant_id', $id)->get();
+        
+        // Transform meta data into key-value pairs
+        $meta = [];
+        foreach ($metaData as $metaItem) {
+            $meta[$metaItem->meta_key] = $metaItem->meta_value;
+        }
+
+        return ServiceResponse::success('Restaurant meta data retrieved successfully', [
+            'restaurant_id' => $id,
+            'meta' => $meta
+        ]);
+    }
+
+    public function getRestaurantWithMeta($id)
+    {
+        $restaurant = Restaurant::with('timings', 'meta')->find($id);
+        if(!$restaurant) {
+            return ServiceResponse::error('Restaurant not found', [], 404);
+        }
+
+        // Transform meta data into key-value pairs
+        $meta = [];
+        if ($restaurant->meta && $restaurant->meta->count() > 0) {
+            foreach ($restaurant->meta as $metaItem) {
+                $meta[$metaItem->meta_key] = $metaItem->meta_value;
+            }
+        }
+
+        // Prepare restaurant data
+        $restaurantData = [
+            'id' => $restaurant->id,
+            'name' => $restaurant->name,
+            'address' => $restaurant->address,
+            'phone' => $restaurant->phone,
+            'email' => $restaurant->email,
+            'website' => $restaurant->website,
+            'description' => $restaurant->description,
+            'rating' => $restaurant->rating,
+            'status' => $restaurant->status,
+            'image' => Helper::returnFullImageUrl($restaurant->image),
+            'logo' => Helper::returnFullImageUrl($restaurant->logo),
+            'favicon' => Helper::returnFullImageUrl($restaurant->favicon),
+            'copyright_text' => $restaurant->copyright_text,
+            'is_active' => $restaurant->is_active,
+            'meta' => $meta,
+            'schedule' => $restaurant->timings->map(function ($item) {
+                return [
+                    'day' => $item->day,
+                    'start_time' => $item->start_time,
+                    'end_time' => $item->end_time,
+                    'status' => $item->status,
+                ];
+            }),
+        ];
+
+        return ServiceResponse::success('Restaurant with meta data retrieved successfully', [
+            'restaurant' => $restaurantData
+        ]);
     }
 
     public function aboutUs(Request $request)
