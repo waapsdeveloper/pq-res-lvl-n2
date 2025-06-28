@@ -9,10 +9,11 @@
         "rating": 4.8,
         "status": "active",
         "is_active": 1,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST01.png",
-        "logo": "images/restaurant/REST01.png"
+        "image": "images/restaurant/REST02.png",
+        "favicon": "images/restaurant/REST02.png",
+        "logo": "images/restaurant/REST02.png"
     },
+
     {
         "name": "The New Local CraftFood 2",
         "address": "456 Foodie Lane, Chicago, NY",
@@ -23,9 +24,9 @@
         "rating": 4.8,
         "status": "active",
         "is_active": 0,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST01.png",
-        "logo": "images/restaurant/REST01.png"
+        "image": "images/restaurant/REST02.png",
+        "favicon": "images/restaurant/REST02.png",
+        "logo": "images/restaurant/REST02.png"
     },
     {
         "name": "Urban Spice House",
@@ -37,9 +38,9 @@
         "rating": 4.7,
         "status": "active",
         "is_active": 0,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST01.png",
-        "logo": "images/restaurant/REST01.png"
+        "image": "images/restaurant/REST02.png",
+        "favicon": "images/restaurant/REST02.png",
+        "logo": "images/restaurant/REST02.png"
     },
     {
         "name": "Green Garden Bistro",
@@ -51,9 +52,9 @@
         "rating": 4.9,
         "status": "active",
         "is_active": 0,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST01.png",
-        "logo": "images/restaurant/REST01.png"
+        "image": "images/restaurant/REST02.png",
+        "favicon": "images/restaurant/REST02.png",
+        "logo": "images/restaurant/REST02.png"
     },
     {
         "name": "Seaside Grill & Bar",
@@ -65,8 +66,8 @@
         "rating": 4.6,
         "status": "active",
         "is_active": 0,
-        "image": "images/restaurant/REST01.png",
-        "favicon": "images/restaurant/REST01.png",
-        "logo": "images/restaurant/REST01.png"
+        "image": "images/restaurant/REST02.png",
+        "favicon": "images/restaurant/REST02.png",
+        "logo": "images/restaurant/REST02.png"
     }
 ]
