@@ -108,6 +108,9 @@ Route::get('/auth-user/permissions', [UserController::class, 'getAuthUserPermiss
 
 Route::prefix('category')->group(function () {
     Route::get('/bulk-delete', [CategoryController::class, 'bulkDelete'])->name('category-bulkDelete');
+    
+    // Route for existing category image upload with category ID
+    Route::post('/{id}/upload-image', [CategoryController::class, 'uploadImage'])->name('category.uploadImage');
 
     Route::resource('/', CategoryController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.

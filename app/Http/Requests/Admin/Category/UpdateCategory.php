@@ -32,14 +32,23 @@ class UpdateCategory extends FormRequest
             'image' => [
                 'nullable',
                 function ($attribute, $value, $fail) {
-                    if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp|svg+xml|webp|tiff);base64,/', $value)) {
-                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                    // Check if it's a base64 image
+                    if (strpos($value, 'data:image') === 0) {
+                        if (!preg_match('/^data:image\/(jpeg|png|jpg|gif|bmp|svg+xml|webp|tiff);base64,/', $value)) {
+                            $fail('The ' . $attribute . ' field must be a valid base64 encoded image.');
+                        }
+                    } 
+                    // Check if it's a URL
+                    elseif (filter_var($value, FILTER_VALIDATE_URL) || strpos($value, 'images/') === 0) {
+                        // Valid URL or relative path
+                        return;
+                    }
+                    // If neither base64 nor URL, it's invalid
+                    else {
+                        $fail('The ' . $attribute . ' field must be a valid base64 encoded image or a valid URL.');
                     }
                 },
             ],
-
-
-
         ];
     }
     protected function failedValidation(Validator $validator)

@@ -36,6 +36,25 @@ class Helper
         }
     }
 
+    /**
+     * Upload a file and return the path
+     */
+    static public function uploadFile($file, $folder)
+    {
+        if ($file && $file->isValid()) {
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            
+            $filePath = Storage::disk('public')->put('images/' . $folder . '/' . $filename, file_get_contents($file));
+            
+            if ($filePath) {
+                return 'images/' . $folder . '/' . $filename;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 
     public static function deleteImage(string $url)
     {

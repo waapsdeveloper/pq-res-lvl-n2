@@ -93,9 +93,15 @@ class CategoryController extends Controller
         $category->update(['identifier' => $identifier]);
 
         if (isset($data['image'])) {
-
-            $url = Helper::getBase64ImageUrl($data['image'], 'category'); // Assuming a helper to handle the image upload
-            $category->update(['image' => $url]);
+            // Check if it's a base64 image or a URL
+            if (strpos($data['image'], 'data:image') === 0) {
+                // It's a base64 image
+                $url = Helper::getBase64ImageUrl($data['image'], 'category');
+                $category->update(['image' => $url]);
+            } else {
+                // It's already a URL, use it directly
+                $category->update(['image' => $data['image']]);
+            }
         }
 
         return ServiceResponse::success('Category store successful', ['Category' => $category]);
@@ -151,8 +157,14 @@ class CategoryController extends Controller
             if ($category->image) {
                 Helper::deleteImage($category->image);
             }
-            $url = Helper::getBase64ImageUrl($data['image'], 'category');
-            $data['image'] = $url;
+            
+            // Check if it's a base64 image or a URL
+            if (strpos($data['image'], 'data:image') === 0) {
+                // It's a base64 image
+                $url = Helper::getBase64ImageUrl($data['image'], 'category');
+                $data['image'] = $url;
+            }
+            // If it's already a URL, use it directly (no change needed)
         }
         $category->update([
             'name' => $data['name'] ?? $category->name,
@@ -203,5 +215,46 @@ class CategoryController extends Controller
         Category::whereIn('id', $ids)->delete();
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
+    }
+
+    /**
+     * Upload category image
+     */
+    public function uploadImage(Request $request, string $id)
+    {
+        // Validate that the category exists
+        $category = Category::find($id);
+        if (!$category) {
+            return ServiceResponse::error('Category not found', [], 404);
+        }
+
+        // Validate that an image file was uploaded
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|file|image|mimes:jpeg,png,jpg,webp|max:1024', // 1MB max
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Image validation failed', $validator->errors());
+        }
+
+        try {
+            // Upload the image
+            $url = Helper::uploadFile($request->file('image'), 'category');
+            
+            if ($url) {
+                // Update the category with the new image
+                $category->update(['image' => $url]);
+                
+                return ServiceResponse::success('Image uploaded successfully', [
+                    'image_url' => $url,
+                    'full_url' => Helper::returnFullImageUrl($url),
+                    'category_id' => $id
+                ]);
+            } else {
+                return ServiceResponse::error('Failed to upload image');
+            }
+        } catch (\Exception $e) {
+            return ServiceResponse::error('Image upload failed: ' . $e->getMessage());
+        }
     }
 }
