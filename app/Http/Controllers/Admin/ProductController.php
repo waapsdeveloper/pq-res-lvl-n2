@@ -216,14 +216,14 @@ class ProductController extends Controller
         // }
         $product->update([
             'name' => $data['name'] ?? $product->name,
-            'category_id' => $data['category'] ?? $product->category_id,
+            'category_id' => $data['category_id'] ?? $product->category_id,
             'restaurant_id' => $data['restaurant_id'] ?? $product->restaurant_id,
             'description' => $data['description'] ?? $product->description,
             'price' => $data['price'] ?? $product->price,
             'status' => $data['status'] ?? $product->status,
             'discount' => $data['discount'] ?? $product->discount,
             // 'variation_id' => $data['variation_id'] ?? $product->variation_id,
-            'image' => $data['image'] ?? $product->image,
+            // 'image' => $data['image'] ?? $product->image,
         ]);
 
         $identifier = Identifier::make('Product', $product->id, 4);
