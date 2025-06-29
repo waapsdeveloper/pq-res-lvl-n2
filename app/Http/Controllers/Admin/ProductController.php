@@ -97,15 +97,15 @@ class ProductController extends Controller
      */
     public function store(StoreProduct $request)
     {
-        if ($request->has('image')) {
-            $image = $request->input('image');
-            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
-            if ($fileSize > 3 * 1024 * 1024) {
-                return response()
-                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
-                    ->setStatusCode(422);
-            }
-        }
+        // if ($request->has('image')) {
+        //     $image = $request->input('image');
+        //     $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+        //     if ($fileSize > 3 * 1024 * 1024) {
+        //         return response()
+        //             ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+        //             ->setStatusCode(422);
+        //     }
+        // }
         // Validate and get the data
         $data = $request->validated();
 
@@ -128,17 +128,17 @@ class ProductController extends Controller
         $product->update(['identifier' => $identifier]);
 
         // Handle image upload
-        if (isset($data['image'])) {
-            // Check if it's a base64 image or a URL
-            if (strpos($data['image'], 'data:image') === 0) {
-                // It's a base64 image
-                $url = Helper::getBase64ImageUrl($data['image'], 'product');
-                $product->update(['image' => $url]);
-            } else {
-                // It's already a URL, use it directly
-                $product->update(['image' => $data['image']]);
-            }
-        }
+        // if (isset($data['image'])) {
+        //     // Check if it's a base64 image or a URL
+        //     if (strpos($data['image'], 'data:image') === 0) {
+        //         // It's a base64 image
+        //         $url = Helper::getBase64ImageUrl($data['image'], 'product');
+        //         $product->update(['image' => $url]);
+        //     } else {
+        //         // It's already a URL, use it directly
+        //         $product->update(['image' => $data['image']]);
+        //     }
+        // }
         if (isset($data['variation']) && is_array($data['variation'])) {
             ProductProps::create([
                 'product_id' => $product->id,
@@ -186,34 +186,34 @@ class ProductController extends Controller
      */
     public function update(UpdateProduct $request, string $id)
     {
-        if ($request->has('image')) {
-            $image = $request->input('image');
-            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
-            if ($fileSize > 3 * 1024 * 1024) {
-                return response()
-                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
-                    ->setStatusCode(422);
-            }
-        }
+        // if ($request->has('image')) {
+        //     $image = $request->input('image');
+        //     $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+        //     if ($fileSize > 3 * 1024 * 1024) {
+        //         return response()
+        //             ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+        //             ->setStatusCode(422);
+        //     }
+        // }
         $data = $request->validated();
 
         $product = Product::find($id);
         if (!$product) {
             return ServiceResponse::error('Product not found');
         }
-        if (isset($data['image'])) {
-            if ($product->image) {
-                Helper::deleteImage($product->image);
-            }
+        // if (isset($data['image'])) {
+        //     if ($product->image) {
+        //         Helper::deleteImage($product->image);
+        //     }
             
-            // Check if it's a base64 image or a URL
-            if (strpos($data['image'], 'data:image') === 0) {
-                // It's a base64 image
-                $url = Helper::getBase64ImageUrl($data['image'], 'product');
-                $data['image'] = $url;
-            }
-            // If it's already a URL, use it directly (no change needed)
-        }
+        //     // Check if it's a base64 image or a URL
+        //     if (strpos($data['image'], 'data:image') === 0) {
+        //         // It's a base64 image
+        //         $url = Helper::getBase64ImageUrl($data['image'], 'product');
+        //         $data['image'] = $url;
+        //     }
+        //     // If it's already a URL, use it directly (no change needed)
+        // }
         $product->update([
             'name' => $data['name'] ?? $product->name,
             'category_id' => $data['category'] ?? $product->category_id,
