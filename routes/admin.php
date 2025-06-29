@@ -125,6 +125,9 @@ Route::prefix('category')->group(function () {
 Route::prefix('product')->group(function () {
     Route::get('/bulk-delete', [ProductController::class, 'bulkDelete'])->name('product-bulkDelete');
     Route::get('/bulk-fetch', [ProductController::class, 'bulkFetch'])->name('product-bulkFetch');
+    
+    // Route for existing product image upload with product ID
+    Route::post('/{id}/upload-image', [ProductController::class, 'uploadImage'])->name('product.uploadImage');
 
     Route::resource('/', ProductController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.

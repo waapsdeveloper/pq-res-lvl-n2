@@ -129,8 +129,15 @@ class ProductController extends Controller
 
         // Handle image upload
         if (isset($data['image'])) {
-            $url = Helper::getBase64ImageUrl($data['image'], 'product');
-            $product->update(['image' => $url]);
+            // Check if it's a base64 image or a URL
+            if (strpos($data['image'], 'data:image') === 0) {
+                // It's a base64 image
+                $url = Helper::getBase64ImageUrl($data['image'], 'product');
+                $product->update(['image' => $url]);
+            } else {
+                // It's already a URL, use it directly
+                $product->update(['image' => $data['image']]);
+            }
         }
         if (isset($data['variation']) && is_array($data['variation'])) {
             ProductProps::create([
@@ -198,8 +205,14 @@ class ProductController extends Controller
             if ($product->image) {
                 Helper::deleteImage($product->image);
             }
-            $url = Helper::getBase64ImageUrl($data['image'], 'product');
-            $data['image'] = $url;
+            
+            // Check if it's a base64 image or a URL
+            if (strpos($data['image'], 'data:image') === 0) {
+                // It's a base64 image
+                $url = Helper::getBase64ImageUrl($data['image'], 'product');
+                $data['image'] = $url;
+            }
+            // If it's already a URL, use it directly (no change needed)
         }
         $product->update([
             'name' => $data['name'] ?? $product->name,
@@ -269,26 +282,58 @@ class ProductController extends Controller
     public function bulkFetch(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'restaurant_id' => 'required|exists',
-            'ids.*' => 'required|exists:restaurants,id',  // Ensure valid restaurant IDs
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:products,id',
         ]);
 
         if ($validator->fails()) {
-            return ServiceResponse::error('Validation failed', $validator->errors()->first());
+            return ServiceResponse::error('Validation failed', $validator->errors());
         }
 
-        $query = Product::query();
+        $ids = $request->input('ids', []);
+        $products = Product::whereIn('id', $ids)->get();
 
-        $query->where('restaurant_id', $request->input('restaurant_id'));
+        return ServiceResponse::success("Bulk fetch successful", ['products' => $products]);
+    }
 
-        $query->with('category', 'restaurant', 'productProps');
-        $query->orderBy('created_at', 'desc');
-        $data = $query->get();
+    /**
+     * Upload product image
+     */
+    public function uploadImage(Request $request, string $id)
+    {
+        // Validate that the product exists
+        $product = Product::find($id);
+        if (!$product) {
+            return ServiceResponse::error('Product not found', [], 404);
+        }
 
-        $data->getCollection()->transform(function ($item) {
-            return new ProductResource($item);
-        });
+        // Validate that an image file was uploaded
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|file|image|mimes:jpeg,png,jpg,webp|max:1024', // 1MB max
+        ]);
 
-        return ServiceResponse::success("Bulk Fetch successful", ['data' => $data]);
+        if ($validator->fails()) {
+            return ServiceResponse::error('Image validation failed', $validator->errors());
+        }
+
+        try {
+            // Upload the image
+            $url = Helper::uploadFile($request->file('image'), 'product');
+            
+            if ($url) {
+                // Update the product with the new image
+                $product->update(['image' => $url]);
+                
+                return ServiceResponse::success('Image uploaded successfully', [
+                    'image_url' => $url,
+                    'full_url' => Helper::returnFullImageUrl($url),
+                    'product_id' => $id
+                ]);
+            } else {
+                return ServiceResponse::error('Failed to upload image');
+            }
+        } catch (\Exception $e) {
+            return ServiceResponse::error('Image upload failed: ' . $e->getMessage());
+        }
     }
 }
