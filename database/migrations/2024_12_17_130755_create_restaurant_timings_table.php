@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restaurant_timings', function (Blueprint $table) {
+        Schema::create('restaurant_timings_meta', function (Blueprint $table) {
             $table->id();
             $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
-            $table->string('day');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->string('meta_key');
+            $table->text('meta_value')->nullable();
             $table->timestamps();
+            
+            // Add unique constraint to prevent duplicate keys for same restaurant
+            $table->unique(['restaurant_id', 'meta_key']);
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurant_timings');
+        Schema::dropIfExists('restaurant_timings_meta');
     }
 };

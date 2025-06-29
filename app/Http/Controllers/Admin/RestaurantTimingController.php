@@ -34,22 +34,19 @@ class RestaurantTimingController extends Controller
 
         // Apply search filter if a search term is provided
         if ($search) {
-            $query->where('day', 'like', '%' . $search . '%');
+            $query->where('meta_key', 'like', '%' . $search . '%');
         }
+        
         if ($filters) {
             if (is_string($filters)) {
-                $filters = json_decode($filters, true); // Decode JSON to array
+                $filters = json_decode($filters, true);
             }
             if (is_array($filters)) {
-                if (isset($filters['day'])) {
-                    $query->where('day', 'like', '%' . $filters['day'] . '%');
+                if (isset($filters['meta_key'])) {
+                    $query->where('meta_key', 'like', '%' . $filters['meta_key'] . '%');
                 }
                 if (isset($filters['restaurant_id'])) {
                     $query->where('restaurant_id', 'like', '%' . $filters['restaurant_id'] . '%');
-                }
-
-                if (isset($filters['status'])) {
-                    $query->where('status', $filters['status']);
                 }
             }
         }
@@ -71,7 +68,44 @@ class RestaurantTimingController extends Controller
         return ServiceResponse::success("Restaurant timing list retrieved successfully", ['data' => $data]);
     }
 
+    /**
+     * Get timing configuration for a restaurant
+     */
+    public function getTimingConfig(Request $request)
+    {
+        $restaurantId = $request->input('restaurant_id');
+        
+        if (!$restaurantId) {
+            $active_restaurant = Helper::getActiveRestaurantId();
+            $restaurantId = $active_restaurant->id;
+        }
 
+        $timingConfig = RestaurantTiming::getTimingConfig($restaurantId);
+        
+        // Format the data for frontend
+        $formattedData = [];
+        foreach (RestaurantTiming::getDayOptions() as $dayKey => $dayName) {
+            $formattedData[$dayKey] = [
+                'day_name' => $dayName,
+                'start_time' => $timingConfig[$dayKey . '_start_time'] ?? null,
+                'end_time' => $timingConfig[$dayKey . '_end_time'] ?? null,
+                'break_start' => $timingConfig[$dayKey . '_break_start'] ?? null,
+                'break_end' => $timingConfig[$dayKey . '_break_end'] ?? null,
+                'is_24_hours' => (bool)($timingConfig[$dayKey . '_is_24_hours'] ?? false),
+                'is_off' => (bool)($timingConfig[$dayKey . '_is_off'] ?? false),
+                'formatted_timing' => RestaurantTiming::getFormattedTiming($restaurantId, $dayKey)
+            ];
+        }
+
+        // Add global settings
+        $formattedData['same_time_all_days'] = (bool)($timingConfig['same_time_all_days'] ?? false);
+        $formattedData['off_days'] = $timingConfig['off_days'] ?? [];
+
+        return ServiceResponse::success("Restaurant timing configuration retrieved successfully", [
+            'restaurant_id' => $restaurantId,
+            'timing_config' => $formattedData
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -81,28 +115,35 @@ class RestaurantTimingController extends Controller
         //
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreRestaurantTiming $request)
     {
         $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+        $timings = $data['timings'];
 
+        // Convert timings array to config array
+        $config = [];
+        foreach ($timings as $timing) {
+            $key = $timing['key'];
+            $value = $timing['value'];
+            
+            // Convert boolean strings to actual booleans
+            if (in_array($value, ['true', 'false'])) {
+                $value = $value === 'true';
+            }
+            
+            $config[$key] = $value;
+        }
 
-        $timing = RestaurantTiming::create([
-            'restaurant_id' => $data['restaurant_id'],
-            'day' => ucfirst($data['day']),
-            'start_time' => DateTime::createFromFormat('H:i:s', $data['start_time'])->format('H:i'),
-            'end_time' => DateTime::createFromFormat('H:i:s', $data['end_time'])->format('H:i'),
-            'status' => $data['status'],
-
-        ]);
-
+        // Save timing configuration
+        RestaurantTiming::setTimingConfig($restaurantId, $config);
 
         return ServiceResponse::success(
-            'RestaurantTiming store successful',
-            ['timing' => $timing]
+            'Restaurant timing configuration saved successfully',
+            ['restaurant_id' => $restaurantId, 'config' => $config]
         );
     }
 
@@ -136,22 +177,30 @@ class RestaurantTimingController extends Controller
     public function update(UpdateRestaurantTiming $request, string $id)
     {
         $data = $request->validated();
+        $restaurantId = $data['restaurant_id'] ?? $id;
+        $timings = $data['timings'] ?? [];
 
-        $restaurant_timing = RestaurantTiming::find($id);
-        if (!$restaurant_timing) {
-            return ServiceResponse::error('Restaurant timing not found');
+        // Convert timings array to config array
+        $config = [];
+        foreach ($timings as $timing) {
+            $key = $timing['key'];
+            $value = $timing['value'];
+            
+            // Convert boolean strings to actual booleans
+            if (in_array($value, ['true', 'false'])) {
+                $value = $value === 'true';
+            }
+            
+            $config[$key] = $value;
         }
 
-        $restaurant_timing->update([
-            'restaurant_id' => $data['restaurant_id'] ?? $restaurant_timing->restaurant_id,
-            'day' => ucfirst($data['day']) ?? $restaurant_timing->day,
-            'start_time' => DateTime::createFromFormat('H:i:s', $data['start_time'])->format('H:i') ?? $restaurant_timing->start_time,
-            'end_time' => DateTime::createFromFormat('H:i:s', $data['end_time'])->format('H:i') ?? $restaurant_timing->end_time,
-            'status' => $data['status'] ?? $restaurant_timing->status,
+        // Update timing configuration
+        RestaurantTiming::setTimingConfig($restaurantId, $config);
 
+        return ServiceResponse::success('Restaurant timing configuration updated successfully', [
+            'restaurant_id' => $restaurantId, 
+            'config' => $config
         ]);
-
-        return ServiceResponse::success('Restaurant timing update successful', ['restaurant_timing' => $restaurant_timing]);
     }
 
     /**
@@ -159,25 +208,29 @@ class RestaurantTimingController extends Controller
      */
     public function destroy(string $id)
     {
-        // Attempt to find the restaurant by ID
-        $RestaurantTiming = RestaurantTiming::find($id);
+        // Attempt to find the restaurant timing by ID
+        $restaurantTiming = RestaurantTiming::find($id);
 
         // If the RestaurantTiming doesn't exist, return an error response
-        if (!$RestaurantTiming) {
+        if (!$restaurantTiming) {
             return ServiceResponse::error("RestaurantTiming not found", 404);
         }
 
         // Delete the RestaurantTiming
-        $RestaurantTiming->delete();
+        $restaurantTiming->delete();
 
         // Return a success response
         return ServiceResponse::success("RestaurantTiming deleted successfully.");
     }
+
+    /**
+     * Bulk delete timings
+     */
     public function bulkDelete(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'ids' => 'required|array',
-            'ids.*' => 'required|exists:restaurant_timings,id',
+            'ids.*' => 'required|exists:restaurant_timings_meta,id',
         ]);
 
         if ($validator->fails()) {
@@ -188,5 +241,36 @@ class RestaurantTimingController extends Controller
         RestaurantTiming::whereIn('id', $ids)->delete();
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
+    }
+
+    /**
+     * Check if restaurant is open at specific time
+     */
+    public function checkOpenStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'restaurant_id' => 'required|integer|exists:restaurants,id',
+            'day' => 'required|string|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
+            'time' => 'nullable|date_format:H:i',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $restaurantId = $request->input('restaurant_id');
+        $day = $request->input('day');
+        $time = $request->input('time');
+
+        $isOpen = RestaurantTiming::isOpenAt($restaurantId, $day, $time);
+        $formattedTiming = RestaurantTiming::getFormattedTiming($restaurantId, $day);
+
+        return ServiceResponse::success("Open status checked successfully", [
+            'restaurant_id' => $restaurantId,
+            'day' => $day,
+            'time' => $time,
+            'is_open' => $isOpen,
+            'formatted_timing' => $formattedTiming
+        ]);
     }
 }

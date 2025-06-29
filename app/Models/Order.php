@@ -32,7 +32,10 @@ class Order extends Model
         'discount_value',
         'final_total',
         'tax_percentage',
-        'tax_amount',  
+        'tax_amount',
+        'tips',
+        'tips_amount',
+        'delivery_charges',
         'is_paid' // add this line
 
     ];

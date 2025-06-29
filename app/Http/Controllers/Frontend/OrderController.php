@@ -133,7 +133,8 @@ class OrderController extends Controller
         $paymentMethod = $data['payment_method'] ?? 'cash';
         $orderType = $data['order_type'] ?? null;
         $deliveryAddress = $data['delivery_address'] ?? null;
-
+        $tax_percentage = $request->tax_percentage ?? 0;
+        $tax_amount = $request->tax_amount ?? 0;
         $couponCode = $request->coupon_code;
         $discountValue = $request->discount_value;
         $finalTotal = $request->final_total;
@@ -160,6 +161,8 @@ class OrderController extends Controller
             'coupon_code' => $couponCode,
             'discount_value' => $discountValue,
             'final_total' => $finalTotal,
+            'tax_percentage' => $tax_percentage,
+            'tax_amount' => $tax_amount,
         ]);
         $identifier = Identifier::make('Order', $order->id, 3);
         $invoice_no = Identifier::make('Invoice', $order->id, 3);
@@ -186,7 +189,7 @@ class OrderController extends Controller
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update');
 
         // send email
-        
+
         try {
             Helper::sendEmail($customer->email, 'Order Details', 'emails.order_details', ['order' => $order]);
         } catch (\Exception $e) {

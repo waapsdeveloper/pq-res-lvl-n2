@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('branch_configs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('branch_id')->unique(); // Foreign key to the branch/restaurant table
-            $table->decimal('tax', 5, 2)->default(0); // Tax percentage
-            $table->string('currency')->nullable(); // Currency code (e.g., USD, EUR)
-            $table->string('dial_code', 10)->nullable(); // Dial code for phone numbers
-            $table->string('currency_symbol', 10)->nullable(); // Currency symbol (e.g., $, €, £)
+            $table->unsignedBigInteger('branch_id')->unique();
+            $table->decimal('tax', 8, 2)->default(0);
+            $table->string('currency')->default('USD');
+            $table->string('dial_code')->default('+1');
+            $table->string('currency_symbol')->nullable();
+            $table->decimal('delivery_charges', 8, 2)->default(0); // New column
+            $table->decimal('tips', 8, 2)->default(0); // New column
             $table->timestamps();
 
-            // Foreign key constraint
             $table->foreign('branch_id')->references('id')->on('restaurants')->onDelete('cascade');
         });
     }

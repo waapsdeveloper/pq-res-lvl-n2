@@ -54,7 +54,7 @@ class BranchConfigController extends Controller
         $data = $query->paginate($perpage, ['*'], 'page', $page);
 
         // Transform each item to your required structure
-        $data->getCollection()->transform(function ($config) {
+        $data->transform(function ($config) {
             $branch = $config->branch;
             $currency = Currency::where('currency_code', $config->currency)->first();
 
@@ -103,6 +103,8 @@ class BranchConfigController extends Controller
             'tax' => 'nullable|numeric|min:0|max:50',
             'currency' => 'required|string|max:3',
             'dial_code' => 'required|string|max:10',
+            'currency_symbol' => 'nullable|string|max:10',
+
         ]);
 
         // Check if config already exists for this branch
@@ -163,6 +165,9 @@ class BranchConfigController extends Controller
             'tax' => 'nullable|numeric|min:0|max:50',
             'currency' => 'required|string|max:3',
             'dial_code' => 'required|string|max:10',
+            'currency_symbol' => 'nullable|string|max:10',
+            'tips' => 'nullable|numeric|min:0|max:50',
+            'delivery_charges' => 'nullable|numeric|min:0|max:1000',
         ]);
 
 
@@ -173,12 +178,14 @@ class BranchConfigController extends Controller
             // Update the existing configuration
             // $config->update($data);
             // $message = 'Branch configuration updated successfully';
-        } 
-            // Create a new configuration if not found
+        }
+        // Create a new configuration if not found
         $config->update([
             'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
             'currency' => $data['currency'],
             'dial_code' => $data['dial_code'],
+            'tips' => $data['tips'] ?? 0, // 
+            'delivery_charges' => $data['delivery_charges'] ?? 0, // Default
             'currency_symbol' => Currency::where('currency_code', $data['currency'])->value('currency_symbol'),
         ]);
 
@@ -188,6 +195,8 @@ class BranchConfigController extends Controller
             $restaurant->tax = $data['tax'] ?? 0; // Default tax to 0 if not provided
             $restaurant->currency = $data['currency'];
             $restaurant->dial_code = $data['dial_code'];
+            $restaurant->tips = $data['tips'] ?? 0;
+            $restaurant->delivery_charges = $data['delivery_charges'] ?? 0; // Default delivery
             $restaurant->save();
         }
 
@@ -223,7 +232,7 @@ class BranchConfigController extends Controller
     public function getRestaurantConfigById(Request $request, $id)
     {
         $restaurant = Restaurant::where('id', $id)->first();
-        if(!$restaurant) {
+        if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found', [], 404);
         }
 
@@ -236,12 +245,13 @@ class BranchConfigController extends Controller
                 'tax' => 0, // Default tax, can be changed later
                 'dial_code' => '+1', // Default dial code, can be changed later
                 'currency_symbol' => '$', // Default currency symbol, can be changed later
+                'tips' => 0,
+                'delivery_charges' => 0, // Default delivery
             ]);
         }
 
 
 
         return ServiceResponse::success('Restaurant config retrieved successfully', ['data' => $config]);
-
     }
 }

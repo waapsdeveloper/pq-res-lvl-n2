@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Requests\Admin\RestautrantSetting\StoreRestaurantSetting;
 use App\Models\BranchConfig;
 use App\Models\RestaurantSetting;
+use App\Models\RestaurantMeta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
@@ -36,7 +37,8 @@ class RestaurantController extends Controller
         $perpage = $request->input('perpage', 10);
         $filters = $request->input('filters', null);
 
-        $query = Restaurant::query()->with('timings', 'settings')->orderBy('id', 'desc');
+        // Order by is_active DESC first, then by id DESC
+        $query = Restaurant::query()->with('timings', 'settings', 'meta')->orderByDesc('is_active')->orderByDesc('id');
         // Optionally apply search filter if needed
         if ($search) {
             $query->where('name', 'like', '%' . $search . '%');
@@ -82,9 +84,16 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurant $request)
     {
+        if ($request->has('logo')) {
+            $image = $request->input('logo');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $data = $request->validated();
-
-        // return response()->json($data);
 
         // Create the restaurant
         $restaurant = Restaurant::create([
@@ -107,25 +116,55 @@ class RestaurantController extends Controller
             }
         }
 
-        foreach ($data['schedule'] as $day => $scheduleItem) {
-            if (!empty($scheduleItem)) {
-                RestaurantTiming::create([
-                    'restaurant_id' => $restaurant->id,
-                    'day' => ucfirst($scheduleItem['day']), // Din ka naam proper capitalization ke saath
-                    'start_time' => $scheduleItem['start_time'], // Start time
-                    'end_time' => $scheduleItem['end_time'], // End time
-                    'status' => $scheduleItem['status'] ?? 'inactive', // Status, default inactive
-                ]);
+        // Handle timing configuration
+        if (isset($data['timings']) && is_array($data['timings'])) {
+            $timingConfig = [];
+
+            foreach ($data['timings'] as $timing) {
+                if (isset($timing['key']) && isset($timing['value'])) {
+                    $timingConfig[$timing['key']] = $timing['value'];
+                }
+            }
+
+            if (!empty($timingConfig)) {
+                RestaurantTiming::setTimingConfig($restaurant->id, $timingConfig);
             }
         }
 
         // create branch config as well
-        $branchConfig = BranchConfig::create([
+        $branchConfig = BranchConfig::firstOrCreate([
             'branch_id' => $restaurant->id,
-            'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
-            'currency' => $data['currency'] ?? 'USD', // Default currency to USD if not provided
-            'dial_code' => $data['dial_code'] ?? '+1', // Default dial code to +1 if not provided
+            'tax' => $data['tax'] ?? 0,
+            'currency' => $data['currency'] ?? 'USD',
+            'dial_code' => $data['dial_code'] ?? '+1',
+            'delivery_charges' => $data['delivery_charges'] ?? 0,
+            'tips' => $data['tips'] ?? 0,
+
         ]);
+
+        // Store meta data if provided
+        if (isset($data['meta']) && is_array($data['meta'])) {
+            Log::info('Meta data received for restaurant store:', ['meta' => $data['meta']]);
+            foreach ($data['meta'] as $metaItem) {
+                Log::info('Processing meta item:', ['meta_item' => $metaItem]);
+                if (isset($metaItem['key'])) {
+                    RestaurantMeta::create([
+                        'restaurant_id' => $restaurant->id,
+                        'meta_key' => $metaItem['key'],
+                        'meta_value' => $metaItem['value'] ?? null,
+                    ]);
+                    Log::info('Meta item stored:', [
+                        'restaurant_id' => $restaurant->id,
+                        'meta_key' => $metaItem['key'],
+                        'meta_value' => $metaItem['value'] ?? null,
+                    ]);
+                } else {
+                    Log::warning('Meta item missing key:', ['meta_item' => $metaItem]);
+                }
+            }
+        } else {
+            Log::info('No meta data provided for restaurant store.');
+        }
 
         return ServiceResponse::success('Store successful', ['restaurant' => $restaurant]);
     }
@@ -138,7 +177,7 @@ class RestaurantController extends Controller
     {
         //
         // Attempt to find the restaurant by ID
-        $restaurant = Restaurant::with('timings', 'settings')->find($id);
+        $restaurant = Restaurant::with('timings', 'settings', 'meta')->find($id);
         // $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
@@ -162,6 +201,15 @@ class RestaurantController extends Controller
      */
     public function update(UpdateRestaurant $request, string $id)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $data = $request->validated();
 
         $restaurant = Restaurant::find($id);
@@ -201,19 +249,33 @@ class RestaurantController extends Controller
             }
         }
 
-        // Delete existing timings for this restaurant before adding new ones
-        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
+        // Handle timing configuration
+        if (isset($data['timings']) && is_array($data['timings'])) {
+            $timingConfig = [];
 
-        foreach ($data['schedule'] as $day => $scheduleItem) {
-            if (!empty($scheduleItem)) {
-                Log::info("schedule", $scheduleItem);
-                RestaurantTiming::create([
-                    'restaurant_id' => $restaurant->id,
-                    'day' => ucfirst($scheduleItem['day']), // Din ka naam proper capitalization ke saath
-                    'start_time' => $scheduleItem['start_time'], // Start time
-                    'end_time' => $scheduleItem['end_time'], // End time
-                    'status' => $scheduleItem['status'] ?? 'inactive', // Status, default inactive
-                ]);
+            foreach ($data['timings'] as $timing) {
+                if (isset($timing['key']) && isset($timing['value'])) {
+                    $timingConfig[$timing['key']] = $timing['value'];
+                }
+            }
+
+            if (!empty($timingConfig)) {
+                RestaurantTiming::setTimingConfig($restaurant->id, $timingConfig);
+            }
+        }
+
+        // Update meta data if provided
+        if (isset($data['meta']) && is_array($data['meta'])) {
+            foreach ($data['meta'] as $key => $value) {
+                RestaurantMeta::updateOrCreate(
+                    [
+                        'restaurant_id' => $restaurant->id,
+                        'meta_key' => $key,
+                    ],
+                    [
+                        'meta_value' => $value,
+                    ]
+                );
             }
         }
 
@@ -228,12 +290,17 @@ class RestaurantController extends Controller
     {
         // Attempt to find the restaurant by ID
         $restaurant = Restaurant::find($id);
-        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
 
         // If the restaurant doesn't exist, return an error response
         if (!$restaurant) {
             return ServiceResponse::error("Restaurant not found", 404);
         }
+
+        // Delete timing data
+        RestaurantTiming::where('restaurant_id', $restaurant->id)->delete();
+
+        // Delete meta data
+        RestaurantMeta::where('restaurant_id', $restaurant->id)->delete();
 
         // Delete the restaurant
         $restaurant->delete();
@@ -339,6 +406,9 @@ class RestaurantController extends Controller
 
         RestaurantTiming::whereIn('restaurant_id', $ids)->delete();
 
+        // Delete meta data
+        RestaurantMeta::whereIn('restaurant_id', $ids)->delete();
+
         Restaurant::whereIn('id', $ids)->delete();
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
@@ -385,5 +455,91 @@ class RestaurantController extends Controller
         return ServiceResponse::success('Restaurant activated successfully', [
             'restaurant' => $restaurant
         ]);
+    }
+
+    /**
+     * Store or update restaurant meta data
+     */
+    public function storeMeta(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'meta_key' => 'required|string|max:255',
+            'meta_value' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $meta = RestaurantMeta::updateOrCreate(
+            [
+                'restaurant_id' => $restaurant->id,
+                'meta_key' => $request->meta_key,
+            ],
+            [
+                'meta_value' => $request->meta_value,
+            ]
+        );
+
+        return ServiceResponse::success('Meta data stored successfully', ['meta' => $meta]);
+    }
+
+    /**
+     * Get restaurant meta data by key
+     */
+    public function getMeta(Request $request, $id)
+    {
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $metaKey = $request->input('meta_key');
+
+        if ($metaKey) {
+            $meta = RestaurantMeta::where('restaurant_id', $restaurant->id)
+                ->where('meta_key', $metaKey)
+                ->first();
+
+            return ServiceResponse::success('Meta data retrieved successfully', ['meta' => $meta]);
+        }
+
+        $meta = RestaurantMeta::where('restaurant_id', $restaurant->id)->get();
+
+        return ServiceResponse::success('All meta data retrieved successfully', ['meta' => $meta]);
+    }
+
+    /**
+     * Delete restaurant meta data
+     */
+    public function deleteMeta(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'meta_key' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return ServiceResponse::error('Validation failed', $validator->errors());
+        }
+
+        $restaurant = Restaurant::find($id);
+        if (!$restaurant) {
+            return ServiceResponse::error('Restaurant not found');
+        }
+
+        $deleted = RestaurantMeta::where('restaurant_id', $restaurant->id)
+            ->where('meta_key', $request->meta_key)
+            ->delete();
+
+        if ($deleted) {
+            return ServiceResponse::success('Meta data deleted successfully');
+        }
+
+        return ServiceResponse::error('Meta data not found');
     }
 }

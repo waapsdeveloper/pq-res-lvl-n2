@@ -57,8 +57,12 @@ class UpdateRestaurant extends FormRequest
             ],
             'copyright_text' => 'nullable|string',
             'rating' => 'nullable|numeric',
-            'schedule' => 'nullable|array',
-
+            'timings' => 'nullable|array',
+            'timings.*.key' => 'required|string',
+            'timings.*.value' => 'nullable',
+            'meta' => 'nullable|array',
+            'meta.*.key' => 'required|string',
+            'meta.*.value' => 'nullable|string',
         ];
     }
     protected function failedValidation(Validator $validator)

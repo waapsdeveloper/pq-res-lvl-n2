@@ -109,7 +109,18 @@ class UserController extends Controller
 
     public function store(StoreUser $request)
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $data = $request->validated();
+
+
 
         // Extract phone number and country code if phone is an array/object
         $phone = is_array($data['phone']) || is_object($data['phone'])
@@ -126,15 +137,18 @@ class UserController extends Controller
             'phone' => $phone,
             'dial_code' => $dial_code,
             'password' => Hash::make($data['password']),
-             
+
             'role_id' => $data['role_id'] ?? 0,
             'status' => $data['status'],
             'restaurant_id' => $data['restaurant_id'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-  if (isset($data['image'])) {
+        if (isset($data['image'])) {
             $url = Helper::getBase64ImageUrl($data['image'], 'user');
+            if (is_array($url) && isset($url['status']) && $url['status'] === 'error') {
+                return $url; // Return the ServiceResponse::error directly
+            }
             $user->update(['image' => $url]);
         }
         $userDetail = $user->userDetail()->create([
@@ -191,7 +205,17 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateUser $request, $id)
+
     {
+        if ($request->has('image')) {
+            $image = $request->input('image');
+            $fileSize = strlen($image) * 3 / 4; // Approximate size in bytes
+            if ($fileSize > 3 * 1024 * 1024) {
+                return response()
+                    ->json(ServiceResponse::error('Image size exceeds 3 MB.'))
+                    ->setStatusCode(422);
+            }
+        }
         $data = $request->validated();
 
         $user = User::find($id);
@@ -226,7 +250,7 @@ class UserController extends Controller
             'image' => $data['image'] ?? $user->image,
             'updated_at' => now(),
         ]);
-       
+
         if (isset($data['password']) && !empty($data['password'])) {
             $user->update([
                 'password' => Hash::make($data['password']),
@@ -250,7 +274,7 @@ class UserController extends Controller
                 'country' => $data['country'] ?? null,
             ]);
         }
-       
+
 
         if (!$userDetail) {
             throw new \Exception('Failed to update or create user details.');
@@ -294,7 +318,8 @@ class UserController extends Controller
         return ServiceResponse::success("User fetch successfully.", ['user' => $user]);
     }
 
-    public function getAuthUserPermissions(){
+    public function getAuthUserPermissions()
+    {
         $auth = Auth::user();
         $user = User::where('email', $auth->email)->first();
 
