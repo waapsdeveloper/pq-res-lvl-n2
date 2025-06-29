@@ -171,19 +171,19 @@ class CategoryController extends Controller
 
         $identifier = $data['identifier'] ?? Identifier::make('Category', $category->id, 3);
 
-        if (isset($data['image'])) {
-            if ($category->image) {
-                Helper::deleteImage($category->image);
-            }
+        // if (isset($data['image'])) {
+        //     if ($category->image) {
+        //         Helper::deleteImage($category->image);
+        //     }
             
-            // Check if it's a base64 image or a URL
-            if (strpos($data['image'], 'data:image') === 0) {
-                // It's a base64 image
-                $url = Helper::getBase64ImageUrl($data['image'], 'category');
-                $data['image'] = $url;
-            }
-            // If it's already a URL, use it directly (no change needed)
-        }
+        //     // Check if it's a base64 image or a URL
+        //     if (strpos($data['image'], 'data:image') === 0) {
+        //         // It's a base64 image
+        //         $url = Helper::getBase64ImageUrl($data['image'], 'category');
+        //         $data['image'] = $url;
+        //     }
+        //     // If it's already a URL, use it directly (no change needed)
+        // }
         $category->update([
             'name' => $data['name'] ?? $category->name,
             'identifier' => $identifier,
