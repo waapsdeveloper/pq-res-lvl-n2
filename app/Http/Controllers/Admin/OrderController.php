@@ -116,6 +116,7 @@ class OrderController extends Controller
         $totalTax = $ordersForTotals->sum('tax_amount');
         $totalDiscount = $ordersForTotals->sum('discount_value');
 
+
         // Calculate total_final_total with your condition
         $totalFinalTotal = $ordersForTotals->sum(function ($order) {
             // If final_total is 0 or null, use total_price instead
@@ -139,6 +140,7 @@ class OrderController extends Controller
             'total_discount' => $totalDiscount,
             'total_final_total' => $totalFinalTotal,
             'total_price' => $totalPrice,
+
             'data' => $data
         ]);
     }

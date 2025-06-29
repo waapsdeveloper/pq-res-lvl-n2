@@ -30,12 +30,12 @@ class OrderResource extends JsonResource
             'total_price' => $obj->total_price,
             'discount' => $obj->discount,
             'created_at' => $obj->created_at,
-            'updated_at' => $obj->updated_at, 
+            'updated_at' => $obj->updated_at,
             'table' => $obj->table ? $obj->table->name : 'no booked',
             'payment_method' => $obj->payment_method ?? 'cash',
             'order_type' => $obj->order_type ?? null,
             'delivery_address' => $obj->delivery_address ?? null,
-            'restaurant' => $obj->restaurant ? $obj->restaurant : 'no restaurant' ,
+            'restaurant' => $obj->restaurant ? $obj->restaurant : 'no restaurant',
             'phone' => $obj->phone ? $obj->phone : '',
             'dial_code' => $obj->dial_code ? $obj->dial_code : '',
             'coupon_code' => $obj->coupon_code,
@@ -43,7 +43,10 @@ class OrderResource extends JsonResource
             'discount_value' => $obj->discount_value,
             'final_total' => $obj->final_total,
             'tax_percentage' => $this->tax_percentage, // Add this line
-        'tax_amount' => $this->tax_amount,   
+            'tax_amount' => $this->tax_amount,
+            'tips' => $this->tips,
+            'tips_amount' => $this->tips_amount,
+            'delivery_charges' => $this->delivery_charges,
             'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [
