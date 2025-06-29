@@ -101,17 +101,17 @@ class CategoryController extends Controller
         $identifier = Identifier::make('Category', $category->id, 3);
         $category->update(['identifier' => $identifier]);
 
-        if (isset($data['image'])) {
-            // Check if it's a base64 image or a URL
-            if (strpos($data['image'], 'data:image') === 0) {
-                // It's a base64 image
-                $url = Helper::getBase64ImageUrl($data['image'], 'category');
-                $category->update(['image' => $url]);
-            } else {
-                // It's already a URL, use it directly
-                $category->update(['image' => $data['image']]);
-            }
-        }
+        // if (isset($data['image'])) {
+        //     // Check if it's a base64 image or a URL
+        //     if (strpos($data['image'], 'data:image') === 0) {
+        //         // It's a base64 image
+        //         $url = Helper::getBase64ImageUrl($data['image'], 'category');
+        //         $category->update(['image' => $url]);
+        //     } else {
+        //         // It's already a URL, use it directly
+        //         $category->update(['image' => $data['image']]);
+        //     }
+        // }
 
         return ServiceResponse::success('Category store successful', ['Category' => $category]);
     }
@@ -190,7 +190,7 @@ class CategoryController extends Controller
             'category_id' => $data['category_id'] ?? $category->category_id,
             'restaurant_id' => $data['restaurant_id'] ?? $category->restaurant_id,
             'description' => $data['description'] ?? $category->description,
-            'image' => $data['image'] ?? $category->image,
+            // 'image' => $data['image'] ?? $category->image,
             'status' => $data['status'] ?? $category->status,
         ]);
 
