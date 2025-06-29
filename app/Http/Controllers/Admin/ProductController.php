@@ -223,7 +223,7 @@ class ProductController extends Controller
             'status' => $data['status'] ?? $product->status,
             'discount' => $data['discount'] ?? $product->discount,
             // 'variation_id' => $data['variation_id'] ?? $product->variation_id,
-            'image' => $data['image'] ?? $product->image,
+            // 'image' => $data['image'] ?? $product->image,
         ]);
 
         $identifier = Identifier::make('Product', $product->id, 4);
