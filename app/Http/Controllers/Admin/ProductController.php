@@ -216,7 +216,7 @@ class ProductController extends Controller
         // }
         $product->update([
             'name' => $data['name'] ?? $product->name,
-            'category_id' => $data['category'] ?? $product->category_id,
+            'category_id' => $data['category_id'] ?? $product->category_id,
             'restaurant_id' => $data['restaurant_id'] ?? $product->restaurant_id,
             'description' => $data['description'] ?? $product->description,
             'price' => $data['price'] ?? $product->price,
