@@ -133,19 +133,19 @@ class OrderController extends Controller
             return new OrderResource($item);
         });
 
-       
-return ServiceResponse::success("Order list successfully", [
-    'total_tax' => $totalTax,
-    'total_discount' => $totalDiscount,
-    'total_final_total' => $totalFinalTotal,
-    'total_price' => $totalPrice,
-    'data' => $data
-]);
+
+        return ServiceResponse::success("Order list successfully", [
+            'total_tax' => $totalTax,
+            'total_discount' => $totalDiscount,
+            'total_final_total' => $totalFinalTotal,
+            'total_price' => $totalPrice,
+            'data' => $data
+        ]);
     }
-    
-public function totals(Request $request)
-{
-   
+
+    public function totals(Request $request)
+    {
+
         $search = $request->input('search', '');
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 10);
@@ -236,17 +236,14 @@ public function totals(Request $request)
 
         $data->getCollection()->transform(function ($item) {
             return new OrderResource($item);
-            
         });
         return ServiceResponse::success("Order list successfully", [
-    'total_tax' => $totalTax,
-    'total_discount' => $totalDiscount,
-    'total_final_total' => $totalFinalTotal,
-    'total_price' => $totalPrice,
-]);
-
-     
-}
+            'total_tax' => $totalTax,
+            'total_discount' => $totalDiscount,
+            'total_final_total' => $totalFinalTotal,
+            'total_price' => $totalPrice,
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -345,7 +342,12 @@ public function totals(Request $request)
         $discountValue = $request->discount_value;
         $finalTotal = $request->final_total;
         $taxPercentage = $request->tax_percentage ?? 0;
+
         $taxAmount = $request->tax_amount ?? 0;
+        $tipsAmount = $request->tips_amount ?? 0;
+        $tips = $request->tips ?? 0;
+        $deliveryCharges = $request->delivery_charges ?? 0;
+
         $order = Order::create([
             'identifier' => 'ORD-',
             'restaurant_id' => $resID,
@@ -365,7 +367,10 @@ public function totals(Request $request)
             'discount_value' => $discountValue,
             'final_total' => $finalTotal,
             'tax_percentage' => $taxPercentage, // Store tax percentage
-        'tax_amount' => $taxAmount, 
+            'tax_amount' => $taxAmount,
+            'tips' => $tips,
+            'tips_amount' => $tipsAmount,
+            'delivery_charges' => $deliveryCharges,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -536,7 +541,7 @@ public function totals(Request $request)
         $type = array_key_exists('type', $data) ? $data['type'] : $order->type;
         $table = array_key_exists('table_id', $data) ? Rtable::where('id', $data['table_id'])->first() : null;
         $tableNo = $table ? $table->id : $order->table_no;
-             
+
         // Table booking logic
         if ($table) {
             $existingBooking = RTablesBooking::where('rtable_id', $table->id)
@@ -570,8 +575,12 @@ public function totals(Request $request)
         $discountValue = array_key_exists('discount_value', $data) ? $data['discount_value'] : $order->discount_value;
         $finalTotal = array_key_exists('final_total', $data) ? $data['final_total'] : $order->final_total;
         $taxPercentage = array_key_exists('tax_percentage', $data) ? $data['tax_percentage'] : $order->tax_percentage;
+        $tips = array_key_exists('tips', $data) ? $data['tips'] : $order->tips;
+        $tipsAmount = array_key_exists('tips_amount', $data) ? $data['tips_amount'] : $order->tips_amount;
+        $deliveryCharges = array_key_exists('delivery', $data) ? $data['delivery_charges'] : $order->delivery_charges;
         $taxAmount = array_key_exists('tax_amount', $data) ? $data['tax_amount'] : $order->tax_amount;
-    
+
+
         $order->update([
             'restaurant_id' => $resID,
             'type' => $type,
@@ -588,7 +597,10 @@ public function totals(Request $request)
             'discount_value' => $discountValue,
             'final_total' => $finalTotal,
             'tax_percentage' => $taxPercentage, // Update tax percentage
-        'tax_amount' => $taxAmount,  
+            'tax_amount' => $taxAmount,
+            'tips' => $tips,
+            'tips_amount' => $tipsAmount,
+            'delivery_charges' => $deliveryCharges,
             // Do NOT set 'updated_at' here, let Eloquent handle it
         ]);
 

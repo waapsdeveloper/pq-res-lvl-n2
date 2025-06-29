@@ -119,13 +119,13 @@ class RestaurantController extends Controller
         // Handle timing configuration
         if (isset($data['timings']) && is_array($data['timings'])) {
             $timingConfig = [];
-            
+
             foreach ($data['timings'] as $timing) {
                 if (isset($timing['key']) && isset($timing['value'])) {
                     $timingConfig[$timing['key']] = $timing['value'];
                 }
             }
-            
+
             if (!empty($timingConfig)) {
                 RestaurantTiming::setTimingConfig($restaurant->id, $timingConfig);
             }
@@ -137,6 +137,9 @@ class RestaurantController extends Controller
             'tax' => $data['tax'] ?? 0,
             'currency' => $data['currency'] ?? 'USD',
             'dial_code' => $data['dial_code'] ?? '+1',
+            'delivery_charges' => $data['delivery_charges'] ?? 0,
+            'tips' => $data['tips'] ?? 0,
+
         ]);
 
         // Store meta data if provided
@@ -249,13 +252,13 @@ class RestaurantController extends Controller
         // Handle timing configuration
         if (isset($data['timings']) && is_array($data['timings'])) {
             $timingConfig = [];
-            
+
             foreach ($data['timings'] as $timing) {
                 if (isset($timing['key']) && isset($timing['value'])) {
                     $timingConfig[$timing['key']] = $timing['value'];
                 }
             }
-            
+
             if (!empty($timingConfig)) {
                 RestaurantTiming::setTimingConfig($restaurant->id, $timingConfig);
             }

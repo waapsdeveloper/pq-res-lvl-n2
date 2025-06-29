@@ -28,7 +28,12 @@ return new class extends Migration
             $table->string('is_active')->default('0');
             $table->string('dial_code')->nullable();
             $table->string('tax')->nullable();
+            $table->string('tips')->nullable();
+            $table->string('delivery_charges')->nullable();
             $table->string('currency')->default('USD');
+            $table->string('currency_symbol')->default('$');
+
+
 
             $table->timestamps();
         });
