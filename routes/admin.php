@@ -67,6 +67,7 @@ Route::prefix('restaurant')->group(function () {
 Route::prefix('restaurant-timing')->group(function () {
     Route::get('/bulk-delete', [RestaurantTimingController::class, 'bulkDelete'])->name('restaurantTiming-bulkDelete');
     Route::get('/config', [RestaurantTimingController::class, 'getTimingConfig'])->name('restaurantTiming-config');
+    Route::get('/data', [RestaurantTimingController::class, 'getTimingData'])->name('restaurantTiming-data');
     Route::post('/config', [RestaurantTimingController::class, 'store'])->name('restaurantTiming-storeConfig');
     Route::put('/config/{id}', [RestaurantTimingController::class, 'update'])->name('restaurantTiming-updateConfig');
     Route::post('/check-open-status', [RestaurantTimingController::class, 'checkOpenStatus'])->name('restaurantTiming-checkOpenStatus');

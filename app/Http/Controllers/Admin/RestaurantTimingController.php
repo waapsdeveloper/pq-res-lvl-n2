@@ -327,4 +327,61 @@ class RestaurantTimingController extends Controller
             'formatted_timing' => $formattedTiming
         ]);
     }
+
+    /**
+     * Get timing data in frontend format
+     */
+    public function getTimingData(Request $request)
+    {
+        try {
+            $restaurantId = $request->input('restaurant_id');
+            
+            if (!$restaurantId) {
+                $active_restaurant = Helper::getActiveRestaurantId();
+                $restaurantId = $active_restaurant->id;
+            }
+
+            $timingConfig = RestaurantTiming::getTimingConfig($restaurantId);
+            
+            // Build global settings
+            $global = [
+                'start_time' => $timingConfig['global_start_time'] ?? '09:00',
+                'end_time' => $timingConfig['global_end_time'] ?? '17:00',
+                'day_type' => $timingConfig['global_day_type'] ?? 'week_days',
+                'is_24h' => (bool)($timingConfig['global_is_24h'] ?? false),
+                'break_times' => json_decode($timingConfig['global_break_times'] ?? '[]', true) ?: []
+            ];
+
+            // Build days data
+            $days = [];
+            $dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            
+            foreach ($dayNames as $dayName) {
+                $dayKey = strtolower($dayName);
+                $days[] = [
+                    'day' => $dayName,
+                    'start_time' => $timingConfig[$dayKey . '_start_time'] ?? '09:00',
+                    'end_time' => $timingConfig[$dayKey . '_end_time'] ?? '17:00',
+                    'status' => $timingConfig[$dayKey . '_status'] ?? 'active',
+                    'is_24h' => (bool)($timingConfig[$dayKey . '_is_24h'] ?? false),
+                    'is_open' => (bool)($timingConfig[$dayKey . '_is_open'] ?? true),
+                    'is_off_day' => (bool)($timingConfig[$dayKey . '_is_off_day'] ?? false),
+                    'break_times' => json_decode($timingConfig[$dayKey . '_break_times'] ?? '[]', true) ?: []
+                ];
+            }
+
+            $response = [
+                'timing' => [
+                    'global' => $global,
+                    'days' => $days
+                ],
+                'restaurant_id' => $restaurantId
+            ];
+
+            return ServiceResponse::success("Restaurant timing data retrieved successfully", $response);
+
+        } catch (\Exception $e) {
+            return ServiceResponse::error('Failed to retrieve timing data: ' . $e->getMessage(), 500);
+        }
+    }
 }
