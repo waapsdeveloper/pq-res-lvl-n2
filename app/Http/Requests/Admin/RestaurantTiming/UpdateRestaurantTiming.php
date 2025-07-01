@@ -25,9 +25,26 @@ class UpdateRestaurantTiming extends FormRequest
     {
         return [
             'restaurant_id' => 'sometimes|integer|exists:restaurants,id',
-            'timings' => 'sometimes|array',
-            'timings.*.key' => 'required|string',
-            'timings.*.value' => 'nullable',
+            'timing' => 'sometimes|array',
+            'timing.global' => 'sometimes|array',
+            'timing.global.start_time' => 'nullable|date_format:H:i',
+            'timing.global.end_time' => 'nullable|date_format:H:i',
+            'timing.global.day_type' => 'nullable|string|in:week_days,weekends,all',
+            'timing.global.is_24h' => 'nullable|boolean',
+            'timing.global.break_times' => 'nullable|array',
+            'timing.global.break_times.*.start' => 'required_with:timing.global.break_times|date_format:H:i',
+            'timing.global.break_times.*.end' => 'required_with:timing.global.break_times|date_format:H:i',
+            'timing.days' => 'sometimes|array',
+            'timing.days.*.day' => 'required|string|in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday',
+            'timing.days.*.start_time' => 'required|date_format:H:i',
+            'timing.days.*.end_time' => 'required|date_format:H:i',
+            'timing.days.*.status' => 'required|string|in:active,inactive',
+            'timing.days.*.is_24h' => 'required|boolean',
+            'timing.days.*.is_open' => 'required|boolean',
+            'timing.days.*.is_off_day' => 'required|boolean',
+            'timing.days.*.break_times' => 'nullable|array',
+            'timing.days.*.break_times.*.start' => 'required_with:timing.days.*.break_times|date_format:H:i',
+            'timing.days.*.break_times.*.end' => 'required_with:timing.days.*.break_times|date_format:H:i',
         ];
     }
 
@@ -38,31 +55,50 @@ class UpdateRestaurantTiming extends FormRequest
     {
         $validator->after(function ($validator) {
             $data = $this->all();
-            $timings = $data['timings'] ?? [];
+            $timing = $data['timing'] ?? [];
             
-            foreach ($timings as $timing) {
-                $key = $timing['key'] ?? '';
-                $value = $timing['value'] ?? null;
+            // Validate global settings
+            if (isset($timing['global'])) {
+                $global = $timing['global'];
                 
-                // Validate time format for time-related keys
-                if (str_contains($key, '_start_time') || str_contains($key, '_end_time') || 
-                    str_contains($key, '_break_start') || str_contains($key, '_break_end')) {
-                    if ($value && !preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/', $value)) {
-                        $validator->errors()->add('timings', "Invalid time format for {$key}. Use HH:MM format.");
+                // Validate global times
+                if (isset($global['start_time']) && isset($global['end_time'])) {
+                    if ($global['start_time'] >= $global['end_time']) {
+                        $validator->errors()->add('timing.global', 'Global end time must be after start time.');
                     }
                 }
                 
-                // Validate boolean values
-                if (str_contains($key, '_is_24_hours') || str_contains($key, '_is_off')) {
-                    if ($value !== null && !in_array($value, [true, false, 'true', 'false', 1, 0, '1', '0'])) {
-                        $validator->errors()->add('timings', "Invalid boolean value for {$key}.");
+                // Validate global break times
+                if (isset($global['break_times']) && is_array($global['break_times'])) {
+                    foreach ($global['break_times'] as $index => $break) {
+                        if (isset($break['start']) && isset($break['end'])) {
+                            if ($break['start'] >= $break['end']) {
+                                $validator->errors()->add('timing.global.break_times', "Break time {$index}: end time must be after start time.");
+                            }
+                        }
                     }
                 }
-                
-                // Validate array values for off_days
-                if ($key === 'off_days' && $value !== null) {
-                    if (!is_array($value) && !is_string($value)) {
-                        $validator->errors()->add('timings', "off_days must be an array or JSON string.");
+            }
+            
+            // Validate days settings
+            if (isset($timing['days']) && is_array($timing['days'])) {
+                foreach ($timing['days'] as $dayIndex => $dayData) {
+                    // Validate day times
+                    if (isset($dayData['start_time']) && isset($dayData['end_time'])) {
+                        if ($dayData['start_time'] >= $dayData['end_time']) {
+                            $validator->errors()->add('timing.days', "Day {$dayData['day']}: end time must be after start time.");
+                        }
+                    }
+                    
+                    // Validate day break times
+                    if (isset($dayData['break_times']) && is_array($dayData['break_times'])) {
+                        foreach ($dayData['break_times'] as $breakIndex => $break) {
+                            if (isset($break['start']) && isset($break['end'])) {
+                                if ($break['start'] >= $break['end']) {
+                                    $validator->errors()->add('timing.days', "Day {$dayData['day']} break time {$breakIndex}: end time must be after start time.");
+                                }
+                            }
+                        }
                     }
                 }
             }

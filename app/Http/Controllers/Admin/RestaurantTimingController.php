@@ -120,31 +120,58 @@ class RestaurantTimingController extends Controller
      */
     public function store(StoreRestaurantTiming $request)
     {
-        $data = $request->validated();
-        $restaurantId = $data['restaurant_id'];
-        $timings = $data['timings'];
+        try {
+            $data = $request->validated();
+            $restaurantId = $data['restaurant_id'] ?? null;
+            $timingData = $data['timing'] ?? null;
 
-        // Convert timings array to config array
-        $config = [];
-        foreach ($timings as $timing) {
-            $key = $timing['key'];
-            $value = $timing['value'];
-            
-            // Convert boolean strings to actual booleans
-            if (in_array($value, ['true', 'false'])) {
-                $value = $value === 'true';
+            if (!$restaurantId) {
+                return ServiceResponse::error('Restaurant ID is required', 400);
             }
+
+            if (!$timingData) {
+                return ServiceResponse::error('Timing data is required', 400);
+            }
+
+            // Convert the new structure to config array
+            $config = [];
             
-            $config[$key] = $value;
+            // Handle global settings
+            if (isset($timingData['global'])) {
+                $global = $timingData['global'];
+                $config['global_start_time'] = $global['start_time'] ?? null;
+                $config['global_end_time'] = $global['end_time'] ?? null;
+                $config['global_day_type'] = $global['day_type'] ?? null;
+                $config['global_is_24h'] = $global['is_24h'] ?? false;
+                $config['global_break_times'] = json_encode($global['break_times'] ?? []);
+            }
+
+            // Handle days settings
+            if (isset($timingData['days']) && is_array($timingData['days'])) {
+                foreach ($timingData['days'] as $dayData) {
+                    $day = strtolower($dayData['day']);
+                    $config[$day . '_day'] = $dayData['day'];
+                    $config[$day . '_start_time'] = $dayData['start_time'];
+                    $config[$day . '_end_time'] = $dayData['end_time'];
+                    $config[$day . '_status'] = $dayData['status'];
+                    $config[$day . '_is_24h'] = $dayData['is_24h'];
+                    $config[$day . '_is_open'] = $dayData['is_open'];
+                    $config[$day . '_is_off_day'] = $dayData['is_off_day'];
+                    $config[$day . '_break_times'] = json_encode($dayData['break_times'] ?? []);
+                }
+            }
+
+            // Save timing configuration
+            RestaurantTiming::setTimingConfig($restaurantId, $config);
+
+            return ServiceResponse::success(
+                'Restaurant timing configuration saved successfully',
+                ['restaurant_id' => $restaurantId, 'config' => $config]
+            );
+
+        } catch (\Exception $e) {
+            return ServiceResponse::error('Failed to save timing configuration: ' . $e->getMessage(), 500);
         }
-
-        // Save timing configuration
-        RestaurantTiming::setTimingConfig($restaurantId, $config);
-
-        return ServiceResponse::success(
-            'Restaurant timing configuration saved successfully',
-            ['restaurant_id' => $restaurantId, 'config' => $config]
-        );
     }
 
     /**
@@ -176,31 +203,58 @@ class RestaurantTimingController extends Controller
      */
     public function update(UpdateRestaurantTiming $request, string $id)
     {
-        $data = $request->validated();
-        $restaurantId = $data['restaurant_id'] ?? $id;
-        $timings = $data['timings'] ?? [];
+        try {
+            $data = $request->validated();
+            $restaurantId = $data['restaurant_id'] ?? $id;
+            $timingData = $data['timing'] ?? null;
 
-        // Convert timings array to config array
-        $config = [];
-        foreach ($timings as $timing) {
-            $key = $timing['key'];
-            $value = $timing['value'];
-            
-            // Convert boolean strings to actual booleans
-            if (in_array($value, ['true', 'false'])) {
-                $value = $value === 'true';
+            if (!$restaurantId) {
+                return ServiceResponse::error('Restaurant ID is required', 400);
             }
+
+            if (!$timingData) {
+                return ServiceResponse::error('Timing data is required', 400);
+            }
+
+            // Convert the new structure to config array
+            $config = [];
             
-            $config[$key] = $value;
+            // Handle global settings
+            if (isset($timingData['global'])) {
+                $global = $timingData['global'];
+                $config['global_start_time'] = $global['start_time'] ?? null;
+                $config['global_end_time'] = $global['end_time'] ?? null;
+                $config['global_day_type'] = $global['day_type'] ?? null;
+                $config['global_is_24h'] = $global['is_24h'] ?? false;
+                $config['global_break_times'] = json_encode($global['break_times'] ?? []);
+            }
+
+            // Handle days settings
+            if (isset($timingData['days']) && is_array($timingData['days'])) {
+                foreach ($timingData['days'] as $dayData) {
+                    $day = strtolower($dayData['day']);
+                    $config[$day . '_day'] = $dayData['day'];
+                    $config[$day . '_start_time'] = $dayData['start_time'];
+                    $config[$day . '_end_time'] = $dayData['end_time'];
+                    $config[$day . '_status'] = $dayData['status'];
+                    $config[$day . '_is_24h'] = $dayData['is_24h'];
+                    $config[$day . '_is_open'] = $dayData['is_open'];
+                    $config[$day . '_is_off_day'] = $dayData['is_off_day'];
+                    $config[$day . '_break_times'] = json_encode($dayData['break_times'] ?? []);
+                }
+            }
+
+            // Update timing configuration
+            RestaurantTiming::setTimingConfig($restaurantId, $config);
+
+            return ServiceResponse::success('Restaurant timing configuration updated successfully', [
+                'restaurant_id' => $restaurantId, 
+                'config' => $config
+            ]);
+
+        } catch (\Exception $e) {
+            return ServiceResponse::error('Failed to update timing configuration: ' . $e->getMessage(), 500);
         }
-
-        // Update timing configuration
-        RestaurantTiming::setTimingConfig($restaurantId, $config);
-
-        return ServiceResponse::success('Restaurant timing configuration updated successfully', [
-            'restaurant_id' => $restaurantId, 
-            'config' => $config
-        ]);
     }
 
     /**
