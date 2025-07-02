@@ -97,6 +97,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/restaurant/get-restaurant-config-by-id/{id}', 'getRestaurantConfigById');
     Route::get('/restaurant/meta/{id}', 'getRestaurantMeta');
     Route::get('/restaurant/with-meta/{id}', 'getRestaurantWithMeta');
+    Route::get('/restaurant/{id}/opening-hours', 'getOpeningHours');
 });
 
 Route::middleware([ExtractRestaurantId::class])->group(function () {

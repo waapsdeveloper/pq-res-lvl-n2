@@ -250,4 +250,51 @@ class HomeController extends Controller
             'floors' => $floors
         ]);
     }
+
+    /**
+     * Get grouped opening hours for a restaurant
+     */
+    public function getOpeningHours($id)
+    {
+        $restaurantId = $id;
+        $timingConfig = \App\Models\RestaurantTiming::getTimingConfig($restaurantId);
+        $days = \App\Models\RestaurantTiming::getDayOptions();
+
+        // Build an array of [day, formatted_timing]
+        $dayTimings = [];
+        foreach ($days as $dayKey => $dayName) {
+            $timing = \App\Models\RestaurantTiming::getFormattedTiming($restaurantId, $dayKey);
+            $dayTimings[] = [
+                'day' => $dayName,
+                'timing' => $timing
+            ];
+        }
+
+        // Group consecutive days with the same timing
+        $grouped = [];
+        $currentGroup = null;
+        foreach ($dayTimings as $i => $item) {
+            if ($currentGroup === null) {
+                $currentGroup = [
+                    'days' => [$item['day']],
+                    'timing' => $item['timing']
+                ];
+            } else if ($item['timing'] === $currentGroup['timing']) {
+                $currentGroup['days'][] = $item['day'];
+            } else {
+                $grouped[] = $currentGroup;
+                $currentGroup = [
+                    'days' => [$item['day']],
+                    'timing' => $item['timing']
+                ];
+            }
+        }
+        if ($currentGroup !== null) {
+            $grouped[] = $currentGroup;
+        }
+
+        return \App\Helpers\ServiceResponse::success('Opening hours retrieved successfully', [
+            'opening_hours' => $grouped
+        ]);
+    }
 }
