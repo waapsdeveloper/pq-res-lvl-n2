@@ -254,4 +254,52 @@ class BranchConfigController extends Controller
 
         return ServiceResponse::success('Restaurant config retrieved successfully', ['data' => $config]);
     }
+
+    public function updateOrderSettings(Request $request)
+    {
+        $data = $request->validate([
+            'branch_id' => 'required|exists:restaurants,id',
+            'name' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'tax' => 'nullable|numeric|min:0|max:50',
+            'currency' => 'required|string|max:3',
+            'enableDeliveryCharges' => 'nullable|boolean',
+            'enableTax' => 'nullable|boolean',
+            'dial_code' => 'required|string|max:10',
+            'delivery_charges' => 'nullable|numeric|min:0|max:1000',
+        ]);
+
+        // Find or create branch config
+        $config = BranchConfig::where('branch_id', $data['branch_id'])->first();
+        
+        if (!$config) {
+            // Create new config if it doesn't exist
+            $config = new BranchConfig();
+            $config->branch_id = $data['branch_id'];
+        }
+
+        // Update config with order settings
+        $config->currency = $data['currency'];
+        $config->dial_code = $data['dial_code'];
+        $config->tax = $data['enableTax'] ? ($data['tax'] ?? 0) : 0;
+        $config->delivery_charges = $data['enableDeliveryCharges'] ? ($data['delivery_charges'] ?? 0) : 0;
+        $config->currency_symbol = Currency::where('currency_code', $data['currency'])->value('currency_symbol');
+        $config->save();
+
+        // Update restaurant with order settings
+        $restaurant = Restaurant::find($data['branch_id']);
+        if ($restaurant) {
+            $restaurant->name = $data['name'] ?? $restaurant->name;
+            $restaurant->country = $data['country'] ?? $restaurant->country;
+            $restaurant->currency = $data['currency'];
+            $restaurant->dial_code = $data['dial_code'];
+            $restaurant->enableTax = $data['enableTax'];
+            $restaurant->enableDeliveryCharges = $data['enableDeliveryCharges'];
+            $restaurant->tax = $data['enableTax'] ? ($data['tax'] ?? 0) : 0;
+            $restaurant->delivery_charges = $data['enableDeliveryCharges'] ? ($data['delivery_charges'] ?? 0) : 0;
+            $restaurant->save();
+        }
+
+        return ServiceResponse::success('Order settings updated successfully', ['data' => $config]);
+    }
 }
