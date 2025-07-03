@@ -123,6 +123,8 @@ Route::middleware([ExtractRestaurantId::class])->group(function () {
         Route::post('/make-order-bookings', 'makeOrderBookings')->middleware('auth:api');
         Route::get('/search-customer-order', 'searchCustomerOrder');
         Route::get('/track-customer-order/{order_number}', 'trackCustomerOrder');
+        Route::put('/update-order-charges/{order_id}', 'updateOrderCharges')->middleware('auth:api');
+        Route::get('/order-summary/{order_id}', 'getOrderSummary')->middleware('auth:api');
     });
 });
 

@@ -37,6 +37,9 @@ class AddOrderBookingResource extends JsonResource
             'final_total' => $obj->final_total,
             'tax_percentage' => $obj->tax_percentage,
             'tax_amount' => $obj->tax_amount,
+            'tips' => $obj->tips,
+            'tips_amount' => $obj->tips_amount,
+            'delivery_charges' => $obj->delivery_charges,
             'products' => $obj->orderProducts->map(function ($orderProduct) {
                 return [
                     'name' => $orderProduct->product->name,

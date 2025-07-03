@@ -35,6 +35,11 @@ class OrderResource extends JsonResource
             'coupon_code' => $obj->coupon_code,
             'discount_value' => $obj->discount_value,
             'final_total' => $obj->final_total,
+            'tax_percentage' => $obj->tax_percentage,
+            'tax_amount' => $obj->tax_amount,
+            'tips' => $obj->tips,
+            'tips_amount' => $obj->tips_amount,
+            'delivery_charges' => $obj->delivery_charges,
             'products' => $obj->orderProducts ? $obj->orderProducts->map(function ($orderProduct) {
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [

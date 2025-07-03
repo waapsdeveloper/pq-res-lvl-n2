@@ -46,6 +46,11 @@ class MakeOrderBooking extends FormRequest
             'coupon_code' => 'nullable|string',
             'discount_value' => 'nullable|numeric',
             'final_total' => 'nullable|numeric',
+            'tips' => 'nullable|numeric|min:0',
+            'tips_amount' => 'nullable|numeric|min:0',
+            'delivery_charges' => 'nullable|numeric|min:0',
+            'tax_percentage' => 'nullable|numeric|min:0|max:100',
+            'tax_amount' => 'nullable|numeric|min:0',
 
         ];
     }

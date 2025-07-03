@@ -138,6 +138,9 @@ class OrderController extends Controller
         $couponCode = $request->coupon_code;
         $discountValue = $request->discount_value;
         $finalTotal = $request->final_total;
+        $tips = $request->tips ?? 0;
+        $tips_amount = $request->tips_amount ?? 0;
+        $delivery_charges = $request->delivery_charges ?? 0;
 
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
@@ -163,6 +166,9 @@ class OrderController extends Controller
             'final_total' => $finalTotal,
             'tax_percentage' => $tax_percentage,
             'tax_amount' => $tax_amount,
+            'tips' => $tips,
+            'tips_amount' => $tips_amount,
+            'delivery_charges' => $delivery_charges,
         ]);
         $identifier = Identifier::make('Order', $order->id, 3);
         $invoice_no = Identifier::make('Invoice', $order->id, 3);
@@ -228,5 +234,79 @@ class OrderController extends Controller
 
         $data = new AddOrderBookingResource($order);
         return ServiceResponse::success("Customer Order Tracked Successfully", ['order' => $data]);
+    }
+
+    /**
+     * Update tips and delivery charges for an order
+     */
+    public function updateOrderCharges(Request $request, $orderId)
+    {
+        $request->validate([
+            'tips' => 'nullable|numeric|min:0',
+            'tips_amount' => 'nullable|numeric|min:0',
+            'delivery_charges' => 'nullable|numeric|min:0',
+        ]);
+
+        $order = Order::where('id', $orderId)
+            ->where('customer_id', auth()->user()->id)
+            ->first();
+
+        if (!$order) {
+            return ServiceResponse::error("Order not found", 404);
+        }
+
+        // Update the order with new charges
+        $order->update([
+            'tips' => $request->tips ?? $order->tips,
+            'tips_amount' => $request->tips_amount ?? $order->tips_amount,
+            'delivery_charges' => $request->delivery_charges ?? $order->delivery_charges,
+        ]);
+
+        // Recalculate final total if needed
+        if ($request->has('recalculate_total') && $request->recalculate_total) {
+            $newTotal = $order->total_price + $order->delivery_charges + $order->tips_amount;
+            $order->update(['final_total' => $newTotal]);
+        }
+
+        $order->load('orderProducts.product', 'customer', 'restaurant', 'table');
+        $data = new AddOrderBookingResource($order);
+
+        return ServiceResponse::success("Order charges updated successfully", ['order' => $data]);
+    }
+
+    /**
+     * Get order summary with all charges
+     */
+    public function getOrderSummary($orderId)
+    {
+        $order = Order::where('id', $orderId)
+            ->where('customer_id', auth()->user()->id)
+            ->first();
+
+        if (!$order) {
+            return ServiceResponse::error("Order not found", 404);
+        }
+
+        $summary = [
+            'order_number' => $order->order_number,
+            'subtotal' => $order->total_price,
+            'discount' => $order->discount ?? 0,
+            'tax_percentage' => $order->tax_percentage ?? 0,
+            'tax_amount' => $order->tax_amount ?? 0,
+            'delivery_charges' => $order->delivery_charges ?? 0,
+            'tips' => $order->tips ?? 0,
+            'tips_amount' => $order->tips_amount ?? 0,
+            'final_total' => $order->final_total,
+            'breakdown' => [
+                'subtotal' => $order->total_price,
+                'discount' => $order->discount ?? 0,
+                'tax' => $order->tax_amount ?? 0,
+                'delivery' => $order->delivery_charges ?? 0,
+                'tips' => $order->tips_amount ?? 0,
+                'total' => $order->final_total,
+            ]
+        ];
+
+        return ServiceResponse::success("Order summary retrieved successfully", ['summary' => $summary]);
     }
 }
