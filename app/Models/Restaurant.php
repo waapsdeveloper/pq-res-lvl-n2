@@ -35,6 +35,13 @@ class Restaurant extends Model
         'is_active',
         'image',
         'currency',
+        'country',
+        'tax',
+        'dial_code',
+        'tips',
+        'delivery_charges',
+        'enableTax',
+        'enableDeliveryCharges',
     ];
 
     // Attributes that should be hidden from arrays (e.g., sensitive data)
@@ -45,6 +52,11 @@ class Restaurant extends Model
 
     protected $casts = [
         'rating' => 'float',
+        'tax' => 'decimal:2',
+        'tips' => 'decimal:2',
+        'delivery_charges' => 'decimal:2',
+        'enableTax' => 'boolean',
+        'enableDeliveryCharges' => 'boolean',
     ];
 
     public function timings()

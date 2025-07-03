@@ -138,6 +138,7 @@ class RestaurantController extends Controller
             'currency' => $data['currency'] ?? 'USD',
             'dial_code' => $data['dial_code'] ?? '+1',
             'delivery_charges' => $data['delivery_charges'] ?? 0,
+            'country' => $data['country'] ?? 'United States',
             'tips' => $data['tips'] ?? 0,
 
         ]);

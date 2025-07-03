@@ -100,11 +100,15 @@ class BranchConfigController extends Controller
     {
         $data = $request->validate([
             'branch_id' => 'required|exists:restaurants,id',
+            'country' => 'nullable|string|max:255',
             'tax' => 'nullable|numeric|min:0|max:50',
             'currency' => 'required|string|max:3',
             'dial_code' => 'required|string|max:10',
             'currency_symbol' => 'nullable|string|max:10',
-
+            'delivery_charges' => 'nullable|numeric|min:0|max:1000',
+            'tips' => 'nullable|numeric|min:0|max:50',
+            'enableTax' => 'nullable|boolean',
+            'enableDeliveryCharges' => 'nullable|boolean',
         ]);
 
         // Check if config already exists for this branch
@@ -122,6 +126,9 @@ class BranchConfigController extends Controller
             $restaurant->tax = $data['tax'] ?? 0; // Default tax to 0 if not provided
             $restaurant->currency = $data['currency'];
             $restaurant->dial_code = $data['dial_code'];
+            $restaurant->country = $data['country'] ?? null;
+            $restaurant->enableTax = $data['enableTax'] ?? true;
+            $restaurant->enableDeliveryCharges = $data['enableDeliveryCharges'] ?? true;
             $restaurant->save();
         }
 
@@ -146,61 +153,53 @@ class BranchConfigController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $data = $request->validate([
-        //     'branch_id' => [
-        //         'required',
-        //         'exists:restaurants,id',
-        //         Rule::unique('branch_configs', 'branch_id')->ignore($id),
-        //     ],
-        //     'tax' => 'nullable|numeric|min:0|max:100',
-        //     'currency' => 'nullable|string|max:3',
-        //     'dial_code' => 'nullable|string|max:10',
-        // ]);
-
-        // Find the configuration by ID
-
-
         $data = $request->validate([
             'branch_id' => 'required|exists:restaurants,id',
+            'country' => 'nullable|string|max:255',
             'tax' => 'nullable|numeric|min:0|max:50',
             'currency' => 'required|string|max:3',
             'dial_code' => 'required|string|max:10',
             'currency_symbol' => 'nullable|string|max:10',
             'tips' => 'nullable|numeric|min:0|max:50',
             'delivery_charges' => 'nullable|numeric|min:0|max:1000',
+            'enableTax' => 'nullable|boolean',
+            'enableDeliveryCharges' => 'nullable|boolean',
         ]);
-
 
         $config = BranchConfig::find($id);
 
         if (!$config) {
             return ServiceResponse::error('Branch configuration not found', ['data' => null], 404);
-            // Update the existing configuration
-            // $config->update($data);
-            // $message = 'Branch configuration updated successfully';
         }
-        // Create a new configuration if not found
+
+        // Update the existing configuration
         $config->update([
-            'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
+            'country' => $data['country'] ?? null,
+            'tax' => $data['tax'] ?? 0,
             'currency' => $data['currency'],
             'dial_code' => $data['dial_code'],
-            'tips' => $data['tips'] ?? 0, // 
-            'delivery_charges' => $data['delivery_charges'] ?? 0, // Default
+            'tips' => $data['tips'] ?? 0,
+            'delivery_charges' => $data['delivery_charges'] ?? 0,
+            'enableTax' => $data['enableTax'] ?? true,
+            'enableDeliveryCharges' => $data['enableDeliveryCharges'] ?? true,
             'currency_symbol' => Currency::where('currency_code', $data['currency'])->value('currency_symbol'),
         ]);
 
         // Update the restaurant with the tax, currency, and dial code
         $restaurant = \App\Models\Restaurant::find($data['branch_id']);
         if ($restaurant) {
-            $restaurant->tax = $data['tax'] ?? 0; // Default tax to 0 if not provided
+            $restaurant->tax = $data['tax'] ?? 0;
             $restaurant->currency = $data['currency'];
             $restaurant->dial_code = $data['dial_code'];
+            $restaurant->country = $data['country'] ?? null;
             $restaurant->tips = $data['tips'] ?? 0;
-            $restaurant->delivery_charges = $data['delivery_charges'] ?? 0; // Default delivery
+            $restaurant->delivery_charges = $data['delivery_charges'] ?? 0;
+            $restaurant->enableTax = $data['enableTax'] ?? true;
+            $restaurant->enableDeliveryCharges = $data['enableDeliveryCharges'] ?? true;
             $restaurant->save();
         }
 
-        $message = 'Branch configuration created successfully';
+        $message = 'Branch configuration updated successfully';
 
         // Fetch the related restaurant (branch) details
         $config->load('branch');
@@ -241,16 +240,17 @@ class BranchConfigController extends Controller
             // If no config exists, create a default one
             $config = BranchConfig::create([
                 'branch_id' => $id,
+                'country' => null,
                 'currency' => 'USD', // Default currency, can be changed later
                 'tax' => 0, // Default tax, can be changed later
                 'dial_code' => '+1', // Default dial code, can be changed later
                 'currency_symbol' => '$', // Default currency symbol, can be changed later
                 'tips' => 0,
-                'delivery_charges' => 0, // Default delivery
+                'delivery_charges' => 0, // Default delivery charges
+                'enableTax' => true, // Default enable tax
+                'enableDeliveryCharges' => true, // Default enable delivery charges
             ]);
         }
-
-
 
         return ServiceResponse::success('Restaurant config retrieved successfully', ['data' => $config]);
     }
