@@ -293,8 +293,87 @@ class HomeController extends Controller
             $grouped[] = $currentGroup;
         }
 
+        // Format the grouped data into readable strings
+        $formattedHours = [];
+        foreach ($grouped as $group) {
+            $daysCount = count($group['days']);
+            
+            if ($daysCount === 1) {
+                // Single day
+                $formattedHours[] = $group['days'][0] . ': ' . $group['timing'];
+            } else {
+                // Multiple consecutive days
+                $firstDay = $group['days'][0];
+                $lastDay = $group['days'][$daysCount - 1];
+                $formattedHours[] = $firstDay . ' to ' . $lastDay . ': ' . $group['timing'];
+            }
+        }
+
         return \App\Helpers\ServiceResponse::success('Opening hours retrieved successfully', [
-            'opening_hours' => $grouped
+            'opening_hours' => $formattedHours,
+            'raw_data' => $grouped // Keep the raw data for backward compatibility
+        ]);
+    }
+
+    /**
+     * Get formatted opening hours for a restaurant (formatted as requested)
+     */
+    public function getFormattedOpeningHours($id)
+    {
+        $restaurantId = $id;
+        $days = \App\Models\RestaurantTiming::getDayOptions();
+
+        // Build an array of [day, formatted_timing]
+        $dayTimings = [];
+        foreach ($days as $dayKey => $dayName) {
+            $timing = \App\Models\RestaurantTiming::getFormattedTiming($restaurantId, $dayKey);
+            $dayTimings[] = [
+                'day' => $dayName,
+                'timing' => $timing
+            ];
+        }
+
+        // Group consecutive days with the same timing
+        $grouped = [];
+        $currentGroup = null;
+        foreach ($dayTimings as $i => $item) {
+            if ($currentGroup === null) {
+                $currentGroup = [
+                    'days' => [$item['day']],
+                    'timing' => $item['timing']
+                ];
+            } else if ($item['timing'] === $currentGroup['timing']) {
+                $currentGroup['days'][] = $item['day'];
+            } else {
+                $grouped[] = $currentGroup;
+                $currentGroup = [
+                    'days' => [$item['day']],
+                    'timing' => $item['timing']
+                ];
+            }
+        }
+        if ($currentGroup !== null) {
+            $grouped[] = $currentGroup;
+        }
+
+        // Format the grouped data into readable strings exactly as requested
+        $formattedHours = [];
+        foreach ($grouped as $group) {
+            $daysCount = count($group['days']);
+            
+            if ($daysCount === 1) {
+                // Single day
+                $formattedHours[] = $group['days'][0] . "\n" . $group['timing'];
+            } else {
+                // Multiple consecutive days
+                $firstDay = $group['days'][0];
+                $lastDay = $group['days'][$daysCount - 1];
+                $formattedHours[] = $firstDay . ' to ' . $lastDay . "\n" . $group['timing'];
+            }
+        }
+
+        return \App\Helpers\ServiceResponse::success('Formatted opening hours retrieved successfully', [
+            'formatted_opening_hours' => $formattedHours
         ]);
     }
 }
