@@ -24,8 +24,8 @@ return new class extends Migration
             }
 
             // Change data types for existing fields if they exist
-            if (Schema::hasColumn('restaurants', 'tax')) {
-                $table->decimal('tax', 8, 2)->default(0)->change();
+            if (!Schema::hasColumn('restaurants', 'tax')) {
+                $table->decimal('tax', 8, 2)->default(0);
             }
             if (Schema::hasColumn('restaurants', 'tips')) {
                 $table->decimal('tips', 8, 2)->default(0)->change();
