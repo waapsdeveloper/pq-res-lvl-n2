@@ -18,9 +18,9 @@ return new class extends Migration
             $table->boolean('enableDeliveryCharges')->default(true)->after('enableTax');
             
             // Change data types for existing fields
-            $table->decimal('tax', 8, 2)->default(0)->change();
-            $table->decimal('tips', 8, 2)->default(0)->change();
-            $table->decimal('delivery_charges', 8, 2)->default(0)->change();
+            $table->decimal('tax', 8, 2)->default(0);
+            $table->decimal('tips', 8, 2)->default(0);
+            $table->decimal('delivery_charges', 8, 2)->default(0);
         });
     }
 
@@ -34,9 +34,9 @@ return new class extends Migration
             $table->dropColumn(['country', 'enableTax', 'enableDeliveryCharges']);
             
             // Revert data types
-            $table->string('tax')->nullable()->change();
-            $table->string('tips')->nullable()->change();
-            $table->string('delivery_charges')->nullable()->change();
+            $table->dropColumn('tax')->nullable();
+            $table->dropColumn('tips')->nullable();
+            $table->dropColumn('delivery_charges')->nullable();
         });
     }
 };
