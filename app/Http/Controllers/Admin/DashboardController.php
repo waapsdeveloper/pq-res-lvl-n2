@@ -62,19 +62,28 @@ class DashboardController extends Controller
 
     public function topSellingProducts(Request $request)
     {
+        // Check for restaurant_id in the request
+        $restaurantId = $request->input('restaurant_id');
+        if (!$restaurantId) {
+            return ServiceResponse::error('restaurant_id is required', [], 400);
+        }
         // Get the filter parameter from the request, default to 'month'
         $filter = $request->input('filter', 'month');
 
         // Apply date filtering based on the filter parameter
-        $query = OrderProduct::query();
+        $query = OrderProduct::query()
+            ->whereHas('order', function ($q) use ($restaurantId) {
+                $q->where('restaurant_id', $restaurantId);
+            });
+
 
         if ($filter === 'today') {
             $query->whereDate('created_at', today());
         } elseif ($filter === 'weekly') {
             $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
-        } elseif ($filter === 'monthly') {
+        } elseif ($filter === 'monthly' || $filter === 'month') {
             $query->whereMonth('created_at', now()->month)
-                  ->whereYear('created_at', now()->year);
+                ->whereYear('created_at', now()->year);
         }
 
         // Fetch top 5 selling products with their quantities
@@ -99,7 +108,7 @@ class DashboardController extends Controller
             $percentage = $totalQuantity > 0 ? ($product->total_quantity / $totalQuantity) * 100 : 0;
 
             $productLabels[] = $productName;
-            $productPercentages[] = round($percentage, 2) . ' %'; // Round to 2 decimal places
+            $productPercentages[] = round($percentage, 2); // Just the number, not with '%'
         }
 
         // Pie chart data
@@ -110,6 +119,8 @@ class DashboardController extends Controller
 
         return ServiceResponse::success('Products sorted by total quantity', ['order_products' => $chartOptions]);
     }
+    // No additional code needed here for your endpoint to work.
+    // The topSellingProducts method already handles the filter and restaurant_id as per your request.
 
     public function totalRevenue(Request $request)
     {
@@ -141,7 +152,7 @@ class DashboardController extends Controller
             'total_revenue' => $totalRevenue,
         ]);
     }
-  
+
     public function latestTables()
     {
         // Fetch tables with their total orders and total amount
@@ -155,7 +166,7 @@ class DashboardController extends Controller
             })
             ->sortByDesc('total_amount') // Sort tables by total amount in descending order
             ->take(8); // Limit to the top 8 tables
-    
+
         // Transform the data to include only the required keys
         $tables = $tables->map(function ($table) {
             return [
@@ -165,11 +176,11 @@ class DashboardController extends Controller
                 'total_amount' => $table->total_amount,
             ];
         });
-    
+
         return ServiceResponse::success('Tables fetched successfully', ['tables' => $tables]);
     }
 
-    
+
 
     public function customerChartData(Request $request)
     {
@@ -638,29 +649,36 @@ class DashboardController extends Controller
             ],
         ]);
     }
-    public function dashboardTopCards()
+
+    public function dashboardTopCards(Request $request)
     {
-        // Calculate total number of orders
-        $totalOrders = Order::count();
-    
-        // Calculate total amount generated
-        $totalAmount = Order::sum('total_price');
-    
+        $restaurantId = $request->input('restaurant_id');
+        if (!$restaurantId) {
+            return ServiceResponse::error('restaurant_id is required', [], 400);
+        }
+
+        // Calculate total number of orders for this restaurant
+        $totalOrders = Order::where('restaurant_id', $restaurantId)->count();
+
+        // Calculate total amount generated for this restaurant
+        $totalAmount = Order::where('restaurant_id', $restaurantId)->sum('total_price');
+
         // Prepare data for the graph (e.g., last 10 days' revenue and orders)
         $graphData = Order::selectRaw('DATE(created_at) as date, SUM(total_price) as total_amount, COUNT(*) as total_orders')
+            ->where('restaurant_id', $restaurantId)
             ->groupBy('date')
             ->orderBy('date', 'desc')
             ->limit(10)
             ->get()
             ->reverse(); // Reverse to show oldest first
-    
+
         // Format graph data for the response
         $categories = $graphData->pluck('date')->map(function ($date) {
             return date('d M', strtotime($date)); // Format date as "01 Jan"
         });
         $amountSeries = $graphData->pluck('total_amount');
         $ordersSeries = $graphData->pluck('total_orders');
-    
+
         return ServiceResponse::success('Dashboard top cards data fetched successfully', [
             'total_orders' => $totalOrders,
             'total_amount' => $totalAmount,
@@ -680,5 +698,3 @@ class DashboardController extends Controller
         ]);
     }
 }
-
-
