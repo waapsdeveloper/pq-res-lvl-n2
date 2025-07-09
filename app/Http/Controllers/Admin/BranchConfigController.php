@@ -271,7 +271,7 @@ class BranchConfigController extends Controller
 
         // Find or create branch config
         $config = BranchConfig::where('branch_id', $data['branch_id'])->first();
-        
+
         if (!$config) {
             // Create new config if it doesn't exist
             $config = new BranchConfig();

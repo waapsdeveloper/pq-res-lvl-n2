@@ -27,9 +27,7 @@ return new class extends Migration
             if (!Schema::hasColumn('restaurants', 'tax')) {
                 $table->decimal('tax', 8, 2)->default(0);
             }
-            if (Schema::hasColumn('restaurants', 'tips')) {
-                $table->decimal('tips', 8, 2)->default(0)->change();
-            }
+
             if (Schema::hasColumn('restaurants', 'delivery_charges')) {
                 $table->decimal('delivery_charges', 8, 2)->default(0)->change();
             }
