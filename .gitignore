@@ -18,6 +18,10 @@
 /storage/framework
 /storage/logs
 /storage/app/public/images/restaurant/
+/storage/app/public/images/category/
+/storage/app/public/images/expense/
+/storage/app/public/images/product/
+/storage/app/public/images/user/
 
 # Vendor & Environment
 /vendor
