@@ -18,7 +18,7 @@ class RestaurantMeta extends Model
     ];
 
     protected $casts = [
-        'meta_value' => 'json',
+        'meta_value' => 'string',
     ];
 
     /**

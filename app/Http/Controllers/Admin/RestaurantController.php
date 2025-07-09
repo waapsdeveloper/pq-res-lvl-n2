@@ -212,6 +212,10 @@ class RestaurantController extends Controller
             }
         }
         $data = $request->validated();
+        
+        // Debug: Log the entire request data
+        logger()->info('Restaurant update request data:', $request->all());
+        logger()->info('Validated data:', $data);
 
         $restaurant = Restaurant::find($id);
 
@@ -267,16 +271,20 @@ class RestaurantController extends Controller
 
         // Update meta data if provided
         if (isset($data['meta']) && is_array($data['meta'])) {
-            foreach ($data['meta'] as $key => $value) {
-                RestaurantMeta::updateOrCreate(
-                    [
-                        'restaurant_id' => $restaurant->id,
-                        'meta_key' => $key,
-                    ],
-                    [
-                        'meta_value' => $value,
-                    ]
-                );
+            logger()->info('Meta data received:', $data['meta']);
+            foreach ($data['meta'] as $metaItem) {
+                if (isset($metaItem['key'])) {
+                    logger()->info('Processing meta item:', $metaItem);
+                    RestaurantMeta::updateOrCreate(
+                        [
+                            'restaurant_id' => $restaurant->id,
+                            'meta_key' => $metaItem['key'],
+                        ],
+                        [
+                            'meta_value' => $metaItem['value'] ?? '',
+                        ]
+                    );
+                }
             }
         }
 
