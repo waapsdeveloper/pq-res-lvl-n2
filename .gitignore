@@ -1,31 +1,50 @@
+# PHPUnit & Testing
 /.phpunit.cache
+.phpunit.result.cache
+
+# Node Modules & Build
 /node_modules
 /public/build
 /public/hot
+
+# Public assets
 /public/images
 /public/storage
+
+# Storage
 /storage/*.key
 /storage/pail
 /storage/app/private
 /storage/framework
 /storage/logs
-/storage/*.key
+/storage/app/public/images/restaurant/
+
+# Vendor & Environment
 /vendor
 .env
 .env.backup
 .env.production
+
+# PHP & Laravel tools
 .phpactor.json
-.phpunit.result.cache
 Homestead.json
 Homestead.yaml
 auth.json
-npm-debug.log
-yarn-error.log
+
+# Editor & IDE config
 /.fleet
 /.idea
 /.vscode
 /.zed
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Custom files (if you want to exclude these)
 .txt
 new.txt
+
+# Ignored specific files
 app/Mail/ForgotUser.php
 resources/views/mail/forgot-user.blade.php
