@@ -22,6 +22,7 @@
 /storage/app/public/images/expense/
 /storage/app/public/images/product/
 /storage/app/public/images/user/
+/storage/app/public/images
 
 # Vendor & Environment
 /vendor
