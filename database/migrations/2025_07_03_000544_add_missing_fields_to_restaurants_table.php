@@ -42,13 +42,19 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('restaurants', function (Blueprint $table) {
-            // Remove added fields
-            $table->dropColumn(['country', 'enableTax', 'enableDeliveryCharges']);
+            // Remove added fields if they exist
+            foreach (['country', 'enableTax', 'enableDeliveryCharges'] as $col) {
+                if (Schema::hasColumn('restaurants', $col)) {
+                    $table->dropColumn($col);
+                }
+            }
 
-            // Revert data types
-            $table->string('tax')->nullable()->change();
-            $table->string('tips')->nullable()->change();
-            $table->string('delivery_charges')->nullable()->change();
+            // Revert data types for changed fields if they exist
+            foreach (['tax', 'tips', 'delivery_charges'] as $col) {
+                if (Schema::hasColumn('restaurants', $col)) {
+                    $table->string($col)->nullable()->change();
+                }
+            }
         });
     }
 };
