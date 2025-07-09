@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\MigrationsTableSeeder;
 
 
 class DatabaseSeeder extends Seeder
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ExpenseCategorySeeder::class);
         $this->call(ExpenseSeeder::class);
         $this->call(CouponSeeder::class);
+        $this->call(MigrationsTableSeeder::class);
         
         // $this->call(OrderSeeder::class); //5
         // $this->call(OrderBillingSeeder::class); //6

@@ -32,7 +32,6 @@ class OrderSeeder extends Seeder
                 'restaurant_id' => $order['restaurant_id'],
                 'total_price' => $order['total_price'],
                 "is_paid" =>$order['is_paid'],
-                dd($order['is_paid']),
 
                 'discount' => $order['discount'],
                 'created_at' => now(),

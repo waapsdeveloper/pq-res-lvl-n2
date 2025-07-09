@@ -383,7 +383,7 @@ class OrderController extends Controller
         $order->update(
             [
                 'identifier' => Identifier::make('Order', $order->id, 3),
-                'invoice_no' => Identifier::make('Invoice', $order->id, 3)
+                'invoice_no' => Identifier::make('Invoice', $order->id, 3) . '-' . $order->order_number . '-' . $order->id . '-' . $order->created_at->format('Ymd')
             ]
         );
 
