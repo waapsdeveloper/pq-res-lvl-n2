@@ -42,6 +42,7 @@ class Restaurant extends Model
         'delivery_charges',
         'enableTax',
         'enableDeliveryCharges',
+        'home_page_title',
     ];
 
     // Attributes that should be hidden from arrays (e.g., sensitive data)

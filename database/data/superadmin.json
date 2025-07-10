@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Super Admin",
+        "email": "superadmin@email.com",
+        "password": "admin123$",
+        "role_id": 1,
+        "restaurant_id": null,
+        "status": "active",
+        "address": "123 Main St",
+        "city": "New York",
+        "state": "NY",
+        "country": "USA",
+        "image": "images/user/user-1.png",
+        "dial_code": "+1"
+    }
+]

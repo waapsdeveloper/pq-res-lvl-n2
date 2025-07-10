@@ -50,6 +50,7 @@ class RestaurantListResourse extends JsonResource
             "logo" => $logo,
             "copyright_text" => $obj->copyright_text ?? null,
             'is_active' => $obj->is_active,
+            "home_page_title" => $obj->home_page_title ?? null,
             "meta" => $meta, // Add meta data to response
             "settings" => $obj->settings ?
                 [

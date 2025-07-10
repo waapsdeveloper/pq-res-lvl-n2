@@ -106,6 +106,7 @@ class RestaurantController extends Controller
             'status' => $data['status'] ?? 'active',
             'copyright_text' => $data['copyright_text'] ?? null,
             'rating' => $data['rating'] ?? 0,
+            'home_page_title' => $data['home_page_title'] ?? null,
         ]);
 
         // Process image, favicon, and logo (Base64 conversion)
@@ -242,6 +243,7 @@ class RestaurantController extends Controller
             'status' => $data['status'] ?? $restaurant->status,
             'copyright_text' => $data['copyright_text'] ?? $restaurant->copyright_text,
             'rating' => $data['rating'] ?? $restaurant->rating,
+            'home_page_title' => $data['home_page_title'] ?? $restaurant->home_page_title,
         ]);
 
         $restaurant->save(); // Save the changes

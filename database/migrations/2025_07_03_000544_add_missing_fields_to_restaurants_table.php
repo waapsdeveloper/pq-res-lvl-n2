@@ -22,6 +22,9 @@ return new class extends Migration
             if (!Schema::hasColumn('restaurants', 'enableDeliveryCharges')) {
                 $table->boolean('enableDeliveryCharges')->default(true)->after('enableTax');
             }
+            if (!Schema::hasColumn('restaurants', 'home_page_title')) {
+                $table->string('home_page_title', 60)->nullable()->after('name');
+            }
 
             // Change data types for existing fields if they exist
             if (!Schema::hasColumn('restaurants', 'tax')) {
@@ -45,6 +48,9 @@ return new class extends Migration
                 if (Schema::hasColumn('restaurants', $col)) {
                     $table->dropColumn($col);
                 }
+            }
+            if (Schema::hasColumn('restaurants', 'home_page_title')) {
+                $table->dropColumn('home_page_title');
             }
 
             // Revert data types for changed fields if they exist

@@ -63,6 +63,7 @@ class UpdateRestaurant extends FormRequest
             'meta' => 'nullable|array',
             'meta.*.key' => 'required|string',
             'meta.*.value' => 'nullable|string',
+            'home_page_title' => 'nullable|string|max:60',
         ];
     }
     protected function failedValidation(Validator $validator)

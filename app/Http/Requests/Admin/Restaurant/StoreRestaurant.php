@@ -62,6 +62,7 @@ class StoreRestaurant extends FormRequest
             'timings.*.value' => 'nullable',
             'meta' => 'nullable|array',
             'meta.*' => 'nullable|string',
+            'home_page_title' => 'nullable|string|max:60',
         ];
     }
 
