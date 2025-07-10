@@ -137,8 +137,9 @@ class BranchConfigController extends Controller
 
     public function show($id)
     {
-        $config = BranchConfig::with('branch')->findOrFail($id);
-
+        
+        $config = BranchConfig::with('branch')->where('branch_id', $id)->first();
+        
         // Access the restaurant (branch) details through the relationship
         $restaurant = $config->branch;
 
