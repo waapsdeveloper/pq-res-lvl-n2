@@ -164,6 +164,44 @@ class RestaurantTimingController extends Controller
             // Save timing configuration
             RestaurantTiming::setTimingConfig($restaurantId, $config);
 
+            // --- Sync legacy meta keys for compatibility ---
+            $legacyDays = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+            foreach ($legacyDays as $day) {
+                // Start/End time
+                if (isset($config[$day . '_start_time'])) {
+                    RestaurantTiming::setTimingValue($restaurantId, $day . '_start_time', $config[$day . '_start_time']);
+                }
+                if (isset($config[$day . '_end_time'])) {
+                    RestaurantTiming::setTimingValue($restaurantId, $day . '_end_time', $config[$day . '_end_time']);
+                }
+                // 24h
+                if (isset($config[$day . '_is_24h'])) {
+                    RestaurantTiming::setTimingValue($restaurantId, $day . '_is_24_hours', $config[$day . '_is_24h'] ? 1 : 0);
+                }
+                // Off day
+                if (isset($config[$day . '_is_off_day'])) {
+                    RestaurantTiming::setTimingValue($restaurantId, $day . '_is_off', $config[$day . '_is_off_day'] ? 1 : 0);
+                }
+                // Break times (optional, for future use)
+                if (isset($config[$day . '_break_times'])) {
+                    $breaks = json_decode($config[$day . '_break_times'], true);
+                    if (is_array($breaks) && count($breaks) > 0) {
+                        // Use first break for legacy keys
+                        $firstBreak = $breaks[0];
+                        if (isset($firstBreak['start'])) {
+                            RestaurantTiming::setTimingValue($restaurantId, $day . '_break_start', $firstBreak['start']);
+                        }
+                        if (isset($firstBreak['end'])) {
+                            RestaurantTiming::setTimingValue($restaurantId, $day . '_break_end', $firstBreak['end']);
+                        }
+                    } else {
+                        // Clear break times if none
+                        RestaurantTiming::setTimingValue($restaurantId, $day . '_break_start', null);
+                        RestaurantTiming::setTimingValue($restaurantId, $day . '_break_end', null);
+                    }
+                }
+            }
+
             return ServiceResponse::success(
                 'Restaurant timing configuration saved successfully',
                 ['restaurant_id' => $restaurantId, 'config' => $config]
@@ -246,6 +284,44 @@ class RestaurantTimingController extends Controller
 
             // Update timing configuration
             RestaurantTiming::setTimingConfig($restaurantId, $config);
+
+            // --- Sync legacy meta keys for compatibility ---
+            $legacyDays = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+            foreach ($legacyDays as $day) {
+                // Start/End time
+                if (isset($config[$day . '_start_time'])) {
+                    RestaurantTiming::setTimingValue($restaurantId, $day . '_start_time', $config[$day . '_start_time']);
+                }
+                if (isset($config[$day . '_end_time'])) {
+                    RestaurantTiming::setTimingValue($restaurantId, $day . '_end_time', $config[$day . '_end_time']);
+                }
+                // 24h
+                if (isset($config[$day . '_is_24h'])) {
+                    RestaurantTiming::setTimingValue($restaurantId, $day . '_is_24_hours', $config[$day . '_is_24h'] ? 1 : 0);
+                }
+                // Off day
+                if (isset($config[$day . '_is_off_day'])) {
+                    RestaurantTiming::setTimingValue($restaurantId, $day . '_is_off', $config[$day . '_is_off_day'] ? 1 : 0);
+                }
+                // Break times (optional, for future use)
+                if (isset($config[$day . '_break_times'])) {
+                    $breaks = json_decode($config[$day . '_break_times'], true);
+                    if (is_array($breaks) && count($breaks) > 0) {
+                        // Use first break for legacy keys
+                        $firstBreak = $breaks[0];
+                        if (isset($firstBreak['start'])) {
+                            RestaurantTiming::setTimingValue($restaurantId, $day . '_break_start', $firstBreak['start']);
+                        }
+                        if (isset($firstBreak['end'])) {
+                            RestaurantTiming::setTimingValue($restaurantId, $day . '_break_end', $firstBreak['end']);
+                        }
+                    } else {
+                        // Clear break times if none
+                        RestaurantTiming::setTimingValue($restaurantId, $day . '_break_start', null);
+                        RestaurantTiming::setTimingValue($restaurantId, $day . '_break_end', null);
+                    }
+                }
+            }
 
             return ServiceResponse::success('Restaurant timing configuration updated successfully', [
                 'restaurant_id' => $restaurantId, 
