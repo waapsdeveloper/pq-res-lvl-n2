@@ -17,7 +17,7 @@ class ProductsController extends Controller
     {
         // Set default pagination parameters
         $page = $request->input('page', 1);
-        $perpage = $request->input('perpage', 100);
+        $perpage = $request->input('perpage', 6);
 
         $query = Product::query()
             ->where('restaurant_id', (int) $request->restaurant_id)
