@@ -65,23 +65,43 @@ class HomeController extends Controller
 
     public function getRestaurantMeta($id)
     {
-        $restaurant = Restaurant::find($id);
-        if(!$restaurant) {
-            return ServiceResponse::error('Restaurant not found', [], 404);
-        }
-
         // Get all meta data for the restaurant
         $metaData = RestaurantMeta::where('restaurant_id', $id)->get();
         
-        // Transform meta data into key-value pairs
+        if($metaData->isEmpty()) {
+            // Also fetch the restaurant for favicon
+            $restaurant = Restaurant::find($id);
+            return ServiceResponse::success('No meta data found for this restaurant', [
+                'restaurant_id' => $id,
+                'meta' => [],
+                'favicon' => $restaurant ? Helper::returnFullImageUrl($restaurant->favicon) : null
+            ]);
+        }
+        
+        // Transform meta data into key-value pairs with JSON parsing
         $meta = [];
         foreach ($metaData as $metaItem) {
-            $meta[$metaItem->meta_key] = $metaItem->meta_value;
+            $value = $metaItem->meta_value;
+            
+            // Try to parse JSON values for restaurant_attributes
+            if ($metaItem->meta_key === 'restaurant_attributes') {
+                try {
+                    $value = json_decode($metaItem->meta_value, true);
+                } catch (\Exception $e) {
+                    // Keep original value if JSON parsing fails
+                }
+            }
+            
+            $meta[$metaItem->meta_key] = $value;
         }
+
+        // Fetch the restaurant for favicon
+        $restaurant = Restaurant::find($id);
 
         return ServiceResponse::success('Restaurant meta data retrieved successfully', [
             'restaurant_id' => $id,
-            'meta' => $meta
+            'meta' => $meta,
+            'favicon' => $restaurant ? Helper::returnFullImageUrl($restaurant->favicon) : null
         ]);
     }
 
