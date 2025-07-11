@@ -101,12 +101,8 @@ class RestaurantController extends Controller
             'address' => $data['address'],
             'phone' => $data['phone'] ?? null,
             'email' => $data['email'] ?? null,
-            'website' => $data['website'] ?? null,
             'description' => $data['description'] ?? null,
             'status' => $data['status'] ?? 'active',
-            'copyright_text' => $data['copyright_text'] ?? null,
-            'rating' => $data['rating'] ?? 0,
-            'home_page_title' => $data['home_page_title'] ?? null,
         ]);
 
         // Process image, favicon, and logo (Base64 conversion)
@@ -181,7 +177,7 @@ class RestaurantController extends Controller
         // Attempt to find the restaurant by ID
         $restaurant = Restaurant::with('timings', 'settings', 'meta')->find($id);
         // $restaurant['image'] = Helper::returnFullImageUrl($restaurant->image);
-        // If the restaurant doesn't exist, return an error response
+        // If the restaurant doesn't exist, return an error response    
         if (!$restaurant) {
             return ServiceResponse::error("Restaurant not found", 404);
         }
@@ -238,12 +234,8 @@ class RestaurantController extends Controller
             'address' => $data['address'],
             'phone' => $data['phone'] ?? $restaurant->phone,
             'email' => $data['email'] ?? $restaurant->email,
-            'website' => $data['website'] ?? $restaurant->website,
             'description' => $data['description'] ?? $restaurant->description,
             'status' => $data['status'] ?? $restaurant->status,
-            'copyright_text' => $data['copyright_text'] ?? $restaurant->copyright_text,
-            'rating' => $data['rating'] ?? $restaurant->rating,
-            'home_page_title' => $data['home_page_title'] ?? $restaurant->home_page_title,
         ]);
 
         $restaurant->save(); // Save the changes

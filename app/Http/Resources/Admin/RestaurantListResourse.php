@@ -39,7 +39,6 @@ class RestaurantListResourse extends JsonResource
             "address" => $obj->address,
             "phone" => $obj->phone ?? null,
             "email" => $obj->email ?? null,
-            "website" => $obj->website ?? null,
             "description" => $obj->description ?? null,
             "rating" => $obj->rating ?? 0, // Default rating to 0 if not set
             "status" => ucfirst($obj->status),
@@ -48,9 +47,7 @@ class RestaurantListResourse extends JsonResource
             "image" => $image,
             "favicon" => $favicon,
             "logo" => $logo,
-            "copyright_text" => $obj->copyright_text ?? null,
             'is_active' => $obj->is_active,
-            "home_page_title" => $obj->home_page_title ?? null,
             "meta" => $meta, // Add meta data to response
             "settings" => $obj->settings ?
                 [
