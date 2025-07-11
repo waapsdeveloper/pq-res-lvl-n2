@@ -68,6 +68,34 @@ class User extends Authenticatable
         return $value ? Helper::returnFullImageUrl($value) : null;
     }
 
+    /**
+     * Override the default password reset notification to use a custom mailable.
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $resetUrl = url(config('app.url') . route('password.reset', ['token' => $token, 'email' => $this->email], false));
+        $activeRestaurant = \App\Helpers\Helper::getActiveRestaurantId();
+        $restaurantLogo = $activeRestaurant ? $activeRestaurant->logo : null;
+        $restaurantName = $activeRestaurant ? $activeRestaurant->name : config('app.name');
+
+        \Mail::send('mail.forgot_password', [
+            'resetUrl' => $resetUrl,
+            'restaurantLogoCid' => 'restaurant_logo_cid',
+            'restaurantName' => $restaurantName
+        ], function ($message) use ($restaurantLogo) {
+            $message->to($this->email);
+            $message->subject('Reset your password');
+            if ($restaurantLogo) {
+                // Remove domain from logo if it's a full URL, get the path after /storage/
+                $logoPath = str_replace(url('/storage') . '/', '', $restaurantLogo);
+                $logoFullPath = storage_path('app/public/' . $logoPath);
+                if (file_exists($logoFullPath)) {
+                    $message->embed($logoFullPath, 'restaurant_logo_cid');
+                }
+            }
+        });
+    }
+
     // role
     public function role()
     {

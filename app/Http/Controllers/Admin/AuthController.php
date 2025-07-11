@@ -93,5 +93,68 @@ class AuthController extends Controller
 
         return ServiceResponse::success('User registered successfully', ['user' => $user, 'token' => $token]);
     }
+
+    /**
+     * Handle forgot password: send reset link to email
+     */
+    public function forgotPassword(Request $request)
+    {
+        try {
+            $request->validate(['email' => 'required|email']);
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
+                return response()->json([
+                    'result' => __('passwords.user'),
+                    'status' => 404
+                ], 404);
+            }
+            $status = Password::broker()->sendResetLink(
+                $request->only('email')
+            );
+            \Log::info('Password reset status: ' . $status);
+
+            if ($status === Password::RESET_LINK_SENT) {
+                return response()->json([
+                    'result' => __($status),
+                    'status' => 200
+                ], 200);
+            } else {
+                return response()->json([
+                    'result' => __($status),
+                    'status' => 400
+                ], 400);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Forgot password error: ' . $e->getMessage());
+            return response()->json([
+                'result' => 'An unexpected error occurred while sending the reset link. Please try again later.',
+                'status' => 500
+            ], 500);
+        }
+    }
+
+    /**
+     * Handle reset password: update password using token
+     */
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:6',
+        ]);
+        $status = Password::broker()->reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->password = Hash::make($password);
+                $user->save();
+            }
+        );
+        if ($status === Password::PASSWORD_RESET) {
+            return ServiceResponse::success('Password has been reset successfully.');
+        } else {
+            return ServiceResponse::error('Invalid token or email.');
+        }
+    }
     
 }
