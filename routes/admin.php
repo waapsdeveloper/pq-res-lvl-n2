@@ -60,6 +60,11 @@ Route::prefix('restaurant')->group(function () {
         ->name('orderUpdateImage');
     Route::put('/update-logo/{id}', [RestaurantController::class, 'updateLogo'])
         ->name('orderUpdateLogo');
+    
+    // Restaurant Meta routes
+    Route::post('/{id}/meta', [RestaurantController::class, 'storeMeta'])->name('restaurant.storeMeta');
+    Route::get('/{id}/meta', [RestaurantController::class, 'getMeta'])->name('restaurant.getMeta');
+    Route::delete('/{id}/meta', [RestaurantController::class, 'deleteMeta'])->name('restaurant.deleteMeta');
 });
 
 

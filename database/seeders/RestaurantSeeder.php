@@ -25,9 +25,9 @@ class RestaurantSeeder extends Seeder
                     'address' => $data['address'] ?? null,
                     'phone' => $data['phone'] ?? null,
                     'email' => $data['email'] ?? null,
-                    'website' => $data['website'] ?? null,
+
                     'description' => $data['description'] ?? null,
-                    'rating' => $data['rating'] ?? null,
+
                     'image' => $data['image'] ?? null,
                     'favicon' => $data['favicon'] ?? null,
                     'logo' => $data['logo'] ?? null,
