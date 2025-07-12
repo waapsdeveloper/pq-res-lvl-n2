@@ -122,15 +122,15 @@ class BranchConfigController extends Controller
 
         // Update the restaurant with the tax, currency, and dial code
         $restaurant = \App\Models\Restaurant::find($data['branch_id']);
-        if ($restaurant) {
-            $restaurant->tax = $data['tax'] ?? 0; // Default tax to 0 if not provided
-            $restaurant->currency = $data['currency'];
-            $restaurant->dial_code = $data['dial_code'];
-            $restaurant->country = $data['country'] ?? null;
-            $restaurant->enableTax = $data['enableTax'] ?? true;
-            $restaurant->enableDeliveryCharges = $data['enableDeliveryCharges'] ?? true;
-            $restaurant->save();
-        }
+        // if ($restaurant) {
+        //     $restaurant->tax = $data['tax'] ?? 0; // Default tax to 0 if not provided
+        //     $restaurant->currency = $data['currency'];
+        //     $restaurant->dial_code = $data['dial_code'];
+        //     $restaurant->country = $data['country'] ?? null;
+        //     $restaurant->enableTax = $data['enableTax'] ?? true;
+        //     $restaurant->enableDeliveryCharges = $data['enableDeliveryCharges'] ?? true;
+        //     $restaurant->save();
+        // }
 
         return ServiceResponse::success('Branch configuration created successfully', ['data' => $config]);
     }
@@ -187,18 +187,18 @@ class BranchConfigController extends Controller
         ]);
 
         // Update the restaurant with the tax, currency, and dial code
-        $restaurant = \App\Models\Restaurant::find($data['branch_id']);
-        if ($restaurant) {
-            $restaurant->tax = $data['tax'] ?? 0;
-            $restaurant->currency = $data['currency'];
-            $restaurant->dial_code = $data['dial_code'];
-            $restaurant->country = $data['country'] ?? null;
-            $restaurant->tips = $data['tips'] ?? 0;
-            $restaurant->delivery_charges = $data['delivery_charges'] ?? 0;
-            $restaurant->enableTax = $data['enableTax'] ?? true;
-            $restaurant->enableDeliveryCharges = $data['enableDeliveryCharges'] ?? true;
-            $restaurant->save();
-        }
+        // $restaurant = \App\Models\Restaurant::find($data['branch_id']);
+        // if ($restaurant) {
+        //     $restaurant->tax = $data['tax'] ?? 0;
+        //     $restaurant->currency = $data['currency'];
+        //     $restaurant->dial_code = $data['dial_code'];
+        //     $restaurant->country = $data['country'] ?? null;
+        //     $restaurant->tips = $data['tips'] ?? 0;
+        //     $restaurant->delivery_charges = $data['delivery_charges'] ?? 0;
+        //     $restaurant->enableTax = $data['enableTax'] ?? true;
+        //     $restaurant->enableDeliveryCharges = $data['enableDeliveryCharges'] ?? true;
+        //     $restaurant->save();
+        // }
 
         $message = 'Branch configuration updated successfully';
 
