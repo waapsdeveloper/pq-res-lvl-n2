@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {
@@ -78,19 +80,52 @@ class User extends Authenticatable
         $restaurantLogo = $activeRestaurant ? $activeRestaurant->logo : null;
         $restaurantName = $activeRestaurant ? $activeRestaurant->name : config('app.name');
 
-        \Mail::send('mail.forgot_password', [
+        Mail::send('mail.forgot_password', [
             'resetUrl' => $resetUrl,
             'restaurantLogoCid' => 'restaurant_logo_cid',
             'restaurantName' => $restaurantName
         ], function ($message) use ($restaurantLogo) {
             $message->to($this->email);
             $message->subject('Reset your password');
+            $logoEmbedded = false;
+            $logoPath = null;
             if ($restaurantLogo) {
-                // Remove domain from logo if it's a full URL, get the path after /storage/
-                $logoPath = str_replace(url('/storage') . '/', '', $restaurantLogo);
+                // If the logo is a full URL, extract the path after /storage/
+                if (strpos($restaurantLogo, '/storage/') !== false) {
+                    $logoPath = substr($restaurantLogo, strpos($restaurantLogo, '/storage/') + strlen('/storage/'));
+                } else {
+                    $logoPath = ltrim($restaurantLogo, '/');
+                }
                 $logoFullPath = storage_path('app/public/' . $logoPath);
+                Log::info('Logo path for email: ' . $logoFullPath);
                 if (file_exists($logoFullPath)) {
                     $message->embed($logoFullPath, 'restaurant_logo_cid');
+                    $logoEmbedded = true;
+                } else {
+                    // Try to get the full image URL and download it
+                    $logoUrl = \App\Helpers\Helper::returnFullImageUrl($restaurantLogo);
+                    if ($logoUrl) {
+                        $tmpFile = tempnam(sys_get_temp_dir(), 'logo_');
+                        try {
+                            file_put_contents($tmpFile, file_get_contents($logoUrl));
+                            if (file_exists($tmpFile)) {
+                                $message->embed($tmpFile, 'restaurant_logo_cid');
+                                $logoEmbedded = true;
+                            }
+                        } catch (\Exception $e) {
+                            Log::error('Failed to download logo for email: ' . $e->getMessage());
+                        } finally {
+                            if (file_exists($tmpFile)) {
+                                @unlink($tmpFile);
+                            }
+                        }
+                    }
+                }
+            }
+            if (!$logoEmbedded) {
+                $defaultLogoPath = public_path('default-logo.png');
+                if (file_exists($defaultLogoPath)) {
+                    $message->embed($defaultLogoPath, 'restaurant_logo_cid');
                 }
             }
         });

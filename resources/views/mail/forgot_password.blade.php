@@ -101,9 +101,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo-container">
-            <img src="cid:{{ $restaurantLogoCid }}" alt="{{ $restaurantName ?? config('app.name') }} Logo" class="logo">
-        </div>
+        <!-- <div class="logo-container">
+            <img src="cid:restaurant_logo_cid" alt="{{ $restaurantName ?? config('app.name') }} Logo" class="logo" style="display:block; margin:0 auto; max-width:140px; height:auto;">
+        </div> -->
         <div class="title">{{ $restaurantName ?? config('app.name') }}</div>
         <div class="subtitle">Password Reset Request</div>
         <div class="content">
@@ -112,7 +112,7 @@
             Click the button below to reset your password:
         </div>
         <div class="btn-container">
-            <a href="{{ $resetUrl ?? '#' }}" class="btn">Reset Password</a>
+            <a href="{{ $resetUrl ?? '#' }}" class="btn" style="color:white">Reset Password</a>
         </div>
         <div class="content">
             If the button above doesn't work, copy and paste this link into your browser:
