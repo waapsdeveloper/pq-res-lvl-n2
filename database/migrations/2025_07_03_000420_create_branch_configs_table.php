@@ -19,7 +19,7 @@ return new class extends Migration
                 $table->decimal('tax', 8, 2)->default(0);
                 $table->string('currency')->default('USD');
                 $table->string('dial_code')->default('+1');
-                $table->string('currency_symbol')->nullable();
+                $table->string('currency_symbol')->default('$');
                 $table->decimal('delivery_charges', 8, 2)->default(0);
                 $table->decimal('tips', 8, 2)->default(0);
                 $table->boolean('enableTax')->default(true);
