@@ -11,24 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('restaurants', function (Blueprint $table) {
-        //     // Remove the specified columns from restaurants table
-        //     $table->dropColumn([
-        //         'home_page_title',
-        //         'website',
-        //         'copyright_text',
-        //         'rating',
-        //         'dial_code',
-        //         'tax',
-        //         'tips',
-        //         'delivery_charges',
-        //         'currency',
-        //         'currency_symbol',
-        //         'country',
-        //         'enableTax',
-        //         'enableDeliveryCharges'
-        //     ]);
-        // });
+        Schema::table('restaurants', function (Blueprint $table) {
+            // Remove the specified columns from restaurants table
+            $table->dropColumn([
+                'home_page_title',
+                'website',
+                'copyright_text',
+                'rating',
+                'dial_code',
+                'tax',
+                'tips',
+                'delivery_charges',
+                'currency',
+                'currency_symbol',
+                'country',
+                'enableTax',
+                'enableDeliveryCharges'
+            ]);
+        });
     }
 
     /**
