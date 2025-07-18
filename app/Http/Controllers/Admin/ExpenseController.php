@@ -143,8 +143,16 @@ class ExpenseController extends Controller
 
         $data = $validator->validated();
 
-        if (isset($data['image'])) {
+        // Handle image update logic similar to RestaurantController
+        if (array_key_exists('image', $data) && $data['image']) {
+            // Delete old image if exists
+            if ($expense->image) {
+                Helper::deleteImage($expense->image);
+            }
             $data['image'] = Helper::getBase64ImageUrl($data['image'], 'expense');
+        } else {
+            // Keep the previous image if not provided
+            $data['image'] = $expense->image;
         }
 
         $expense->update($data);
