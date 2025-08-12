@@ -35,7 +35,16 @@ class OrderResource extends JsonResource
             'payment_method' => $obj->payment_method ?? 'cash',
             'order_type' => $obj->order_type ?? null,
             'delivery_address' => $obj->delivery_address ?? null,
-            'restaurant' => $obj->restaurant ? $obj->restaurant : 'no restaurant',
+            'restaurant' => $obj->restaurant
+                ? array_merge(
+                    $obj->restaurant->toArray(),
+                    [
+                        'logo' => $obj->restaurant->logo ? Helper::returnFullImageUrl($obj->restaurant->logo) : null,
+                        'favicon' => $obj->restaurant->favicon ? Helper::returnFullImageUrl($obj->restaurant->favicon) : null,
+                        'image' => $obj->restaurant->image ? Helper::returnFullImageUrl($obj->restaurant->image) : null,
+                    ]
+                )
+                : 'no restaurant',
             'phone' => $obj->phone ? $obj->phone : '',
             'dial_code' => $obj->dial_code ? $obj->dial_code : '',
             'coupon_code' => $obj->coupon_code,
@@ -51,6 +60,7 @@ class OrderResource extends JsonResource
                 $image = $orderProduct->product ? Helper::returnFullImageUrl($orderProduct->product->image) : null;
                 return [
                     'product_id' => $orderProduct->product_id,
+                    'category' => $orderProduct->category,
                     'product_name' => $orderProduct->product->name ?? null,
                     'product_price' => $orderProduct->product->price ?? null,
                     'product_discount' => $orderProduct->product->discount ?? null,
@@ -58,9 +68,13 @@ class OrderResource extends JsonResource
                     'product_image' => $image,
                     'quantity' => $orderProduct->quantity,
                     'price' => $orderProduct->price,
-                    'variation' => $orderProduct->variation ?? [],
+                    "variation" => $orderProduct->variation
+                        ? json_decode($orderProduct->variation, true)
+                        : [],
                     "meta_key" => $orderProduct->productProp->meta_key ?? null,
-                    "meta_value" => $orderProduct->productProp->meta_value ?? null,
+                    // "meta_value" => $orderProduct->productProp->meta_value
+                    //     ? json_decode($orderProduct->productProp->meta_value, true)
+                    //     : null,
                     "meta_key_type" => $orderProduct->productProp->meta_key_type ?? null,
                 ];
             }) : [],

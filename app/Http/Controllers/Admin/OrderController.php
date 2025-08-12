@@ -263,6 +263,8 @@ class OrderController extends Controller
         // $data = $request->all();
 
         $data = $request->validated();
+        logger()->info('Products data:', $data['products']);
+
         $resID = $request->restaurant_id;
 
         $customerName = $data['customer_name'] ?? 'Walk-in Customer';
@@ -273,7 +275,7 @@ class OrderController extends Controller
         if (!$user) {
             $user = User::create([
                 'name' => $customerName,
-                'phone' => $customerPhone,
+                'phone' => $customerPhone,  
                 'email' => $customerPhone . "@phone.test",
             ]);
         }
@@ -289,13 +291,14 @@ class OrderController extends Controller
 
             // $pricePerUnit = $product->price;
             $pricePerUnit = $item['price'];
-
+            $category = $item['category'] ?? null;
             $quantity = $item['quantity'];
             $itemTotal = $pricePerUnit * $quantity;
 
             $totalPrice += $itemTotal;
 
             $orderProducts[] = [
+                'category' => $category,
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
@@ -395,6 +398,7 @@ class OrderController extends Controller
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
                 'variation' => json_encode($orderProduct['variation']),
+                'category' => $orderProduct['category'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

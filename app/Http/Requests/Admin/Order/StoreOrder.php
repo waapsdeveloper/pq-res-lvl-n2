@@ -28,6 +28,7 @@ class StoreOrder extends FormRequest
             'customer_phone' => 'nullable|string|max:20',
             'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
+            'products.*.category' => 'required|string|max:255',
             'products.*.quantity' => 'required|integer|min:1',
             'products.*.price' => 'required|numeric|min:0',
             'products.*.notes' => 'nullable|string',
