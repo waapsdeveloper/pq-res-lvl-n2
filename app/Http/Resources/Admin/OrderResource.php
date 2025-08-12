@@ -42,6 +42,8 @@ class OrderResource extends JsonResource
                         'logo' => $obj->restaurant->logo ? Helper::returnFullImageUrl($obj->restaurant->logo) : null,
                         'favicon' => $obj->restaurant->favicon ? Helper::returnFullImageUrl($obj->restaurant->favicon) : null,
                         'image' => $obj->restaurant->image ? Helper::returnFullImageUrl($obj->restaurant->image) : null,
+                        'logo_base64' => Helper::returnBase64ImageUrl($obj->restaurant->logo ?? null),
+
                     ]
                 )
                 : 'no restaurant',

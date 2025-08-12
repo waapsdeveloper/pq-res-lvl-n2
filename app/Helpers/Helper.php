@@ -72,7 +72,29 @@ class Helper
         return true; // File deleted successfully
     }
 
-    
+    static public function returnBase64ImageUrl($imagePath)
+{
+    if (!$imagePath || $imagePath == "") {
+        return null;
+    }
+
+    // Build the full physical path from storage
+    $fullPath = storage_path('app/public/' . ltrim($imagePath, '/'));
+
+    if (!file_exists($fullPath)) {
+        return null;
+    }
+
+    // Get file contents
+    $imageData = file_get_contents($fullPath);
+
+    // Detect MIME type (so we know if it’s png/jpg/etc.)
+    $mimeType = mime_content_type($fullPath);
+
+    // Encode to Base64 and return as data URL
+    return 'data:' . $mimeType . ';base64,' . base64_encode($imageData);
+}
+
 
     static public function returnFullImageUrl($imagePath)
     {
