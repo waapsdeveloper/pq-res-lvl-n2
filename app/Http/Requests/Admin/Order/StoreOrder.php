@@ -43,6 +43,7 @@ class StoreOrder extends FormRequest
             'delivery_address' => 'nullable|string',
             'restaurant_id' => 'required|exists:restaurants,id',
             'coupon_code' => 'nullable|string',
+            'source' => 'nullable|string',
             'discount_value' => 'nullable|numeric',
             'final_total' => 'nullable|numeric',
             'tax_percentage' => 'nullable|numeric|min:0', // Add this line

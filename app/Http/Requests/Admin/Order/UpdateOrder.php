@@ -39,6 +39,7 @@ class UpdateOrder extends FormRequest
             'status' => 'nullable|string|in:pending,confirmed,preparing,ready_for_pickup,out_for_delivery,delivered,completed,cancelled',
             'payment_method' => 'nullable|string',
             'order_type' => 'nullable|string',
+            'source' => 'nullable|string',
             'delivery_address' => 'nullable|string',
             'restaurant_id' => 'nullable|exists:restaurants,id',
             'coupon_code' => 'nullable|string',

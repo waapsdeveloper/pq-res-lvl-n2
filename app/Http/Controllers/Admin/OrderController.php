@@ -64,8 +64,8 @@ class OrderController extends Controller
             }
 
             if (isset($filters['total_price']) && !empty($filters['total_price'])) {
-                $query->where('total_price', '<',  $filters['total_price'])
-                    ->orWhere('total_price', '=',  $filters['total_price'])->orderByDesc('total_price');
+                $query->where('total_price', '<', $filters['total_price'])
+                    ->orWhere('total_price', '=', $filters['total_price'])->orderByDesc('total_price');
             }
 
             if (isset($filters['type']) && !empty($filters['type'])) {
@@ -171,8 +171,8 @@ class OrderController extends Controller
             }
 
             if (isset($filters['total_price']) && !empty($filters['total_price'])) {
-                $query->where('total_price', '<',  $filters['total_price'])
-                    ->orWhere('total_price', '=',  $filters['total_price'])->orderByDesc('total_price');
+                $query->where('total_price', '<', $filters['total_price'])
+                    ->orWhere('total_price', '=', $filters['total_price'])->orderByDesc('total_price');
             }
 
             if (isset($filters['type']) && !empty($filters['type'])) {
@@ -275,7 +275,7 @@ class OrderController extends Controller
         if (!$user) {
             $user = User::create([
                 'name' => $customerName,
-                'phone' => $customerPhone,  
+                'phone' => $customerPhone,
                 'email' => $customerPhone . "@phone.test",
             ]);
         }
@@ -374,6 +374,7 @@ class OrderController extends Controller
             'tax_percentage' => $taxPercentage, // Store tax percentage
             'tax_amount' => $taxAmount,
             'tips' => $tips,
+            'source' => $request->is_from_pos ? 'pos' : 'website',
             'tips_amount' => $tipsAmount,
             'delivery_charges' => $deliveryCharges,
             'created_at' => now(),
@@ -602,6 +603,7 @@ class OrderController extends Controller
             'coupon_code' => $couponCode,
             'discount_value' => $discountValue,
             'final_total' => $finalTotal,
+            'source' => $request->is_from_pos ? 'pos' : 'website',
             'tax_percentage' => $taxPercentage, // Update tax percentage
             'tax_amount' => $taxAmount,
             'tips' => $tips,

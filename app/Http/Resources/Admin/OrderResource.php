@@ -33,6 +33,7 @@ class OrderResource extends JsonResource
             'updated_at' => $obj->updated_at,
             'table' => $obj->table ? $obj->table->name : 'no booked',
             'payment_method' => $obj->payment_method ?? 'cash',
+            'source' => $obj->source, // Add source field
             'order_type' => $obj->order_type ?? null,
             'delivery_address' => $obj->delivery_address ?? null,
             'restaurant' => $obj->restaurant

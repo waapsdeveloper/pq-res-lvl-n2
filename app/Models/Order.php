@@ -36,6 +36,7 @@ class Order extends Model
         'tips',
         'tips_amount',
         'delivery_charges',
+        'source',
         'is_paid' // add this line
 
     ];
