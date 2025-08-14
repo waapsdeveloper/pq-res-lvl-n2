@@ -69,7 +69,7 @@ class OrderController extends Controller
             }
 
             if (isset($filters['type']) && !empty($filters['type'])) {
-                $query->where('type', 'like', '%' . $filters['type'] . '%');
+                $query->where('order_type', 'like', '%' . $filters['type'] . '%');
             }
 
             if (isset($filters['status']) && !empty($filters['status'])) {
