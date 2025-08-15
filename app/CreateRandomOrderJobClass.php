@@ -18,7 +18,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 class CreateRandomOrderJobClass
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function __invoke()
     {
@@ -46,7 +48,7 @@ class CreateRandomOrderJobClass
 
         $randomDate = Arr::random($randomDate);
         logger()->info('Random date generated', ['random_date' => $randomDate]);
-        
+
         $cityCodes = ['21', '22', '23', '24', '25', '26'];
         $cityCode = $cityCodes[array_rand($cityCodes)];
         $phone = str_pad(mt_rand(1000000, 9999999), 7, '0', STR_PAD_LEFT);
@@ -122,7 +124,7 @@ class CreateRandomOrderJobClass
         // Order Calculations
         $discount = mt_rand(0, 1000) / 100; // Decimal between 0.00-10.00
         $subtotal = max(0, $totalPrice - $discount);
-        
+
         $taxPercentage = mt_rand(500, 1500) / 100; // Decimal between 5.00-15.00
         $taxAmount = $subtotal * ($taxPercentage / 100);
         $finalPrice = $subtotal + $taxAmount;
@@ -140,9 +142,9 @@ class CreateRandomOrderJobClass
             'identifier' => 'ORD-',
             'order_number' => $orderNumber,
             'type' => $type,
+            'order_type' => $type,
             'status' => $status,
             'notes' => $randomNote,
-            'order_type' => $type,
             'customer_id' => $customer->id,
             'discount' => $discount,
             'invoice_no' => $invoiceNumber,
@@ -156,7 +158,7 @@ class CreateRandomOrderJobClass
             'created_at' => $randomDate,
             'updated_at' => $randomDate,
         ]);
-        
+
         $order->update([
             'identifier' => Identifier::make('Order', $order->id, 3),
             'invoice_no' => Identifier::make('Invoice', $order->id, 3)

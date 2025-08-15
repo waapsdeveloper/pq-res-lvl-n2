@@ -5,7 +5,7 @@
         "currency_name": "UAE Dirham",
         "dial_code": "+971",
         "flag": "🇦🇪",
-        "currency_symbol": "د.إ"
+        "currency_symbol": "AED"
     },
     {
         "country": "Saudi Arabia",
@@ -13,7 +13,7 @@
         "currency_name": "Saudi Riyal",
         "dial_code": "+966",
         "flag": "🇸🇦",
-        "currency_symbol": "﷼"
+        "currency_symbol": "SR"
     },
     {
         "country": "Kuwait",
@@ -21,7 +21,7 @@
         "currency_name": "Kuwaiti Dinar",
         "dial_code": "+965",
         "flag": "🇰🇼",
-        "currency_symbol": "د.ك"
+        "currency_symbol": "KD"
     },
     {
         "country": "Qatar",
@@ -29,7 +29,7 @@
         "currency_name": "Qatari Riyal",
         "dial_code": "+974",
         "flag": "🇶🇦",
-        "currency_symbol": "﷼"
+        "currency_symbol": "QR"
     },
     {
         "country": "Bahrain",
@@ -37,7 +37,7 @@
         "currency_name": "Bahraini Dinar",
         "dial_code": "+973",
         "flag": "🇧🇭",
-        "currency_symbol": ".د.ب"
+        "currency_symbol": "BD"
     },
     {
         "country": "Oman",
@@ -45,7 +45,7 @@
         "currency_name": "Omani Rial",
         "dial_code": "+968",
         "flag": "🇴🇲",
-        "currency_symbol": "ر.ع."
+        "currency_symbol": "OMR"
     },
     {
         "country": "Jordan",
@@ -53,7 +53,7 @@
         "currency_name": "Jordanian Dinar",
         "dial_code": "+962",
         "flag": "🇯🇴",
-        "currency_symbol": "د.ا"
+        "currency_symbol": "JD"
     },
     {
         "country": "Lebanon",
@@ -61,7 +61,7 @@
         "currency_name": "Lebanese Pound",
         "dial_code": "+961",
         "flag": "🇱🇧",
-        "currency_symbol": "ل.ل"
+        "currency_symbol": "L£"
     },
     {
         "country": "Egypt",
@@ -69,7 +69,7 @@
         "currency_name": "Egyptian Pound",
         "dial_code": "+20",
         "flag": "🇪🇬",
-        "currency_symbol": "ج.م"
+        "currency_symbol": "E£"
     },
     {
         "country": "Turkey",
@@ -93,7 +93,7 @@
         "currency_name": "Pakistani Rupee",
         "dial_code": "+92",
         "flag": "🇵🇰",
-        "currency_symbol": "₨"
+        "currency_symbol": "Rs"
     },
     {
         "country": "Bangladesh",
@@ -109,7 +109,7 @@
         "currency_name": "Sri Lankan Rupee",
         "dial_code": "+94",
         "flag": "🇱🇰",
-        "currency_symbol": "රු"
+        "currency_symbol": "Rs"
     },
     {
         "country": "Nepal",
@@ -117,7 +117,7 @@
         "currency_name": "Nepalese Rupee",
         "dial_code": "+977",
         "flag": "🇳🇵",
-        "currency_symbol": "रू"
+        "currency_symbol": "Rs"
     },
     {
         "country": "China",
@@ -141,7 +141,7 @@
         "currency_name": "Singapore Dollar",
         "dial_code": "+65",
         "flag": "🇸🇬",
-        "currency_symbol": "$"
+        "currency_symbol": "S$"
     },
     {
         "country": "Malaysia",
@@ -229,7 +229,7 @@
         "currency_name": "Swiss Franc",
         "dial_code": "+41",
         "flag": "🇨🇭",
-        "currency_symbol": "Fr."
+        "currency_symbol": "CHF"
     },
     {
         "country": "Sweden",
@@ -277,6 +277,30 @@
         "currency_name": "Canadian Dollar",
         "dial_code": "+1",
         "flag": "🇨🇦",
-        "currency_symbol": "$"
+        "currency_symbol": "C$"
+    },
+    {
+    "country": "Australia",
+    "currency_code": "AUD",
+    "currency_name": "Australian Dollar",
+    "dial_code": "+61",
+    "flag": "🇦🇺",
+    "currency_symbol": "A$"
+},
+    {
+        "country": "New Zealand",
+        "currency_code": "NZD",
+        "currency_name": "New Zealand Dollar",
+        "dial_code": "+64",
+        "flag": "🇳🇿",
+        "currency_symbol": "NZ$"
+    },
+    {
+        "country": "South Africa",
+        "currency_code": "ZAR",
+        "currency_name": "South African Rand",
+        "dial_code": "+27",
+        "flag": "🇿🇦",
+        "currency_symbol": "R"
     }
 ]
