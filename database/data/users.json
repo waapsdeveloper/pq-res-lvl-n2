@@ -2,6 +2,7 @@
     {
         "name": "Super Admin",
         "email": "superadmin@email.com",
+        "phone": 1234567890,
         "password": "admin123$",
         "role_id": 1,
         "restaurant_id": null,

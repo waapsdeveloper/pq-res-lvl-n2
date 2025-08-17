@@ -35,7 +35,7 @@ class ProductResource extends JsonResource
                 "meta_key_type" => $prodProps->meta_key_type
             ];
         }) ?? [];
-        
+
         // Extract only the meta_value into a separate array
         $metaValues = $variations->pluck('meta_value')->toArray();
 
@@ -64,12 +64,19 @@ class ProductResource extends JsonResource
                     'rating' => $obj->restaurant->rating,
                 ] : [],
             "variation" => $obj->productProps->map(function ($prodProps) {
-                return [
-                    "meta_key" => $prodProps->meta_key,
-                    "meta_value" => $prodProps->meta_value,
-                    "meta_key_type" => $prodProps->meta_key_type
-                ];
-            }) ?? [],
+                $decoded = is_string($prodProps->meta_value) ? json_decode($prodProps->meta_value, true) : $prodProps->meta_value;
+
+                // Ensure each variation has selectedOption field (default null if not set)
+                return collect($decoded)->map(function ($variation) {
+                    return [
+                        "type" => $variation['type'] ?? null,
+                        "selected" => $variation['selected'] ?? false,
+                        "options" => $variation['options'] ?? [],
+                        "selectedOption" => $variation['selectedOption'] ?? null,
+                    ];
+                });
+            })->flatten(1)->values()->toArray(),
+
             "variations" => $metaValues,
 
         ];
