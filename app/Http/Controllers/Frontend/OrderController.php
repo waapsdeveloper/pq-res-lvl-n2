@@ -111,13 +111,15 @@ class OrderController extends Controller
             // $itemTotal = $pricePerUnit * $quantity;
             // $totalPrice += $itemTotal;
 
-
+            $category = $item['category'] ?? null;
             $orderProducts[] = [
                 'product_id' => $item['product_id'],
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
                 'variation' => json_encode($item['variations']) ?? null,
+                'category' => $category,
+
             ];
         }
 
@@ -164,6 +166,7 @@ class OrderController extends Controller
             'coupon_code' => $couponCode,
             'discount_value' => $discountValue,
             'final_total' => $finalTotal,
+            'source' => $request->is_from_pos ? 'pos' : 'website',
             'tax_percentage' => $tax_percentage,
             'tax_amount' => $tax_amount,
             'tips' => $tips,
@@ -179,6 +182,7 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['product_id'],
                 'quantity' => $orderProduct['quantity'],
+                'category' => $orderProduct['category'],
                 'price' => $orderProduct['price'],
                 'notes' => $orderProduct['notes'] ?? null,
                 'variation' => $orderProduct['variation'],

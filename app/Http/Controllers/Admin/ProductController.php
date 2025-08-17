@@ -25,7 +25,7 @@ class ProductController extends Controller
     {
         $search = $request->input('search', '');
         $page = $request->input('page', 1);
-        $perpage = $request->input('perpage', 10);
+        $perpage = $request->input('perpage',50);
         $filters = $request->input('filters', null);
         $active_restaurant = Helper::getActiveRestaurantId();
         $resID = $request->restaurant_id == -1 ? $active_restaurant->id : $request->restaurant_id;
@@ -259,7 +259,7 @@ class ProductController extends Controller
         }
 
         $product->delete();
-        return ServiceResponse::success("{roduct deleted successfully.");
+        return ServiceResponse::success("{product deleted successfully.");
     }
     public function bulkDelete(Request $request)
     {
