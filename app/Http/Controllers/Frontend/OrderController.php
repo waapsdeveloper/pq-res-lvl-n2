@@ -21,7 +21,9 @@ use App\Traits\NotificationTrait;
 use App\Traits\Traits\Frontend\CustomerTrait;
 use App\Traits\Traits\Frontend\TableBookingTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
 
@@ -64,6 +66,7 @@ class OrderController extends Controller
         $data = $request->validated();
         $phone = $data['phone'];
         $dial_code = $data['dial_code'];
+        Log::info('Request data:', $data);
 
         // create or update custoer by phone
         $customer = auth()->user();
@@ -117,7 +120,7 @@ class OrderController extends Controller
                 'quantity' => $quantity,
                 'price' => $pricePerUnit,
                 'notes' => $item['notes'] ?? null,
-                'variation' => json_encode($item['variations']) ?? null,
+                'variation' => json_encode($item['variation']) ?? null,
                 'category' => $category,
 
             ];
@@ -143,7 +146,7 @@ class OrderController extends Controller
         $tips = $request->tips ?? 0;
         $tips_amount = $request->tips_amount ?? 0;
         $delivery_charges = $request->delivery_charges ?? 0;
-
+          
         $order = Order::create([
             'identifier' => $rtableIdf ?? null,
             'order_number' => $orderNumber,
@@ -176,6 +179,7 @@ class OrderController extends Controller
         $identifier = Identifier::make('Order', $order->id, 3);
         $invoice_no = Identifier::make('Invoice', $order->id, 3);
         $order->update(['identifier' => $identifier, 'invoice' => $invoice_no]);
+        Log::info('Order products:', [$orderProducts]);
 
         foreach ($orderProducts as $orderProduct) {
             OrderProduct::create([

@@ -33,7 +33,7 @@ class MakeOrderBooking extends FormRequest
             'products.*.price' => 'required',
             'products.*.category' => 'required|string|max:255',
             'products.*.notes' => 'nullable|string',
-            'products.*.variations' => 'nullable',
+            'products.*.variation' => 'nullable',
             'discount' => 'nullable|numeric|min:0|max:100',
             'notes' => 'nullable|string',
             'type' => 'nullable|string',

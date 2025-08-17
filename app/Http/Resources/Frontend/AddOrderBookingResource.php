@@ -50,7 +50,6 @@ class AddOrderBookingResource extends JsonResource
                     'price' => $orderProduct->price,
                     'notes' => $orderProduct->notes,
                     'variation' => $orderProduct->variation,
-                    'variations' => $orderProduct->variation ? json_decode($orderProduct->variation) : [],
                 ];
             }),
             'customer' => $obj->customer ? [
