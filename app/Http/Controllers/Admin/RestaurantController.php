@@ -21,6 +21,7 @@ use App\Models\BranchConfig;
 use App\Models\RestaurantSetting;
 use App\Models\RestaurantMeta;
 use Illuminate\Support\Facades\DB;
+use App\Models\InvoiceSetting;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
 
@@ -136,10 +137,24 @@ class RestaurantController extends Controller
             'dial_code' => $data['dial_code'] ?? '+1',
             'delivery_charges' => $data['delivery_charges'] ?? 0,
             'currency_symbol' => $data['currency_symbol'] ?? '$',
-             'country' => $data['country'] ?? 'United States',
+            'country' => $data['country'] ?? 'United States',
             // 'tips' => $data['tips'] ?? 0,
 
         ]);
+
+        $invoiceSetting = InvoiceSetting::create([
+            'restaurant_id' => $restaurant->id,
+            'invoice_logo' => $data['invoice_logo'] ?? null,
+            'size' => $data['size'] ?? '80mm',
+            'left_margin' => $data['left_margin'] ?? "1mm",
+            'right_margin' => $data['right_margin'] ?? "1mm",
+            'google_review_barcode' => $data['google_review_barcode'] ?? null,
+            'footer_text' => $data['footer_text'] ?? '  Thank you for dining with us! We appreciate your business and hope you enjoyed your meal.<br>
+    Please visit us again soon. If you have any feedback, let us know!',
+            'restaurant_address' => $data['restaurant_address'] ?? '',
+            'font_size' => $data['font_size'] ?? 10,
+        ]);
+        Log::info('Invoice setting actually stored:', $invoiceSetting->toArray());
 
         // Store meta data if provided
         if (isset($data['meta']) && is_array($data['meta'])) {
@@ -210,7 +225,7 @@ class RestaurantController extends Controller
             }
         }
         $data = $request->validated();
-        
+
         // Debug: Log the entire request data
         logger()->info('Restaurant update request data:', $request->all());
         logger()->info('Validated data:', $data);
@@ -425,7 +440,7 @@ class RestaurantController extends Controller
             ['id' => $data['id'] ?? null],
             [
                 'restaurant_id' => $data['restaurant_id'],
-                'meta_key'   => $data['meta_key'],
+                'meta_key' => $data['meta_key'],
                 'meta_value' => $data['meta_value'],
             ]
         );

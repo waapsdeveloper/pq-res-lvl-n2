@@ -24,6 +24,8 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\BranchConfigController;
 use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Admin\InvoiceSettingController;
+
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -60,7 +62,7 @@ Route::prefix('restaurant')->group(function () {
         ->name('orderUpdateImage');
     Route::put('/update-logo/{id}', [RestaurantController::class, 'updateLogo'])
         ->name('orderUpdateLogo');
-    
+
     // Restaurant Meta routes
     Route::post('/{id}/meta', [RestaurantController::class, 'storeMeta'])->name('restaurant.storeMeta');
     Route::get('/{id}/meta', [RestaurantController::class, 'getMeta'])->name('restaurant.getMeta');
@@ -118,7 +120,7 @@ Route::get('/auth-user/permissions', [UserController::class, 'getAuthUserPermiss
 
 Route::prefix('category')->group(function () {
     Route::get('/bulk-delete', [CategoryController::class, 'bulkDelete'])->name('category-bulkDelete');
-    
+
     // Route for existing category image upload with category ID
     Route::post('/{id}/upload-image', [CategoryController::class, 'uploadImage'])->name('category.uploadImage');
 
@@ -131,7 +133,7 @@ Route::prefix('category')->group(function () {
 Route::prefix('product')->group(function () {
     Route::get('/bulk-delete', [ProductController::class, 'bulkDelete'])->name('product-bulkDelete');
     Route::get('/bulk-fetch', [ProductController::class, 'bulkFetch'])->name('product-bulkFetch');
-    
+
     // Route for existing product image upload with product ID
     Route::post('/{id}/upload-image', [ProductController::class, 'uploadImage'])->name('product.uploadImage');
 
@@ -276,4 +278,16 @@ Route::prefix('expense')->group(function () {
         ->name('expense.updateStatus');
     Route::put('/update-type/{id}', [\App\Http\Controllers\Admin\ExpenseController::class, 'updateType'])
         ->name('expense.updateType');
+});
+
+
+Route::prefix('invoice-settings')->group(function () {
+    // Bulk delete if needed
+    Route::get('/bulk-delete', [InvoiceSettingController::class, 'bulkDelete'])->name('invoiceSettings.bulkDelete');
+
+    // RESTful resource routes
+    Route::resource('/', InvoiceSettingController::class)
+        ->parameters(['' => 'id'])
+        ->only(['index', 'show', 'store', 'update', 'destroy'])
+        ->names('invoiceSettings');
 });

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Restaurant;
 use App\Models\BranchConfig;
+use App\Models\InvoiceSetting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
@@ -25,9 +26,7 @@ class RestaurantSeeder extends Seeder
                     'address' => $data['address'] ?? null,
                     'phone' => $data['phone'] ?? null,
                     'email' => $data['email'] ?? null,
-
                     'description' => $data['description'] ?? null,
-
                     'image' => $data['image'] ?? null,
                     'favicon' => $data['favicon'] ?? null,
                     'logo' => $data['logo'] ?? null,
@@ -43,15 +42,32 @@ class RestaurantSeeder extends Seeder
                     'branch_id' => $restaurant->id,
                 ],
                 [
+                    'tax' => $data['tax'] ?? 0,
+                    'currency' => $data['currency'] ?? 'USD',
+                    'dial_code' => $data['dial_code'] ?? '+1',
+                    'currency_symbol' => $data['currency_symbol'] ?? '$',
+                ]
+            );
 
-                    'tax' => $data['tax'] ?? 0, // Default tax to 0 if not provided
-                    'currency' => $data['currency'] ?? 'USD', // Default currency to USD if not provided
-                    'dial_code' => $data['dial_code'] ?? '+1', // Default dial code to +1 if not provided
-                    'currency_symbol' => $data['currency_symbol'] ?? '$', // Default currency symbol to $ if not provided
+            // Create invoice settings for the restaurant
+            InvoiceSetting::updateOrCreate(
+                [
+                    'restaurant_id' => $restaurant->id,
+                ],
+                [
+                    'invoice_logo' => $data['invoice_logo'] ?? $restaurant->logo,
+                    'size' => $data['size'] ?? '80mm',
+                    'left_margin' => $data['left_margin'] ?? '1mm',
+                    'right_margin' => $data['right_margin'] ?? '1mm',
+                    'google_review_barcode' => $data['google_review_barcode'] ?? null,
+                    'footer_text' => $data['footer_text'] ??
+                        'Thank you for dining with us! Please visit again.',
+                    'restaurant_address' => $data['restaurant_address'] ?? $restaurant->address,
+                    'font_size' => $data['font_size'] ?? 10,
                 ]
             );
         }
 
-        $this->command->info('Restaurants imported successfully from JSON file.');
+        $this->command->info('Restaurants & Invoice settings imported successfully from JSON file.');
     }
 }
