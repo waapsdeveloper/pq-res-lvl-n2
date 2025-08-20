@@ -50,22 +50,7 @@ class RestaurantSeeder extends Seeder
             );
 
             // Create invoice settings for the restaurant
-            InvoiceSetting::updateOrCreate(
-                [
-                    'restaurant_id' => $restaurant->id,
-                ],
-                [
-                    'invoice_logo' => $data['invoice_logo'] ?? $restaurant->logo,
-                    'size' => $data['size'] ?? '80mm',
-                    'left_margin' => $data['left_margin'] ?? '1mm',
-                    'right_margin' => $data['right_margin'] ?? '1mm',
-                    'google_review_barcode' => $data['google_review_barcode'] ?? null,
-                    'footer_text' => $data['footer_text'] ??
-                        'Thank you for dining with us! Please visit again.',
-                    'restaurant_address' => $data['restaurant_address'] ?? $restaurant->address,
-                    'font_size' => $data['font_size'] ?? 10,
-                ]
-            );
+           
         }
 
         $this->command->info('Restaurants & Invoice settings imported successfully from JSON file.');
