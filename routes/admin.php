@@ -144,6 +144,8 @@ Route::prefix('product')->group(function () {
 });
 
 Route::prefix('order')->group(function () {
+    Route::get('/deleted-orders', [OrderController::class, 'deletedIndex'])
+        ->name('order.deletedIndex');
     Route::get('/totals', [OrderController::class, 'totals'])->name('order.totals');
     Route::get('/bulk-delete', [OrderController::class, 'bulkDelete'])->name('order-bulkDelete');
 
@@ -155,6 +157,14 @@ Route::prefix('order')->group(function () {
         ->name('orderUpdateStatus');
     Route::put('/update-payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])
         ->name('orderUpdatePaymentStatus');
+    // Deleted orders routes
+    Route::post('/{id}/restore', [OrderController::class, 'restore'])->name('order.restore');
+    Route::post('/restore-multiple', [OrderController::class, 'restoreMultiple'])->name('order.restoreMultiple');
+
+    // Force delete routes
+    Route::delete('/force-delete/{id}', [OrderController::class, 'forceDelete'])->name('order.forceDelete');
+    Route::delete('/force-delete-multiple', [OrderController::class, 'forceDeleteMultiple'])->name('order.forceDeleteMultiple');
+
 });
 
 Route::prefix('rtable')->group(function () {

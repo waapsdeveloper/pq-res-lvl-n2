@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ExpenseCategorySeeder::class);
         $this->call(ExpenseSeeder::class);
         $this->call(CouponSeeder::class);
+        $this->call(InvoiceSettingSeeder::class);
         $this->call(MigrationsTableSeeder::class);
         
         // $this->call(OrderSeeder::class); //5

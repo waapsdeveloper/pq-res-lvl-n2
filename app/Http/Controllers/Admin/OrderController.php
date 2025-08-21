@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\Order\UpdateOrder;
 use App\Http\Requests\Admin\Order\UpdateOrderStatus;
 use App\Http\Resources\Admin\NotifyResource;
 use App\Http\Resources\Admin\OrderResource;
+use App\Http\Resources\Admin\DeletedOrderResource;
 use App\Models\Coupon;
 use App\Models\Invoice;
 use App\Models\Notification;
@@ -144,6 +145,133 @@ class OrderController extends Controller
             'data' => $data
         ]);
     }
+
+    public function deletedIndex(Request $request)
+    {
+        $search = $request->input('search', '');
+        $page = $request->input('page', 1);
+        $perpage = $request->input('perpage', 10);
+        $filters = $request->input('filters', null);
+        $resID = $request->input('restaurant_id', null);
+
+        $query = Order::onlyTrashed()
+            ->with([
+                'customer',
+                'table_no',
+                'table',
+                'orderProducts' => function ($q) {
+                    $q->withTrashed() // include soft-deleted orderProducts
+                        ->with([
+                            'product' => function ($q2) {
+                                $q2->withTrashed(); // include soft-deleted product
+                            },
+                            'productProp' => function ($q3) {
+                                $q3->withTrashed(); // include soft-deleted productProp
+                            }
+                        ]);
+                }
+            ])
+            ->orderByDesc('id');
+        // ✅ restaurant filter
+        if (!empty($resID)) {
+            $query->where('restaurant_id', $resID);
+        }
+
+        // ✅ search filter
+        if (!empty($search)) {
+            $query->where('order_number', 'like', '%' . $search . '%');
+        }
+
+        // ✅ extra filters
+        if (!empty($filters) && $filters !== 'null') {
+            $filters = json_decode($filters, true);
+
+            if (is_array($filters)) {
+                if (!empty($filters['order_id'])) {
+                    $query->where('order_number', 'like', '%' . $filters['order_id'] . '%');
+                }
+
+                if (!empty($filters['total_price'])) {
+                    $query->where(function ($q) use ($filters) {
+                        $q->where('total_price', '<', $filters['total_price'])
+                            ->orWhere('total_price', '=', $filters['total_price']);
+                    })->orderByDesc('total_price');
+                }
+
+                if (!empty($filters['type'])) {
+                    $query->where('order_type', 'like', '%' . $filters['type'] . '%');
+                }
+
+                if (!empty($filters['status'])) {
+                    $query->where('status', $filters['status']);
+                }
+
+                if (!empty($filters['customer_name'])) {
+                    $query->whereHas('customer', function ($q) use ($filters) {
+                        $q->where('name', 'like', '%' . $filters['customer_name'] . '%');
+                    });
+                }
+
+                if (!empty($filters['phone'])) {
+                    $query->whereHas('customer', function ($q) use ($filters) {
+                        $q->where('phone', 'like', '%' . $filters['phone'] . '%');
+                    });
+                }
+
+                if (!empty($filters['created_at'])) {
+                    $query->whereDate('created_at', $filters['created_at']);
+                }
+
+                if (!empty($filters['started_from'])) {
+                    $query->whereDate('created_at', '>=', $filters['started_from']);
+                }
+
+                if (!empty($filters['ended_at'])) {
+                    $query->whereDate('created_at', '<=', $filters['ended_at']);
+                }
+
+                if (isset($filters['is_paid']) && $filters['is_paid'] !== '') {
+                    $query->where('is_paid', $filters['is_paid']);
+                }
+
+                if (!empty($filters['table'])) {
+                    $query->whereHas('table', function ($q) use ($filters) {
+                        $q->where('name', 'like', '%' . $filters['table'] . '%');
+                    });
+                }
+            }
+        }
+
+        // ✅ clone query for totals
+        $ordersForTotals = (clone $query)->get();
+
+        $totalTax = $ordersForTotals->sum('tax_amount');
+        $totalDiscount = $ordersForTotals->sum('discount_value');
+        $totalFinalTotal = $ordersForTotals->sum(function ($order) {
+            return ($order->final_total == 0 || $order->final_total === null)
+                ? $order->total_price
+                : $order->final_total;
+        });
+        $totalPrice = $ordersForTotals->sum('total_price');
+
+        // ✅ paginate
+        $data = $query->paginate($perpage, ['*'], 'page', $page);
+
+        $data->getCollection()->transform(function ($item) {
+            return new DeletedOrderResource($item);
+        });
+
+        return ServiceResponse::success("Deleted orders list successfully", [
+            'total_tax' => $totalTax,
+            'total_discount' => $totalDiscount,
+            'total_final_total' => $totalFinalTotal,
+            'total_price' => $totalPrice,
+            'data' => $data
+        ]);
+    }
+
+
+
 
     public function totals(Request $request)
     {
@@ -769,4 +897,65 @@ class OrderController extends Controller
 
         return ServiceResponse::success("Bulk delete successful", ['ids' => $ids]);
     }
+    public function restore($id)
+    {
+        try {
+            $order = Order::onlyTrashed()->findOrFail($id);
+
+            $order->restore();
+
+            return ServiceResponse::success("Order restored successfully", [
+                'order' => new OrderResource($order)
+            ]);
+        } catch (\Exception $e) {
+            return ServiceResponse::error("Failed to restore order: " . $e->getMessage());
+        }
+    }
+    public function restoreMultiple(Request $request)
+    {
+        $ids = $request->input('ids', []); // pass an array of order IDs
+
+        if (empty($ids)) {
+            return ServiceResponse::error("No orders selected for restore");
+        }
+
+        $restored = Order::onlyTrashed()->whereIn('id', $ids)->restore();
+
+        return ServiceResponse::success("Orders restored successfully", [
+            'restored_count' => $restored
+        ]);
+    }
+    // Force delete a single order
+    public function forceDelete($id)
+    {
+        try {
+            $order = Order::onlyTrashed()->findOrFail($id);
+
+            $order->forceDelete();
+
+            return ServiceResponse::success("Order permanently deleted", [
+                'id' => $id
+            ]);
+        } catch (\Exception $e) {
+            return ServiceResponse::error("Failed to force delete order: " . $e->getMessage());
+        }
+    }
+
+    // Force delete multiple orders
+    public function forceDeleteMultiple(Request $request)
+    {
+        $ids = $request->input('ids', []); // expects array of IDs
+
+        if (empty($ids)) {
+            return ServiceResponse::error("No orders selected for permanent deletion");
+        }
+
+        $deleted = Order::onlyTrashed()->whereIn('id', $ids)->forceDelete();
+
+        return ServiceResponse::success("Orders permanently deleted", [
+            'deleted_count' => $deleted
+        ]);
+    }
+
+
 }
