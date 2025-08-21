@@ -30,6 +30,7 @@ class DeletedOrderResource extends JsonResource
             'discount' => $obj->discount,
             'created_at' => $obj->created_at,
             'updated_at' => $obj->updated_at,
+            'deleted_at' => $obj->deleted_at ?? null,
             'table' => $obj->table ? $obj->table->name : 'no booked',
             'payment_method' => $obj->payment_method ?? 'cash',
             'source' => $obj->source,

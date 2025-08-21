@@ -592,10 +592,25 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::where('id', $id)
-            ->with('orderProducts.product', 'restaurant')
-            ->with('customer', 'table_no', 'table')->with(['orderProducts.productProp'])
-            ->first();
+        $order = Order::withTrashed() // include soft-deleted orders
+            ->with([
+                'customer',
+                'table_no',
+                'table',
+                'restaurant',
+                'orderProducts' => function ($q) {
+                    $q->withTrashed() // include soft-deleted orderProducts
+                        ->with([
+                            'product' => function ($q2) {
+                                $q2->withTrashed(); // include soft-deleted products
+                            },
+                            'productProp' => function ($q3) {
+                                $q3->withTrashed(); // include soft-deleted productProps
+                            }
+                        ]);
+                }
+            ])
+            ->find($id); // or ->where('id', $id)->first();
 
         if (!$order) {
             return ServiceResponse::error('Order not found');
@@ -607,6 +622,7 @@ class OrderController extends Controller
             'order' => $data,
         ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
