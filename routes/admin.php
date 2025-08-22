@@ -25,6 +25,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\BranchConfigController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\InvoiceSettingController;
+use App\Http\Controllers\Admin\OrderReportController;
 
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -300,4 +301,10 @@ Route::prefix('invoice-settings')->group(function () {
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
         ->names('invoiceSettings');
+});
+
+// routes/api.php
+Route::prefix('reports')->group(function () {
+    Route::get('/orders/daily', [OrderReportController::class, 'daily']);
+    Route::get('/orders/monthly', [OrderReportController::class, 'monthly']);
 });
