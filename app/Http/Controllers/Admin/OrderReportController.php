@@ -20,7 +20,7 @@ class OrderReportController extends Controller
             ->whereDate('created_at', $date)
             ->get();
         return ServiceResponse::success('Daily Order report fetched successfully', [
-             'date' => $date,
+            'date' => $date,
             'orders' => OrderReportResource::collection($orders),
             'totals' => $this->getTotals($orders),
         ]);
@@ -29,14 +29,14 @@ class OrderReportController extends Controller
     public function monthly(Request $request)
     {
         $month = $request->month ?? Carbon::now()->month;
-        $year  = $request->year ?? Carbon::now()->year;
+        $year = $request->year ?? Carbon::now()->year;
 
         $orders = Order::with(['customer', 'restaurant', 'orderProducts.product'])
             ->whereYear('created_at', $year)
             ->whereMonth('created_at', $month)
             ->get();
 
-        return ServiceResponse::success('Monthly report fetch successfully',  [
+        return ServiceResponse::success('Monthly report fetch successfully', [
             'month' => $month,
             'year' => $year,
             'orders' => OrderReportResource::collection($orders),
@@ -47,10 +47,11 @@ class OrderReportController extends Controller
     private function getTotals($orders)
     {
         return [
-            'total_sale'    => $orders->sum('total_price'),
-            'total_tax'     => $orders->sum('tax_amount'),
-            'total_discount'=> $orders->sum('discount_value'),
-            'grand_total'   => $orders->sum('final_total'),
+            'total_sale' => $orders->sum('total_price'),
+            'tips' => $orders->sum('tips'),
+            'total_tax' => $orders->sum('tax_amount'),
+            'total_discount' => $orders->sum('discount_value'),
+            'grand_total' => $orders->sum('final_total'),
         ];
     }
 }
