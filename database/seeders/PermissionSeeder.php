@@ -31,6 +31,7 @@ class PermissionSeeder extends Seeder
             ['entity' => 'message', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'order', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu']],
             ['entity' => 'branch', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter', 'set_default', 'config_button']],
+            ['entity' => 'report', 'operations' => ['view', 'daily', 'monthly', 'yearly', 'custom']],
         ];
 
         // Map which roles get which entities' permissions
