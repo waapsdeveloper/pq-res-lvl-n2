@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VariationController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\QzController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\BranchConfigController;
 use App\Http\Controllers\Admin\CurrencyController;
@@ -308,3 +309,6 @@ Route::prefix('reports')->group(function () {
     Route::get('/orders/daily', [OrderReportController::class, 'daily']);
     Route::get('/orders/monthly', [OrderReportController::class, 'monthly']);
 });
+
+Route::get('/qz/certificate', [QzController::class, 'certificate']);
+Route::post('/qz/sign', [QzController::class, 'sign']);
