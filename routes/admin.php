@@ -16,7 +16,6 @@ use App\Http\Controllers\Admin\RestaurantTimingController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TableBookingController;
 use App\Http\Controllers\Admin\RTableBookingController;
-use App\Http\Controllers\QzTrayController;
 use App\Http\Controllers\Admin\ExpenseCategoryController;
 use App\Http\Controllers\Admin\RtableController;
 use App\Http\Controllers\Admin\UserController;
@@ -309,6 +308,3 @@ Route::prefix('reports')->group(function () {
     Route::get('/orders/daily', [OrderReportController::class, 'daily']);
     Route::get('/orders/monthly', [OrderReportController::class, 'monthly']);
 });
-
-Route::post('/sign', [QzTrayController::class, 'sign']);
-Route::get('/cert', [QzTrayController::class, 'cert']);
