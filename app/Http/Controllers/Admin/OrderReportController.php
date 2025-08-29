@@ -13,8 +13,18 @@ class OrderReportController extends Controller
 {
     public function daily(Request $request)
     {
-        $date = $request->date ?? Carbon::today()->toDateString();
+        // Prefer explicit date param, fallback to filters['report-date'], then today
+        $date = $request->input('date', null);
 
+        $filtersInput = $request->filled('filters') ? $request->input('filters') : null;
+        $filters = $filtersInput ? json_decode($filtersInput, true) : null;
+
+        if (!$date && !empty($filters['report-date'])) {
+            $date = $filters['report-date'];
+        }
+        $date = $date ?? Carbon::today()->toDateString();
+
+        // Start base query
         $orders = Order::with(['customer', 'restaurant', 'orderProducts.product'])
             ->whereDate('created_at', $date);
 
@@ -23,17 +33,35 @@ class OrderReportController extends Controller
             $orders->where('restaurant_id', $request->restaurant_id);
         }
 
-        // Handle filters JSON
-        if ($request->filled('filters')) {
-            $filters = json_decode($request->filters, true);
+        // Determine orderScope (filters take precedence)
+        $orderScope = null;
+        if (!empty($filters['orderScope'])) {
+            $orderScope = $filters['orderScope'];
+        } elseif ($request->filled('orderScope')) {
+            $orderScope = $request->orderScope;
+        }
 
-            if (!empty($filters['orderid'])) {
-                $orders->where('order_number', 'LIKE', '%' . $filters['orderid'] . '%');
+        // Apply scope: normal (default), deleted (only soft-deleted), all-orders (include trashed)
+        if ($orderScope === 'deleted') {
+            $orders->onlyTrashed();
+        } elseif ($orderScope === 'all-orders') {
+            $orders->withTrashed();
+        }
+        // else 'normal' or null => default behaviour (exclude trashed)
+
+        // Handle filters JSON (order id / type / status)
+        if ($filters) {
+            // support both 'orderid' and 'order_id'
+            if (!empty($filters['orderid']) || !empty($filters['order_id'])) {
+                $orderIdValue = $filters['orderid'] ?? $filters['order_id'];
+                $orders->where('order_number', 'LIKE', '%' . $orderIdValue . '%');
             }
 
             if (!empty($filters['type'])) {
-                $orders->where('order_type', $filters['type']);
+                // use like for flexibility
+                $orders->where('order_type', 'LIKE', '%' . $filters['type'] . '%');
             }
+
             if (!empty($filters['status'])) {
                 $orders->where('status', $filters['status']);
             }
