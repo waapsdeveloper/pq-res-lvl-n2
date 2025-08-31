@@ -22,8 +22,10 @@ use App\Models\RestaurantSetting;
 use App\Models\RestaurantMeta;
 use Illuminate\Support\Facades\DB;
 use App\Models\InvoiceSetting;
+
 use Illuminate\Validation\ValidationException;
 use PHPUnit\TextUI\Help;
+
 
 
 class RestaurantController extends Controller
@@ -448,8 +450,50 @@ class RestaurantController extends Controller
     }
     public function showActiveRestaurant()
     {
-        $activeRestaurantId = Helper::getActiveRestaurantId();
-        return ServiceResponse::success('Active Restaurant ID', ['active_restaurant' => $activeRestaurantId]);
+        $helperActiveId = Helper::getActiveRestaurantId();
+
+        // Attempt to load restaurant by helper id, fallback to active flag, then first record
+        $restaurant = null;
+        if (!empty($helperActiveId)) {
+            $restaurant = Restaurant::with(['meta', 'timings', 'settings'])->find($helperActiveId);
+        }
+
+        if (!$restaurant) {
+            $restaurant = Restaurant::with(['meta', 'timings', 'settings'])->where('is_active', 1)->first();
+        }
+
+        if (!$restaurant) {
+            $restaurant = Restaurant::with(['meta', 'timings', 'settings'])->orderBy('id')->first();
+        }
+
+        // Defensive: if something returned a Collection, grab the first model
+        if ($restaurant instanceof \Illuminate\Support\Collection) {
+            $restaurant = $restaurant->first();
+        }
+
+        // Build meta map (key => value), JSON-decode when appropriate
+        $restaurantMeta = collect([]);
+        if ($restaurant && isset($restaurant->meta) && $restaurant->meta instanceof \Illuminate\Support\Collection) {
+            $restaurantMeta = $restaurant->meta->mapWithKeys(function ($row) {
+                $value = $row->meta_value;
+                if (is_string($value)) {
+                    $trim = trim($value);
+                    if ($trim !== '' && in_array($trim[0], ['{', '['])) {
+                        $decoded = json_decode($value, true);
+                        if (json_last_error() === JSON_ERROR_NONE) {
+                            $value = $decoded;
+                        }
+                    }
+                }
+                return [$row->meta_key => $value];
+            });
+        }
+
+        // Return full restaurant object under 'active_restaurant' as requested
+        return ServiceResponse::success('Active Restaurant', [
+            'active_restaurant' => $restaurant ? new RestaurantListResourse($restaurant) : null,
+            'restaurant_meta'   => $restaurantMeta,
+        ]);
     }
 
 
