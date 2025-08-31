@@ -17,6 +17,8 @@ class OrderReportResource extends JsonResource
             'amount'    => $this->total_price ?? 0,
             'discount'  => $this->discount_value ?? 0,
             'tips'      => $this->tips_amount ?? 0,
+            'source'    => $this->source,
+            'payment'   => $this->payment_method,
             'total'     => $this->final_total ?? 0,
             // safe trashed check: returns true if model uses SoftDeletes and is soft-deleted
             'isDeleted' => method_exists($this->resource, 'trashed') ? (bool) $this->resource->trashed() : false,

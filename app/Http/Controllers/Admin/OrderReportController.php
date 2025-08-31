@@ -124,12 +124,46 @@ class OrderReportController extends Controller
 
     private function getTotals($orders)
     {
+        // base totals
+        $totalSale = $orders->sum('total_price');
+        $tips = $orders->sum('tips');
+        $totalTax = $orders->sum('tax_amount');
+        $totalDiscount = $orders->sum('discount_value');
+        $grandTotal = $orders->sum('final_total');
+
+        // normalize payment method and compute counts & sums
+        $cardOrders = $orders->filter(function ($o) {
+            $pm = strtolower(trim($o->payment_method ?? ''));
+            return $pm !== '' && strpos($pm, 'creditcard') !== false;
+        });
+
+        $cashOrders = $orders->filter(function ($o) {
+            $pm = strtolower(trim($o->payment_method ?? ''));
+            return $pm !== '' && strpos($pm, 'cash') !== false;
+        });
+
+        $totalCardCount = $cardOrders->count();
+        $totalCardAmount = $cardOrders->sum(function ($o) {
+            return $o->final_total ?? 0;
+        });
+
+        $totalCashCount = $cashOrders->count();
+        $totalCashAmount = $cashOrders->sum(function ($o) {
+            return $o->final_total ?? 0;
+        });
+
         return [
-            'total_sale' => $orders->sum('total_price'),
-            'tips' => $orders->sum('tips'),
-            'total_tax' => $orders->sum('tax_amount'),
-            'total_discount' => $orders->sum('discount_value'),
-            'grand_total' => $orders->sum('final_total'),
+            'total_sale' => $totalSale,
+            'tips' => $tips,
+            'total_tax' => $totalTax,
+            'total_discount' => $totalDiscount,
+            'grand_total' => $grandTotal,
+            // card metrics (creditcard)
+            'total_card_count' => $totalCardCount,
+            'total_card_amount' => $totalCardAmount,
+            // cash metrics
+            'total_cash_count' => $totalCashCount,
+            'total_cash_amount' => $totalCashAmount,
         ];
     }
 }
