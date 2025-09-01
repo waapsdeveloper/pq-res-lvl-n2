@@ -181,29 +181,98 @@ Right-click the shortcut → Properties → Run: Minimized.
 ✅ Pros: Simple, no admin rights needed.
 ❌ Cons: User can easily remove it.
 
-2. Windows Task Scheduler (Stealth Mode)
+2.🖥️ Task Scheduler Setup (Windows Stealth Daemon)
+1. Open Task Scheduler
 
-This is more professional: runs invisibly at boot, even if no user logs in.
+Press Win + R → type taskschd.msc → hit Enter.
 
-Open Task Scheduler (taskschd.msc).
+Or search Task Scheduler in Start Menu.
 
-Create a new task:
+2. Create a New Task (not “Basic Task”)
 
-General → Run whether user is logged in or not.
+In the right panel → click Create Task… (⚠️ not Create Basic Task — you need the advanced options).
 
-Triggers → At startup.
+3. General Tab
 
-Actions → Start a program → Browse PrintDaemon_v1.exe.
+Name: e.g., PrintDaemon
 
-Conditions → Uncheck Start only if on AC power (if you want on laptops too).
+Description: “Silent PDF Printer Daemon”
 
-Settings → Enable Run task as soon as possible after a scheduled start.
+Security options:
 
-Save → It will now run silently.
+Select: Run whether user is logged on or not ✅
 
-✅ Pros: Runs truly in background, no console window.
-❌ Cons: Needs admin to set up.
+Check: Run with highest privileges ✅ (important if your daemon needs printer access).
 
+Configure for: Choose your Windows version.
+
+👉 This makes it invisible — no console window at login.
+
+4. Triggers Tab
+
+Click New…
+
+Begin the task: At startup
+
+Enabled ✅
+
+(Optional) Add another trigger → “At log on” if you also want it when user logs in.
+
+Click OK.
+
+5. Actions Tab
+
+Click New…
+
+Action: Start a program
+
+Program/script: Browse to your compiled PrintDaemon_v1.exe.
+
+(Optional) Start in: C:\path\to\daemon\folder (so relative paths work).
+
+Click OK.
+
+6. Conditions Tab
+
+Uncheck Start the task only if the computer is on AC power (important for laptops).
+
+Uncheck Start only if idle.
+
+Basically → nothing should block it.
+
+7. Settings Tab
+
+Check: Allow task to be run on demand
+
+Check: Run task as soon as possible after a scheduled start is missed
+
+Check: If the task fails, restart every X minutes (recommended).
+
+Stop the task if it runs longer than → uncheck this (you want it always running).
+
+8. Save & Test
+
+Click OK.
+
+Windows will prompt for admin credentials (since it’s set to run whether logged in or not). Enter password.
+
+Task is now saved.
+
+9. Verify
+
+Reboot your system.
+
+Open Task Manager → check under Background Processes for PrintDaemon_v1.exe.
+
+You won’t see any popup or console window — ghost mode achieved ✅
+
+⚡ Why Task Scheduler > Startup Folder
+
+Startup Folder only runs when a user logs in → visible console (unless you minimize).
+
+Task Scheduler runs at boot, before login, and fully hidden.
+
+Also, it restarts if it crashes (if you set retries).
 3. Convert to Windows Service (Using nssm)
 
 If you want real daemon style, turn it into a Windows Service.
