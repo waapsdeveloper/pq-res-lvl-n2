@@ -307,4 +307,5 @@ Route::prefix('invoice-settings')->group(function () {
 Route::prefix('reports')->group(function () {
     Route::get('/orders/daily', [OrderReportController::class, 'daily']);
     Route::get('/orders/monthly', [OrderReportController::class, 'monthly']);
+    Route::get('/orders/product-daily', [OrderReportController::class, 'productDailyReport']);
 });
