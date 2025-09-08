@@ -144,11 +144,16 @@ Route::prefix('product')->group(function () {
         ->names('product'); // Restrict to specific CRUD actions.
 });
 
-Route::prefix('order')->group(function () {
+Route::prefix('order')->middleware('auth:api')->group(function () {
     Route::get('/deleted-orders', [OrderController::class, 'deletedIndex'])
         ->name('order.deletedIndex');
     Route::get('/totals', [OrderController::class, 'totals'])->name('order.totals');
     Route::get('/bulk-delete', [OrderController::class, 'bulkDelete'])->name('order-bulkDelete');
+    // Event timeline
+    Route::get('/{id}/events', [OrderController::class, 'events'])->name('order.events');
+
+    // Update specific event
+    Route::put('/{orderId}/events/{eventId}', [OrderController::class, 'updateEvent'])->name('order.updateEvent');
 
     Route::resource('/', OrderController::class)
         ->parameters(['' => 'id'])

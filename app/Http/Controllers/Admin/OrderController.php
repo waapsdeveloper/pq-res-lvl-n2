@@ -30,8 +30,10 @@ use App\Http\Controllers\Admin\RTableBookingController;
 use App\Http\Requests\Admin\RTablebooking\StoreRTablesBooking;
 use App\Models\Rtable;
 use App\Models\RTableBooking_RTable;
+use App\Models\OrderLog;
 use App\Models\RTablesBooking;
 use Illuminate\Support\Facades\App;
+use Log;
 
 class OrderController extends Controller
 {
@@ -552,7 +554,38 @@ class OrderController extends Controller
             'notes' => ""
         ]);
 
+
         logger()->info('Invoice created successfully', ['invoice_id' => $invoice->id]);
+        $performer = auth()->user();
+        logger()->info('Performer info', ['performer' => $performer]);
+        OrderLog::create([
+            'order_id' => $order->id,
+            'event_type' => 'order_created',
+            'old_value' => null,
+            'new_value' => $order->status,
+            'performed_by' => $performer ? $performer->name : 'System',
+            'performed_by_id' => $performer ? $performer->id : null,
+        ]);
+        // 2. Log initial status
+OrderLog::create([
+    'order_id'        => $order->id,
+    'event_type'      => 'status_change',
+    'old_value'       => null,
+    'new_value'       => $order->status,
+    'performed_by'    => $performer ? $performer->name : 'System',
+    'performed_by_id' => $performer ? $performer->id : null,
+]);
+
+// 3. Log initial payment status
+OrderLog::create([
+    'order_id'        => $order->id,
+    'event_type'      => 'payment_status',
+    'old_value'       => null,
+    'new_value'       => $order->is_paid ? 'Paid' : 'Unpaid',
+    'performed_by'    => $performer ? $performer->name : 'System',
+    'performed_by_id' => $performer ? $performer->id : null,
+]);
+
 
         // If table_id is not null, update the table status to occupied
         if ($table) {
@@ -865,16 +898,34 @@ class OrderController extends Controller
             return ServiceResponse::error('Order not found');
         }
 
+        $oldStatus = $order->status;
+
         $order->update([
             'status' => $data['status'],
         ]);
+
+        // 🔥 Log this status change (create if missing, update if exists)
+        OrderLog::updateOrCreate(
+            [
+                'order_id' => $order->id,
+                'event_type' => 'status_change',
+            ],
+            [
+                'old_value' => $oldStatus,
+                'new_value' => $data['status'],
+                'performed_by' => auth()->user()->name ?? 'System',
+                'performed_by_id' => auth()->id(),
+            ]
+        );
 
         $notification = $this->createNotification($order);
 
         $noti = new NotifyResource($notification);
         Helper::sendPusherToUser($noti, 'notification-channel', 'notification-update-' . $order->order_number);
+
         return ServiceResponse::success('Order status updated successfully', $order);
     }
+
 
     public function updatePaymentStatus(Request $request, $id)
     {
@@ -888,11 +939,26 @@ class OrderController extends Controller
             return ServiceResponse::error('Order not found');
         }
 
+        $oldPaymentStatus = $order->is_paid ? 'Paid' : 'Unpaid';
+        $newPaymentStatus = $request->is_paid ? 'Paid' : 'Unpaid';
+
         $order->update([
             'is_paid' => $request->is_paid,
         ]);
 
-        // Optionally, send notification or perform other actions here
+        // 🔥 Log this payment status change (create if missing, update if exists)
+        OrderLog::updateOrCreate(
+            [
+                'order_id' => $order->id,
+                'event_type' => 'payment_status',
+            ],
+            [
+                'old_value' => $oldPaymentStatus,
+                'new_value' => $newPaymentStatus,
+                'performed_by' => auth()->user()->name ?? 'System',
+                'performed_by_id' => auth()->id(),
+            ]
+        );
 
         return ServiceResponse::success('Order payment status updated successfully', $order);
     }
@@ -972,6 +1038,64 @@ class OrderController extends Controller
             'deleted_count' => $deleted
         ]);
     }
+
+    public function events($id)
+    {
+        $order = Order::with('logs')->withTrashed()->find($id); // include soft-deleted
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+
+        $events = $order->logs->map(function ($log) {
+            return [
+                'id' => $log->id,
+                'event_type' => $log->event_type,
+                'old_value' => $log->old_value,
+                'new_value' => $log->new_value,
+                'performed_by' => $log->performed_by,
+                'performed_by_id' => $log->performed_by_id,
+                'timestamp' => $log->created_at->toDateTimeString(),
+            ];
+        });
+
+        return ServiceResponse::success('Order events fetched successfully', [
+            'order_id' => $order->id,
+            'order_number' => $order->order_number,
+            'created_at' => $order->created_at ? $order->created_at->toDateTimeString() : null,
+            'updated_at' => $order->updated_at ? $order->updated_at->toDateTimeString() : null,
+            'deleted_at' => $order->deleted_at ? $order->deleted_at->toDateTimeString() : null,
+            'events' => $events,
+        ]);
+    }
+
+    public function updateEvent(Request $request, $orderId, $eventId)
+    {
+        $order = Order::find($orderId);
+
+        if (!$order) {
+            return ServiceResponse::error('Order not found');
+        }
+
+        $event = $order->logs()->find($eventId);
+
+        if (!$event) {
+            return ServiceResponse::error('Event not found for this order');
+        }
+
+        $event->update([
+            'event_type' => $request->input('event_type', $event->event_type),
+            'old_value' => $request->input('old_value', $event->old_value),
+            'new_value' => $request->input('new_value', $event->new_value),
+            'performed_by' => $request->input('performed_by', $event->performed_by),
+            'performed_by_id' => $request->input('performed_by_id', $event->performed_by_id),
+        ]);
+
+        return ServiceResponse::success('Event updated successfully', [
+            'event' => $event,
+        ]);
+    }
+
 
 
 }

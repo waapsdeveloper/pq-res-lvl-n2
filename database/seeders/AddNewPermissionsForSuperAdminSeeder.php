@@ -19,7 +19,7 @@ class AddNewPermissionsForSuperAdminSeeder extends Seeder
         $roleId = $roles['super-admin'];
 
         $newPermissions = [
-            ['entity' => 'report', 'operations' => ['view', 'daily_sale_report', 'yearly', 'custom', 'weekly']],
+            ['entity' => 'report', 'operations' => ['view', 'daily_sale_report', 'daily_product_report','yearly', 'custom', 'weekly']],
             ['entity' => 'order', 'operations' => ['deleted_order','history']],
             ['entity' => 'role', 'operations' => ['filter']],
         ];

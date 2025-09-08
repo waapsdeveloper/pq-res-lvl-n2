@@ -84,4 +84,10 @@ class Order extends Model
     {
         return $this->belongsTo(Notification::class, 'id', 'order_id');
     }
+
+    public function logs()
+{
+    return $this->hasMany(OrderLog::class);
+}
+
 }
