@@ -20,7 +20,8 @@ class AddNewPermissionsForSuperAdminSeeder extends Seeder
 
         $newPermissions = [
             ['entity' => 'report', 'operations' => ['view', 'daily_sale_report', 'yearly', 'custom', 'weekly']],
-            ['entity' => 'order', 'operations' => ['deleted_order']],
+            ['entity' => 'order', 'operations' => ['deleted_order','history']],
+            ['entity' => 'role', 'operations' => ['filter']],
         ];
 
         foreach ($newPermissions as $perm) {
