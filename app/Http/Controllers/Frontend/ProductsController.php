@@ -21,20 +21,13 @@ class ProductsController extends Controller
         $query = Product::query()
             ->where('restaurant_id', (int) $request->restaurant_id)
             ->whereIn('status', ['Active', 'active'])
+            ->whereHas('category', function ($q) {
+                $q->whereIn('status', ['Active', 'active']);
+            })
             ->with('category', 'productProps', 'variation');
 
         // If category_id is provided, check if the category is active
         if ($request->has('category_id')) {
-            $category = Category::where('id', $request->input('category_id'))
-                ->whereIn('status', ['Active', 'active'])
-                ->first();
-
-            if (!$category) {
-                // Return empty paginated result if category is not active or doesn't exist
-                $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, $perpage, $page);
-                return ServiceResponse::success('Products retrieved successfully', ['products' => $empty]);
-            }
-
             $query->where('category_id', $request->input('category_id'));
         }
 
@@ -70,18 +63,13 @@ class ProductsController extends Controller
     }
     public function productByCategory($id)
     {
-        // Check if category is active
-        $category = Category::where('id', $id)
-            ->whereIn('status', ['Active', 'active'])
-            ->first();
-
-        if (!$category) {
-            $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 9, 1);
-            return ServiceResponse::success('Products retrieved by category', ['products' => $empty]);
-        }
-
+        // Only fetch products whose category is active
         $query = Product::where('category_id', $id)
-            ->whereIn('status', ['Active', 'active']);
+            ->whereIn('status', ['Active', 'active'])
+            ->whereHas('category', function ($q) {
+                $q->whereIn('status', ['Active', 'active']);
+            });
+
         $data = $query->paginate(9);
         $data->getCollection()->transform(function ($product) {
             return new ProductResource($product);
@@ -94,18 +82,12 @@ class ProductsController extends Controller
 
     public function getByCategory($id)
     {
-        // Check if category is active
-        $category = Category::where('id', $id)
-            ->whereIn('status', ['Active', 'active'])
-            ->first();
-
-        if (!$category) {
-            $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 12, 1);
-            return ServiceResponse::success('Products retrieved by category', ['products' => $empty]);
-        }
-
+        // Only fetch products whose category is active
         $query = Product::where('category_id', $id)
-            ->whereIn('status', ['Active', 'active']);
+            ->whereIn('status', ['Active', 'active'])
+            ->whereHas('category', function ($q) {
+                $q->whereIn('status', ['Active', 'active']);
+            });
 
         $data = $query->paginate(12);
         $data->getCollection()->transform(function ($product) {

@@ -199,20 +199,13 @@ class HomeController extends Controller
         $query = Product::query()
             ->with('category', 'restaurant', 'productProps', 'variation')
             ->where('restaurant_id', (int) $request->restaurant_id)
-            ->whereIn('status', ['Active', 'active']);
+            ->whereIn('status', ['Active', 'active'])
+            ->whereHas('category', function ($q) {
+                $q->whereIn('status', ['Active', 'active']);
+            });
 
-        // If category_id is provided, check if the category is active
+        // If category_id is provided, filter by it (category status is already checked above)
         if ($request->has('category_id')) {
-            $category = \App\Models\Category::where('id', $request->category_id)
-                ->whereIn('status', ['Active', 'active'])
-                ->first();
-
-            if (!$category) {
-                // Return empty paginated result if category is not active or doesn't exist
-                $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, $perpage, $page);
-                return ServiceResponse::success('Popular dishes available', ['products' => $empty]);
-            }
-
             $query->where('category_id', $request->category_id);
         }
 
