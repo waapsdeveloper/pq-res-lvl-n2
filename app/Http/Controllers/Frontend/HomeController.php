@@ -193,17 +193,32 @@ class HomeController extends Controller
     }
     public function getPopularProducts(Request $request)
     {
-        // Set default pagination parameters
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 8);
-        // Query to fetch products
+
         $query = Product::query()
             ->with('category', 'restaurant', 'productProps', 'variation')
+            ->where('restaurant_id', (int) $request->restaurant_id)
+            ->whereIn('status', ['Active', 'active']);
 
-            ->where('restaurant_id', (int) $request->restaurant_id)->whereIn('status', ['Active', 'active'])
-            ->limit(8);
+        // If category_id is provided, check if the category is active
+        if ($request->has('category_id')) {
+            $category = \App\Models\Category::where('id', $request->category_id)
+                ->whereIn('status', ['Active', 'active'])
+                ->first();
+
+            if (!$category) {
+                // Return empty paginated result if category is not active or doesn't exist
+                $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, $perpage, $page);
+                return ServiceResponse::success('Popular dishes available', ['products' => $empty]);
+            }
+
+            $query->where('category_id', $request->category_id);
+        }
+
+        $query->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
-        // Transform the collection into the desired format
+
         $data->getCollection()->transform(function ($product) {
             // return new PopularProductsResource($product);
             return new ProductResource($product);

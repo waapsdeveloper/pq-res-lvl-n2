@@ -15,17 +15,26 @@ class ProductsController extends Controller
 {
     public function getProducts(Request $request)
     {
-        // Set default pagination parameters
         $page = $request->input('page', 1);
         $perpage = $request->input('perpage', 20);
 
         $query = Product::query()
             ->where('restaurant_id', (int) $request->restaurant_id)
-            ->whereIn('status', ['Active', 'active']) // <-- Only active products
+            ->whereIn('status', ['Active', 'active'])
             ->with('category', 'productProps', 'variation');
 
-        // if category_id
+        // If category_id is provided, check if the category is active
         if ($request->has('category_id')) {
+            $category = Category::where('id', $request->input('category_id'))
+                ->whereIn('status', ['Active', 'active'])
+                ->first();
+
+            if (!$category) {
+                // Return empty paginated result if category is not active or doesn't exist
+                $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, $perpage, $page);
+                return ServiceResponse::success('Products retrieved successfully', ['products' => $empty]);
+            }
+
             $query->where('category_id', $request->input('category_id'));
         }
 
@@ -61,8 +70,18 @@ class ProductsController extends Controller
     }
     public function productByCategory($id)
     {
+        // Check if category is active
+        $category = Category::where('id', $id)
+            ->whereIn('status', ['Active', 'active'])
+            ->first();
+
+        if (!$category) {
+            $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 9, 1);
+            return ServiceResponse::success('Products retrieved by category', ['products' => $empty]);
+        }
+
         $query = Product::where('category_id', $id)
-            ->whereIn('status', ['Active', 'active']); // <-- Only active products
+            ->whereIn('status', ['Active', 'active']);
         $data = $query->paginate(9);
         $data->getCollection()->transform(function ($product) {
             return new ProductResource($product);
@@ -75,18 +94,24 @@ class ProductsController extends Controller
 
     public function getByCategory($id)
     {
-        // Query to fetch products by category_id
-        $query = Product::where('category_id', $id)
-            ->whereIn('status', ['Active', 'active']); // <-- Only active products
+        // Check if category is active
+        $category = Category::where('id', $id)
+            ->whereIn('status', ['Active', 'active'])
+            ->first();
 
-        // Paginate the results
+        if (!$category) {
+            $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 12, 1);
+            return ServiceResponse::success('Products retrieved by category', ['products' => $empty]);
+        }
+
+        $query = Product::where('category_id', $id)
+            ->whereIn('status', ['Active', 'active']);
+
         $data = $query->paginate(12);
-        // Transform the collection into the desired format
         $data->getCollection()->transform(function ($product) {
             return new ProductResource($product);
         });
 
-        // Return the transformed data with a success message
         return ServiceResponse::success('Products retrieved by category', ['products' => $data]);
     }
 }
