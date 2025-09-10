@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function categories(Request $request)
     {
-        $categories = Category::where('restaurant_id', (int) $request->restaurant_id)->get();
+        $categories = Category::where('restaurant_id', (int) $request->restaurant_id)->whereIn('status', ['Active', 'active'])->get();
 
         $categories = $categories->map(function ($category) {
             $category->image = Helper::returnFullImageUrl($category->image);

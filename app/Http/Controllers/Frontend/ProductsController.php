@@ -21,6 +21,7 @@ class ProductsController extends Controller
 
         $query = Product::query()
             ->where('restaurant_id', (int) $request->restaurant_id)
+            ->whereIn('status', ['Active', 'active']) // <-- Only active products
             ->with('category', 'productProps', 'variation');
 
         // if category_id
@@ -60,7 +61,8 @@ class ProductsController extends Controller
     }
     public function productByCategory($id)
     {
-        $query = Product::where('category_id', $id);
+        $query = Product::where('category_id', $id)
+            ->whereIn('status', ['Active', 'active']); // <-- Only active products
         $data = $query->paginate(9);
         $data->getCollection()->transform(function ($product) {
             return new ProductResource($product);
@@ -74,7 +76,8 @@ class ProductsController extends Controller
     public function getByCategory($id)
     {
         // Query to fetch products by category_id
-        $query = Product::where('category_id', $id);
+        $query = Product::where('category_id', $id)
+            ->whereIn('status', ['Active', 'active']); // <-- Only active products
 
         // Paginate the results
         $data = $query->paginate(12);

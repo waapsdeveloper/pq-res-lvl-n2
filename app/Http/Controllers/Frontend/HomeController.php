@@ -41,7 +41,7 @@ class HomeController extends Controller
     public function getRestaurantConfigById(Request $request, $id)
     {
         $restaurant = Restaurant::where('id', $id)->first();
-        if(!$restaurant) {
+        if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found', [], 404);
         }
 
@@ -67,8 +67,8 @@ class HomeController extends Controller
     {
         // Get all meta data for the restaurant
         $metaData = RestaurantMeta::where('restaurant_id', $id)->get();
-        
-        if($metaData->isEmpty()) {
+
+        if ($metaData->isEmpty()) {
             // Also fetch the restaurant for favicon
             $restaurant = Restaurant::find($id);
             return ServiceResponse::success('No meta data found for this restaurant', [
@@ -77,12 +77,12 @@ class HomeController extends Controller
                 'favicon' => $restaurant ? Helper::returnFullImageUrl($restaurant->favicon) : null
             ]);
         }
-        
+
         // Transform meta data into key-value pairs with JSON parsing
         $meta = [];
         foreach ($metaData as $metaItem) {
             $value = $metaItem->meta_value;
-            
+
             // Try to parse JSON values for restaurant_attributes
             if ($metaItem->meta_key === 'restaurant_attributes') {
                 try {
@@ -91,7 +91,7 @@ class HomeController extends Controller
                     // Keep original value if JSON parsing fails
                 }
             }
-            
+
             $meta[$metaItem->meta_key] = $value;
         }
 
@@ -108,7 +108,7 @@ class HomeController extends Controller
     public function getRestaurantWithMeta($id)
     {
         $restaurant = Restaurant::with('timings', 'meta')->find($id);
-        if(!$restaurant) {
+        if (!$restaurant) {
             return ServiceResponse::error('Restaurant not found', [], 404);
         }
 
@@ -200,7 +200,7 @@ class HomeController extends Controller
         $query = Product::query()
             ->with('category', 'restaurant', 'productProps', 'variation')
 
-            ->where('restaurant_id', (int) $request->restaurant_id)
+            ->where('restaurant_id', (int) $request->restaurant_id)->whereIn('status', ['Active', 'active'])
             ->limit(8);
         $data = $query->paginate($perpage, ['*'], 'page', $page);
         // Transform the collection into the desired format
@@ -317,7 +317,7 @@ class HomeController extends Controller
         $formattedHours = [];
         foreach ($grouped as $group) {
             $daysCount = count($group['days']);
-            
+
             if ($daysCount === 1) {
                 // Single day
                 $formattedHours[] = $group['days'][0] . ': ' . $group['timing'];
@@ -380,7 +380,7 @@ class HomeController extends Controller
         $formattedHours = [];
         foreach ($grouped as $group) {
             $daysCount = count($group['days']);
-            
+
             if ($daysCount === 1) {
                 // Single day
                 $formattedHours[] = $group['days'][0] . "\n" . $group['timing'];
