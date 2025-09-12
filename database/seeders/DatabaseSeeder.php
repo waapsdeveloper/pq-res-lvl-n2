@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ExpenseSeeder::class);
         $this->call(CouponSeeder::class);
         $this->call(InvoiceSettingSeeder::class);
+        $this->call(AddNewPermissionsForSuperAdminSeeder::class);
         $this->call(MigrationsTableSeeder::class);
         
         // $this->call(OrderSeeder::class); //5
