@@ -558,33 +558,100 @@ class OrderController extends Controller
         logger()->info('Invoice created successfully', ['invoice_id' => $invoice->id]);
         $performer = auth()->user();
         logger()->info('Performer info', ['performer' => $performer]);
+
+        // --- build product payload helper (include quantity and full variation + selected parts) ---
+        $buildProductPayload = function ($op) {
+            // $op is OrderProduct model
+            $productId = $op->product_id ?? null;
+            $prodModel = $op->product ?? ($productId ? Product::find($productId) : null);
+            $productName = $prodModel ? $prodModel->name : null;
+            $quantity = $op->quantity ?? null;
+            $price = $op->price ?? null;
+            $notes = $op->notes ?? null;
+
+            $variationRaw = $op->variation ?? null;
+            // decode variation if JSON string
+            if (is_string($variationRaw) && $variationRaw !== '') {
+                $decoded = json_decode($variationRaw, true);
+                $variation = (json_last_error() === JSON_ERROR_NONE) ? $decoded : $variationRaw;
+            } else {
+                $variation = $variationRaw;
+            }
+
+            // extract selected options (if structure contains selectedOption or selected flag)
+            $selectedVariations = [];
+            if (is_array($variation)) {
+                foreach ($variation as $group) {
+                    if (isset($group['selectedOption']) && $group['selectedOption']) {
+                        $selectedVariations[] = [
+                            'type' => $group['type'] ?? null,
+                            'selected' => $group['selectedOption'],
+                        ];
+                        continue;
+                    }
+                    if (isset($group['options']) && is_array($group['options'])) {
+                        $sel = [];
+                        foreach ($group['options'] as $opt) {
+                            if ((isset($opt['selected']) && $opt['selected']) || (isset($opt['is_selected']) && $opt['is_selected'])) {
+                                $sel[] = $opt;
+                            }
+                        }
+                        if (!empty($sel)) {
+                            $selectedVariations[] = [
+                                'type' => $group['type'] ?? null,
+                                'selected' => $sel,
+                            ];
+                        }
+                    }
+                }
+            }
+
+            return [
+                'product_id' => $productId,
+                'name' => $productName,
+                'quantity' => $quantity,
+                'price' => $price,
+                'notes' => $notes,
+                'variation' => $variation,                 // full decoded variation payload
+                'selected_variations' => $selectedVariations, // only selected parts
+            ];
+        };
+
+        // Build array of product payloads for this order
+        $productPayloads = [];
+        foreach ($order->orderProducts as $op) {
+            $productPayloads[] = $buildProductPayload($op);
+        }
+
+        // Log order_created with product assignment (new_value = full products array)
         OrderLog::create([
             'order_id' => $order->id,
             'event_type' => 'order_created',
             'old_value' => null,
-            'new_value' => $order->status,
+            'new_value' => json_encode($productPayloads, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             'performed_by' => $performer ? $performer->name : 'System',
             'performed_by_id' => $performer ? $performer->id : null,
         ]);
-        // 2. Log initial status
-OrderLog::create([
-    'order_id'        => $order->id,
-    'event_type'      => 'status_change',
-    'old_value'       => null,
-    'new_value'       => $order->status,
-    'performed_by'    => $performer ? $performer->name : 'System',
-    'performed_by_id' => $performer ? $performer->id : null,
-]);
 
-// 3. Log initial payment status
-OrderLog::create([
-    'order_id'        => $order->id,
-    'event_type'      => 'payment_status',
-    'old_value'       => null,
-    'new_value'       => $order->is_paid ? 'Paid' : 'Unpaid',
-    'performed_by'    => $performer ? $performer->name : 'System',
-    'performed_by_id' => $performer ? $performer->id : null,
-]);
+        // Keep initial status log (separate)
+        OrderLog::create([
+            'order_id'        => $order->id,
+            'event_type'      => 'status_change',
+            'old_value'       => null,
+            'new_value'       => $order->status,
+            'performed_by'    => $performer ? $performer->name : 'System',
+            'performed_by_id' => $performer ? $performer->id : null,
+        ]);
+
+        // Keep payment status log (separate)
+        OrderLog::create([
+            'order_id'        => $order->id,
+            'event_type'      => 'payment_status',
+            'old_value'       => null,
+            'new_value'       => $order->is_paid ? 'Paid' : 'Unpaid',
+            'performed_by'    => $performer ? $performer->name : 'System',
+            'performed_by_id' => $performer ? $performer->id : null,
+        ]);
 
 
         // If table_id is not null, update the table status to occupied
