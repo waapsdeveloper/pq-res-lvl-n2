@@ -26,6 +26,7 @@ class SandboxRoleSeeder extends Seeder
         // Manager permissions (only these)
         $managerPermissions = [
             ['entity' => 'dashboard', 'operations' => ['view']],
+            ['entity' => 'order', 'operations' => ['add','view', 'edit', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu', 'deleted_order', 'history']],
             ['entity' => 'product', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'category', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'variation', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter']],
@@ -69,7 +70,7 @@ class SandboxRoleSeeder extends Seeder
         // Saleman permissions
         $salemanPermissions = [
             ['entity' => 'dashboard', 'operations' => ['view']],
-            ['entity' => 'order', 'operations' => ['add', 'edit', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu', 'deleted_order', 'history']],
+            ['entity' => 'order', 'operations' => ['add', 'view','edit', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu', 'deleted_order', 'history']],
             ['entity' => 'report', 'operations' => ['view', 'daily_sale_report', 'yearly', 'custom','daily_product_report']],
         ];
 
