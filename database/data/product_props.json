@@ -2,151 +2,385 @@
     {
         "product_id": 1,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"size\", \"selected\": false, \"options\": [{\"name\": \"500ml\", \"description\": \"500ml bottle\", \"price\": 2.5}, {\"name\": \"1L\", \"description\": \"1 liter bottle\", \"price\": 5.0}, {\"name\": \"1.5L\", \"description\": \"1.5 liter bottle\", \"price\": 7.0}]}]",
+        "meta_value": "[{\"type\":\"size\",\"selected\":false,\"options\":[{\"name\":\"500ml\",\"description\":\"500ml bottle\",\"price\":2.5},{\"name\":\"1L\",\"description\":\"1 liter bottle\",\"price\":5.0},{\"name\":\"1.5L\",\"description\":\"1.5 liter bottle\",\"price\":7.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 2,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"add-on\", \"selected\": false, \"options\": [{\"name\": \"with cream\", \"description\": \"Add whipped cream\", \"price\": 3.0}]}]",
+        "meta_value": "[{\"type\":\"add-on\",\"selected\":false,\"options\":[{\"name\":\"with cream\",\"description\":\"Add whipped cream\",\"price\":3.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 3,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"size\", \"selected\": false, \"options\": [{\"name\": \"small\", \"description\": \"250ml cup\", \"price\": 2.5}, {\"name\": \"medium\", \"description\": \"350ml cup\", \"price\": 4.0}, {\"name\": \"large\", \"description\": \"500ml cup\", \"price\": 5.5}]}]",
+        "meta_value": "[{\"type\":\"size\",\"selected\":false,\"options\":[{\"name\":\"small\",\"description\":\"250ml cup\",\"price\":2.5},{\"name\":\"medium\",\"description\":\"350ml cup\",\"price\":4.0},{\"name\":\"large\",\"description\":\"500ml cup\",\"price\":5.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 4,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"add-on\", \"selected\": false, \"options\": [{\"name\": \"pulp\", \"description\": \"Add orange pulp\", \"price\": 2.0}]}]",
+        "meta_value": "[{\"type\":\"add-on\",\"selected\":false,\"options\":[{\"name\":\"pulp\",\"description\":\"Add orange pulp\",\"price\":2.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 5,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"add-on\", \"selected\": false, \"options\": [{\"name\": \"extra strawberry\", \"description\": \"Add more strawberries\", \"price\": 3.0}]}]",
+        "meta_value": "[{\"type\":\"add-on\",\"selected\":false,\"options\":[{\"name\":\"extra strawberry\",\"description\":\"Add more strawberries\",\"price\":3.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 6,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"patty\", \"selected\": false, \"options\": [{\"name\": \"extra cheese\", \"description\": \"Add more cheese\", \"price\": 2.0}]}]",
+        "meta_value": "[{\"type\":\"patty\",\"selected\":false,\"options\":[{\"name\":\"extra cheese\",\"description\":\"Add more cheese\",\"price\":2.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 7,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"size\", \"selected\": false, \"options\": [{\"name\": \"single\", \"description\": \"One patty\", \"price\": 4.0}, {\"name\": \"double\", \"description\": \"Two patties\", \"price\": 6.0}]}]",
+        "meta_value": "[{\"type\":\"size\",\"selected\":false,\"options\":[{\"name\":\"single\",\"description\":\"One patty\",\"price\":4.0},{\"name\":\"double\",\"description\":\"Two patties\",\"price\":6.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 8,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"sauce\", \"selected\": false, \"options\": [{\"name\": \"extra sauce\", \"description\": \"Add extra special sauce\", \"price\": 2.5}]}]",
+        "meta_value": "[{\"type\":\"sauce\",\"selected\":false,\"options\":[{\"name\":\"extra sauce\",\"description\":\"Add extra special sauce\",\"price\":2.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 9,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"patty\", \"selected\": false, \"options\": [{\"name\": \"grilled\", \"description\": \"Grilled patty\", \"price\": 3.5}, {\"name\": \"fried\", \"description\": \"Fried patty\", \"price\": 4.0}]}]",
+        "meta_value": "[{\"type\":\"patty\",\"selected\":false,\"options\":[{\"name\":\"grilled\",\"description\":\"Grilled patty\",\"price\":3.5},{\"name\":\"fried\",\"description\":\"Fried patty\",\"price\":4.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 10,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"bacon\", \"selected\": false, \"options\": [{\"name\": \"extra bacon\", \"description\": \"Add more bacon\", \"price\": 3.0}]}]",
+        "meta_value": "[{\"type\":\"bacon\",\"selected\":false,\"options\":[{\"name\":\"extra bacon\",\"description\":\"Add more bacon\",\"price\":3.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 11,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"crust\", \"selected\": false, \"options\": [{\"name\": \"thin crust\", \"description\": \"Thin crust pizza\", \"price\": 4.5}, {\"name\": \"thick crust\", \"description\": \"Thick crust pizza\", \"price\": 5.5}]}]",
+        "meta_value": "[{\"type\":\"crust\",\"selected\":false,\"options\":[{\"name\":\"thin crust\",\"description\":\"Thin crust pizza\",\"price\":4.5},{\"name\":\"thick crust\",\"description\":\"Thick crust pizza\",\"price\":5.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 12,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"topping\", \"selected\": false, \"options\": [{\"name\": \"extra cheese\", \"description\": \"Add more cheese\", \"price\": 2.0}]}]",
+        "meta_value": "[{\"type\":\"topping\",\"selected\":false,\"options\":[{\"name\":\"extra cheese\",\"description\":\"Add more cheese\",\"price\":2.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 13,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"size\", \"selected\": false, \"options\": [{\"name\": \"small\", \"description\": \"6-inch pizza\", \"price\": 4.0}, {\"name\": \"large\", \"description\": \"12-inch pizza\", \"price\": 8.0}]}]",
+        "meta_value": "[{\"type\":\"size\",\"selected\":false,\"options\":[{\"name\":\"small\",\"description\":\"6-inch pizza\",\"price\":4.0},{\"name\":\"large\",\"description\":\"12-inch pizza\",\"price\":8.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 14,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"vegetable\", \"selected\": false, \"options\": [{\"name\": \"add olives\", \"description\": \"Add more olives\", \"price\": 2.5}]}]",
+        "meta_value": "[{\"type\":\"vegetable\",\"selected\":false,\"options\":[{\"name\":\"add olives\",\"description\":\"Add more olives\",\"price\":2.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 15,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"meat\", \"selected\": false, \"options\": [{\"name\": \"extra sausage\", \"description\": \"Add extra sausage\", \"price\": 3.5}]}]",
+        "meta_value": "[{\"type\":\"meat\",\"selected\":false,\"options\":[{\"name\":\"extra sausage\",\"description\":\"Add extra sausage\",\"price\":3.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 16,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"seasoning\", \"selected\": false, \"options\": [{\"name\": \"extra salt\", \"description\": \"Add more salt\", \"price\": 2.0}]}]",
+        "meta_value": "[{\"type\":\"seasoning\",\"selected\":false,\"options\":[{\"name\":\"extra salt\",\"description\":\"Add more salt\",\"price\":2.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 17,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"dipping sauce\", \"selected\": false, \"options\": [{\"name\": \"BBQ\", \"description\": \"Barbecue sauce\", \"price\": 2.5}]}]",
+        "meta_value": "[{\"type\":\"dipping sauce\",\"selected\":false,\"options\":[{\"name\":\"BBQ\",\"description\":\"Barbecue sauce\",\"price\":2.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 18,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"flavor\", \"selected\": false, \"options\": [{\"name\": \"spicy\", \"description\": \"Spicy nuggets\", \"price\": 3.0}]}]",
+        "meta_value": "[{\"type\":\"flavor\",\"selected\":false,\"options\":[{\"name\":\"spicy\",\"description\":\"Spicy nuggets\",\"price\":3.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 19,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"dip\", \"selected\": false, \"options\": [{\"name\": \"marinara\", \"description\": \"Marinara dip\", \"price\": 2.5}]}]",
+        "meta_value": "[{\"type\":\"dip\",\"selected\":false,\"options\":[{\"name\":\"marinara\",\"description\":\"Marinara dip\",\"price\":2.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 20,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"seasoning\", \"selected\": false, \"options\": [{\"name\": \"spicy\", \"description\": \"Spicy popcorn chicken\", \"price\": 3.0}]}]",
+        "meta_value": "[{\"type\":\"seasoning\",\"selected\":false,\"options\":[{\"name\":\"spicy\",\"description\":\"Spicy popcorn chicken\",\"price\":3.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 21,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"topping\", \"selected\": false, \"options\": [{\"name\": \"extra chocolate\", \"description\": \"Add more chocolate\", \"price\": 2.5}]}]",
+        "meta_value": "[{\"type\":\"topping\",\"selected\":false,\"options\":[{\"name\":\"extra chocolate\",\"description\":\"Add more chocolate\",\"price\":2.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 22,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"scoop\", \"selected\": false, \"options\": [{\"name\": \"extra scoop\", \"description\": \"Add an extra scoop\", \"price\": 3.0}]}]",
+        "meta_value": "[{\"type\":\"scoop\",\"selected\":false,\"options\":[{\"name\":\"extra scoop\",\"description\":\"Add an extra scoop\",\"price\":3.0}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 23,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"topping\", \"selected\": false, \"options\": [{\"name\": \"chocolate drizzle\", \"description\": \"Add chocolate drizzle\", \"price\": 2.5}]}]",
+        "meta_value": "[{\"type\":\"topping\",\"selected\":false,\"options\":[{\"name\":\"chocolate drizzle\",\"description\":\"Add chocolate drizzle\",\"price\":2.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 24,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"add-on\", \"selected\": false, \"options\": [{\"name\": \"extra cream\", \"description\": \"Add extra whipped cream\", \"price\": 2.5}]}]",
+        "meta_value": "[{\"type\":\"add-on\",\"selected\":false,\"options\":[{\"name\":\"extra cream\",\"description\":\"Add extra whipped cream\",\"price\":2.5}]}]",
         "meta_key_type": "array"
     },
     {
         "product_id": 25,
         "meta_key": "variation",
-        "meta_value": "[{\"type\": \"lava\", \"selected\": false, \"options\": [{\"name\": \"extra chocolate\", \"description\": \"Extra molten chocolate\", \"price\": 3.5}]}]",
+        "meta_value": "[{\"type\":\"lava\",\"selected\":false,\"options\":[{\"name\":\"extra chocolate\",\"description\":\"Extra molten chocolate\",\"price\":3.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 26,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 27,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 28,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 29,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 30,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mild seasoning\",\"price\":0},{\"name\":\"Spicy\",\"description\":\"Extra spicy seasoning\",\"price\":1.0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 31,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"sauce\",\"selected\":false,\"options\":[{\"name\":\"Sweet Chili\",\"description\":\"Sweet chili dipping sauce\",\"price\":0.5},{\"name\":\"Soy Ginger\",\"description\":\"Soy ginger dipping sauce\",\"price\":0.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 32,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"protein\",\"selected\":false,\"options\":[{\"name\":\"Add Tofu\",\"description\":\"Add grilled tofu\",\"price\":2.0},{\"name\":\"Add Chickpeas\",\"description\":\"Add seasoned chickpeas\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 33,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"dressing\",\"selected\":false,\"options\":[{\"name\":\"Extra Dressing\",\"description\":\"Extra citrus dressing on the side\",\"price\":0.75}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 34,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"side\",\"selected\":false,\"options\":[{\"name\":\"With Rice\",\"description\":\"Add a side of jasmine rice\",\"price\":2.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 35,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"topping\",\"selected\":false,\"options\":[{\"name\":\"Extra Slaw\",\"description\":\"Add more spicy slaw\",\"price\":1.0},{\"name\":\"Avocado\",\"description\":\"Add fresh avocado slices\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 36,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"garnish\",\"selected\":false,\"options\":[{\"name\":\"Extra Mint\",\"description\":\"Add more fresh mint\",\"price\":0.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 37,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"topping\",\"selected\":false,\"options\":[{\"name\":\"Extra Coconut\",\"description\":\"Add toasted coconut flakes\",\"price\":0.75}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 38,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"dressing\",\"selected\":false,\"options\":[{\"name\":\"Extra Dressing\",\"description\":\"Extra Caesar dressing on the side\",\"price\":0.75}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 39,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"cheese\",\"selected\":false,\"options\":[{\"name\":\"Extra Feta\",\"description\":\"Add more feta cheese\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 40,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"pasta\",\"selected\":false,\"options\":[{\"name\":\"Gluten-Free\",\"description\":\"Gluten-free pasta\",\"price\":2.0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 41,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"protein\",\"selected\":false,\"options\":[{\"name\":\"Add Tofu\",\"description\":\"Add grilled tofu\",\"price\":2.5},{\"name\":\"Add Chicken\",\"description\":\"Add grilled chicken strips\",\"price\":3.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 42,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"sauce\",\"selected\":false,\"options\":[{\"name\":\"Extra Alfredo\",\"description\":\"Extra creamy Alfredo sauce\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 43,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"topping\",\"selected\":false,\"options\":[{\"name\":\"Guacamole\",\"description\":\"Add fresh guacamole\",\"price\":1.5},{\"name\":\"Sour Cream\",\"description\":\"Add sour cream\",\"price\":0.75}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 44,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 45,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"side\",\"selected\":false,\"options\":[{\"name\":\"Extra Tartar\",\"description\":\"Extra tartar sauce\",\"price\":0.5},{\"name\":\"Lemon Wedges\",\"description\":\"Add lemon wedges\",\"price\":0.25}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 46,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"doneness\",\"selected\":false,\"options\":[{\"name\":\"Medium\",\"description\":\"Grilled to medium\",\"price\":0},{\"name\":\"Well Done\",\"description\":\"Grilled to well done\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 47,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"vegetable\",\"selected\":false,\"options\":[{\"name\":\"Add Broccoli\",\"description\":\"Add steamed broccoli\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 48,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"cheese\",\"selected\":false,\"options\":[{\"name\":\"Extra Cheese\",\"description\":\"Add more cheese blend\",\"price\":1.0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 49,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"chutney\",\"selected\":false,\"options\":[{\"name\":\"Mint\",\"description\":\"Mint chutney on the side\",\"price\":0.5},{\"name\":\"Tamarind\",\"description\":\"Sweet tamarind chutney\",\"price\":0.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 50,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"sauce\",\"selected\":false,\"options\":[{\"name\":\"Extra Garlic\",\"description\":\"Extra garlic sauce\",\"price\":0.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 51,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"rice\",\"selected\":false,\"options\":[{\"name\":\"Extra Raita\",\"description\":\"Add a side of cucumber raita\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 52,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced noodles\",\"price\":0},{\"name\":\"Spicy\",\"description\":\"Extra spicy Szechuan noodles\",\"price\":1.0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 53,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 54,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 55,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 56,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"rice\",\"selected\":false,\"options\":[{\"name\":\"Extra Raita\",\"description\":\"Add a side of cucumber raita\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 57,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 58,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 59,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"rice\",\"selected\":false,\"options\":[{\"name\":\"Extra Raita\",\"description\":\"Add a side of cucumber raita\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 60,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced\",\"price\":0},{\"name\":\"Medium\",\"description\":\"Medium spice\",\"price\":0},{\"name\":\"Hot\",\"description\":\"Extra spicy\",\"price\":0}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 61,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"chutney\",\"selected\":false,\"options\":[{\"name\":\"Mint\",\"description\":\"Mint chutney on the side\",\"price\":0.5},{\"name\":\"Tamarind\",\"description\":\"Sweet tamarind chutney\",\"price\":0.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 62,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"sauce\",\"selected\":false,\"options\":[{\"name\":\"Extra Garlic\",\"description\":\"Extra garlic sauce\",\"price\":0.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 63,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"rice\",\"selected\":false,\"options\":[{\"name\":\"Extra Raita\",\"description\":\"Add a side of cucumber raita\",\"price\":1.5}]}]",
+        "meta_key_type": "array"
+    },
+    {
+        "product_id": 64,
+        "meta_key": "variation",
+        "meta_value": "[{\"type\":\"spice level\",\"selected\":false,\"options\":[{\"name\":\"Mild\",\"description\":\"Mildly spiced noodles\",\"price\":0},{\"name\":\"Spicy\",\"description\":\"Extra spicy Szechuan noodles\",\"price\":1.0}]}]",
         "meta_key_type": "array"
     }
 ]
