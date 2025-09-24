@@ -1,65 +1,15 @@
 [
-    {
-        "name": "The Local CraftFood",
-        "address": "123 Foodie Lane, New York, NY",
-        "phone": "123-456-7890",
-        "email": "contact@localcraftfood.com",
+     {
+        "name": "Axe Restaurant",
+        "address": "Suite 9, 10 Street 28, Block M Block M Commercial Area Model Town, Lahore, Pakistan",
+        "phone": "+13319017091",
+        "email": "AxeTechSolutions@Gmail.com",
         "description": "A fine dining experience with globally inspired cuisine.",
         "status": "active",
         "is_active": 1,
         "image": "images/restaurant/REST04.png",
         "favicon": "images/restaurant/REST04.png",
         "logo": "images/restaurant/REST04.png"
-    },
-
-    {
-        "name": "The New Local CraftFood 2",
-        "address": "456 Foodie Lane, Chicago, NY",
-        "phone": "999-999-0009",
-        "email": "contact@gourmetkitchen2.com",
-
-        "description": "A fine dining experience with globally inspired cuisine.",
-
-        "status": "active",
-        "is_active": 0,
-        "image": "images/restaurant/REST04.png",
-        "favicon": "images/restaurant/REST04.png",
-        "logo": "images/restaurant/REST04.png"
-    },
-    {
-        "name": "Urban Spice House",
-        "address": "789 Gourmet Ave, Los Angeles, CA",
-        "phone": "555-123-4567",
-        "email": "info@urbanspicehouse.com",
-        "description": "Modern fusion cuisine with a spicy twist.",
-        "status": "active",
-        "is_active": 0,
-        "image": "images/restaurant/REST04.png",
-        "favicon": "images/restaurant/REST04.png",
-        "logo": "images/restaurant/REST04.png"
-    },
-    {
-        "name": "Green Garden Bistro",
-        "address": "321 Vegan Blvd, Austin, TX",
-        "phone": "888-222-3333",
-        "email": "hello@greengardenbistro.com",
-        "description": "Plant-based delights and organic meals.",
-        "status": "active",
-        "is_active": 0,
-        "image": "images/restaurant/REST04.png",
-        "favicon": "images/restaurant/REST04.png",
-        "logo": "images/restaurant/REST04.png"
-    },
-    {
-        "name": "Seaside Grill & Bar",
-        "address": "654 Ocean Drive, Miami, FL",
-        "phone": "777-888-9999",
-        "email": "contact@seasidegrillbar.com",
-        "description": "Fresh seafood and tropical cocktails by the beach.",
-        "status": "active",
-        "is_active": 0,
-        "image": "images/restaurant/REST04.png",
-        "favicon": "images/restaurant/REST04.png",
-        "logo": "images/restaurant/REST04.png"
     }
+ 
 ]

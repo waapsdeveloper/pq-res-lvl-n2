@@ -166,7 +166,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "French Fries",
         "description": "Golden crispy french fries, perfectly seasoned.",
         "price": 2.99,
@@ -177,7 +177,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Chicken Nuggets",
         "description": "Juicy and tender chicken nuggets with dipping sauce.",
         "price": 3.99,
@@ -188,7 +188,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Onion Rings",
         "description": "Crispy fried onion rings, perfect for snacking.",
         "price": 3.49,
@@ -199,7 +199,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Mozzarella Sticks",
         "description": "Cheesy mozzarella sticks with marinara dip.",
         "price": 4.49,
@@ -210,7 +210,7 @@
     },
     {
         "category_id": 4,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Popcorn Chicken",
         "description": "Crispy bite-sized chicken pieces with flavorful seasoning.",
         "price": 3.99,
@@ -221,7 +221,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Chocolate Brownie",
         "description": "Rich and fudgy chocolate brownie topped with chocolate sauce.",
         "price": 3.99,
@@ -232,7 +232,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Vanilla Ice Cream",
         "description": "Creamy vanilla ice cream made with natural vanilla beans.",
         "price": 2.99,
@@ -243,7 +243,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Cheesecake Slice",
         "description": "Classic cheesecake slice with a graham cracker crust.",
         "price": 4.49,
@@ -254,7 +254,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Strawberry Sundae",
         "description": "A delightful sundae with fresh strawberries and whipped cream.",
         "price": 3.75,
@@ -265,7 +265,7 @@
     },
     {
         "category_id": 5,
-        "restaurant_id": 2,
+        "restaurant_id": 1,
         "name": "Chocolate Lava Cake",
         "description": "Warm and gooey lava cake with molten chocolate inside.",
         "price": 5.99,
@@ -331,7 +331,7 @@
     },
     {
         "category_id": 7,
-        "restaurant_id": 3,
+        "restaurant_id": 1,
         "name": "Fusion Spring Rolls",
         "description": "Crispy rolls with a blend of Asian and Mediterranean fillings.",
         "price": 5.99,
@@ -342,7 +342,7 @@
     },
     {
         "category_id": 8,
-        "restaurant_id": 4,
+        "restaurant_id": 1,
         "name": "Vegan Buddha Bowl",
         "description": "A nourishing bowl of grains, greens, and plant proteins.",
         "price": 8.99,
@@ -353,7 +353,7 @@
     },
     {
         "category_id": 8,
-        "restaurant_id": 4,
+        "restaurant_id": 1,
         "name": "Quinoa Avocado Salad",
         "description": "Fresh salad with quinoa, avocado, and citrus dressing.",
         "price": 7.49,
@@ -364,7 +364,7 @@
     },
     {
         "category_id": 9,
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "name": "Grilled Salmon Skewers",
         "description": "Tender salmon skewers with lemon and herbs.",
         "price": 12.99,
@@ -375,7 +375,7 @@
     },
     {
         "category_id": 9,
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "name": "Shrimp Tacos",
         "description": "Soft tacos filled with spicy shrimp and slaw.",
         "price": 10.99,
@@ -386,7 +386,7 @@
     },
     {
         "category_id": 10,
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "name": "Pineapple Mojito",
         "description": "Refreshing mojito with pineapple and mint.",
         "price": 5.99,
@@ -397,7 +397,7 @@
     },
     {
         "category_id": 10,
-        "restaurant_id": 5,
+        "restaurant_id": 1,
         "name": "Coconut Cooler",
         "description": "Chilled coconut drink with a tropical twist.",
         "price": 4.49,
