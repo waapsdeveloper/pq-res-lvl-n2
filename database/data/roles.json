@@ -4,8 +4,8 @@
         "slug": "super-admin"
     },
     {
-        "name": "Admin",
-        "slug": "admin"
+        "name": "Waiter",
+        "slug": "waiter"
     },
     {
         "name": "Manager",
@@ -15,25 +15,10 @@
         "name": "Chef",
         "slug": "chef"
     },
-    {
-        "name": "Waiter",
-        "slug": "waiter"
-    },
+    
     {
         "name": "Cashier",
         "slug": "cashier"
-    },
-    {
-        "name": "Delivery Boy",
-        "slug": "delivery-boy"
-    },
-    {
-        "name": "Receptionist",
-        "slug": "receptionist"
-    },
-    {
-        "name": "Cleaner",
-        "slug": "cleaner"
     },
     {
         "name": "Customer",

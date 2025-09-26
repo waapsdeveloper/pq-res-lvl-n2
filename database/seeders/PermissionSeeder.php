@@ -29,7 +29,7 @@ class PermissionSeeder extends Seeder
             ['entity' => 'expense', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter', 'status', 'payment_status_update']],
             ['entity' => 'coupon', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter']],
             ['entity' => 'message', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter']],
-            ['entity' => 'order', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu','deleted_order']],
+            ['entity' => 'order', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter', 'payment_status', 'order_status', 'menu','deleted_order', 'history']],
             ['entity' => 'branch', 'operations' => ['add', 'view', 'edit', 'update', 'delete', 'list', 'filter', 'set_default', 'config_button']],
             ['entity' => 'report', 'operations' => ['view', 'daily_sale_report', 'daily_sale_report', 'yearly', 'custom']],
         ];
@@ -37,15 +37,10 @@ class PermissionSeeder extends Seeder
         // Map which roles get which entities' permissions
         $rolePermissions = [
             'super-admin' => ['*'], // All permissions
-            'admin'       => ['user', 'product', 'category', 'variation', 'table', 'table_booking', 'expense_category', 'expense', 'coupon', 'message', 'order', 'branch'],
             'manager'     => ['user','product', 'category', 'variation', 'table', 'table_booking', 'expense_category', 'expense', 'coupon', 'order', 'branch'],
             'chef'        => ['product', 'order','category', 'variation'],
             'waiter'      => ['order', 'table_booking','table'],
             'cashier'     => ['order', 'expense', 'coupon'],
-            'delivery-boy'=> ['order'],
-            'receptionist'=> ['table_booking', 'order'],
-            'cleaner'     => [],
-            'customer'    => [],
         ];
 
         foreach ($rolePermissions as $roleSlug => $allowedEntities) {
