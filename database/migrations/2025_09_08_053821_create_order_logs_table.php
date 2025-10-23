@@ -15,8 +15,8 @@ return new class extends Migration
         $table->id();
         $table->unsignedBigInteger('order_id'); // link to orders table
         $table->string('event_type');           // e.g. status_change, payment_status, note_added
-        $table->string('old_value')->nullable(); // what it was before
-        $table->string('new_value')->nullable(); // what it changed to
+        $table->longText('old_value')->nullable(); // what it was before
+        $table->longText('new_value')->nullable(); // what it changed to
         $table->string('performed_by')->nullable(); // name or role (Admin, Customer, Rider)
         $table->unsignedBigInteger('performed_by_id')->nullable(); // user_id or admin_id
         $table->timestamps();
