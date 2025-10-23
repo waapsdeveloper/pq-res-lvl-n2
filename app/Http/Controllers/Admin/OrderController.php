@@ -62,56 +62,77 @@ class OrderController extends Controller
         if ($filters) {
             $filters = json_decode($filters, true);
 
-            if (isset($filters['order_id']) && !empty($filters['order_id'])) {
+            // Filter by Order ID
+            if (!empty($filters['order_id'])) {
                 $query->where('order_number', 'like', '%' . $filters['order_id'] . '%');
             }
 
-            if (isset($filters['total_price']) && !empty($filters['total_price'])) {
-                $query->where('total_price', '<', $filters['total_price'])
-                    ->orWhere('total_price', '=', $filters['total_price'])->orderByDesc('total_price');
+            // Filter by Total Price
+            if (!empty($filters['total_price'])) {
+                $query->where(function ($q) use ($filters) {
+                    $q->where('total_price', '<', $filters['total_price'])
+                        ->orWhere('total_price', '=', $filters['total_price']);
+                })->orderByDesc('total_price');
             }
 
-            if (isset($filters['type']) && !empty($filters['type'])) {
-                $query->where('order_type', 'like', '%' . $filters['type'] . '%');
+            // Filter by Order Type (can be array)
+            if (!empty($filters['type'])) {
+                $types = is_array($filters['type']) ? $filters['type'] : [$filters['type']];
+                $query->whereIn('order_type', $types);
             }
 
-            if (isset($filters['status']) && !empty($filters['status'])) {
-                $query->where('status', $filters['status']);
+            // Filter by Status (can be array)
+            if (!empty($filters['status'])) {
+                $statuses = is_array($filters['status']) ? $filters['status'] : [$filters['status']];
+                $query->whereIn('status', $statuses);
             }
 
-            if (isset($filters['customer_name']) && !empty($filters['customer_name'])) {
+            // Filter by Payment Method (can be array)
+            if (!empty($filters['payment_method'])) {
+                $methods = is_array($filters['payment_method']) ? $filters['payment_method'] : [$filters['payment_method']];
+                $query->whereIn('payment_method', $methods);
+            }
+
+            // Filter by Customer Name
+            if (!empty($filters['customer_name'])) {
                 $query->whereHas('customer', function ($q) use ($filters) {
                     $q->where('name', 'like', '%' . $filters['customer_name'] . '%');
                 });
             }
 
-            if (isset($filters['phone']) && !empty($filters['phone'])) {
+            // Filter by Customer Phone
+            if (!empty($filters['phone'])) {
                 $query->whereHas('customer', function ($q) use ($filters) {
                     $q->where('phone', 'like', '%' . $filters['phone'] . '%');
                 });
             }
 
-            if (isset($filters['created_at']) && !empty($filters['created_at'])) {
-                $query->whereDate('created_at', $filters['created_at']);
-            }
-
-            if (isset($filters['started_from']) && !empty($filters['started_from'])) {
-                $query->whereDate('created_at', '>=', $filters['started_from']);
-            }
-
-            if (isset($filters['ended_at']) && !empty($filters['ended_at'])) {
-                $query->whereDate('created_at', '<=', $filters['ended_at']);
-            }
-
-            if (isset($filters['is_paid']) && $filters['is_paid'] !== '') {
-                $query->where('is_paid', $filters['is_paid']);
-            }
-            if (isset($filters['table']) && !empty($filters['table'])) {
+            // Filter by Table Name
+            if (!empty($filters['table'])) {
                 $query->whereHas('table', function ($q) use ($filters) {
                     $q->where('name', 'like', '%' . $filters['table'] . '%');
                 });
             }
+
+            // Date Filters
+            if (!empty($filters['created_at'])) {
+                $query->whereDate('created_at', $filters['created_at']);
+            }
+
+            if (!empty($filters['started_from'])) {
+                $query->whereDate('created_at', '>=', $filters['started_from']);
+            }
+
+            if (!empty($filters['ended_at'])) {
+                $query->whereDate('created_at', '<=', $filters['ended_at']);
+            }
+
+            // Filter by Paid/Unpaid
+            if (isset($filters['is_paid']) && $filters['is_paid'] !== '') {
+                $query->where('is_paid', $filters['is_paid']);
+            }
         }
+
 
         // Before pagination
         $ordersForTotals = (clone $query)->get();
@@ -833,281 +854,285 @@ class OrderController extends Controller
 
 
         // Before updating the order, capture old values
-$oldOrderType      = $order->order_type;
-$oldPaymentMethod  = $order->payment_method;
-$existingProducts  = $order->orderProducts->keyBy('product_id');
+        $oldOrderType      = $order->order_type;
+        $oldPaymentMethod  = $order->payment_method;
+        $existingProducts  = $order->orderProducts->keyBy('product_id');
 
-// helper: recursively sort arrays for stable JSON comparison
-$sortRecursive = function (&$v) use (&$sortRecursive) {
-    if (!is_array($v)) return;
-    // sort associative arrays by key, keep numeric arrays order
-    if (array_values($v) === $v) {
-        foreach ($v as &$item) { $sortRecursive($item); }
-    } else {
-        ksort($v);
-        foreach ($v as &$item) { $sortRecursive($item); }
-    }
-};
-
-// normalize variation / any JSON value to stable JSON string
-$normalize = function ($val) use ($sortRecursive) {
-    if (is_string($val)) {
-        $decoded = json_decode($val, true);
-        if ($decoded !== null) $val = $decoded;
-    }
-    if (is_array($val)) {
-        $sortRecursive($val);
-        return json_encode($val, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    }
-    return json_encode($val, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-};
-
-// Build new products list from request (you already build $orderProducts earlier)
-$newProductsById = collect($orderProducts)->keyBy('product_id');
-
-// Compare products: added / removed / updated
-$added   = [];
-$removed = [];
-$updated = [];
-
-$newIds = $newProductsById->keys()->all();
-$oldIds = $existingProducts->keys()->all();
-
-// removed
-foreach ($existingProducts as $pid => $oldP) {
-    if (!in_array($pid, $newIds)) {
-        $removed[] = [
-            'product_id' => $pid,
-            'quantity'   => $oldP->quantity,
-            'price'      => $oldP->price,
-            'notes'      => $oldP->notes,
-            'variation'  => $normalize($oldP->variation),
-        ];
-    }
-}
-
-// added & updated
-foreach ($newProductsById as $pid => $newP) {
-    if (!isset($existingProducts[$pid])) {
-        // added
-        $added[] = $newP;
-    } else {
-        $oldP = $existingProducts[$pid];
-        $oldVar = $normalize($oldP->variation);
-        $newVar = $normalize($newP['variation'] ?? $newP['variation']);
-        // compare key fields
-        $changed = false;
-        $oldSnapshot = [
-            'product_id' => $pid,
-            'quantity'   => $oldP->quantity,
-            'price'      => (string)$oldP->price,
-            'notes'      => $oldP->notes,
-            'variation'  => $oldVar,
-        ];
-        $newSnapshot = [
-            'product_id' => $pid,
-            'quantity'   => $newP['quantity'],
-            'price'      => (string)$newP['price'],
-            'notes'      => $newP['notes'] ?? null,
-            'variation'  => $newVar,
-        ];
-        if (
-            (string)$oldP->quantity !== (string)$newP['quantity'] ||
-            (string)$oldP->price !== (string)$newP['price'] ||
-            ($oldP->notes ?? null) !== ($newP['notes'] ?? null) ||
-            $oldVar !== $newVar
-        ) {
-            $updated[] = [
-                'old' => $oldSnapshot,
-                'new' => $newSnapshot,
-            ];
-        }
-    }
-}
-
-// Proceed with normal order update & product sync (your existing logic)
-$order->update([
-    'restaurant_id' => $resID,
-    'type' => $type,
-    'status' => $orderStatus,
-    'notes' => $orderNote,
-    'customer_id' => $user->id ?? null,
-    'discount' => $discount,
-    'table_no' => $tableNo,
-    'total_price' => $finalPrice,
-    'payment_method' => $paymentMethod,
-    'order_type' => $orderType,
-    'delivery_address' => $deliveryAddress,
-    'coupon_code' => $couponCode,
-    'discount_value' => $discountValue,
-    'final_total' => $finalTotal,
-    'source' => $request->is_from_pos ? 'pos' : 'website',
-    'tax_percentage' => $taxPercentage,
-    'tax_amount' => $taxAmount,
-    'tips' => $tips,
-    'tips_amount' => $tipsAmount,
-    'delivery_charges' => $deliveryCharges,
-]);
-
-// Sync order products (existing code)
-$existingProducts = $order->orderProducts->keyBy('product_id');
-$newProductIds = [];
-foreach ($orderProducts as $orderProduct) {
-    $newProductIds[] = $orderProduct['product_id'];
-    if ($existingProducts->has($orderProduct['product_id'])) {
-        $existingProducts[$orderProduct['product_id']]->update($orderProduct);
-    } else {
-        $order->orderProducts()->create($orderProduct);
-    }
-}
-$order->orderProducts()->whereNotIn('product_id', $newProductIds)->delete();
-
-// After update, create OrderLog entries for each detected change
-$performer = auth()->user();
-$performedBy = $performer ? $performer->name : 'System';
-$performedById = $performer ? $performer->id : null;
-
-// helper: build payload including product name and ONLY the selected variation(s)
-$buildSelectedPayload = function ($item) {
-    // $item can be an array snapshot or an Eloquent model/object
-    $productId = is_array($item) ? ($item['product_id'] ?? null) : ($item->product_id ?? null);
-    $quantity  = is_array($item) ? ($item['quantity'] ?? null) : ($item->quantity ?? null);
-    $price     = is_array($item) ? ($item['price'] ?? null) : ($item->price ?? null);
-    $notes     = is_array($item) ? ($item['notes'] ?? null) : ($item->notes ?? null);
-    $variationRaw = is_array($item) ? ($item['variation'] ?? null) : ($item->variation ?? null);
-
-    // decode if json string
-    if (is_string($variationRaw) && $variationRaw !== '') {
-        $decoded = json_decode($variationRaw, true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $variation = $decoded;
-        } else {
-            $variation = null;
-        }
-    } elseif (is_array($variationRaw)) {
-        $variation = $variationRaw;
-    } else {
-        $variation = null;
-    }
-
-    $selectedVariations = [];
-    if (is_array($variation)) {
-        foreach ($variation as $group) {
-            // prefer explicit selectedOption
-            if (isset($group['selectedOption']) && $group['selectedOption']) {
-                $selectedVariations[] = [
-                    'type' => $group['type'] ?? null,
-                    'selected' => $group['selectedOption'],
-                ];
-                continue;
-            }
-
-            // otherwise pick options marked selected
-            if (isset($group['options']) && is_array($group['options'])) {
-                $selectedOptions = [];
-                foreach ($group['options'] as $opt) {
-                    if ((isset($opt['selected']) && $opt['selected']) || (isset($opt['is_selected']) && $opt['is_selected'])) {
-                        $selectedOptions[] = $opt;
-                    }
+        // helper: recursively sort arrays for stable JSON comparison
+        $sortRecursive = function (&$v) use (&$sortRecursive) {
+            if (!is_array($v)) return;
+            // sort associative arrays by key, keep numeric arrays order
+            if (array_values($v) === $v) {
+                foreach ($v as &$item) {
+                    $sortRecursive($item);
                 }
-                if (!empty($selectedOptions)) {
-                    $selectedVariations[] = [
-                        'type' => $group['type'] ?? null,
-                        'selected' => $selectedOptions,
+            } else {
+                ksort($v);
+                foreach ($v as &$item) {
+                    $sortRecursive($item);
+                }
+            }
+        };
+
+        // normalize variation / any JSON value to stable JSON string
+        $normalize = function ($val) use ($sortRecursive) {
+            if (is_string($val)) {
+                $decoded = json_decode($val, true);
+                if ($decoded !== null) $val = $decoded;
+            }
+            if (is_array($val)) {
+                $sortRecursive($val);
+                return json_encode($val, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            }
+            return json_encode($val, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        };
+
+        // Build new products list from request (you already build $orderProducts earlier)
+        $newProductsById = collect($orderProducts)->keyBy('product_id');
+
+        // Compare products: added / removed / updated
+        $added   = [];
+        $removed = [];
+        $updated = [];
+
+        $newIds = $newProductsById->keys()->all();
+        $oldIds = $existingProducts->keys()->all();
+
+        // removed
+        foreach ($existingProducts as $pid => $oldP) {
+            if (!in_array($pid, $newIds)) {
+                $removed[] = [
+                    'product_id' => $pid,
+                    'quantity'   => $oldP->quantity,
+                    'price'      => $oldP->price,
+                    'notes'      => $oldP->notes,
+                    'variation'  => $normalize($oldP->variation),
+                ];
+            }
+        }
+
+        // added & updated
+        foreach ($newProductsById as $pid => $newP) {
+            if (!isset($existingProducts[$pid])) {
+                // added
+                $added[] = $newP;
+            } else {
+                $oldP = $existingProducts[$pid];
+                $oldVar = $normalize($oldP->variation);
+                $newVar = $normalize($newP['variation'] ?? $newP['variation']);
+                // compare key fields
+                $changed = false;
+                $oldSnapshot = [
+                    'product_id' => $pid,
+                    'quantity'   => $oldP->quantity,
+                    'price'      => (string)$oldP->price,
+                    'notes'      => $oldP->notes,
+                    'variation'  => $oldVar,
+                ];
+                $newSnapshot = [
+                    'product_id' => $pid,
+                    'quantity'   => $newP['quantity'],
+                    'price'      => (string)$newP['price'],
+                    'notes'      => $newP['notes'] ?? null,
+                    'variation'  => $newVar,
+                ];
+                if (
+                    (string)$oldP->quantity !== (string)$newP['quantity'] ||
+                    (string)$oldP->price !== (string)$newP['price'] ||
+                    ($oldP->notes ?? null) !== ($newP['notes'] ?? null) ||
+                    $oldVar !== $newVar
+                ) {
+                    $updated[] = [
+                        'old' => $oldSnapshot,
+                        'new' => $newSnapshot,
                     ];
                 }
             }
         }
-    }
 
-    // resolve product name safely
-    $prodModel = $productId ? Product::find($productId) : null;
-    $productName = $prodModel ? $prodModel->name : null;
+        // Proceed with normal order update & product sync (your existing logic)
+        $order->update([
+            'restaurant_id' => $resID,
+            'type' => $type,
+            'status' => $orderStatus,
+            'notes' => $orderNote,
+            'customer_id' => $user->id ?? null,
+            'discount' => $discount,
+            'table_no' => $tableNo,
+            'total_price' => $finalPrice,
+            'payment_method' => $paymentMethod,
+            'order_type' => $orderType,
+            'delivery_address' => $deliveryAddress,
+            'coupon_code' => $couponCode,
+            'discount_value' => $discountValue,
+            'final_total' => $finalTotal,
+            'source' => $request->is_from_pos ? 'pos' : 'website',
+            'tax_percentage' => $taxPercentage,
+            'tax_amount' => $taxAmount,
+            'tips' => $tips,
+            'tips_amount' => $tipsAmount,
+            'delivery_charges' => $deliveryCharges,
+        ]);
 
-    return [
-        'product_id' => $productId,
-        'name' => $productName,
-        'quantity' => $quantity,
-        'price' => $price,
-        'notes' => $notes,
-        'selected_variations' => $selectedVariations, // only selected items
-    ];
-};
+        // Sync order products (existing code)
+        $existingProducts = $order->orderProducts->keyBy('product_id');
+        $newProductIds = [];
+        foreach ($orderProducts as $orderProduct) {
+            $newProductIds[] = $orderProduct['product_id'];
+            if ($existingProducts->has($orderProduct['product_id'])) {
+                $existingProducts[$orderProduct['product_id']]->update($orderProduct);
+            } else {
+                $order->orderProducts()->create($orderProduct);
+            }
+        }
+        $order->orderProducts()->whereNotIn('product_id', $newProductIds)->delete();
 
-// log order_type change
-if ((string)$oldOrderType !== (string)$orderType) {
-    OrderLog::create([
-        'order_id' => $order->id,
-        'event_type' => 'order_type',
-        'old_value' => (string)$oldOrderType,
-        'new_value' => (string)$orderType,
-        'performed_by' => $performedBy,
-        'performed_by_id' => $performedById,
-        'meta' => 'order_type',
-    ]);
-}
+        // After update, create OrderLog entries for each detected change
+        $performer = auth()->user();
+        $performedBy = $performer ? $performer->name : 'System';
+        $performedById = $performer ? $performer->id : null;
 
-// log payment_method change
-if ((string)$oldPaymentMethod !== (string)$paymentMethod) {
-    OrderLog::create([
-        'order_id' => $order->id,
-        'event_type' => 'payment_method',
-        'old_value' => (string)$oldPaymentMethod,
-        'new_value' => (string)$paymentMethod,
-        'performed_by' => $performedBy,
-        'performed_by_id' => $performedById,
-        'meta' => 'payment_method',
-    ]);
-}
+        // helper: build payload including product name and ONLY the selected variation(s)
+        $buildSelectedPayload = function ($item) {
+            // $item can be an array snapshot or an Eloquent model/object
+            $productId = is_array($item) ? ($item['product_id'] ?? null) : ($item->product_id ?? null);
+            $quantity  = is_array($item) ? ($item['quantity'] ?? null) : ($item->quantity ?? null);
+            $price     = is_array($item) ? ($item['price'] ?? null) : ($item->price ?? null);
+            $notes     = is_array($item) ? ($item['notes'] ?? null) : ($item->notes ?? null);
+            $variationRaw = is_array($item) ? ($item['variation'] ?? null) : ($item->variation ?? null);
 
-// products: ADDED (single entry, show name + selected variation only)
-foreach ($added as $p) {
-    $newPayload = $buildSelectedPayload($p);
-    OrderLog::create([
-        'order_id' => $order->id,
-        'event_type' => 'product_added',
-        'old_value' => null,
-        'new_value' => json_encode($newPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-        'performed_by' => $performedBy,
-        'performed_by_id' => $performedById,
-        'meta' => 'products',
-    ]);
-}
+            // decode if json string
+            if (is_string($variationRaw) && $variationRaw !== '') {
+                $decoded = json_decode($variationRaw, true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $variation = $decoded;
+                } else {
+                    $variation = null;
+                }
+            } elseif (is_array($variationRaw)) {
+                $variation = $variationRaw;
+            } else {
+                $variation = null;
+            }
 
-// products: REMOVED (single entry, include selected variation from old payload)
-foreach ($removed as $p) {
-    $oldPayload = $buildSelectedPayload($p);
-    OrderLog::create([
-        'order_id' => $order->id,
-        'event_type' => 'product_removed',
-        'old_value' => json_encode($oldPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-        'new_value' => null,
-        'performed_by' => $performedBy,
-        'performed_by_id' => $performedById,
-        'meta' => 'products',
-    ]);
-}
+            $selectedVariations = [];
+            if (is_array($variation)) {
+                foreach ($variation as $group) {
+                    // prefer explicit selectedOption
+                    if (isset($group['selectedOption']) && $group['selectedOption']) {
+                        $selectedVariations[] = [
+                            'type' => $group['type'] ?? null,
+                            'selected' => $group['selectedOption'],
+                        ];
+                        continue;
+                    }
 
-// products: UPDATED (single entry per product; old -> new; only selected variation values are stored)
-foreach ($updated as $p) {
-    $oldPayload = $buildSelectedPayload($p['old']);
-    $newPayload = $buildSelectedPayload($p['new']);
-    // If payloads are identical (no meaningful selected change), skip logging to avoid duplicates
-    if (json_encode($oldPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) === json_encode($newPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)) {
-        continue;
-    }
-    OrderLog::create([
-        'order_id' => $order->id,
-        'event_type' => 'product_updated',
-        'old_value' => json_encode($oldPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-        'new_value' => json_encode($newPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-        'performed_by' => $performedBy,
-        'performed_by_id' => $performedById,
-        'meta' => 'products',
-    ]);
-}
+                    // otherwise pick options marked selected
+                    if (isset($group['options']) && is_array($group['options'])) {
+                        $selectedOptions = [];
+                        foreach ($group['options'] as $opt) {
+                            if ((isset($opt['selected']) && $opt['selected']) || (isset($opt['is_selected']) && $opt['is_selected'])) {
+                                $selectedOptions[] = $opt;
+                            }
+                        }
+                        if (!empty($selectedOptions)) {
+                            $selectedVariations[] = [
+                                'type' => $group['type'] ?? null,
+                                'selected' => $selectedOptions,
+                            ];
+                        }
+                    }
+                }
+            }
 
-// ...existing code continues (invoice booking notify email response) ...
+            // resolve product name safely
+            $prodModel = $productId ? Product::find($productId) : null;
+            $productName = $prodModel ? $prodModel->name : null;
+
+            return [
+                'product_id' => $productId,
+                'name' => $productName,
+                'quantity' => $quantity,
+                'price' => $price,
+                'notes' => $notes,
+                'selected_variations' => $selectedVariations, // only selected items
+            ];
+        };
+
+        // log order_type change
+        if ((string)$oldOrderType !== (string)$orderType) {
+            OrderLog::create([
+                'order_id' => $order->id,
+                'event_type' => 'order_type',
+                'old_value' => (string)$oldOrderType,
+                'new_value' => (string)$orderType,
+                'performed_by' => $performedBy,
+                'performed_by_id' => $performedById,
+                'meta' => 'order_type',
+            ]);
+        }
+
+        // log payment_method change
+        if ((string)$oldPaymentMethod !== (string)$paymentMethod) {
+            OrderLog::create([
+                'order_id' => $order->id,
+                'event_type' => 'payment_method',
+                'old_value' => (string)$oldPaymentMethod,
+                'new_value' => (string)$paymentMethod,
+                'performed_by' => $performedBy,
+                'performed_by_id' => $performedById,
+                'meta' => 'payment_method',
+            ]);
+        }
+
+        // products: ADDED (single entry, show name + selected variation only)
+        foreach ($added as $p) {
+            $newPayload = $buildSelectedPayload($p);
+            OrderLog::create([
+                'order_id' => $order->id,
+                'event_type' => 'product_added',
+                'old_value' => null,
+                'new_value' => json_encode($newPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                'performed_by' => $performedBy,
+                'performed_by_id' => $performedById,
+                'meta' => 'products',
+            ]);
+        }
+
+        // products: REMOVED (single entry, include selected variation from old payload)
+        foreach ($removed as $p) {
+            $oldPayload = $buildSelectedPayload($p);
+            OrderLog::create([
+                'order_id' => $order->id,
+                'event_type' => 'product_removed',
+                'old_value' => json_encode($oldPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                'new_value' => null,
+                'performed_by' => $performedBy,
+                'performed_by_id' => $performedById,
+                'meta' => 'products',
+            ]);
+        }
+
+        // products: UPDATED (single entry per product; old -> new; only selected variation values are stored)
+        foreach ($updated as $p) {
+            $oldPayload = $buildSelectedPayload($p['old']);
+            $newPayload = $buildSelectedPayload($p['new']);
+            // If payloads are identical (no meaningful selected change), skip logging to avoid duplicates
+            if (json_encode($oldPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) === json_encode($newPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)) {
+                continue;
+            }
+            OrderLog::create([
+                'order_id' => $order->id,
+                'event_type' => 'product_updated',
+                'old_value' => json_encode($oldPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                'new_value' => json_encode($newPayload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                'performed_by' => $performedBy,
+                'performed_by_id' => $performedById,
+                'meta' => 'products',
+            ]);
+        }
+
+        // ...existing code continues (invoice booking notify email response) ...
         // Send email to the customer
         Helper::sendEmail($user->email, 'Your Order Details', 'emails.order_details', ['order' => $order]);
 
@@ -1336,7 +1361,4 @@ foreach ($updated as $p) {
             'event' => $event,
         ]);
     }
-
-
-
 }
