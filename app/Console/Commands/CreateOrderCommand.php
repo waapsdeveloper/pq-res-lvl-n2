@@ -22,7 +22,7 @@ class CreateOrderCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-order-command';
+    protected $signature = 'order:create-random';
 
     /**
      * The console command description.
