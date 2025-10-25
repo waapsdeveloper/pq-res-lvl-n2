@@ -87,6 +87,16 @@ class OrderController extends Controller
                 $query->whereIn('status', $statuses);
             }
 
+            // Filter by date range
+            if (!empty($filters['date_range'])) {
+                if (!empty($filters['date_range']['startDate'])) {
+                    $query->whereDate('created_at', '>=', Carbon::parse($filters['date_range']['startDate'])->startOfDay());
+                }
+                if (!empty($filters['date_range']['endDate'])) {
+                    $query->whereDate('created_at', '<=', Carbon::parse($filters['date_range']['endDate'])->endOfDay());
+                }
+            }
+
             // Filter by Payment Method (can be array)
             if (!empty($filters['payment_method'])) {
                 $methods = is_array($filters['payment_method']) ? $filters['payment_method'] : [$filters['payment_method']];
