@@ -38,12 +38,9 @@ Route::middleware('auth:api')->prefix('profile')->group(function () {
     Route::post('/update-user-address/{id}', [ProfileController::class, 'updateUserAddress']);
     Route::delete('/delete-user-address/{id}', [ProfileController::class, 'deleteUserAddress']);
 
-// Route::prefix('profile')->group(function () {
+    // Route::prefix('profile')->group(function () {
     Route::post('/add', [ProfileController::class, 'addProfile']);
     Route::post('/update', [ProfileController::class, 'updateProfile']);
-
-
-
 });
 
 
@@ -67,7 +64,8 @@ Route::prefix('table-booking')->middleware('auth:api')->group(function () {
     Route::resource('/', TableBookingController::class)
         ->parameters(['' => 'id'])
         ->only(['index', 'show', 'store', 'update', 'destroy'])
-        ->names('table-booking')->middleware([ExtractRestaurantId::class]);
+        ->names('frontend.table-booking')
+        ->middleware([ExtractRestaurantId::class]);
 })->middleware([ExtractRestaurantId::class]);
 
 Route::get('/track-table-booking/{order_number}', [TableBookingController::class, 'trackTableBooking']);
@@ -132,6 +130,6 @@ Route::get('/countries', [CountryController::class, 'index']);
 
 Route::prefix('coupon')->group(function () {
 
-    Route::get('/available-valid-coupon', [CouponController::class, 'availableValidCoupon'])->name('coupon.availableValidCoupon');
-    Route::post('/update-coupon-usage', [CouponController::class, 'updateCouponUsage'])->name('coupon.updateCouponUsage');
+    Route::get('/available-valid-coupon', [CouponController::class, 'availableValidCoupon'])->name('frontend.coupon.availableValidCoupon');
+    Route::post('/update-coupon-usage', [CouponController::class, 'updateCouponUsage'])->name('frontend.coupon.updateCouponUsage');
 });

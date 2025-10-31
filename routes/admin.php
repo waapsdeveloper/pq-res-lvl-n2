@@ -229,7 +229,7 @@ Route::prefix('message')->group(function () {
     Route::resource('/', MessageController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
-        ->names('invoice');
+        ->names('message');
 });
 
 
