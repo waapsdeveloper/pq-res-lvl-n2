@@ -170,7 +170,6 @@ Route::prefix('order')->middleware('auth:api')->group(function () {
     // Force delete routes
     Route::delete('/force-delete/{id}', [OrderController::class, 'forceDelete'])->name('order.forceDelete');
     Route::delete('/force-delete-multiple', [OrderController::class, 'forceDeleteMultiple'])->name('order.forceDeleteMultiple');
-
 });
 
 Route::prefix('rtable')->group(function () {
@@ -199,7 +198,7 @@ Route::prefix('variation')->group(function () {
     Route::resource('/', VariationController::class)
         ->parameters(['' => 'id']) // If needed, customize parameter names.
         ->only(['index', 'show', 'update', 'store', 'destroy'])
-        ->names('customer'); // Restrict to specific CRUD actions.
+        ->names('variation'); // Restrict to specific CRUD actions.
 });
 
 // DUPLICATE API CALLS
