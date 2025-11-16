@@ -19,8 +19,10 @@ use App\Helpers\Identifier;
 use App\Helpers\Helper;
 use App\Http\Resources\Admin\OrderResource;
 use App\Models\BranchConfig;
+use App\Models\Coupon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 
 
@@ -187,5 +189,80 @@ class KioskController extends Controller
       Log::error('Kiosk createOrder error', ['exception' => $e->getMessage(), 'trace' => $e->getTraceAsString(), 'payload' => $request->all()]);
       return ServiceResponse::error('Server error: ' . $e->getMessage());
     }
+  }
+
+  /**
+   * Check if a coupon code is valid and available
+   */
+  public function availableValidCoupon(Request $request)
+  {
+    $validator = Validator::make($request->all(), [
+      'code' => 'required|exists:coupons,code',
+    ]);
+
+    if ($validator->fails()) {
+      return ServiceResponse::error('Validation failed', $validator->errors());
+    }
+
+    $coupon = Coupon::where('code', $request->code)->first();
+    // if (!$coupon || !$coupon->isValid()) {
+    //   return ServiceResponse::error('Coupon is not available', ['coupon' => null]);
+    // }
+
+    // optional: frontend may provide cart_total so backend can compute actual discount amount
+    $cartTotal = isset($request->cart_total) ? floatval($request->cart_total) : null;
+
+    $discountAmount = null;
+    $discountType = $coupon->discount_type ?? 'fixed';
+    $discountValue = floatval($coupon->discount_value ?? 0);
+
+    if ($cartTotal !== null) {
+      if (strtolower($discountType) === 'percent' || strtolower($discountType) === 'percentage') {
+        // discount_value is treated as percent (e.g., 10 means 10%)
+        $discountAmount = ($cartTotal * $discountValue) / 100.0;
+      } else {
+        // fixed amount discount
+        $discountAmount = $discountValue;
+      }
+      // ensure non-negative and not exceeding cart total
+      $discountAmount = max(0, min($discountAmount, $cartTotal));
+      // round to 2 decimals
+      $discountAmount = round($discountAmount, 2);
+    }
+
+    return ServiceResponse::success('Coupon is available', [
+      'coupon' => $coupon,
+      'discount' => [
+        'type' => $discountType,
+        'value' => $discountValue,
+        'amount' => $discountAmount,
+      ],
+    ]);
+  }
+
+  /**
+   * Update coupon usage count
+   */
+  public function updateCouponUsage(Request $request)
+  {
+    $validator = Validator::make($request->all(), [
+      'code' => 'required|exists:coupons,code',
+    ]);
+
+    if ($validator->fails()) {
+      return ServiceResponse::error('Validation failed', $validator->errors());
+    }
+    $coupon = Coupon::where('code', $request->code)->first();
+    if (!$coupon || !$coupon->isValid()) {
+      return ServiceResponse::error('Coupon is not available', ['coupon' => $coupon]);
+    }
+
+    // increment used_count safely
+    $coupon->used_count = intval($coupon->used_count ?? 0) + 1;
+    $coupon->save();
+
+    return ServiceResponse::success('Coupon usage updated successfully', [
+      'coupon' => $coupon,
+    ]);
   }
 }

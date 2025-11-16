@@ -6,3 +6,5 @@ use App\Http\Controllers\Kiosk\KioskController;
 Route::get('/catalog', [KioskController::class, 'getCatalog']);
 Route::get('/restaurant-meta', [KioskController::class, 'getRestaurantMeta']);
 Route::post('/create-order', [KioskController::class, 'createOrder']);
+Route::post('/check-coupon', [KioskController::class, 'availableValidCoupon']);
+Route::post('/update-coupon-usage', [KioskController::class, 'updateCouponUsage']);

@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*','api/admin/*', 'api/frontend/*' ],
+    'paths' => ['api/*','api/admin/*', 'api/frontend/*' ,'api/kiosk/*'] ,
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => explode(',', env('ALLOWED_ORIGINS', 'http://localhost:4200')),
+    'allowed_origins' => explode(',', env('ALLOWED_ORIGINS', 'http://localhost:4200','http://localhost:4300')),
 
     'allowed_origins_patterns' => [],
 
